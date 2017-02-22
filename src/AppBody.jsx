@@ -1,7 +1,11 @@
 import React from 'react';
+
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
+import SelectField from 'material-ui/SelectField';
+import SnippetArea from './SnippetArea';
+import TokenSelector from './TokenSelector';
 
 const languages = [
   { text: 'C', value: 'c' },
@@ -22,7 +26,7 @@ class AppBody extends React.Component {
     super(props);
     this.state = {
       langDrawerOpen: false,
-      selectedLanguage: 'python'
+      selectedLanguage: ''
     };
     this.handleSelect = this.handleSelect.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
@@ -35,10 +39,10 @@ class AppBody extends React.Component {
     });
   }
 
-  handleSelect(selectedLanguage) {
+  handleSelect(ev, index, value) {
     this.setState({
       langDrawerOpen: false,
-      selectedLanguage,
+      selectedLanguage: value,
     });
   }
 
@@ -46,14 +50,10 @@ class AppBody extends React.Component {
     return languages.map((lang, index) => {
       return (
         <MenuItem
-          checked={ lang.value === this.state.selectedLanguage }
-          key={`${lang.value} index`}
-          onTouchTap={() => this.handleSelect(lang.value)}
-          value={`${lang.value}`}
-
-        >
-          {lang.text}
-        </MenuItem>
+          key={`${lang.value}-index`}
+          primaryText={lang.text}
+          value={lang.value}
+        />
       );
     });
   }
@@ -61,19 +61,23 @@ class AppBody extends React.Component {
   render() {
 
     return (
-      <div>
-        <RaisedButton
-          label="Select snippet language"
-          onTouchTap={this.handleToggle}
-        />
-        <Drawer
-          docked={false}
-          width={250}
-          open={this.state.langDrawerOpen}
-          onRequestChange={(langDrawerOpen) => this.setState({langDrawerOpen})}
-        >
-          {this.makeMenuItems()}
-        </Drawer>
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-md-4">
+            <SelectField
+              floatingLabelText="Language"
+              value={this.state.selectedLanguage}
+              onChange={this.handleSelect}
+            >
+              <MenuItem value={null} primaryText="" />
+              {this.makeMenuItems()}
+            </SelectField>
+            <TokenSelector />
+          </div>
+          <div className="col-md-8">
+            <SnippetArea />
+          </div>
+        </div>
       </div>
     );
   }

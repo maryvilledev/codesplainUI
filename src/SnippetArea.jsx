@@ -9,9 +9,7 @@ const SnippetArea = () => (
     multiLine={true}
     name="snippetArea"
     rows={30}
-  >
-
-  </TextField>
+  />
 );
 
 export default SnippetArea;
