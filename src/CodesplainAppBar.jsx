@@ -7,8 +7,8 @@ import AppBar from 'material-ui/AppBar';
  */
 const CodesplainAppBar = () => (
   <AppBar
+    showMenuIconButton={false}
     title="Codesplain"
-    iconClassNameRight="muidocs-icon-navigation-expand-more"
   />
 );
 

@@ -3,9 +3,11 @@ import TextField from 'material-ui/TextField';
 
 const SnippetArea = () => (
   <TextField
-    defaultValue="Enter code here"
-    name="snippetArea"
+    fullWidth={true}
+    floatingLabelFixed={true}
+    floatingLabelText="Enter code here"
     multiLine={true}
+    name="snippetArea"
     rows={30}
   >
 

@@ -4,18 +4,17 @@ import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 
 const languages = [
-  'Brainfuck',
-  'C',
-  'Clojure',
-  'COBOL',
-  'FORTRAN',
-  'Go',
-  'Java',
-  'Javascript',
-  'Perl',
-  'Python',
-  'Ruby',
-  'Scala',
+  { text: 'C', value: 'c' },
+  { text: 'Clojure', value: 'clojure' },
+  { text: 'COBOL' , value: 'cobol' },
+  { text: 'FORTRAN' , value: 'fortran' },
+  { text: 'Go' , value: 'go' },
+  { text: 'Java' , value: 'java' },
+  { text: 'Javascript' , value: 'javascript' },
+  { text: 'Perl' , value: 'perl' },
+  { text: 'Python' , value: 'python' },
+  { text: 'Ruby' , value: 'ruby' },
+  { text: 'Scala' , value: 'scala' },
 ];
 
 class AppBody extends React.Component {
@@ -23,8 +22,9 @@ class AppBody extends React.Component {
     super(props);
     this.state = {
       langDrawerOpen: false,
+      selectedLanguage: 'python'
     };
-    this.handleClose = this.handleClose.bind(this);
+    this.handleSelect = this.handleSelect.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
     this.makeMenuItems = this.makeMenuItems.bind(this);
   }
@@ -35,9 +35,10 @@ class AppBody extends React.Component {
     });
   }
 
-  handleClose() {
+  handleSelect(selectedLanguage) {
     this.setState({
       langDrawerOpen: false,
+      selectedLanguage,
     });
   }
 
@@ -45,10 +46,13 @@ class AppBody extends React.Component {
     return languages.map((lang, index) => {
       return (
         <MenuItem
-          key={`${lang} index`}
-          onTouchTap={this.handleClose}
+          checked={ lang.value === this.state.selectedLanguage }
+          key={`${lang.value} index`}
+          onTouchTap={() => this.handleSelect(lang.value)}
+          value={`${lang.value}`}
+
         >
-          {lang}
+          {lang.text}
         </MenuItem>
       );
     });
@@ -64,7 +68,7 @@ class AppBody extends React.Component {
         />
         <Drawer
           docked={false}
-          width={100}
+          width={250}
           open={this.state.langDrawerOpen}
           onRequestChange={(langDrawerOpen) => this.setState({langDrawerOpen})}
         >
