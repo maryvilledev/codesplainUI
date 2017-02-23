@@ -1,9 +1,8 @@
 import React from 'react';
 
-import MenuItem from 'material-ui/MenuItem';
-import SelectField from 'material-ui/SelectField';
 import { Card, CardText } from 'material-ui/Card';
 
+import LanguageSelector from './LanguageSelector';
 import SnippetArea from './SnippetArea';
 import TokenSelector from './TokenSelector';
 import TokenInfoPanel from './TokenInfoPanel';
@@ -22,40 +21,26 @@ const languages = [
   { text: 'Scala' , value: 'scala' },
 ];
 
+const tokenTypes = [
+  { text: "Function" },
+  { text: "For loop" },
+  { text: "If statement" },
+  { text: "Variable" },
+  { text: "Return statement" },
+];
+
 class AppBody extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      langDrawerOpen: false,
-      selectedLanguage: ''
+      selectedLanguage: '',
     };
     this.handleSelect = this.handleSelect.bind(this);
-    this.handleToggle = this.handleToggle.bind(this);
-    this.makeMenuItems = this.makeMenuItems.bind(this);
-  }
-
-  handleToggle() {
-    this.setState({
-      langDrawerOpen: !this.state.langDrawerOpen,
-    });
   }
 
   handleSelect(ev, index, value) {
     this.setState({
-      langDrawerOpen: false,
       selectedLanguage: value,
-    });
-  }
-
-  makeMenuItems() {
-    return languages.map((lang, index) => {
-      return (
-        <MenuItem
-          key={`${lang.value}-index`}
-          primaryText={lang.text}
-          value={lang.value}
-        />
-      );
     });
   }
 
@@ -67,15 +52,14 @@ class AppBody extends React.Component {
           <div className="col-md-3">
             <Card>
               <CardText>
-                <SelectField
-                  floatingLabelText="Language"
-                  value={this.state.selectedLanguage}
+                <LanguageSelector
+                  languages={languages}
                   onChange={this.handleSelect}
-                >
-                  <MenuItem value={null} primaryText="" />
-                  {this.makeMenuItems()}
-                </SelectField>
-                <TokenSelector />
+                  selected={this.state.selectedLanguage}
+                />
+                <TokenSelector
+                  tokenTypes={tokenTypes}
+                />
               </CardText>
             </Card>
           </div>
