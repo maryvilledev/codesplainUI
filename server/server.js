@@ -34,4 +34,4 @@ app.get('/api/snippets/:id', function(req, res) {
     })
 })
 
-app.listen(8080)
+app.listen(process.env.PORT)
