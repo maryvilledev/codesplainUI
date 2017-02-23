@@ -67,6 +67,7 @@ class AppBody extends React.Component {
 
     // Generate an AST for the current state of the code snippet
     const AST = parser(snippet);
+    console.log(AST);
     //... Can use this AST to update the snippet text area
   }
 
