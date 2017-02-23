@@ -33,7 +33,7 @@ class AppBody extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedLanguage: ''
+      selectedLanguage: '',
     };
     this.handleSelect = this.handleSelect.bind(this);
   }
@@ -59,7 +59,6 @@ class AppBody extends React.Component {
                 />
                 <TokenSelector
                   tokenTypes={tokenTypes}
-                  onClick={(ev) => { console.log(ev); }}
                 />
               </CardText>
             </Card>
