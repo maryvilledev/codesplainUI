@@ -64,7 +64,7 @@ var CodeSplain_parse_python3 =
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 52);
+/******/ 	return __webpack_require__(__webpack_require__.s = 54);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -434,7 +434,7 @@ Hash.prototype.update = function () {
             k = (k << 15) | (k >>> (32 - 15));
             k = k * 0x1B873593;
             this.count = this.count + 1;
-            hash = this.hash ^ k;
+            var hash = this.hash ^ k;
             hash = (hash << 13) | (hash >>> (32 - 13));
             hash = hash * 5 + 0xE6546B64;
             this.hash = hash;
@@ -1483,6 +1483,7 @@ exports.NoViableAltException = NoViableAltException;
 exports.LexerNoViableAltException = LexerNoViableAltException;
 exports.InputMismatchException = InputMismatchException;
 exports.FailedPredicateException = FailedPredicateException;
+exports.ParseCancellationException = ParseCancellationException;
 
 
 /***/ }),
@@ -1556,7 +1557,7 @@ function ParseTreeVisitor() {
 ParseTreeVisitor.prototype.visit = function(ctx) {
  	if (Array.isArray(ctx)) {
 		return ctx.map(function(child) {
-            return ctx.accept(this);
+            return child.accept(this);
         }, this);
 	} else {
 		return ctx.accept(this);
@@ -2463,7 +2464,7 @@ exports.getCachedPredictionContext = getCachedPredictionContext;
  * can be found in the LICENSE.txt file in the project root.
  */
 
-var LL1Analyzer = __webpack_require__(39).LL1Analyzer;
+var LL1Analyzer = __webpack_require__(40).LL1Analyzer;
 var IntervalSet = __webpack_require__(2).IntervalSet;
 
 function ATN(grammarType , maxTokenType) {
@@ -3759,17 +3760,19 @@ exports.PredPrediction = PredPrediction;
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
-exports.atn = __webpack_require__(45);
-exports.dfa = __webpack_require__(47);
-exports.tree = __webpack_require__(50);
-exports.error = __webpack_require__(49);
+exports.atn = __webpack_require__(46);
+exports.codepointat = __webpack_require__(30);
+exports.dfa = __webpack_require__(48);
+exports.fromcodepoint = __webpack_require__(31);
+exports.tree = __webpack_require__(51);
+exports.error = __webpack_require__(50);
 exports.Token = __webpack_require__(1).Token;
 exports.CommonToken = __webpack_require__(1).CommonToken;
 exports.InputStream = __webpack_require__(22).InputStream;
-exports.FileStream = __webpack_require__(38).FileStream;
-exports.CommonTokenStream = __webpack_require__(37).CommonTokenStream;
+exports.FileStream = __webpack_require__(39).FileStream;
+exports.CommonTokenStream = __webpack_require__(38).CommonTokenStream;
 exports.Lexer = __webpack_require__(13).Lexer;
-exports.Parser = __webpack_require__(40).Parser;
+exports.Parser = __webpack_require__(41).Parser;
 var pc = __webpack_require__(6);
 exports.PredictionContextCache = pc.PredictionContextCache;
 exports.ParserRuleContext = __webpack_require__(19).ParserRuleContext;
@@ -3793,7 +3796,7 @@ exports.Utils = __webpack_require__(0);
 
 var Token = __webpack_require__(1).Token;
 var Recognizer = __webpack_require__(23).Recognizer;
-var CommonTokenFactory = __webpack_require__(36).CommonTokenFactory;
+var CommonTokenFactory = __webpack_require__(37).CommonTokenFactory;
 var RecognitionException  = __webpack_require__(4).RecognitionException;
 var LexerNoViableAltException = __webpack_require__(4).LexerNoViableAltException;
 
@@ -3859,8 +3862,8 @@ Lexer.SKIP = -3;
 
 Lexer.DEFAULT_TOKEN_CHANNEL = Token.DEFAULT_CHANNEL;
 Lexer.HIDDEN = Token.HIDDEN_CHANNEL;
-Lexer.MIN_CHAR_VALUE = '\u0000';
-Lexer.MAX_CHAR_VALUE = '\uFFFE';
+Lexer.MIN_CHAR_VALUE = 0x0000;
+Lexer.MAX_CHAR_VALUE = 0x10FFFF;
 
 Lexer.prototype.reset = function() {
 	// wack Lexer state variables
@@ -4279,7 +4282,7 @@ RuleContext.prototype.accept = function(visitor) {
 
 //need to manage circular dependencies, so export now
 exports.RuleContext = RuleContext;
-var Trees = __webpack_require__(30).Trees;
+var Trees = __webpack_require__(32).Trees;
 
 
 // Print out a whole tree, not just a node, in LISP format
@@ -4681,7 +4684,7 @@ exports.ProxyErrorListener = ProxyErrorListener;
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./Python3Lexer.js": 33,
+	"./Python3Lexer.js": 35,
 	"./Python3Listener.js": 20,
 	"./Python3Parser.js": 21
 };
@@ -15207,21 +15210,38 @@ exports.Python3Parser = Python3Parser;
 //
 
 var Token = __webpack_require__(1).Token;
+__webpack_require__(30);
+__webpack_require__(31);
 
 // Vacuum all input from a string and then treat it like a buffer.
 
-function _loadString(stream) {
+function _loadString(stream, decodeToUnicodeCodePoints) {
 	stream._index = 0;
 	stream.data = [];
-	for (var i = 0; i < stream.strdata.length; i++) {
-		stream.data.push(stream.strdata.charCodeAt(i));
+	if (stream.decodeToUnicodeCodePoints) {
+		for (var i = 0; i < stream.strdata.length; ) {
+			var codePoint = stream.strdata.codePointAt(i);
+			stream.data.push(codePoint);
+			i += codePoint <= 0xFFFF ? 1 : 2;
+		}
+	} else {
+		for (var i = 0; i < stream.strdata.length; i++) {
+			var codeUnit = stream.strdata.charCodeAt(i);
+			stream.data.push(codeUnit);
+		}
 	}
 	stream._size = stream.data.length;
 }
 
-function InputStream(data) {
+// If decodeToUnicodeCodePoints is true, the input is treated
+// as a series of Unicode code points.
+//
+// Otherwise, the input is treated as a series of 16-bit UTF-16 code
+// units.
+function InputStream(data, decodeToUnicodeCodePoints) {
 	this.name = "<empty>";
 	this.strdata = data;
+	this.decodeToUnicodeCodePoints = decodeToUnicodeCodePoints || false;
 	_loadString(this);
 	return this;
 }
@@ -15300,7 +15320,15 @@ InputStream.prototype.getText = function(start, stop) {
 	if (start >= this._size) {
 		return "";
 	} else {
-		return this.strdata.slice(start, stop + 1);
+		if (this.decodeToUnicodeCodePoints) {
+			var result = "";
+			for (var i = start; i <= stop; i++) {
+				result += String.fromCodePoint(this.data[i]);
+			}
+			return result;
+		} else {
+			return this.strdata.slice(start, stop + 1);
+		}
 	}
 };
 
@@ -15338,7 +15366,7 @@ Recognizer.ruleIndexMapCache = {};
 
 
 Recognizer.prototype.checkVersion = function(toolVersion) {
-    var runtimeVersion = "4.6";
+    var runtimeVersion = "4.6.1";
     if (runtimeVersion!==toolVersion) {
         console.log("ANTLR runtime and generated code versions disagree: "+runtimeVersion+"!="+toolVersion);
     }
@@ -15506,7 +15534,7 @@ exports.ATNDeserializationOptions = ATNDeserializationOptions;
 
 var Token = __webpack_require__(1).Token;
 var ATN = __webpack_require__(7).ATN;
-var ATNType = __webpack_require__(41).ATNType;
+var ATNType = __webpack_require__(42).ATNType;
 var ATNStates = __webpack_require__(3);
 var ATNState = ATNStates.ATNState;
 var BasicState = ATNStates.BasicState;
@@ -17388,11 +17416,8 @@ DefaultErrorStrategy.prototype.sync = function(recognizer) {
     var s = recognizer._interp.atn.states[recognizer.state];
     var la = recognizer.getTokenStream().LA(1);
     // try cheaper subset first; might get lucky. seems to shave a wee bit off
-    if (la===Token.EOF || recognizer.atn.nextTokens(s).contains(la)) {
-        return;
-    }
-    // Return but don't end recovery. only do that upon valid token match
-    if(recognizer.isExpectedToken(la)) {
+    var nextTokens = recognizer.atn.nextTokens(s);
+    if (nextTokens.contains(Token.EPSILON) || nextTokens.contains(la)) {
         return;
     }
     switch (s.stateType) {
@@ -17925,6 +17950,134 @@ exports.DefaultErrorStrategy = DefaultErrorStrategy;
 
 /***/ }),
 /* 30 */
+/***/ (function(module, exports) {
+
+/*! https://mths.be/codepointat v0.2.0 by @mathias */
+if (!String.prototype.codePointAt) {
+	(function() {
+		'use strict'; // needed to support `apply`/`call` with `undefined`/`null`
+		var defineProperty = (function() {
+			// IE 8 only supports `Object.defineProperty` on DOM elements
+			try {
+				var object = {};
+				var $defineProperty = Object.defineProperty;
+				var result = $defineProperty(object, object, object) && $defineProperty;
+			} catch(error) {}
+			return result;
+		}());
+		var codePointAt = function(position) {
+			if (this == null) {
+				throw TypeError();
+			}
+			var string = String(this);
+			var size = string.length;
+			// `ToInteger`
+			var index = position ? Number(position) : 0;
+			if (index != index) { // better `isNaN`
+				index = 0;
+			}
+			// Account for out-of-bounds indices:
+			if (index < 0 || index >= size) {
+				return undefined;
+			}
+			// Get the first code unit
+			var first = string.charCodeAt(index);
+			var second;
+			if ( // check if it’s the start of a surrogate pair
+				first >= 0xD800 && first <= 0xDBFF && // high surrogate
+				size > index + 1 // there is a next code unit
+			) {
+				second = string.charCodeAt(index + 1);
+				if (second >= 0xDC00 && second <= 0xDFFF) { // low surrogate
+					// https://mathiasbynens.be/notes/javascript-encoding#surrogate-formulae
+					return (first - 0xD800) * 0x400 + second - 0xDC00 + 0x10000;
+				}
+			}
+			return first;
+		};
+		if (defineProperty) {
+			defineProperty(String.prototype, 'codePointAt', {
+				'value': codePointAt,
+				'configurable': true,
+				'writable': true
+			});
+		} else {
+			String.prototype.codePointAt = codePointAt;
+		}
+	}());
+}
+
+
+/***/ }),
+/* 31 */
+/***/ (function(module, exports) {
+
+/*! https://mths.be/fromcodepoint v0.2.1 by @mathias */
+if (!String.fromCodePoint) {
+	(function() {
+		var defineProperty = (function() {
+			// IE 8 only supports `Object.defineProperty` on DOM elements
+			try {
+				var object = {};
+				var $defineProperty = Object.defineProperty;
+				var result = $defineProperty(object, object, object) && $defineProperty;
+			} catch(error) {}
+			return result;
+		}());
+		var stringFromCharCode = String.fromCharCode;
+		var floor = Math.floor;
+		var fromCodePoint = function(_) {
+			var MAX_SIZE = 0x4000;
+			var codeUnits = [];
+			var highSurrogate;
+			var lowSurrogate;
+			var index = -1;
+			var length = arguments.length;
+			if (!length) {
+				return '';
+			}
+			var result = '';
+			while (++index < length) {
+				var codePoint = Number(arguments[index]);
+				if (
+					!isFinite(codePoint) || // `NaN`, `+Infinity`, or `-Infinity`
+					codePoint < 0 || // not a valid Unicode code point
+					codePoint > 0x10FFFF || // not a valid Unicode code point
+					floor(codePoint) != codePoint // not an integer
+				) {
+					throw RangeError('Invalid code point: ' + codePoint);
+				}
+				if (codePoint <= 0xFFFF) { // BMP code point
+					codeUnits.push(codePoint);
+				} else { // Astral code point; split in surrogate halves
+					// https://mathiasbynens.be/notes/javascript-encoding#surrogate-formulae
+					codePoint -= 0x10000;
+					highSurrogate = (codePoint >> 10) + 0xD800;
+					lowSurrogate = (codePoint % 0x400) + 0xDC00;
+					codeUnits.push(highSurrogate, lowSurrogate);
+				}
+				if (index + 1 == length || codeUnits.length > MAX_SIZE) {
+					result += stringFromCharCode.apply(null, codeUnits);
+					codeUnits.length = 0;
+				}
+			}
+			return result;
+		};
+		if (defineProperty) {
+			defineProperty(String, 'fromCodePoint', {
+				'value': fromCodePoint,
+				'configurable': true,
+				'writable': true
+			});
+		} else {
+			String.fromCodePoint = fromCodePoint;
+		}
+	}());
+}
+
+
+/***/ }),
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* Copyright (c) 2012-2016 The ANTLR Project. All rights reserved.
@@ -18069,7 +18222,7 @@ Trees.descendants = function(t) {
 exports.Trees = Trees;
 
 /***/ }),
-/* 31 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 let antlr = __webpack_require__(12);
@@ -18101,10 +18254,10 @@ module.exports = ErrorListener;
 
 
 /***/ }),
-/* 32 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
-let collapse = __webpack_require__(34).collapse;
+let collapse = __webpack_require__(52).collapse;
 
 module.exports = {
 	'language': 'Python3',
@@ -18201,7 +18354,7 @@ module.exports = {
 
 
 /***/ }),
-/* 33 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // Generated from Python3.g4 by ANTLR 4.6
@@ -19271,26 +19424,7 @@ exports.Python3Lexer = Python3Lexer;
 
 
 /***/ }),
-/* 34 */
-/***/ (function(module, exports) {
-
-module.exports = {};
-
-module.exports.collapse = function(ast) {
-    // If there is only one child, and it is exactly the same as this node, then eliminate this node.
-    if (ast.children.length === 1
-        && ast.begin === ast.children[0].begin
-        && ast.end === ast.children[0].end
-    ) {
-        return ast.children[0];
-    } else {
-        return ast;
-    }
-};
-
-
-/***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //
@@ -19529,6 +19663,7 @@ BufferedTokenStream.prototype.setTokenSource = function(tokenSource) {
 	this.tokenSource = tokenSource;
 	this.tokens = [];
 	this.index = -1;
+	this.fetchedEOF = false;
 };
 
 
@@ -19575,8 +19710,7 @@ BufferedTokenStream.prototype.getHiddenTokensToRight = function(tokenIndex,
 	if (tokenIndex < 0 || tokenIndex >= this.tokens.length) {
 		throw "" + tokenIndex + " not in 0.." + this.tokens.length - 1;
 	}
-	var nextOnChannel = this.nextTokenOnChannel(tokenIndex + 1,
-			Lexer.DEFAULT_TOKEN_CHANNEL);
+	var nextOnChannel = this.nextTokenOnChannel(tokenIndex + 1, Lexer.DEFAULT_TOKEN_CHANNEL);
 	var from_ = tokenIndex + 1;
 	// if none onchannel to right, nextOnChannel=-1 so set to = last token
 	var to = nextOnChannel === -1 ? this.tokens.length - 1 : nextOnChannel;
@@ -19595,8 +19729,7 @@ BufferedTokenStream.prototype.getHiddenTokensToLeft = function(tokenIndex,
 	if (tokenIndex < 0 || tokenIndex >= this.tokens.length) {
 		throw "" + tokenIndex + " not in 0.." + this.tokens.length - 1;
 	}
-	var prevOnChannel = this.previousTokenOnChannel(tokenIndex - 1,
-			Lexer.DEFAULT_TOKEN_CHANNEL);
+	var prevOnChannel = this.previousTokenOnChannel(tokenIndex - 1, Lexer.DEFAULT_TOKEN_CHANNEL);
 	if (prevOnChannel === tokenIndex - 1) {
 		return null;
 	}
@@ -19672,7 +19805,7 @@ exports.BufferedTokenStream = BufferedTokenStream;
 
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //
@@ -19747,7 +19880,7 @@ exports.CommonTokenFactory = CommonTokenFactory;
 
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //
@@ -19783,7 +19916,7 @@ exports.CommonTokenFactory = CommonTokenFactory;
 ///
 
 var Token = __webpack_require__(1).Token;
-var BufferedTokenStream = __webpack_require__(35).BufferedTokenStream;
+var BufferedTokenStream = __webpack_require__(36).BufferedTokenStream;
 
 function CommonTokenStream(lexer, channel) {
 	BufferedTokenStream.call(this, lexer);
@@ -19856,7 +19989,7 @@ CommonTokenStream.prototype.getNumberOfOnChannelTokens = function() {
 exports.CommonTokenStream = CommonTokenStream;
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //
@@ -19872,11 +20005,11 @@ exports.CommonTokenStream = CommonTokenStream;
 //
 var InputStream = __webpack_require__(22).InputStream;
 var isNodeJs = typeof window === 'undefined' && typeof importScripts === 'undefined';
-var fs = isNodeJs ? __webpack_require__(51) : null;
+var fs = isNodeJs ? __webpack_require__(53) : null;
 
-function FileStream(fileName) {
+function FileStream(fileName, decodeToUnicodeCodePoints) {
 	var data = fs.readFileSync(fileName, "utf8");
-	InputStream.call(this, data);
+	InputStream.call(this, data, decodeToUnicodeCodePoints);
 	this.fileName = fileName;
 	return this;
 }
@@ -19888,7 +20021,7 @@ exports.FileStream = FileStream;
 
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //
@@ -20093,7 +20226,7 @@ exports.LL1Analyzer = LL1Analyzer;
 
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* Copyright (c) 2012-2016 The ANTLR Project. All rights reserved.
@@ -20772,7 +20905,7 @@ Parser.prototype.setTrace = function(trace) {
 exports.Parser = Parser;
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports) {
 
 /* Copyright (c) 2012-2016 The ANTLR Project. All rights reserved.
@@ -20795,7 +20928,7 @@ exports.ATNType = ATNType;
 
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //
@@ -20833,7 +20966,7 @@ var SingletonPredictionContext = __webpack_require__(6).SingletonPredictionConte
 var RuleStopState = __webpack_require__(3).RuleStopState;
 var LexerATNConfig = __webpack_require__(15).LexerATNConfig;
 var Transition = __webpack_require__(8).Transition;
-var LexerActionExecutor = __webpack_require__(43).LexerActionExecutor;
+var LexerActionExecutor = __webpack_require__(44).LexerActionExecutor;
 var LexerNoViableAltException = __webpack_require__(4).LexerNoViableAltException;
 
 function resetSimState(sim) {
@@ -21126,7 +21259,7 @@ LexerATNSimulator.prototype.accept = function(input, lexerActionExecutor,
 };
 
 LexerATNSimulator.prototype.getReachableTarget = function(trans, t) {
-	if (trans.matches(t, 0, 0xFFFE)) {
+	if (trans.matches(t, 0, Lexer.MAX_CHAR_VALUE)) {
 		return trans.target;
 	} else {
 		return null;
@@ -21268,7 +21401,7 @@ LexerATNSimulator.prototype.getEpsilonTarget = function(input, config, trans,
 				trans.serializationType === Transition.RANGE ||
 				trans.serializationType === Transition.SET) {
 		if (treatEofAsEpsilon) {
-			if (trans.matches(Token.EOF, 0, 0xFFFF)) {
+			if (trans.matches(Token.EOF, 0, Lexer.MAX_CHAR_VALUE)) {
 				cfg = new LexerATNConfig( { state:trans.target }, config);
 			}
 		}
@@ -21437,7 +21570,7 @@ exports.LexerATNSimulator = LexerATNSimulator;
 
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //
@@ -21609,7 +21742,7 @@ exports.LexerActionExecutor = LexerActionExecutor;
 
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //
@@ -23058,7 +23191,7 @@ ParserATNSimulator.prototype.precedenceTransition = function(config, pt,  collec
                 c = new ATNConfig({state:pt.target}, config); // no pred context
             }
         } else {
-            newSemCtx = SemanticContext.andContext(config.semanticContext, pt.getPredicate());
+            var newSemCtx = SemanticContext.andContext(config.semanticContext, pt.getPredicate());
             c = new ATNConfig({state:pt.target, semanticContext:newSemCtx}, config);
         }
     } else {
@@ -23342,7 +23475,7 @@ ParserATNSimulator.prototype.reportAmbiguity = function(dfa, D, startIndex, stop
 exports.ParserATNSimulator = ParserATNSimulator;
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* Copyright (c) 2012-2016 The ANTLR Project. All rights reserved.
@@ -23352,13 +23485,13 @@ exports.ParserATNSimulator = ParserATNSimulator;
 
 exports.ATN = __webpack_require__(7).ATN;
 exports.ATNDeserializer = __webpack_require__(25).ATNDeserializer;
-exports.LexerATNSimulator = __webpack_require__(42).LexerATNSimulator;
-exports.ParserATNSimulator = __webpack_require__(44).ParserATNSimulator;
+exports.LexerATNSimulator = __webpack_require__(43).LexerATNSimulator;
+exports.ParserATNSimulator = __webpack_require__(45).ParserATNSimulator;
 exports.PredictionMode = __webpack_require__(28).PredictionMode;
 
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //
@@ -23395,7 +23528,7 @@ function DFA(atnStartState, decision) {
     {
         if (atnStartState.isPrecedenceDecision) {
             this.precedenceDfa = true;
-            precedenceState = new DFAState(null, new ATNConfigSet());
+            var precedenceState = new DFAState(null, new ATNConfigSet());
             precedenceState.edges = [];
             precedenceState.isAcceptState = false;
             precedenceState.requiresFullContext = false;
@@ -23517,7 +23650,7 @@ exports.DFA = DFA;
 
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* Copyright (c) 2012-2016 The ANTLR Project. All rights reserved.
@@ -23525,14 +23658,14 @@ exports.DFA = DFA;
  * can be found in the LICENSE.txt file in the project root.
  */
 
-exports.DFA = __webpack_require__(46).DFA;
+exports.DFA = __webpack_require__(47).DFA;
 exports.DFASerializer = __webpack_require__(16).DFASerializer;
 exports.LexerDFASerializer = __webpack_require__(16).LexerDFASerializer;
 exports.PredPrediction = __webpack_require__(11).PredPrediction;
 
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //
@@ -23648,7 +23781,7 @@ DiagnosticErrorListener.prototype.getConflictingAlts = function(reportedAlts, co
 exports.DiagnosticErrorListener = DiagnosticErrorListener;
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* Copyright (c) 2012-2016 The ANTLR Project. All rights reserved.
@@ -23661,13 +23794,13 @@ exports.NoViableAltException = __webpack_require__(4).NoViableAltException;
 exports.LexerNoViableAltException = __webpack_require__(4).LexerNoViableAltException;
 exports.InputMismatchException = __webpack_require__(4).InputMismatchException;
 exports.FailedPredicateException = __webpack_require__(4).FailedPredicateException;
-exports.DiagnosticErrorListener = __webpack_require__(48).DiagnosticErrorListener;
+exports.DiagnosticErrorListener = __webpack_require__(49).DiagnosticErrorListener;
 exports.BailErrorStrategy = __webpack_require__(29).BailErrorStrategy;
 exports.ErrorListener = __webpack_require__(17).ErrorListener;
 
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* Copyright (c) 2012-2016 The ANTLR Project. All rights reserved.
@@ -23676,7 +23809,7 @@ exports.ErrorListener = __webpack_require__(17).ErrorListener;
  */
 
 var Tree = __webpack_require__(5);
-exports.Trees = __webpack_require__(30).Trees;
+exports.Trees = __webpack_require__(32).Trees;
 exports.RuleNode = Tree.RuleNode;
 exports.ParseTreeListener = Tree.ParseTreeListener;
 exports.ParseTreeVisitor = Tree.ParseTreeVisitor;
@@ -23684,26 +23817,45 @@ exports.ParseTreeWalker = Tree.ParseTreeWalker;
 
 
 /***/ }),
-/* 51 */
+/* 52 */
+/***/ (function(module, exports) {
+
+module.exports = {};
+
+module.exports.collapse = function(ast) {
+    // If there is only one child, and it is exactly the same as this node, then eliminate this node.
+    if (ast.children.length === 1
+        && ast.begin === ast.children[0].begin
+        && ast.end === ast.children[0].end
+    ) {
+        return ast.children[0];
+    } else {
+        return ast;
+    }
+};
+
+
+/***/ }),
+/* 53 */
 /***/ (function(module, exports) {
 
 module.exports = fs;
 
 /***/ }),
-/* 52 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 let antlr = __webpack_require__(12);
 
 // LANGUAGE_CONFIG_PATH and LANGUAGE_CACHE_DIR are defined in webpack.config.js
-let lang_config = __webpack_require__(32);
+let lang_config = __webpack_require__(34);
 
 let lexer_classname = lang_config.language + 'Lexer';
 let parser_classname = lang_config.language + 'Parser';
 
 let LexerClass = __webpack_require__(18)("./" + lexer_classname + '.js')[lexer_classname];
 let ParserClass = __webpack_require__(18)("./" + parser_classname + '.js')[parser_classname];
-let ErrorListener = __webpack_require__(31);
+let ErrorListener = __webpack_require__(33);
 
 module.exports = function(input) {
     let chars = new antlr.InputStream(input);
