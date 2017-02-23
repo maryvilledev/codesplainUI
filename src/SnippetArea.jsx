@@ -16,6 +16,9 @@ const SnippetArea = () => (
       multiLine={true}
       name="snippetArea"
       rows={30}
+      textareaStyle={{
+        'fontFamily': 'monospace',
+      }}
     />
     </CardText>
   </Card>
