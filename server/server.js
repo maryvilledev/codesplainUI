@@ -5,7 +5,7 @@ var uuid = require('uuid/v4')
 var bodyParser = require('body-parser')
 
 var app = express()
-var redis = Redis(6379, process.env.REDIS_URL || "localhost")
+var redis = Redis(process.env.REDIS_URL || "redis://localhost:6379")
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
