@@ -20,6 +20,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "serve": "node server"
+    "serve": "node server",
+    "postinstall": "react-scripts build"
   }
 }
