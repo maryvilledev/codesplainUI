@@ -1,5 +1,10 @@
-import express from 'express'
-import Redis from 'ioredis'
+var express = require('express')
+var Redis = require('ioredis')
+var path = require('path')
 
-app = express()
-redis = Redis(6379, process.env.REDIS_URL || "localhost")
+var app = express()
+var redis = Redis(6379, process.env.REDIS_URL || "localhost")
+
+app.use('/', express.static(path.resolve(__dirname, "..", 'build')));
+
+app.listen(8080)
