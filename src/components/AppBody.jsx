@@ -9,17 +9,8 @@ import TokenSelector from './TokenSelector';
 import TokenInfoPanel from './TokenInfoPanel';
 
 const languages = [
-  { text: 'C', value: 'c' },
-  { text: 'Clojure', value: 'clojure' },
-  { text: 'COBOL' , value: 'cobol' },
-  { text: 'FORTRAN' , value: 'fortran' },
-  { text: 'Go' , value: 'go' },
   { text: 'Java' , value: 'java' },
-  { text: 'Javascript' , value: 'javascript' },
-  { text: 'Perl' , value: 'perl' },
-  { text: 'Python' , value: 'python' },
-  { text: 'Ruby' , value: 'ruby' },
-  { text: 'Scala' , value: 'scala' },
+  { text: 'Python 3' , value: 'python3' },
 ];
 
 class AppBody extends React.Component {
