@@ -8,19 +8,9 @@ import TokenSelector from './TokenSelector';
 import TokenInfoPanel from './TokenInfoPanel';
 
 const languages = [
-  { text: 'C', value: 'c' },
-  { text: 'Clojure', value: 'clojure' },
-  { text: 'COBOL' , value: 'cobol' },
-  { text: 'FORTRAN' , value: 'fortran' },
-  { text: 'Go' , value: 'go' },
-  { text: 'Java' , value: 'java' },
-  { text: 'Javascript' , value: 'javascript' },
-  { text: 'Perl' , value: 'perl' },
   { text: 'Python' , value: 'python' },
-  { text: 'Ruby' , value: 'ruby' },
-  { text: 'Scala' , value: 'scala' },
 ];
-
+//Only python is supported, will add languages as support range grows
 const tokenTypes = [
   { text: "Function" },
   { text: "For loop" },
