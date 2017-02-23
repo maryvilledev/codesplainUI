@@ -8,7 +8,7 @@ import AppBar from 'material-ui/AppBar';
 const CodesplainAppBar = () => (
   <AppBar
     showMenuIconButton={false}
-    title="codesplain"
+    title="Codesplain"
   />
 );
 

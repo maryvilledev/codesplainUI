@@ -1,11 +1,12 @@
 import React from 'react';
 
-import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
-import RaisedButton from 'material-ui/RaisedButton';
 import SelectField from 'material-ui/SelectField';
+import { Card, CardText } from 'material-ui/Card';
+
 import SnippetArea from './SnippetArea';
 import TokenSelector from './TokenSelector';
+import TokenInfoPanel from './TokenInfoPanel';
 
 const languages = [
   { text: 'C', value: 'c' },
@@ -63,19 +64,26 @@ class AppBody extends React.Component {
     return (
       <div className="container-fluid">
         <div className="row">
-          <div className="col-md-4">
-            <SelectField
-              floatingLabelText="Language"
-              value={this.state.selectedLanguage}
-              onChange={this.handleSelect}
-            >
-              <MenuItem value={null} primaryText="" />
-              {this.makeMenuItems()}
-            </SelectField>
-            <TokenSelector />
+          <div className="col-md-3">
+            <Card>
+              <CardText>
+                <SelectField
+                  floatingLabelText="Language"
+                  value={this.state.selectedLanguage}
+                  onChange={this.handleSelect}
+                >
+                  <MenuItem value={null} primaryText="" />
+                  {this.makeMenuItems()}
+                </SelectField>
+                <TokenSelector />
+              </CardText>
+            </Card>
           </div>
-          <div className="col-md-8">
+          <div className="col-md-5">
             <SnippetArea />
+          </div>
+          <div className="col-md-4">
+            <TokenInfoPanel />
           </div>
         </div>
       </div>
