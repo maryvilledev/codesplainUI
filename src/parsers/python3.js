@@ -1,4 +1,6 @@
-var CodeSplain_parse_python3 =
+/* eslint-disable */
+
+export const parsePython3 =
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -981,6 +983,238 @@ exports.IntervalSet = IntervalSet;
 
 /***/ }),
 /* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* Copyright (c) 2012-2016 The ANTLR Project. All rights reserved.
+ * Use of this file is governed by the BSD 3-clause license that
+ * can be found in the LICENSE.txt file in the project root.
+ */
+///
+
+// The basic notion of a tree has a parent, a payload, and a list of children.
+//  It is the most abstract interface for all the trees used by ANTLR.
+///
+
+var Token = __webpack_require__(1).Token;
+var Interval = __webpack_require__(2).Interval;
+var INVALID_INTERVAL = new Interval(-1, -2);
+var Utils = __webpack_require__(0);
+
+
+function Tree() {
+	return this;
+}
+
+function SyntaxTree() {
+	Tree.call(this);
+	return this;
+}
+
+SyntaxTree.prototype = Object.create(Tree.prototype);
+SyntaxTree.prototype.constructor = SyntaxTree;
+
+function ParseTree() {
+	SyntaxTree.call(this);
+	return this;
+}
+
+ParseTree.prototype = Object.create(SyntaxTree.prototype);
+ParseTree.prototype.constructor = ParseTree;
+
+function RuleNode() {
+	ParseTree.call(this);
+	return this;
+}
+
+RuleNode.prototype = Object.create(ParseTree.prototype);
+RuleNode.prototype.constructor = RuleNode;
+
+function TerminalNode() {
+	ParseTree.call(this);
+	return this;
+}
+
+TerminalNode.prototype = Object.create(ParseTree.prototype);
+TerminalNode.prototype.constructor = TerminalNode;
+
+function ErrorNode() {
+	TerminalNode.call(this);
+	return this;
+}
+
+ErrorNode.prototype = Object.create(TerminalNode.prototype);
+ErrorNode.prototype.constructor = ErrorNode;
+
+function ParseTreeVisitor() {
+	return this;
+}
+
+ParseTreeVisitor.prototype.visit = function(ctx) {
+ 	if (Array.isArray(ctx)) {
+		return ctx.map(function(child) {
+            return child.accept(this);
+        }, this);
+	} else {
+		return ctx.accept(this);
+	}
+};
+
+ParseTreeVisitor.prototype.visitChildren = function(ctx) {
+  return this.visit(ctx.children);
+}
+
+ParseTreeVisitor.prototype.visitTerminal = function(node) {
+};
+
+ParseTreeVisitor.prototype.visitErrorNode = function(node) {
+};
+
+
+function ParseTreeListener() {
+	return this;
+}
+
+ParseTreeListener.prototype.visitTerminal = function(node) {
+};
+
+ParseTreeListener.prototype.visitErrorNode = function(node) {
+};
+
+ParseTreeListener.prototype.enterEveryRule = function(node) {
+};
+
+ParseTreeListener.prototype.exitEveryRule = function(node) {
+};
+
+function TerminalNodeImpl(symbol) {
+	TerminalNode.call(this);
+	this.parentCtx = null;
+	this.symbol = symbol;
+	return this;
+}
+
+TerminalNodeImpl.prototype = Object.create(TerminalNode.prototype);
+TerminalNodeImpl.prototype.constructor = TerminalNodeImpl;
+
+TerminalNodeImpl.prototype.getChild = function(i) {
+	return null;
+};
+
+TerminalNodeImpl.prototype.getSymbol = function() {
+	return this.symbol;
+};
+
+TerminalNodeImpl.prototype.getParent = function() {
+	return this.parentCtx;
+};
+
+TerminalNodeImpl.prototype.getPayload = function() {
+	return this.symbol;
+};
+
+TerminalNodeImpl.prototype.getSourceInterval = function() {
+	if (this.symbol === null) {
+		return INVALID_INTERVAL;
+	}
+	var tokenIndex = this.symbol.tokenIndex;
+	return new Interval(tokenIndex, tokenIndex);
+};
+
+TerminalNodeImpl.prototype.getChildCount = function() {
+	return 0;
+};
+
+TerminalNodeImpl.prototype.accept = function(visitor) {
+	return visitor.visitTerminal(this);
+};
+
+TerminalNodeImpl.prototype.getText = function() {
+	return this.symbol.text;
+};
+
+TerminalNodeImpl.prototype.toString = function() {
+	if (this.symbol.type === Token.EOF) {
+		return "<EOF>";
+	} else {
+		return this.symbol.text;
+	}
+};
+
+// Represents a token that was consumed during resynchronization
+// rather than during a valid match operation. For example,
+// we will create this kind of a node during single token insertion
+// and deletion as well as during "consume until error recovery set"
+// upon no viable alternative exceptions.
+
+function ErrorNodeImpl(token) {
+	TerminalNodeImpl.call(this, token);
+	return this;
+}
+
+ErrorNodeImpl.prototype = Object.create(TerminalNodeImpl.prototype);
+ErrorNodeImpl.prototype.constructor = ErrorNodeImpl;
+
+ErrorNodeImpl.prototype.isErrorNode = function() {
+	return true;
+};
+
+ErrorNodeImpl.prototype.accept = function(visitor) {
+	return visitor.visitErrorNode(this);
+};
+
+function ParseTreeWalker() {
+	return this;
+}
+
+ParseTreeWalker.prototype.walk = function(listener, t) {
+	var errorNode = t instanceof ErrorNode ||
+			(t.isErrorNode !== undefined && t.isErrorNode());
+	if (errorNode) {
+		listener.visitErrorNode(t);
+	} else if (t instanceof TerminalNode) {
+		listener.visitTerminal(t);
+	} else {
+		this.enterRule(listener, t);
+		for (var i = 0; i < t.getChildCount(); i++) {
+			var child = t.getChild(i);
+			this.walk(listener, child);
+		}
+		this.exitRule(listener, t);
+	}
+};
+//
+// The discovery of a rule node, involves sending two events: the generic
+// {@link ParseTreeListener//enterEveryRule} and a
+// {@link RuleContext}-specific event. First we trigger the generic and then
+// the rule specific. We to them in reverse order upon finishing the node.
+//
+ParseTreeWalker.prototype.enterRule = function(listener, r) {
+	var ctx = r.getRuleContext();
+	listener.enterEveryRule(ctx);
+	ctx.enterRule(listener);
+};
+
+ParseTreeWalker.prototype.exitRule = function(listener, r) {
+	var ctx = r.getRuleContext();
+	ctx.exitRule(listener);
+	listener.exitEveryRule(ctx);
+};
+
+ParseTreeWalker.DEFAULT = new ParseTreeWalker();
+
+exports.RuleNode = RuleNode;
+exports.ErrorNode = ErrorNode;
+exports.TerminalNode = TerminalNode;
+exports.ErrorNodeImpl = ErrorNodeImpl;
+exports.TerminalNodeImpl = TerminalNodeImpl;
+exports.ParseTreeListener = ParseTreeListener;
+exports.ParseTreeVisitor = ParseTreeVisitor;
+exports.ParseTreeWalker = ParseTreeWalker;
+exports.INVALID_INTERVAL = INVALID_INTERVAL;
+
+
+/***/ }),
+/* 4 */
 /***/ (function(module, exports) {
 
 //
@@ -1312,7 +1546,7 @@ exports.BasicBlockStartState = BasicBlockStartState;
 
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* Copyright (c) 2012-2016 The ANTLR Project. All rights reserved.
@@ -1484,238 +1718,6 @@ exports.LexerNoViableAltException = LexerNoViableAltException;
 exports.InputMismatchException = InputMismatchException;
 exports.FailedPredicateException = FailedPredicateException;
 exports.ParseCancellationException = ParseCancellationException;
-
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* Copyright (c) 2012-2016 The ANTLR Project. All rights reserved.
- * Use of this file is governed by the BSD 3-clause license that
- * can be found in the LICENSE.txt file in the project root.
- */
-///
-
-// The basic notion of a tree has a parent, a payload, and a list of children.
-//  It is the most abstract interface for all the trees used by ANTLR.
-///
-
-var Token = __webpack_require__(1).Token;
-var Interval = __webpack_require__(2).Interval;
-var INVALID_INTERVAL = new Interval(-1, -2);
-var Utils = __webpack_require__(0);
-
-
-function Tree() {
-	return this;
-}
-
-function SyntaxTree() {
-	Tree.call(this);
-	return this;
-}
-
-SyntaxTree.prototype = Object.create(Tree.prototype);
-SyntaxTree.prototype.constructor = SyntaxTree;
-
-function ParseTree() {
-	SyntaxTree.call(this);
-	return this;
-}
-
-ParseTree.prototype = Object.create(SyntaxTree.prototype);
-ParseTree.prototype.constructor = ParseTree;
-
-function RuleNode() {
-	ParseTree.call(this);
-	return this;
-}
-
-RuleNode.prototype = Object.create(ParseTree.prototype);
-RuleNode.prototype.constructor = RuleNode;
-
-function TerminalNode() {
-	ParseTree.call(this);
-	return this;
-}
-
-TerminalNode.prototype = Object.create(ParseTree.prototype);
-TerminalNode.prototype.constructor = TerminalNode;
-
-function ErrorNode() {
-	TerminalNode.call(this);
-	return this;
-}
-
-ErrorNode.prototype = Object.create(TerminalNode.prototype);
-ErrorNode.prototype.constructor = ErrorNode;
-
-function ParseTreeVisitor() {
-	return this;
-}
-
-ParseTreeVisitor.prototype.visit = function(ctx) {
- 	if (Array.isArray(ctx)) {
-		return ctx.map(function(child) {
-            return child.accept(this);
-        }, this);
-	} else {
-		return ctx.accept(this);
-	}
-};
-
-ParseTreeVisitor.prototype.visitChildren = function(ctx) {
-  return this.visit(ctx.children);
-}
-
-ParseTreeVisitor.prototype.visitTerminal = function(node) {
-};
-
-ParseTreeVisitor.prototype.visitErrorNode = function(node) {
-};
-
-
-function ParseTreeListener() {
-	return this;
-}
-
-ParseTreeListener.prototype.visitTerminal = function(node) {
-};
-
-ParseTreeListener.prototype.visitErrorNode = function(node) {
-};
-
-ParseTreeListener.prototype.enterEveryRule = function(node) {
-};
-
-ParseTreeListener.prototype.exitEveryRule = function(node) {
-};
-
-function TerminalNodeImpl(symbol) {
-	TerminalNode.call(this);
-	this.parentCtx = null;
-	this.symbol = symbol;
-	return this;
-}
-
-TerminalNodeImpl.prototype = Object.create(TerminalNode.prototype);
-TerminalNodeImpl.prototype.constructor = TerminalNodeImpl;
-
-TerminalNodeImpl.prototype.getChild = function(i) {
-	return null;
-};
-
-TerminalNodeImpl.prototype.getSymbol = function() {
-	return this.symbol;
-};
-
-TerminalNodeImpl.prototype.getParent = function() {
-	return this.parentCtx;
-};
-
-TerminalNodeImpl.prototype.getPayload = function() {
-	return this.symbol;
-};
-
-TerminalNodeImpl.prototype.getSourceInterval = function() {
-	if (this.symbol === null) {
-		return INVALID_INTERVAL;
-	}
-	var tokenIndex = this.symbol.tokenIndex;
-	return new Interval(tokenIndex, tokenIndex);
-};
-
-TerminalNodeImpl.prototype.getChildCount = function() {
-	return 0;
-};
-
-TerminalNodeImpl.prototype.accept = function(visitor) {
-	return visitor.visitTerminal(this);
-};
-
-TerminalNodeImpl.prototype.getText = function() {
-	return this.symbol.text;
-};
-
-TerminalNodeImpl.prototype.toString = function() {
-	if (this.symbol.type === Token.EOF) {
-		return "<EOF>";
-	} else {
-		return this.symbol.text;
-	}
-};
-
-// Represents a token that was consumed during resynchronization
-// rather than during a valid match operation. For example,
-// we will create this kind of a node during single token insertion
-// and deletion as well as during "consume until error recovery set"
-// upon no viable alternative exceptions.
-
-function ErrorNodeImpl(token) {
-	TerminalNodeImpl.call(this, token);
-	return this;
-}
-
-ErrorNodeImpl.prototype = Object.create(TerminalNodeImpl.prototype);
-ErrorNodeImpl.prototype.constructor = ErrorNodeImpl;
-
-ErrorNodeImpl.prototype.isErrorNode = function() {
-	return true;
-};
-
-ErrorNodeImpl.prototype.accept = function(visitor) {
-	return visitor.visitErrorNode(this);
-};
-
-function ParseTreeWalker() {
-	return this;
-}
-
-ParseTreeWalker.prototype.walk = function(listener, t) {
-	var errorNode = t instanceof ErrorNode ||
-			(t.isErrorNode !== undefined && t.isErrorNode());
-	if (errorNode) {
-		listener.visitErrorNode(t);
-	} else if (t instanceof TerminalNode) {
-		listener.visitTerminal(t);
-	} else {
-		this.enterRule(listener, t);
-		for (var i = 0; i < t.getChildCount(); i++) {
-			var child = t.getChild(i);
-			this.walk(listener, child);
-		}
-		this.exitRule(listener, t);
-	}
-};
-//
-// The discovery of a rule node, involves sending two events: the generic
-// {@link ParseTreeListener//enterEveryRule} and a
-// {@link RuleContext}-specific event. First we trigger the generic and then
-// the rule specific. We to them in reverse order upon finishing the node.
-//
-ParseTreeWalker.prototype.enterRule = function(listener, r) {
-	var ctx = r.getRuleContext();
-	listener.enterEveryRule(ctx);
-	ctx.enterRule(listener);
-};
-
-ParseTreeWalker.prototype.exitRule = function(listener, r) {
-	var ctx = r.getRuleContext();
-	ctx.exitRule(listener);
-	listener.exitEveryRule(ctx);
-};
-
-ParseTreeWalker.DEFAULT = new ParseTreeWalker();
-
-exports.RuleNode = RuleNode;
-exports.ErrorNode = ErrorNode;
-exports.TerminalNode = TerminalNode;
-exports.ErrorNodeImpl = ErrorNodeImpl;
-exports.TerminalNodeImpl = TerminalNodeImpl;
-exports.ParseTreeListener = ParseTreeListener;
-exports.ParseTreeVisitor = ParseTreeVisitor;
-exports.ParseTreeWalker = ParseTreeWalker;
-exports.INVALID_INTERVAL = INVALID_INTERVAL;
 
 
 /***/ }),
@@ -3797,8 +3799,8 @@ exports.Utils = __webpack_require__(0);
 var Token = __webpack_require__(1).Token;
 var Recognizer = __webpack_require__(23).Recognizer;
 var CommonTokenFactory = __webpack_require__(37).CommonTokenFactory;
-var RecognitionException  = __webpack_require__(4).RecognitionException;
-var LexerNoViableAltException = __webpack_require__(4).LexerNoViableAltException;
+var RecognitionException  = __webpack_require__(5).RecognitionException;
+var LexerNoViableAltException = __webpack_require__(5).LexerNoViableAltException;
 
 function TokenSource() {
 	return this;
@@ -4188,8 +4190,8 @@ exports.Lexer = Lexer;
 //  @see ParserRuleContext
 ///
 
-var RuleNode = __webpack_require__(5).RuleNode;
-var INVALID_INTERVAL = __webpack_require__(5).INVALID_INTERVAL;
+var RuleNode = __webpack_require__(3).RuleNode;
+var INVALID_INTERVAL = __webpack_require__(3).INVALID_INTERVAL;
 var INVALID_ALT_NUMBER = __webpack_require__(7).INVALID_ALT_NUMBER;
 
 function RuleContext(parent, invokingState) {
@@ -4339,7 +4341,7 @@ RuleContext.prototype.toString = function(ruleNames, stop) {
 //  an ATN state.
 ///
 
-var DecisionState = __webpack_require__(3).DecisionState;
+var DecisionState = __webpack_require__(4).DecisionState;
 var SemanticContext = __webpack_require__(10).SemanticContext;
 var Hash = __webpack_require__(0).Hash;
 
@@ -4738,7 +4740,7 @@ webpackContext.id = 18;
 //  satisfy the superclass interface.
 
 var RuleContext = __webpack_require__(14).RuleContext;
-var Tree = __webpack_require__(5);
+var Tree = __webpack_require__(3);
 var INVALID_INTERVAL = Tree.INVALID_INTERVAL;
 var TerminalNode = Tree.TerminalNode;
 var TerminalNodeImpl = Tree.TerminalNodeImpl;
@@ -15535,7 +15537,7 @@ exports.ATNDeserializationOptions = ATNDeserializationOptions;
 var Token = __webpack_require__(1).Token;
 var ATN = __webpack_require__(7).ATN;
 var ATNType = __webpack_require__(42).ATNType;
-var ATNStates = __webpack_require__(3);
+var ATNStates = __webpack_require__(4);
 var ATNState = ATNStates.ATNState;
 var BasicState = ATNStates.BasicState;
 var DecisionState = ATNStates.DecisionState;
@@ -16642,7 +16644,7 @@ var Map = __webpack_require__(0).Map;
 var BitSet = __webpack_require__(0).BitSet;
 var AltDict = __webpack_require__(0).AltDict;
 var ATN = __webpack_require__(7).ATN;
-var RuleStopState = __webpack_require__(3).RuleStopState;
+var RuleStopState = __webpack_require__(4).RuleStopState;
 var ATNConfigSet = __webpack_require__(9).ATNConfigSet;
 var ATNConfig = __webpack_require__(15).ATNConfig;
 var SemanticContext = __webpack_require__(10).SemanticContext;
@@ -17199,12 +17201,12 @@ exports.PredictionMode = PredictionMode;
 //
 
 var Token = __webpack_require__(1).Token;
-var Errors = __webpack_require__(4);
+var Errors = __webpack_require__(5);
 var NoViableAltException = Errors.NoViableAltException;
 var InputMismatchException = Errors.InputMismatchException;
 var FailedPredicateException = Errors.FailedPredicateException;
 var ParseCancellationException = Errors.ParseCancellationException;
-var ATNState = __webpack_require__(3).ATNState;
+var ATNState = __webpack_require__(4).ATNState;
 var Interval = __webpack_require__(2).Interval;
 var IntervalSet = __webpack_require__(2).IntervalSet;
 
@@ -18087,9 +18089,9 @@ if (!String.fromCodePoint) {
 
 var Utils = __webpack_require__(0);
 var Token = __webpack_require__(1).Token;
-var RuleNode = __webpack_require__(5).RuleNode;
-var ErrorNode = __webpack_require__(5).ErrorNode;
-var TerminalNode = __webpack_require__(5).TerminalNode;
+var RuleNode = __webpack_require__(3).RuleNode;
+var ErrorNode = __webpack_require__(3).ErrorNode;
+var TerminalNode = __webpack_require__(3).TerminalNode;
 var ParserRuleContext = __webpack_require__(19).ParserRuleContext;
 var RuleContext = __webpack_require__(14).RuleContext;
 var INVALID_ALT_NUMBER = __webpack_require__(7).INVALID_ALT_NUMBER;
@@ -20037,7 +20039,7 @@ var Token = __webpack_require__(1).Token;
 var ATNConfig = __webpack_require__(15).ATNConfig;
 var Interval = __webpack_require__(2).Interval;
 var IntervalSet = __webpack_require__(2).IntervalSet;
-var RuleStopState = __webpack_require__(3).RuleStopState;
+var RuleStopState = __webpack_require__(4).RuleStopState;
 var RuleTransition = __webpack_require__(8).RuleTransition;
 var NotSetTransition = __webpack_require__(8).NotSetTransition;
 var WildcardTransition = __webpack_require__(8).WildcardTransition;
@@ -20235,13 +20237,13 @@ exports.LL1Analyzer = LL1Analyzer;
  */
 
 var Token = __webpack_require__(1).Token;
-var ParseTreeListener = __webpack_require__(5).ParseTreeListener;
+var ParseTreeListener = __webpack_require__(3).ParseTreeListener;
 var Recognizer = __webpack_require__(23).Recognizer;
 var DefaultErrorStrategy = __webpack_require__(29).DefaultErrorStrategy;
 var ATNDeserializer = __webpack_require__(25).ATNDeserializer;
 var ATNDeserializationOptions = __webpack_require__(24).ATNDeserializationOptions;
-var TerminalNode = __webpack_require__(5).TerminalNode;
-var ErrorNode = __webpack_require__(5).ErrorNode;
+var TerminalNode = __webpack_require__(3).TerminalNode;
+var ErrorNode = __webpack_require__(3).ErrorNode;
 
 function TraceListener(parser) {
 	ParseTreeListener.call(this);
@@ -20963,11 +20965,11 @@ var ATNConfigSet = __webpack_require__(9).ATNConfigSet;
 var OrderedATNConfigSet = __webpack_require__(9).OrderedATNConfigSet;
 var PredictionContext = __webpack_require__(6).PredictionContext;
 var SingletonPredictionContext = __webpack_require__(6).SingletonPredictionContext;
-var RuleStopState = __webpack_require__(3).RuleStopState;
+var RuleStopState = __webpack_require__(4).RuleStopState;
 var LexerATNConfig = __webpack_require__(15).LexerATNConfig;
 var Transition = __webpack_require__(8).Transition;
 var LexerActionExecutor = __webpack_require__(44).LexerActionExecutor;
-var LexerNoViableAltException = __webpack_require__(4).LexerNoViableAltException;
+var LexerNoViableAltException = __webpack_require__(5).LexerNoViableAltException;
 
 function resetSimState(sim) {
 	sim.index = -1;
@@ -21985,7 +21987,7 @@ var Set = Utils.Set;
 var BitSet = Utils.BitSet;
 var DoubleDict = Utils.DoubleDict;
 var ATN = __webpack_require__(7).ATN;
-var ATNState = __webpack_require__(3).ATNState;
+var ATNState = __webpack_require__(4).ATNState;
 var ATNConfig = __webpack_require__(15).ATNConfig;
 var ATNConfigSet = __webpack_require__(9).ATNConfigSet;
 var Token = __webpack_require__(1).Token;
@@ -21996,8 +21998,8 @@ var PredictionMode = __webpack_require__(28).PredictionMode;
 var RuleContext = __webpack_require__(14).RuleContext;
 var ParserRuleContext = __webpack_require__(19).ParserRuleContext;
 var SemanticContext = __webpack_require__(10).SemanticContext;
-var StarLoopEntryState = __webpack_require__(3).StarLoopEntryState;
-var RuleStopState = __webpack_require__(3).RuleStopState;
+var StarLoopEntryState = __webpack_require__(4).StarLoopEntryState;
+var RuleStopState = __webpack_require__(4).RuleStopState;
 var PredictionContext = __webpack_require__(6).PredictionContext;
 var Interval = __webpack_require__(2).Interval;
 var Transitions = __webpack_require__(8);
@@ -22006,7 +22008,7 @@ var SetTransition = Transitions.SetTransition;
 var NotSetTransition = Transitions.NotSetTransition;
 var RuleTransition = Transitions.RuleTransition;
 var ActionTransition = Transitions.ActionTransition;
-var NoViableAltException = __webpack_require__(4).NoViableAltException;
+var NoViableAltException = __webpack_require__(5).NoViableAltException;
 
 var SingletonPredictionContext = __webpack_require__(6).SingletonPredictionContext;
 var predictionContextFromRuleContext = __webpack_require__(6).predictionContextFromRuleContext;
@@ -23502,7 +23504,7 @@ exports.PredictionMode = __webpack_require__(28).PredictionMode;
 
 var Set = __webpack_require__(0).Set;
 var DFAState = __webpack_require__(11).DFAState;
-var StarLoopEntryState = __webpack_require__(3).StarLoopEntryState;
+var StarLoopEntryState = __webpack_require__(4).StarLoopEntryState;
 var ATNConfigSet = __webpack_require__(9).ATNConfigSet;
 var DFASerializer = __webpack_require__(16).DFASerializer;
 var LexerDFASerializer = __webpack_require__(16).LexerDFASerializer;
@@ -23789,11 +23791,11 @@ exports.DiagnosticErrorListener = DiagnosticErrorListener;
  * can be found in the LICENSE.txt file in the project root.
  */
 
-exports.RecognitionException = __webpack_require__(4).RecognitionException;
-exports.NoViableAltException = __webpack_require__(4).NoViableAltException;
-exports.LexerNoViableAltException = __webpack_require__(4).LexerNoViableAltException;
-exports.InputMismatchException = __webpack_require__(4).InputMismatchException;
-exports.FailedPredicateException = __webpack_require__(4).FailedPredicateException;
+exports.RecognitionException = __webpack_require__(5).RecognitionException;
+exports.NoViableAltException = __webpack_require__(5).NoViableAltException;
+exports.LexerNoViableAltException = __webpack_require__(5).LexerNoViableAltException;
+exports.InputMismatchException = __webpack_require__(5).InputMismatchException;
+exports.FailedPredicateException = __webpack_require__(5).FailedPredicateException;
 exports.DiagnosticErrorListener = __webpack_require__(49).DiagnosticErrorListener;
 exports.BailErrorStrategy = __webpack_require__(29).BailErrorStrategy;
 exports.ErrorListener = __webpack_require__(17).ErrorListener;
@@ -23808,7 +23810,7 @@ exports.ErrorListener = __webpack_require__(17).ErrorListener;
  * can be found in the LICENSE.txt file in the project root.
  */
 
-var Tree = __webpack_require__(5);
+var Tree = __webpack_require__(3);
 exports.Trees = __webpack_require__(32).Trees;
 exports.RuleNode = Tree.RuleNode;
 exports.ParseTreeListener = Tree.ParseTreeListener;
@@ -23857,6 +23859,8 @@ let LexerClass = __webpack_require__(18)("./" + lexer_classname + '.js')[lexer_c
 let ParserClass = __webpack_require__(18)("./" + parser_classname + '.js')[parser_classname];
 let ErrorListener = __webpack_require__(33);
 
+let TerminalNodeImpl = __webpack_require__(3).TerminalNodeImpl;
+
 module.exports = function(input) {
     let chars = new antlr.InputStream(input);
     let lexer = new LexerClass(chars);
@@ -23874,20 +23878,23 @@ module.exports = function(input) {
     let tree = parser[lang_config.entry_rule]();
 
     let process_node = function(node) {
-        let rule_name = parser.ruleNames[node.ruleIndex];
-        let opts = lang_config.rules[rule_name];
+        if (node instanceof TerminalNodeImpl) {
+            return node.symbol.type;
+        } else {
+            let ast = {
+                'type': parser.ruleNames[node.ruleIndex],
+                'begin': node.start.start,
+                'end': node.stop.stop + 1,
+                'children': node.children.map(process_node).filter(Boolean),
+            };
 
-        let ast = {
-            'type': rule_name,
-            'begin': node.start.start,
-            'end': node.stop.stop + 1,
-            'children': node.children.map(process_node),
-        };
-        opts.finalizers.forEach(function(func) {
-            ast = func(ast);
-        });
+            let opts = lang_config.rules[ast.type];
+            opts.finalizers.forEach(function(func) {
+                ast = func(ast);
+            });
 
-        return ast;
+            return ast;
+        }
     };
 
     return process_node(tree);

@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import TextField from 'material-ui/TextField';
 import { Card, CardText } from 'material-ui/Card';
 
-const SnippetArea = () => (
+const SnippetArea = ({ onTitleChanged, onSnippetChanged }) => (
   <Card>
     <CardText>
     <TextField
       name="snippetName"
       hintText="Snippet Name"
+      onChange={onTitleChanged}
     />
     <TextField
       fullWidth={true}
@@ -19,9 +20,15 @@ const SnippetArea = () => (
       textareaStyle={{
         'fontFamily': 'monospace',
       }}
+      onChange={onSnippetChanged}
     />
     </CardText>
   </Card>
 );
+
+SnippetArea.propTypes = {
+  onTitleChanged: PropTypes.func.isRequired,
+  onSnippetChanged: PropTypes.func.isRequired,
+}
 
 export default SnippetArea;
