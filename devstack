@@ -1,0 +1,11 @@
+#!/bin/bash
+
+cd "$(dirname "$0")"
+
+DOCKER="$(which docker)"
+if [ $? != 0 ]; then
+  echo "Please install docker cli"
+  exit 1
+fi
+
+$DOCKER run --name "redis_container" -p 6379:6379 -d redis
