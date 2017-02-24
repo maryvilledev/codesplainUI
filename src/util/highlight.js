@@ -35,6 +35,6 @@ export function highlight(snippet, node, codeMirrorRef) {
   );
 
   node.children.forEach(child => {
-    if (typeof child === 'object') highlight(snippet, child, codeMirrorRef);
+    if (child === Object(child)) highlight(snippet, child, codeMirrorRef);
   });
 }

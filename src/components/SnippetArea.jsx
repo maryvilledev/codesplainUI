@@ -3,9 +3,10 @@ import CodeMirror from 'react-codemirror';
 
 import TextField from 'material-ui/TextField';
 import { Card, CardText } from 'material-ui/Card';
+import '../styles/material.css'
 
 import 'codemirror/lib/codemirror.css';
-import 'codemirror/theme/material.css';
+// import 'codemirror/theme/neat.css'
 
 import 'codemirror/mode/go/go.js';
 import 'codemirror/mode/python/python.js';
@@ -22,6 +23,7 @@ class SnippetArea extends React.Component {
     super(props);
     this.codeMirrorOptions = {
       lineNumbers: true,
+      // theme: 'material',
       mode: snippetEditorModes[this.props.snippetLanguage],
     };
   }
