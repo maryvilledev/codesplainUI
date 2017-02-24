@@ -1,10 +1,8 @@
 import React from 'react'
 import renderer from 'react-test-renderer';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import LanguageSelector from '../../src/components/LanguageSelector'
-
-jest.mock('material-ui/MenuItem')
-jest.mock('material-ui/SelectField')
 
 const mockLanguages = [
   {text: "French", value: 'fr'},
@@ -14,11 +12,13 @@ const mockLanguages = [
 describe('<LanguageSelector />', () => {
   it('matches snapshot', () => {
     const tree = renderer.create(
-      <LanguageSelector
-        languages={mockLanguages}
-        onChange={jest.fn()}
-        selected={mockLanguages[0].value}
-      />
+      <MuiThemeProvider>
+        <LanguageSelector
+          languages={mockLanguages}
+          onChange={jest.fn()}
+          selected={mockLanguages[0].value}
+        />
+      </MuiThemeProvider>
     ).toJSON();
     expect(tree).toMatchSnapshot();
   })

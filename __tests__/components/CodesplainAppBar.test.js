@@ -1,14 +1,15 @@
 import React from 'react'
 import renderer from 'react-test-renderer';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import CodesplainAppBar from '../../src/components/CodesplainAppBar'
-
-jest.mock('material-ui/AppBar')
 
 describe('<CodesplainAppBar />', () => {
   it('matches snapshot', () => {
     const tree = renderer.create(
-      <CodesplainAppBar />
+      <MuiThemeProvider>
+        <CodesplainAppBar />
+      </MuiThemeProvider>
     ).toJSON();
     expect(tree).toMatchSnapshot();
   })

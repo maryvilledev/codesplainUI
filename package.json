@@ -28,7 +28,7 @@
   },
   "jest": {
     "transformIgnorePatterns": [
-      "node_modules/(?!material-ui)"
+      "node_modules/(?!material-ui|codemirror)"
     ]
   }
 }

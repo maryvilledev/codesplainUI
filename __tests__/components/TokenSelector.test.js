@@ -1,10 +1,9 @@
 import React from 'react'
 import renderer from 'react-test-renderer';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-import TokenSelector from '../../src/components/TokenSelector'
+import TokenSelector from '../../src/components/TokenSelector';
 
-jest.mock('material-ui/List')
-jest.mock('material-ui/Subheader')
 jest.mock('material-ui/Checkbox')
 
 const mockTokenTypes = [
@@ -16,9 +15,11 @@ const mockTokenTypes = [
 describe('<TokenSelector />', () => {
   it('matches snapshot', () => {
     const tree = renderer.create(
-      <TokenSelector
-        tokenTypes={mockTokenTypes}
-      />
+      <MuiThemeProvider>
+        <TokenSelector
+          tokenTypes={mockTokenTypes}
+        />
+      </MuiThemeProvider>
     ).toJSON();
     expect(tree).toMatchSnapshot();
   })
