@@ -3,8 +3,11 @@ import CodeMirror from 'react-codemirror';
 import Save from 'material-ui/svg-icons/content/save'
 import IconButton from 'material-ui/IconButton'
 
-import TextField from 'material-ui/TextField';
 import { Card, CardText } from 'material-ui/Card';
+import TextField from 'material-ui/TextField';
+
+import ConfirmLockDialog from './ConfirmLockDialog.jsx'
+import LockButton from './LockButton';
 
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/material.css';
@@ -17,16 +20,17 @@ const snippetEditorModes = {
   python3: 'python',
 };
 
-const SnippetArea = ({ contents, onTitleChanged, onSnippetChanged, onClick, snippetLanguage }) => {
+
+const SnippetArea = ({ contents, isDialogOpen, onTitleChanged, onSnippetChanged,
+   readOnly, switchReadOnlyMode, snippetLanguage, toggleConfirmLockDialogVisibility,
+   onSaveClick }) => {
+
   const codeMirrorOptions = {
     lineNumbers: true,
     theme: 'material',
     mode: snippetEditorModes[snippetLanguage],
+    readOnly,
   };
-  console.log(snippetLanguage
-  );
-
-
 
   return (
     <Card>
@@ -36,13 +40,22 @@ const SnippetArea = ({ contents, onTitleChanged, onSnippetChanged, onClick, snip
         hintText="Snippet Name"
         onChange={onTitleChanged}
       />
+      <LockButton
+        onClick={toggleConfirmLockDialogVisibility}
+        readOnly={readOnly}
+      />
+      <ConfirmLockDialog
+        isOpen={isDialogOpen}
+        accept={switchReadOnlyMode}
+        reject={toggleConfirmLockDialogVisibility}
+      />
       <CodeMirror
         value={contents}
         options={codeMirrorOptions}
         onChange={onSnippetChanged}
       />
     <IconButton
-      onTouchTap={onClick}
+      onTouchTap={onSaveClick}
       tooltip="Save snippet"
     >
       <Save />
@@ -54,10 +67,15 @@ const SnippetArea = ({ contents, onTitleChanged, onSnippetChanged, onClick, snip
 
 SnippetArea.propTypes = {
   contents: PropTypes.string.isRequired,
+  isDialogOpen: PropTypes.bool.isRequired,
   onTitleChanged: PropTypes.func.isRequired,
   onSnippetChanged: PropTypes.func.isRequired,
+  readOnly: PropTypes.bool.isRequired,
   snippetLanguage: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
+  onSaveClick: PropTypes.func.isRequired,
+  switchReadOnlyMode: PropTypes.func.isRequired,
+  toggleConfirmLockDialogVisibility: PropTypes.func.isRequired,
+
 }
 
 export default SnippetArea;
