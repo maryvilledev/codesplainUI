@@ -1,5 +1,7 @@
 import React, { PropTypes } from 'react';
 import CodeMirror from 'react-codemirror';
+import Save from 'material-ui/svg-icons/content/save'
+import IconButton from 'material-ui/IconButton'
 
 import TextField from 'material-ui/TextField';
 import { Card, CardText } from 'material-ui/Card';
@@ -15,7 +17,7 @@ const snippetEditorModes = {
   python3: 'python',
 };
 
-const SnippetArea = ({ contents, onTitleChanged, onSnippetChanged, snippetLanguage }) => {
+const SnippetArea = ({ contents, onTitleChanged, onSnippetChanged, onClick, snippetLanguage }) => {
   const codeMirrorOptions = {
     lineNumbers: true,
     theme: 'material',
@@ -23,6 +25,9 @@ const SnippetArea = ({ contents, onTitleChanged, onSnippetChanged, snippetLangua
   };
   console.log(snippetLanguage
   );
+
+
+
   return (
     <Card>
       <CardText>
@@ -36,6 +41,12 @@ const SnippetArea = ({ contents, onTitleChanged, onSnippetChanged, snippetLangua
         options={codeMirrorOptions}
         onChange={onSnippetChanged}
       />
+    <IconButton
+      onTouchTap={onClick}
+      tooltip="Save snippet"
+    >
+      <Save />
+    </IconButton>
       </CardText>
     </Card>
   );
@@ -46,6 +57,7 @@ SnippetArea.propTypes = {
   onTitleChanged: PropTypes.func.isRequired,
   onSnippetChanged: PropTypes.func.isRequired,
   snippetLanguage: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
 }
 
 export default SnippetArea;
