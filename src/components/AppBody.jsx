@@ -56,6 +56,10 @@ class AppBody extends React.Component {
   }
 
   switchReadOnlyMode() {
+    if (this.state.readOnly) {
+      console.log("Switching back to editing mode not supported yet");
+      return;
+    }
     this.setState({
       isDialogOpen: false,
       readOnly: !(this.state.readOnly),

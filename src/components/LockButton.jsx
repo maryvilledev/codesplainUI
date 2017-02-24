@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 
 import IconButton from 'material-ui/IconButton';
-import FontIcon from 'material-ui/FontIcon';
 import LockOpen from 'material-ui/svg-icons/action/lock-open';
 import Lock from 'material-ui/svg-icons/action/lock';
 
