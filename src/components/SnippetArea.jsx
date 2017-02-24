@@ -1,34 +1,51 @@
 import React, { PropTypes } from 'react';
+import CodeMirror from 'react-codemirror';
+
 import TextField from 'material-ui/TextField';
 import { Card, CardText } from 'material-ui/Card';
 
-const SnippetArea = ({ onTitleChanged, onSnippetChanged }) => (
-  <Card>
-    <CardText>
-    <TextField
-      name="snippetName"
-      hintText="Snippet Name"
-      onChange={onTitleChanged}
-    />
-    <TextField
-      fullWidth={true}
-      floatingLabelFixed={true}
-      floatingLabelText="Enter code here"
-      multiLine={true}
-      name="snippetArea"
-      rows={30}
-      textareaStyle={{
-        'fontFamily': 'monospace',
-      }}
-      onChange={onSnippetChanged}
-    />
-    </CardText>
-  </Card>
-);
+import 'codemirror/lib/codemirror.css';
+import 'codemirror/theme/material.css';
+
+import 'codemirror/mode/go/go.js';
+import 'codemirror/mode/python/python.js';
+
+const snippetEditorModes = {
+  go: 'go',
+  python3: 'python',
+};
+
+const SnippetArea = ({ contents, onTitleChanged, onSnippetChanged, snippetLanguage }) => {
+  const codeMirrorOptions = {
+    lineNumbers: true,
+    theme: 'material',
+    mode: snippetEditorModes[snippetLanguage],
+  };
+  console.log(snippetLanguage
+  );
+  return (
+    <Card>
+      <CardText>
+      <TextField
+        name="snippetName"
+        hintText="Snippet Name"
+        onChange={onTitleChanged}
+      />
+      <CodeMirror
+        value={contents}
+        options={codeMirrorOptions}
+        onChange={onSnippetChanged}
+      />
+      </CardText>
+    </Card>
+  );
+};
 
 SnippetArea.propTypes = {
+  contents: PropTypes.string.isRequired,
   onTitleChanged: PropTypes.func.isRequired,
   onSnippetChanged: PropTypes.func.isRequired,
+  snippetLanguage: PropTypes.string.isRequired,
 }
 
 export default SnippetArea;
