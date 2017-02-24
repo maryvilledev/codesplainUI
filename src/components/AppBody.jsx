@@ -10,7 +10,7 @@ import TokenInfoPanel from './TokenInfoPanel';
 import { parsePython3 } from '../parsers/python3';
 
 const languages = [
-  { text: 'Java' , value: 'java' },
+  { text: 'Go' , value: 'go' },
   { text: 'Python 3' , value: 'python3' },
 ];
 
@@ -31,6 +31,8 @@ class AppBody extends React.Component {
     super(props);
     this.state = {
       selectedLanguage: '',
+      snippetEditorMode: '',
+      snippetContents: '',
     };
     this.handleSelect = this.handleSelect.bind(this);
     this.onSnippetChanged = this.onSnippetChanged.bind(this);
@@ -49,24 +51,26 @@ class AppBody extends React.Component {
   }
 
   // Callback to be invoked when user edits the code snippet
-  onSnippetChanged(ev) {
+  onSnippetChanged(snippetContents) {
+    this.setState({
+      snippetContents
+    })
     // Make sure a language is selected
     const currentLang = this.state.selectedLanguage;
     if (!currentLang) {
       console.warn('Cannot parse snippet. No language selected.');
       return;
-    } 
+    }
 
     // Map to selected language to its parser, if one exists
-    const snippet = ev.target.value;
     const parser = parsers[currentLang];
     if (parser === undefined) {
-      console.warn('No parser available for the ' + currentLang + ' language.');
+      console.warn(`No parser available for the ${currentLang} language`);
       return;
     }
 
     // Generate an AST for the current state of the code snippet
-    const AST = parser(snippet);
+    const AST = parser(snippetContents);
     console.log(AST);
     //... Can use this AST to update the snippet text area
   }
@@ -90,9 +94,11 @@ class AppBody extends React.Component {
             </Card>
           </div>
           <div className="col-md-5">
-            <SnippetArea 
+            <SnippetArea
+              contents={this.state.snippetContents}
               onTitleChanged={this.onSnippetTitleChanged}
-              onSnippetChanged={this.onSnippetChanged} 
+              onSnippetChanged={this.onSnippetChanged}
+              snippetLanguage={this.state.selectedLanguage}
             />
           </div>
           <div className="col-md-4">
