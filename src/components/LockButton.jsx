@@ -1,19 +1,22 @@
 import React, { PropTypes } from 'react';
 
-import FlatButton from 'material-ui/FlatButton';
+import IconButton from 'material-ui/IconButton';
 import FontIcon from 'material-ui/FontIcon';
 import LockOpen from 'material-ui/svg-icons/action/lock-open';
-import LockOutline from 'material-ui/svg-icons/action/lock-outline';
+import Lock from 'material-ui/svg-icons/action/lock';
 
 const LockButton = ({onClick, readOnly}) => {
-  const lockIcon = readOnly ? <LockOutline /> : <LockOpen />;
+  const lockIcon = readOnly ? <Lock /> : <LockOpen />;
+  const toolTipText = readOnly ? "Switching back to edit mode not supported yet" : "Click to switch to prevent any changes to the snippet";
   return (
-    <FlatButton
-      label={`Switch to ${ readOnly ? 'edit' : 'read-only' } mode`}
-      icon={ lockIcon }
-      onClick={onClick}
+    <IconButton
       disabled={readOnly}
-    />
+      label={`Switch to ${ readOnly ? 'edit' : 'read-only' } mode`}
+      onTouchTap={onClick}
+      tooltip={toolTipText}
+    >
+      {lockIcon}
+    </IconButton>
   );
 };
 
