@@ -30,17 +30,26 @@ class AppBody extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      readOnly: false,
       selectedLanguage: '',
       snippetEditorMode: '',
       snippetContents: '',
     };
     this.handleSelect = this.handleSelect.bind(this);
     this.onSnippetChanged = this.onSnippetChanged.bind(this);
+    this.onSnippetTitleChanged = this.onSnippetTitleChanged.bind(this);
+    this.switchReadOnlyMode = this.switchReadOnlyMode.bind(this);
   }
 
   handleSelect(ev, index, value) {
     this.setState({
       selectedLanguage: value,
+    });
+  }
+
+  switchReadOnlyMode() {
+    this.setState({
+      readOnly: !(this.state.readOnly),
     });
   }
 
@@ -98,6 +107,8 @@ class AppBody extends React.Component {
               contents={this.state.snippetContents}
               onTitleChanged={this.onSnippetTitleChanged}
               onSnippetChanged={this.onSnippetChanged}
+              switchReadOnlyMode={this.switchReadOnlyMode}
+              readOnly={this.state.readOnly}
               snippetLanguage={this.state.selectedLanguage}
             />
           </div>
