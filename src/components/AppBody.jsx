@@ -30,6 +30,7 @@ class AppBody extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isDialogOpen: false,
       readOnly: false,
       selectedLanguage: '',
       snippetEditorMode: '',
@@ -39,6 +40,7 @@ class AppBody extends React.Component {
     this.onSnippetChanged = this.onSnippetChanged.bind(this);
     this.onSnippetTitleChanged = this.onSnippetTitleChanged.bind(this);
     this.switchReadOnlyMode = this.switchReadOnlyMode.bind(this);
+    this.toggleConfirmLockDialogVisibility = this.toggleConfirmLockDialogVisibility.bind(this);
   }
 
   handleSelect(ev, index, value) {
@@ -47,8 +49,15 @@ class AppBody extends React.Component {
     });
   }
 
+  toggleConfirmLockDialogVisibility() {
+    this.setState({
+      isDialogOpen: !(this.state.isDialogOpen),
+    })
+  }
+
   switchReadOnlyMode() {
     this.setState({
+      isDialogOpen: false,
       readOnly: !(this.state.readOnly),
     });
   }
@@ -105,8 +114,10 @@ class AppBody extends React.Component {
           <div className="col-md-5">
             <SnippetArea
               contents={this.state.snippetContents}
+              isDialogOpen={this.state.isDialogOpen}
               onTitleChanged={this.onSnippetTitleChanged}
               onSnippetChanged={this.onSnippetChanged}
+              toggleConfirmLockDialogVisibility={this.toggleConfirmLockDialogVisibility}
               switchReadOnlyMode={this.switchReadOnlyMode}
               readOnly={this.state.readOnly}
               snippetLanguage={this.state.selectedLanguage}

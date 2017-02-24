@@ -4,6 +4,7 @@ import CodeMirror from 'react-codemirror';
 import { Card, CardText } from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
 
+import ConfirmLockDialog from './ConfirmLockDialog.jsx'
 import LockButton from './LockButton';
 
 import 'codemirror/lib/codemirror.css';
@@ -17,7 +18,7 @@ const snippetEditorModes = {
   python3: 'python',
 };
 
-const SnippetArea = ({ contents, onTitleChanged, onSnippetChanged, readOnly, switchReadOnlyMode, snippetLanguage }) => {
+const SnippetArea = ({ contents, isDialogOpen, onTitleChanged, onSnippetChanged, readOnly, switchReadOnlyMode, snippetLanguage, toggleConfirmLockDialogVisibility }) => {
   const codeMirrorOptions = {
     lineNumbers: true,
     theme: 'material',
@@ -33,8 +34,13 @@ const SnippetArea = ({ contents, onTitleChanged, onSnippetChanged, readOnly, swi
         onChange={onTitleChanged}
       />
       <LockButton
-        onClick={switchReadOnlyMode}
+        onClick={toggleConfirmLockDialogVisibility}
         readOnly={readOnly}
+      />
+      <ConfirmLockDialog
+        isOpen={isDialogOpen}
+        accept={switchReadOnlyMode}
+        reject={toggleConfirmLockDialogVisibility}
       />
       <CodeMirror
         value={contents}
@@ -48,11 +54,13 @@ const SnippetArea = ({ contents, onTitleChanged, onSnippetChanged, readOnly, swi
 
 SnippetArea.propTypes = {
   contents: PropTypes.string.isRequired,
+  isDialogOpen: PropTypes.bool.isRequired,
   onTitleChanged: PropTypes.func.isRequired,
   onSnippetChanged: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
   snippetLanguage: PropTypes.string.isRequired,
   switchReadOnlyMode: PropTypes.func.isRequired,
+  toggleConfirmLockDialogVisibility: PropTypes.func.isRequired,
 }
 
 export default SnippetArea;
