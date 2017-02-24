@@ -2,5 +2,6 @@ dependencies:
   override:
     - yarn
 test:
-  - yarn test
-  - yarn build
+  override:
+    - yarn test
+    - yarn build
