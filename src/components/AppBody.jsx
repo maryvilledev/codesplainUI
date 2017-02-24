@@ -8,6 +8,7 @@ import TokenSelector from './TokenSelector';
 import TokenInfoPanel from './TokenInfoPanel';
 
 import { parsePython3 } from '../parsers/python3';
+import { highlight }  from '../util/highlight.js';
 
 const languages = [
   { text: 'Go' , value: 'go' },
@@ -32,7 +33,17 @@ class AppBody extends React.Component {
     this.state = {
       selectedLanguage: '',
       snippetEditorMode: '',
-      snippetContents: '',
+      codesplainObj: {
+        snippetName: '',
+        AST: {
+          key: '',
+          tokenName: '',
+          children: [],
+        },
+        snippet:        '',
+        annotations: [],
+        filters:     [],
+      }
     };
     this.handleSelect = this.handleSelect.bind(this);
     this.onSnippetChanged = this.onSnippetChanged.bind(this);
@@ -51,10 +62,8 @@ class AppBody extends React.Component {
   }
 
   // Callback to be invoked when user edits the code snippet
-  onSnippetChanged(snippetContents) {
-    this.setState({
-      snippetContents
-    })
+  onSnippetChanged(snippet, codeMirrorRef) {
+    this.setState({ snippet });
     // Make sure a language is selected
     const currentLang = this.state.selectedLanguage;
     if (!currentLang) {
@@ -70,9 +79,12 @@ class AppBody extends React.Component {
     }
 
     // Generate an AST for the current state of the code snippet
-    const AST = parser(snippetContents);
-    console.log(AST);
-    //... Can use this AST to update the snippet text area
+    const AST = parser(snippet);
+    console.log(JSON.stringify(AST))
+    highlight(snippet, AST, codeMirrorRef);
+    const newCodesplainObj = this.state.codesplainObj;
+    newCodesplainObj.AST = AST;
+    this.setState({ codesplainObj: newCodesplainObj });
   }
 
   render() {
