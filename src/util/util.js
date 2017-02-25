@@ -9,7 +9,7 @@ row as column 0.
 */
 export function getIndexToRowColConverter(snippet) {
   // Make array containing the length of each lines of code in snippet
-  const lines = snippet.split('\n').map(l => l.length + 1);
+  const lines = snippet.split('\n').map(l => l.length + 1); // +1 to accomodate '\n' that was lost when we split the snippet
   return (index) => {
     let row, col, lenPrevRows;
     row = lenPrevRows = 0;

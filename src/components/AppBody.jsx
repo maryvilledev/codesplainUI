@@ -80,7 +80,6 @@ class AppBody extends React.Component {
 
     // Generate an AST for the current state of the code snippet
     const AST = parser(snippet);
-    console.log(JSON.stringify(AST))
     highlight(snippet, AST, codeMirrorRef);
     const newCodesplainObj = this.state.codesplainObj;
     newCodesplainObj.AST = AST;
