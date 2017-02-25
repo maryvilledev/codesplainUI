@@ -1,22 +1,24 @@
 import React, { PropTypes } from 'react';
 import CodeMirror from 'react-codemirror';
 
-import TextField from 'material-ui/TextField';
 import { Card, CardText } from 'material-ui/Card';
 import '../styles/codesplain.css'
+import TextField from 'material-ui/TextField';
+import ConfirmLockDialog from './ConfirmLockDialog.jsx'
+import LockButton from './LockButton';
+import { getIndexToRowColConverter } from '../util/util.js';
 
 import 'codemirror/lib/codemirror.css';
-
 import 'codemirror/mode/go/go.js';
 import 'codemirror/mode/python/python.js';
 
-import { getIndexToRowColConverter } from '../util/util.js';
 
 const snippetEditorModes = {
   go: 'go',
   python3: 'python',
 };
 
+// <<<<<<< HEAD
 class SnippetArea extends React.Component {
   constructor(props) {
     super(props);
@@ -24,6 +26,7 @@ class SnippetArea extends React.Component {
       lineNumbers: true,
       theme: 'codesplain',
       mode: snippetEditorModes[this.props.snippetLanguage],
+      readOnly: this.props.readOnly,
     };
   }
 
@@ -36,6 +39,15 @@ class SnippetArea extends React.Component {
           hintText="Snippet Name"
           onChange={this.props.onTitleChanged}
         />
+        <LockButton
+          onClick={this.props.toggleConfirmLockDialogVisibility}
+          readOnly={this.props.readOnly}
+        />
+        <ConfirmLockDialog
+          isOpen={this.props.isDialogOpen}
+          accept={this.props.switchReadOnlyMode}
+          reject={this.props.toggleConfirmLockDialogVisibility}
+        />
         <CodeMirror
           ref={cm => this.codeMirror = cm}
           value={this.props.contents}
@@ -46,13 +58,51 @@ class SnippetArea extends React.Component {
       </Card>
     );
   }
+// =======
+// const SnippetArea = ({ contents, isDialogOpen, onTitleChanged, onSnippetChanged, readOnly, switchReadOnlyMode, snippetLanguage, toggleConfirmLockDialogVisibility }) => {
+//   const codeMirrorOptions = {
+//     lineNumbers: true,
+//     theme: 'codesplain',
+//     mode: snippetEditorModes[snippetLanguage],
+//     readOnly,
+//   };
+//   return (
+//     <Card>
+//       <CardText>
+//       <TextField
+//         name="snippetName"
+//         hintText="Snippet Name"
+//         onChange={onTitleChanged}
+//       />
+//       <LockButton
+//         onClick={toggleConfirmLockDialogVisibility}
+//         readOnly={readOnly}
+//       />
+//       <ConfirmLockDialog
+//         isOpen={isDialogOpen}
+//         accept={switchReadOnlyMode}
+//         reject={toggleConfirmLockDialogVisibility}
+//       />
+//       <CodeMirror
+//         value={contents}
+//         options={codeMirrorOptions}
+//         onChange={onSnippetChanged}
+//       />
+//       </CardText>
+//     </Card>
+//   );
+// >>>>>>> master
 };
 
 SnippetArea.propTypes = {
   contents: PropTypes.string.isRequired,
+  isDialogOpen: PropTypes.bool.isRequired,
   onTitleChanged: PropTypes.func.isRequired,
   onSnippetChanged: PropTypes.func.isRequired,
+  readOnly: PropTypes.bool.isRequired,
   snippetLanguage: PropTypes.string.isRequired,
+  switchReadOnlyMode: PropTypes.func.isRequired,
+  toggleConfirmLockDialogVisibility: PropTypes.func.isRequired,
 }
 
 export default SnippetArea;

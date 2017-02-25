@@ -34,6 +34,8 @@ class AppBody extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isDialogOpen: false,
+      readOnly: false,
       selectedLanguage: '',
       snippetEditorMode: '',
       codesplainObj: {
@@ -50,11 +52,31 @@ class AppBody extends React.Component {
     };
     this.handleSelect = this.handleSelect.bind(this);
     this.onSnippetChanged = this.onSnippetChanged.bind(this);
+    this.onSnippetTitleChanged = this.onSnippetTitleChanged.bind(this);
+    this.switchReadOnlyMode = this.switchReadOnlyMode.bind(this);
+    this.toggleConfirmLockDialogVisibility = this.toggleConfirmLockDialogVisibility.bind(this);
   }
 
   handleSelect(ev, index, value) {
     this.setState({
       selectedLanguage: value,
+    });
+  }
+
+  toggleConfirmLockDialogVisibility() {
+    this.setState({
+      isDialogOpen: !(this.state.isDialogOpen),
+    })
+  }
+
+  switchReadOnlyMode() {
+    if (this.state.readOnly) {
+      console.log("Switching back to editing mode not supported yet");
+      return;
+    }
+    this.setState({
+      isDialogOpen: false,
+      readOnly: !(this.state.readOnly),
     });
   }
 
@@ -117,8 +139,12 @@ class AppBody extends React.Component {
           <div className="col-md-5">
             <SnippetArea
               contents={this.state.snippetContents}
+              isDialogOpen={this.state.isDialogOpen}
               onTitleChanged={this.onSnippetTitleChanged}
               onSnippetChanged={this.onSnippetChanged}
+              toggleConfirmLockDialogVisibility={this.toggleConfirmLockDialogVisibility}
+              switchReadOnlyMode={this.switchReadOnlyMode}
+              readOnly={this.state.readOnly}
               snippetLanguage={this.state.selectedLanguage}
             />
           </div>

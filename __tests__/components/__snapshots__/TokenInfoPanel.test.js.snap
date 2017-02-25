@@ -1,0 +1,267 @@
+exports[`<TokenInfoPanel /> matches snapshot 1`] = `
+<div
+  style={
+    Object {
+      "WebkitTapHighlightColor": "rgba(0,0,0,0)",
+      "backgroundColor": "#ffffff",
+      "borderRadius": "2px",
+      "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
+             0 1px 4px rgba(0, 0, 0, 0.12)",
+      "boxSizing": "border-box",
+      "color": "rgba(0, 0, 0, 0.87)",
+      "fontFamily": "Roboto, sans-serif",
+      "muiPrepared": true,
+      "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+      "zIndex": 1,
+    }
+  }>
+  <div
+    style={
+      Object {
+        "paddingBottom": 0,
+      }
+    }>
+    <div
+      style={
+        Object {
+          "muiPrepared": true,
+          "padding": 16,
+          "position": "relative",
+        }
+      }>
+      <span
+        style={
+          Object {
+            "color": "rgba(0, 0, 0, 0.87)",
+            "display": "block",
+            "fontSize": 24,
+            "lineHeight": "36px",
+            "muiPrepared": true,
+          }
+        }>
+        Info Panel
+      </span>
+      <span
+        style={
+          Object {
+            "color": "rgba(0, 0, 0, 0.54)",
+            "display": "block",
+            "fontSize": 14,
+            "muiPrepared": true,
+          }
+        } />
+    </div>
+    <div
+      style={
+        Object {
+          "color": "rgba(0, 0, 0, 0.87)",
+          "fontSize": 14,
+          "muiPrepared": true,
+          "padding": 16,
+        }
+      }>
+      General info about the selected token goes here
+    </div>
+    <div
+      style={
+        Object {
+          "muiPrepared": true,
+        }
+      }>
+      <div
+        style={
+          Object {
+            "backgroundColor": "#00bcd4",
+            "display": "flex",
+            "muiPrepared": true,
+            "whiteSpace": "nowrap",
+            "width": "100%",
+          }
+        }>
+        <button
+          disabled={undefined}
+          href={undefined}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onTouchTap={[Function]}
+          style={
+            Object {
+              "WebkitTapHighlightColor": "rgba(0, 0, 0, 0)",
+              "background": "none",
+              "border": 10,
+              "boxSizing": "border-box",
+              "color": "#ffffff",
+              "cursor": "pointer",
+              "display": "inline-block",
+              "fontFamily": "Roboto, sans-serif",
+              "fontSize": 14,
+              "fontWeight": 500,
+              "margin": 0,
+              "muiPrepared": true,
+              "outline": "none",
+              "padding": 0,
+              "position": "relative",
+              "textDecoration": "none",
+              "textTransform": "uppercase",
+              "verticalAlign": null,
+              "width": "50%",
+              "zIndex": 1,
+            }
+          }
+          tabIndex={0}
+          type="button">
+          <div
+            onMouseDown={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            onTouchEnd={[Function]}
+            onTouchStart={[Function]}>
+            <div
+              style={
+                Object {
+                  "alignItems": "center",
+                  "display": "flex",
+                  "flexDirection": "column",
+                  "height": 48,
+                  "justifyContent": "center",
+                }
+              }>
+              Annotation
+            </div>
+          </div>
+        </button>
+        <button
+          disabled={undefined}
+          href={undefined}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onTouchTap={[Function]}
+          style={
+            Object {
+              "WebkitTapHighlightColor": "rgba(0, 0, 0, 0)",
+              "background": "none",
+              "border": 10,
+              "boxSizing": "border-box",
+              "color": "rgba(255, 255, 255, 0.7)",
+              "cursor": "pointer",
+              "display": "inline-block",
+              "fontFamily": "Roboto, sans-serif",
+              "fontSize": 14,
+              "fontWeight": 500,
+              "margin": 0,
+              "muiPrepared": true,
+              "outline": "none",
+              "padding": 0,
+              "position": "relative",
+              "textDecoration": "none",
+              "textTransform": "uppercase",
+              "verticalAlign": null,
+              "width": "50%",
+              "zIndex": 1,
+            }
+          }
+          tabIndex={0}
+          type="button">
+          <div
+            onMouseDown={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            onTouchEnd={[Function]}
+            onTouchStart={[Function]}>
+            <div
+              style={
+                Object {
+                  "alignItems": "center",
+                  "display": "flex",
+                  "flexDirection": "column",
+                  "height": 48,
+                  "justifyContent": "center",
+                }
+              }>
+              SyntaxDB
+            </div>
+          </div>
+        </button>
+      </div>
+      <div
+        style={
+          Object {
+            "width": "100%",
+          }
+        }>
+        <div
+          style={
+            Object {
+              "backgroundColor": "#ff4081",
+              "bottom": 0,
+              "display": "block",
+              "height": 2,
+              "left": "0%",
+              "marginTop": -2,
+              "muiPrepared": true,
+              "position": "relative",
+              "transition": "left 1s cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+              "width": "50%",
+            }
+          } />
+      </div>
+      <div
+        className={undefined}
+        style={
+          Object {
+            "muiPrepared": true,
+          }
+        }>
+        <div
+          style={
+            Object {
+              "position": "relative",
+              "textAlign": "initial",
+              "width": "100%",
+            }
+          }>
+          <div
+            style={
+              Object {
+                "color": "rgba(0, 0, 0, 0.87)",
+                "fontSize": 14,
+                "muiPrepared": true,
+                "padding": 16,
+              }
+            }>
+            Here is some annotation info about the token.
+          </div>
+        </div>
+        <div
+          style={
+            Object {
+              "height": 0,
+              "overflow": "hidden",
+              "position": "relative",
+              "textAlign": "initial",
+              "width": "100%",
+            }
+          }>
+          <div
+            style={
+              Object {
+                "color": "rgba(0, 0, 0, 0.87)",
+                "fontSize": 14,
+                "muiPrepared": true,
+                "padding": 16,
+              }
+            }>
+            Here is some info from SyntaxDB about the token.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
