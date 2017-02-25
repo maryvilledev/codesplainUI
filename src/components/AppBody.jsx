@@ -27,6 +27,9 @@ const tokenTypes = [
   { text: "Return statement" },
 ];
 
+// Keeps track of how long until we're ready to parse another AST
+let parseReady = true;
+
 class AppBody extends React.Component {
   constructor(props) {
     super(props);
@@ -78,12 +81,19 @@ class AppBody extends React.Component {
       return;
     }
 
-    // Generate an AST for the current state of the code snippet
-    const AST = parser(snippet);
-    highlight(snippet, AST, codeMirrorRef);
-    const newCodesplainObj = this.state.codesplainObj;
-    newCodesplainObj.AST = AST;
-    this.setState({ codesplainObj: newCodesplainObj });
+    // Generate an AST for the current state of the code snippet, then
+    // highlight tokens in snippet and update state
+    if(parseReady) {
+      parseReady = false;
+      setTimeout(() => parseReady = true, 150);
+      new Promise((resolve) => resolve(parser(snippet)))
+      .then((AST) => {
+        highlight(snippet, AST, codeMirrorRef);
+        const newCodesplainObj = this.state.codesplainObj;
+        newCodesplainObj.AST = AST;
+        this.setState({ codesplainObj: newCodesplainObj });
+      });
+    }
   }
 
   render() {

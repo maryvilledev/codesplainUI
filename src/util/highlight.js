@@ -1,38 +1,45 @@
 import { styleRegion } from '../components/SnippetArea';
 
-const defaultColors = [
-  "#F7ABAB",
-  "#F7ABD4",
-  "#F0ABF7",
-  "#CAABF7",
-  "#ABDBF7",
-  "#F7ABAB",
-  "#F7CDAB",
-  "#EAF7AB",
-  "#ABF7C6",
+const ignoredTokens = [
+  'suite',
+  'file_input',
+  'simple_stmt',
+  'trailed_atom',
+  'trailer',
 ]
 
-let unusedColors = defaultColors;
+const tokenColors = {
+  'for_stmt' :    '#F7ABAB',
+  'if_stmt':      '#C23B22',
+  'number':       'DEA5A4',
+  'exptr_stmt':   '#F7ABD4',
+  'expr':         '#F0ABF7',
+  'str':          '#CAABF7',
+  'atom':         '#ABDBF7',
+  'expr_stmt':    '#F7ABAB',
+  'arglist':      '#F7CDAB',
+  'argument':     '#EAF7AB',
+  'integer':      '#ABF7C6',
+}
 
-function getColor() {
-  if (unusedColors.length > 0) {
-    let color = unusedColors[Math.floor(Math.random() * unusedColors.length)];
-    unusedColors = unusedColors.filter(val => val !== color); //Remove the color
-    return color;
-  } else {
-    //Out of colors, start repeating
-    unusedColors = defaultColors;
-    return getColor();
-  }
+function getColor(type) {
+  return tokenColors[type];
 }
 
 export function highlight(snippet, node, codeMirrorRef) {
-  styleRegion(
-    codeMirrorRef, 
-    node.begin, 
-    node.end, 
-    `background-color: ${getColor()};`
-  );
+  const color = getColor(node.type);
+  if (color) {
+    styleRegion(
+      codeMirrorRef, 
+      node.begin, 
+      node.end, 
+      `background-color: ${color};`
+    );
+  }
+  // If we aren't ignoring this token, warn that it has no color
+  else if (ignoredTokens.indexOf(node.type) === -1) {
+    console.warn(node.type + ' has no color!')
+  }
 
   node.children.forEach(child => {
     if (child === Object(child)) highlight(snippet, child, codeMirrorRef);
