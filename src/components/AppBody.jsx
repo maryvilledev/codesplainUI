@@ -37,7 +37,7 @@ class AppBody extends React.Component {
     this.state = {
       isDialogOpen: false,
       readOnly: false,
-      selectedLanguage: '',
+      selectedLanguage: 'python3',
       snippetEditorMode: '',
       snippet: '',
       snippetTitle: '',
