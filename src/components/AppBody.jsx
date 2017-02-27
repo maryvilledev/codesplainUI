@@ -9,6 +9,7 @@ import TokenInfoPanel from './TokenInfoPanel';
 
 import { parsePython3 } from '../parsers/python3';
 import { highlight }  from '../util/highlight.js';
+import axios from 'axios'
 
 const languages = [
   { text: 'Go' , value: 'go' },
@@ -38,19 +39,17 @@ class AppBody extends React.Component {
       readOnly: false,
       selectedLanguage: '',
       snippetEditorMode: '',
-      snippetName: '',
-      AST: {
-        key: '',
-        tokenName: '',
-        children: [],
-      },
-      snippet:        '',
+      snippet: '',
+      snippetTitle: '',
       annotations: [],
-      filters:     [],
+      AST: [],
+      filters: {},
     };
     this.handleSelect = this.handleSelect.bind(this);
     this.onSnippetChanged = this.onSnippetChanged.bind(this);
     this.onSnippetTitleChanged = this.onSnippetTitleChanged.bind(this);
+    this.onFiltersChanged = this.onFiltersChanged.bind(this);
+    this.onSaveState = this.onSaveState.bind(this);
     this.switchReadOnlyMode = this.switchReadOnlyMode.bind(this);
     this.toggleConfirmLockDialogVisibility = this.toggleConfirmLockDialogVisibility.bind(this);
   }
@@ -81,7 +80,21 @@ class AppBody extends React.Component {
   // Callback to be invoked when user changes snippet title
   onSnippetTitleChanged(ev) {
     const title = ev.target.value;
-    console.log('Snippet title is: ' + title);
+    this.setState({ snippetTitle: title });
+  }
+
+  onSaveState() {
+    const {snippet, snippetTitle, annotations, AST, filters} = this.state
+    const obj = {snippet, snippetTitle, annotations, AST, filters}
+    const stateString = JSON.stringify(obj)
+    axios.post('/api/snippets/',{ json: stateString })
+      .then(res => {
+        const id = res.data.id
+        this.setState({ id: id })
+      })
+      .catch(err => {
+        console.error(err)
+      })
   }
 
   // Callback to be invoked when user edits the code snippet
@@ -114,6 +127,10 @@ class AppBody extends React.Component {
     }
   }
 
+  onFiltersChanged(filters) {
+    this.setState({ filters: filters });
+  }
+
   render() {
     return (
       <div className="container-fluid">
@@ -128,13 +145,15 @@ class AppBody extends React.Component {
                 />
                 <TokenSelector
                   tokenTypes={tokenTypes}
+                  onChange={this.onFiltersChanged}
                 />
               </CardText>
             </Card>
           </div>
           <div className="col-md-5">
             <SnippetArea
-              contents={this.state.snippetContents}
+              onSaveClick={this.onSaveState}
+              contents={this.state.snippet}
               isDialogOpen={this.state.isDialogOpen}
               onTitleChanged={this.onSnippetTitleChanged}
               onSnippetChanged={this.onSnippetChanged}
@@ -143,6 +162,8 @@ class AppBody extends React.Component {
               readOnly={this.state.readOnly}
               snippetLanguage={this.state.selectedLanguage}
             />
+
+
           </div>
           <div className="col-md-4">
             <TokenInfoPanel />

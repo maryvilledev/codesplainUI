@@ -4,6 +4,7 @@
   "private": true,
   "devDependencies": {},
   "dependencies": {
+    "axios": "^0.15.3",
     "body-parser": "^1.16.1",
     "enzyme": "^2.7.1",
     "express": "^4.14.1",

@@ -18,6 +18,7 @@ describe('<TokenSelector />', () => {
       <MuiThemeProvider>
         <TokenSelector
           tokenTypes={mockTokenTypes}
+          onChange={jest.fn()}
         />
       </MuiThemeProvider>
     ).toJSON();

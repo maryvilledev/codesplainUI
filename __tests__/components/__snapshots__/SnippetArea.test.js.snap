@@ -1,7 +1,8 @@
 exports[`<SnippetArea /> matches snapshot 1`] = `
 <SnippetArea
-  contents=":(){ :|: & };:"
+  contents=""
   isDialogOpen={false}
+  onSaveClick={[Function]}
   onSnippetChanged={[Function]}
   onTitleChanged={[Function]}
   readOnly={false}
