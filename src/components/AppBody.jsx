@@ -38,17 +38,15 @@ class AppBody extends React.Component {
       readOnly: false,
       selectedLanguage: '',
       snippetEditorMode: '',
-      codesplainObj: {
-        snippetName: '',
-        AST: {
-          key: '',
-          tokenName: '',
-          children: [],
-        },
-        snippet:        '',
-        annotations: [],
-        filters:     [],
-      }
+      snippetName: '',
+      AST: {
+        key: '',
+        tokenName: '',
+        children: [],
+      },
+      snippet:        '',
+      annotations: [],
+      filters:     [],
     };
     this.handleSelect = this.handleSelect.bind(this);
     this.onSnippetChanged = this.onSnippetChanged.bind(this);
@@ -111,9 +109,7 @@ class AppBody extends React.Component {
       new Promise((resolve) => resolve(parser(snippet)))
       .then((AST) => {
         highlight(snippet, AST, codeMirrorRef);
-        const newCodesplainObj = this.state.codesplainObj;
-        newCodesplainObj.AST = AST;
-        this.setState({ codesplainObj: newCodesplainObj });
+        this.setState({ AST: AST });
       });
     }
   }

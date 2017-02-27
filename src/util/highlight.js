@@ -31,7 +31,7 @@ export function highlight(snippet, node, codeMirrorRef) {
   if (ignoredTokens.indexOf(node.type) === -1) {
     let color = getColor(node.type);
     if (!color) {
-      color = '#ffffff';
+      color = 'inherit';
       console.warn(`token "${node.type}" has no color specified!`);
     }
     styleRegion(
