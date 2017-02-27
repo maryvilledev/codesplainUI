@@ -1,4 +1,5 @@
 import React from 'react';
+import { browserHistory } from 'react-router'
 
 import { Card, CardText } from 'material-ui/Card';
 
@@ -97,6 +98,24 @@ class AppBody extends React.Component {
       })
   }
 
+  componentDidMount() {
+    const { id } = this.props.params;
+    if (!id) {
+      return
+    }
+
+    axios.get(`/api/snippets/${id}`)
+      .then(res => {
+        const stateString = res.data.json;
+        const obj = JSON.parse(stateString)
+        this.setState(obj)
+      })
+      .catch(err => {
+        //Bad URL, redirect
+        browserHistory.push("/")
+      });
+  }
+
   // Callback to be invoked when user edits the code snippet
   onSnippetChanged(snippet, codeMirrorRef) {
     this.setState({ snippet });
@@ -152,6 +171,7 @@ class AppBody extends React.Component {
           </div>
           <div className="col-md-5">
             <SnippetArea
+              title={this.state.snippetTitle}
               onSaveClick={this.onSaveState}
               contents={this.state.snippet}
               isDialogOpen={this.state.isDialogOpen}
