@@ -18,45 +18,40 @@ const snippetEditorModes = {
   python3: 'python',
 };
 
-class SnippetArea extends React.Component {
-  constructor(props) {
-    super(props);
-    this.codeMirrorOptions = {
-      lineNumbers: true,
-      theme: 'codesplain',
-      mode: snippetEditorModes[this.props.snippetLanguage],
-      readOnly: this.props.readOnly,
-    };
-  }
-
-  render() {
-    return (
-      <Card>
-        <CardText>
-        <TextField
-          name="snippetName"
-          hintText="Snippet Name"
-          onChange={this.props.onTitleChanged}
-        />
-        <LockButton
-          onClick={this.props.toggleConfirmLockDialogVisibility}
-          readOnly={this.props.readOnly}
-        />
-        <ConfirmLockDialog
-          isOpen={this.props.isDialogOpen}
-          accept={this.props.switchReadOnlyMode}
-          reject={this.props.toggleConfirmLockDialogVisibility}
-        />
-        <CodeMirror
-          ref={cm => this.codeMirror = cm}
-          value={this.props.contents}
-          options={this.codeMirrorOptions}
-          onChange={ev => this.props.onSnippetChanged(ev, this.codeMirror)}
-        />
-        </CardText>
-      </Card>
-    );
-  }
+const SnippetArea = ({ contents, isDialogOpen, onTitleChanged, onSnippetChanged, readOnly, switchReadOnlyMode, snippetLanguage, toggleConfirmLockDialogVisibility }) => {
+  const codeMirrorOptions = {
+    lineNumbers: true,
+    theme: 'codesplain',
+    mode: snippetEditorModes[snippetLanguage],
+    readOnly,
+  };
+  let codeMirrorRef;
+  return (
+    <Card>
+      <CardText>
+      <TextField
+        name="snippetName"
+        hintText="Snippet Name"
+        onChange={onTitleChanged}
+      />
+      <LockButton
+        onClick={toggleConfirmLockDialogVisibility}
+        readOnly={readOnly}
+      />
+      <ConfirmLockDialog
+        isOpen={isDialogOpen}
+        accept={switchReadOnlyMode}
+        reject={toggleConfirmLockDialogVisibility}
+      />
+      <CodeMirror
+        ref={cm => codeMirrorRef = cm}
+        value={contents}
+        options={codeMirrorOptions}
+        onChange={ev => onSnippetChanged(ev, codeMirrorRef)}
+      />
+      </CardText>
+    </Card>
+  );
 };
 
 SnippetArea.propTypes = {
