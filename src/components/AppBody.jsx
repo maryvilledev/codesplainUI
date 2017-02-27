@@ -1,4 +1,5 @@
 import React from 'react';
+import { browserHistory } from 'react-router'
 
 import { Card, CardText } from 'material-ui/Card';
 
@@ -105,10 +106,13 @@ class AppBody extends React.Component {
 
     axios.get(`/api/snippets/${id}`)
       .then(res => {
-        console.log(res.body)
+        const stateString = res.data.json;
+        const obj = JSON.parse(stateString)
+        this.setState(obj)
       })
       .catch(err => {
-        console.error(err)
+        //Bad URL, redirect
+        browserHistory.push("/")
       });
   }
 
