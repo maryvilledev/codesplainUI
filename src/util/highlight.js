@@ -20,6 +20,12 @@ const tokenColors = {
   'arglist':      '#F7CDAB',
   'argument':     '#EAF7AB',
   'integer':      '#ABF7C6',
+  'funcdef':      '#AEC6CF',
+  'parameters':   '#FFB347',
+  'classdef':     '#03C03C',
+  'try_stmt':     '#966FD6',
+  'pass_stmt':    '#FDFD96',
+  'except_clause':'#779ECB',
 }
 
 function getColor(type) {
