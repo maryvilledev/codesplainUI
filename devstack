@@ -8,7 +8,7 @@ if [ $? != 0 ]; then
   exit 1
 fi
 
-$DOCKER run --name "redis_container" -p 6379:6379 -d redis
-if [ $? != 0]; then
+$DOCKER run --name "redis_container" -p 6379:6379 -d redis 2> /dev/null
+if [ $? != 0 ]; then
   $DOCKER start "redis_container"
 fi
