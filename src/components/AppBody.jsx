@@ -118,7 +118,7 @@ class AppBody extends React.Component {
     // highlight tokens in snippet and update state
     if(parseReady) {
       parseReady = false;
-      setTimeout(() => parseReady = true, 150);
+      setTimeout(() => parseReady = true, 1000);
       new Promise((resolve) => resolve(parser(snippet)))
       .then((AST) => {
         highlight(snippet, AST, codeMirrorRef);
