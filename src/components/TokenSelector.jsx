@@ -6,27 +6,35 @@ import Checkbox from 'material-ui/Checkbox';
 class TokenSelector extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-
-    };
+    this.itemState = {}
     this.makeListItems = this.makeListItems.bind(this);
   }
 
   makeListItems() {
     return this.props.tokenTypes.map((tokenType, index) => {
+      const tokenText = tokenType.text
+      if (this.itemState[tokenText] === undefined)
+        this.itemState[tokenText] = false;
       return (
         <ListItem
-          key={`${tokenType.text}-index`}
-          leftCheckbox={<Checkbox />}
-          primaryText={tokenType.text}
+          key={`${tokenText}-index`}
+          leftCheckbox={
+            <Checkbox onCheck={
+                (ev, checked) => this.itemState[tokenText] = checked
+              }
+            />
+          }
+          primaryText={tokenText}
         />
       );
     });
   }
 
+
+
   render() {
     return (
-      <List>
+      <List onChange={() => this.props.onChange(this.itemState)}>
         <Subheader>Token types to highlight</Subheader>
         { this.makeListItems() }
       </List>
@@ -38,6 +46,6 @@ TokenSelector.propTypes = {
   tokenTypes: PropTypes.arrayOf(PropTypes.shape({
     text: PropTypes.string,
   })).isRequired,
+  onChange: PropTypes.func.isRequired,
 };
-
 export default TokenSelector;

@@ -2,18 +2,19 @@
   "name": "codesplainui",
   "version": "0.1.0",
   "private": true,
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "dependencies": {
-    "react-scripts": "0.9.0",
+    "axios": "^0.15.3",
     "body-parser": "^1.16.1",
     "enzyme": "^2.7.1",
     "express": "^4.14.1",
     "ioredis": "^2.5.0",
     "material-ui": "^0.17.0",
     "react": "^15.4.2",
+    "react-addons-test-utils": "^15.4.2",
     "react-codemirror": "^0.3.0",
     "react-dom": "^15.4.2",
+    "react-scripts": "0.9.0",
     "react-tap-event-plugin": "^2.0.1",
     "react-test-renderer": "^15.4.2",
     "uuid": "^3.0.1"

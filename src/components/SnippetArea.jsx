@@ -1,5 +1,7 @@
 import React, { PropTypes } from 'react';
 import CodeMirror from 'react-codemirror';
+import Save from 'material-ui/svg-icons/content/save'
+import IconButton from 'material-ui/IconButton'
 
 import { Card, CardText } from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
@@ -18,13 +20,18 @@ const snippetEditorModes = {
   python3: 'python',
 };
 
-const SnippetArea = ({ contents, isDialogOpen, onTitleChanged, onSnippetChanged, readOnly, switchReadOnlyMode, snippetLanguage, toggleConfirmLockDialogVisibility }) => {
+
+const SnippetArea = ({ contents, isDialogOpen, onTitleChanged, onSnippetChanged,
+   readOnly, switchReadOnlyMode, snippetLanguage, toggleConfirmLockDialogVisibility,
+   onSaveClick }) => {
+
   const codeMirrorOptions = {
     lineNumbers: true,
     theme: 'material',
     mode: snippetEditorModes[snippetLanguage],
     readOnly,
   };
+
   return (
     <Card>
       <CardText>
@@ -47,6 +54,12 @@ const SnippetArea = ({ contents, isDialogOpen, onTitleChanged, onSnippetChanged,
         options={codeMirrorOptions}
         onChange={onSnippetChanged}
       />
+    <IconButton
+      onTouchTap={onSaveClick}
+      tooltip="Save snippet"
+    >
+      <Save />
+    </IconButton>
       </CardText>
     </Card>
   );
@@ -59,8 +72,10 @@ SnippetArea.propTypes = {
   onSnippetChanged: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
   snippetLanguage: PropTypes.string.isRequired,
+  onSaveClick: PropTypes.func.isRequired,
   switchReadOnlyMode: PropTypes.func.isRequired,
   toggleConfirmLockDialogVisibility: PropTypes.func.isRequired,
+
 }
 
 export default SnippetArea;
