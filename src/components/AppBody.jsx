@@ -97,6 +97,21 @@ class AppBody extends React.Component {
       })
   }
 
+  componentDidMount() {
+    const { id } = this.props.params;
+    if (!id) {
+      return
+    }
+
+    axios.get(`/api/snippets/${id}`)
+      .then(res => {
+        console.log(res.body)
+      })
+      .catch(err => {
+        console.error(err)
+      });
+  }
+
   // Callback to be invoked when user edits the code snippet
   onSnippetChanged(snippet, codeMirrorRef) {
     this.setState({ snippet });
