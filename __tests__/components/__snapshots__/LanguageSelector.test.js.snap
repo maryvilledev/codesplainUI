@@ -18,7 +18,7 @@ exports[`<LanguageSelector /> matches snapshot 1`] = `
   }>
   <label
     className={undefined}
-    htmlFor="undefined-undefined-Language-15673"
+    htmlFor="undefined-undefined-Language-44594"
     onTouchTap={undefined}
     style={
       Object {
@@ -40,7 +40,7 @@ exports[`<LanguageSelector /> matches snapshot 1`] = `
   <div
     className={undefined}
     disabled={false}
-    id="undefined-undefined-Language-15673"
+    id="undefined-undefined-Language-44594"
     onBlur={[Function]}
     onChange={[Function]}
     onFocus={[Function]}
