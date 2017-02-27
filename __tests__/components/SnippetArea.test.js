@@ -19,7 +19,7 @@ describe('<SnippetArea />', () => {
           onSnippetChanged={jest.fn()}
           onTitleChanged={jest.fn()}
         />
-      </MuiThemeProvider>
+    </MuiThemeProvider>
     );
     expect(tree).toMatchSnapshot();
   })
