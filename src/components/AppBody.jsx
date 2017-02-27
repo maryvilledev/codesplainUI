@@ -8,6 +8,7 @@ import TokenSelector from './TokenSelector';
 import TokenInfoPanel from './TokenInfoPanel';
 
 import { parsePython3 } from '../parsers/python3';
+import { highlight }  from '../util/highlight.js';
 import axios from 'axios'
 
 const languages = [
@@ -26,6 +27,9 @@ const tokenTypes = [
   { text: "Variable" },
   { text: "Return statement" },
 ];
+
+// Keeps track of how long until we're ready to parse another AST
+let parseReady = true;
 
 class AppBody extends React.Component {
   constructor(props) {
@@ -94,7 +98,7 @@ class AppBody extends React.Component {
   }
 
   // Callback to be invoked when user edits the code snippet
-  onSnippetChanged(snippet) {
+  onSnippetChanged(snippet, codeMirrorRef) {
     this.setState({ snippet });
     // Make sure a language is selected
     const currentLang = this.state.selectedLanguage;
@@ -110,9 +114,17 @@ class AppBody extends React.Component {
       return;
     }
 
-    // Generate an AST for the current state of the code snippet
-    const AST = parser(snippet);
-    this.setState({ AST: AST });
+    // Generate an AST for the current state of the code snippet, then
+    // highlight tokens in snippet and update state
+    if(parseReady) {
+      parseReady = false;
+      setTimeout(() => parseReady = true, 1000);
+      new Promise((resolve) => resolve(parser(snippet)))
+      .then((AST) => {
+        highlight(snippet, AST, codeMirrorRef);
+        this.setState({ AST: AST });
+      });
+    }
   }
 
   onFiltersChanged(filters) {

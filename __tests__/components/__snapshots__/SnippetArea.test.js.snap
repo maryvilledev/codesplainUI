@@ -1,6 +1,12 @@
 exports[`<SnippetArea /> matches snapshot 1`] = `
 <SnippetArea
+  contents=""
+  isDialogOpen={false}
+  onSaveClick={[Function]}
   onSnippetChanged={[Function]}
   onTitleChanged={[Function]}
-  snippetLanguage="bash" />
+  readOnly={false}
+  snippetLanguage="bash"
+  switchReadOnlyMode={[Function]}
+  toggleConfirmLockDialogVisibility={[Function]} />
 `;
