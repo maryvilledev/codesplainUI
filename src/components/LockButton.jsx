@@ -6,7 +6,7 @@ import Lock from 'material-ui/svg-icons/action/lock';
 
 const LockButton = ({onClick, readOnly}) => {
   const lockIcon = readOnly ? <Lock /> : <LockOpen />;
-  const toolTipText = readOnly ? "Switching back to edit mode not supported yet" : "Click to switch to prevent any changes to the snippet";
+  const toolTipText = readOnly ? "Switching back to edit mode not supported yet" : "Click to lock the snippet (this will prevent further changes.)";
   return (
     <IconButton
       disabled={readOnly}
