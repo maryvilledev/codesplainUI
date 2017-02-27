@@ -171,6 +171,7 @@ class AppBody extends React.Component {
           </div>
           <div className="col-md-5">
             <SnippetArea
+              title={this.state.snippetTitle}
               onSaveClick={this.onSaveState}
               contents={this.state.snippet}
               isDialogOpen={this.state.isDialogOpen}

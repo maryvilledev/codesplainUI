@@ -23,7 +23,7 @@ const snippetEditorModes = {
 
 const SnippetArea = ({ contents, isDialogOpen, onTitleChanged, onSnippetChanged,
    readOnly, switchReadOnlyMode, snippetLanguage, toggleConfirmLockDialogVisibility,
-   onSaveClick }) => {
+   onSaveClick, title }) => {
 
   const codeMirrorOptions = {
     lineNumbers: true,
@@ -33,12 +33,14 @@ const SnippetArea = ({ contents, isDialogOpen, onTitleChanged, onSnippetChanged,
   };
 
   let codeMirrorRef;
+  console.log(title)
 
   return (
     <Card>
       <CardText>
       <TextField
         name="snippetName"
+        value={title}
         hintText="Snippet Name"
         onChange={onTitleChanged}
       />
@@ -78,6 +80,7 @@ SnippetArea.propTypes = {
   onSaveClick: PropTypes.func.isRequired,
   switchReadOnlyMode: PropTypes.func.isRequired,
   toggleConfirmLockDialogVisibility: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired
 
 }
 
@@ -85,7 +88,7 @@ export default SnippetArea;
 
 /*
 Given a CodeMirror ref, styleRegion() will apply the specified css style to the
-given region of code. The code is treated as a single string, and characters in 
+given region of code. The code is treated as a single string, and characters in
 that string must be identified by their index (as opposed to row/col). Both
 start and end are inclusive.
 */
