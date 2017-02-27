@@ -18,7 +18,6 @@ const snippetEditorModes = {
   python3: 'python',
 };
 
-// <<<<<<< HEAD
 class SnippetArea extends React.Component {
   constructor(props) {
     super(props);
@@ -58,40 +57,6 @@ class SnippetArea extends React.Component {
       </Card>
     );
   }
-// =======
-// const SnippetArea = ({ contents, isDialogOpen, onTitleChanged, onSnippetChanged, readOnly, switchReadOnlyMode, snippetLanguage, toggleConfirmLockDialogVisibility }) => {
-//   const codeMirrorOptions = {
-//     lineNumbers: true,
-//     theme: 'codesplain',
-//     mode: snippetEditorModes[snippetLanguage],
-//     readOnly,
-//   };
-//   return (
-//     <Card>
-//       <CardText>
-//       <TextField
-//         name="snippetName"
-//         hintText="Snippet Name"
-//         onChange={onTitleChanged}
-//       />
-//       <LockButton
-//         onClick={toggleConfirmLockDialogVisibility}
-//         readOnly={readOnly}
-//       />
-//       <ConfirmLockDialog
-//         isOpen={isDialogOpen}
-//         accept={switchReadOnlyMode}
-//         reject={toggleConfirmLockDialogVisibility}
-//       />
-//       <CodeMirror
-//         value={contents}
-//         options={codeMirrorOptions}
-//         onChange={onSnippetChanged}
-//       />
-//       </CardText>
-//     </Card>
-//   );
-// >>>>>>> master
 };
 
 SnippetArea.propTypes = {

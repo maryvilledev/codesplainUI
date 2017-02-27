@@ -1,5 +1,5 @@
 import React from 'react'
-import renderer from 'react-test-renderer';
+import ReactTestUtils from 'react-addons-test-utils';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import SnippetArea from '../../src/components/SnippetArea'
@@ -11,16 +11,21 @@ const mockSnippetLanguage = "bash"
 
 describe('<SnippetArea />', () => {
   it('matches snapshot', () => {
-    const tree = renderer.create(
+    const renderer = ReactTestUtils.createRenderer();
+    const tree = renderer.render(
       <MuiThemeProvider>
         <SnippetArea
           contents={mockContents}
           snippetLanguage={mockSnippetLanguage}
           onSnippetChanged={jest.fn()}
           onTitleChanged={jest.fn()}
+          isDialogOpen={false}
+          readOnly={false}
+          switchReadOnlyMode={jest.fn()}
+          toggleConfirmLockDialogVisibility={jest.fn()}
         />
       </MuiThemeProvider>
-    ).toJSON();
+    );
     expect(tree).toMatchSnapshot();
   })
 })
