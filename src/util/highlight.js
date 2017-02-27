@@ -27,18 +27,19 @@ function getColor(type) {
 }
 
 export function highlight(snippet, node, codeMirrorRef) {
-  const color = getColor(node.type);
-  if (color) {
+  // If we aren't ignoring this token...
+  if (ignoredTokens.indexOf(node.type) === -1) {
+    let color = getColor(node.type);
+    if (!color) {
+      color = '#ffffff';
+      console.warn(`token "${node.type}" has no color specified!`);
+    }
     styleRegion(
       codeMirrorRef, 
       node.begin, 
       node.end, 
       `background-color: ${color};`
     );
-  }
-  // If we aren't ignoring this token, warn that it has no color
-  else if (ignoredTokens.indexOf(node.type) === -1) {
-    console.warn(node.type + ' has no color!')
   }
 
   node.children.forEach(child => {
