@@ -36,7 +36,7 @@ class AppBody extends React.Component {
       snippetTitle: '',
       annotations: [],
       AST: [],
-      filters: [],
+      filters: {},
     };
     this.handleSelect = this.handleSelect.bind(this);
     this.onSnippetChanged = this.onSnippetChanged.bind(this);
@@ -92,7 +92,7 @@ class AppBody extends React.Component {
 
   // Callback to be invoked when user edits the code snippet
   onSnippetChanged(snippet, codeMirrorRef) {
-    this.setState({ snippet });
+    this.setState({ snippet, codeMirrorRef });
     // Make sure a language is selected
     const currentLang = this.state.selectedLanguage;
     if (!currentLang) {
@@ -118,19 +118,32 @@ class AppBody extends React.Component {
         getTokenCount(AST, tokenCount);
 
         // Generate array of strings containing pretty token name and its count
-        const filters = Object.keys(tokenCount)
-                              .filter(t => getPrettyTokenName(t) !== undefined)
-                              .map(t => `${getPrettyTokenName(t)} (${tokenCount[t]})`);
+        const filters = this.state.filters;
+        let newFilters = {};
+        Object.keys(tokenCount).filter(t => getPrettyTokenName(t) !== undefined)
+                               .forEach(t => {
+                                 let selected = false;
+                                 if (filters[t]) selected = filters[t].selected;
+                                 newFilters[t] = { 
+                                   prettyTokenName: getPrettyTokenName(t),
+                                   count: tokenCount[t],
+                                   selected: selected,
+                                 }
+                               });
 
         // Highlight the code snippet and update state
-        highlight(snippet, AST, codeMirrorRef);
-        this.setState({ AST: AST , filters: filters });
+        highlight(snippet, AST, codeMirrorRef, newFilters);
+        this.setState({ AST: AST , filters: newFilters });
       });
     }
   }
 
-  onFiltersChanged(filters) {
-    this.setState({ filters: filters });
+  onFiltersChanged(token, checked) {
+    const newFilters = this.state.filters;
+    newFilters[token].selected = checked;
+    // Highlight the code snippet and update state
+    highlight(this.state.snippet, this.state.AST, this.state.codeMirrorRef, newFilters);
+    this.setState({ filters: newFilters });
   }
 
   render() {
@@ -146,7 +159,7 @@ class AppBody extends React.Component {
                   selected={this.state.selectedLanguage}
                 />
                 <TokenSelector
-                  tokenTypes={this.state.filters.map(f => { return { text: f } })}
+                  tokens={this.state.filters}
                   onChange={this.onFiltersChanged}
                 />
               </CardText>
@@ -164,8 +177,6 @@ class AppBody extends React.Component {
               readOnly={this.state.readOnly}
               snippetLanguage={this.state.selectedLanguage}
             />
-
-
           </div>
           <div className="col-md-4">
             <TokenInfoPanel />

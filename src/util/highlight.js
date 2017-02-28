@@ -15,7 +15,7 @@ const tokenColors = {
   'expr':         '#F0ABF7',
   'str':          '#CAABF7',
   'atom':         '#ABDBF7',
-  'expr_stmt':    '#F7ABAB',
+  'expr_stmt':    '#BEDA0B',
   'arglist':      '#F7CDAB',
   'argument':     '#EAF7AB',
   'integer':      '#ABF7C6',
@@ -31,14 +31,26 @@ function getColor(type) {
   return tokenColors[type];
 }
 
-export function highlight(snippet, node, codeMirrorRef) {
+export function highlight(snippet, node, codeMirrorRef, filters, parentColor) {
+  let color = parentColor;
+  if (parentColor === undefined) color = 'transparent';
+
   // If we aren't ignoring this token...
   if (ignoredTokens.indexOf(node.type) === -1) {
-    let color = getColor(node.type);
+    color = getColor(node.type); // Get the color for this token's type
+
+    // If this token has no color 
     if (!color) {
       color = 'inherit';
       console.warn(`token "${node.type}" has no color specified!`);
     }
+
+    // If this token's filter is not selected
+    if (!filters[node.type].selected) {
+      color = parentColor;
+    }
+
+    // Apply the background color CSS to this token
     styleRegion(
       codeMirrorRef, 
       node.begin, 
@@ -47,7 +59,9 @@ export function highlight(snippet, node, codeMirrorRef) {
     );
   }
 
+  // Highlight all children of this token
   node.children.forEach(child => {
-    if (child === Object(child)) highlight(snippet, child, codeMirrorRef);
+    if (child === Object(child)) 
+      highlight(snippet, child, codeMirrorRef, filters, color);
   });
 }
