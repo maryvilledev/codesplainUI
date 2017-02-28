@@ -20,18 +20,71 @@ const snippetEditorModes = {
   python3: 'python',
 };
 
+// Options for the CodeMirror instance that are shared by edit and annotation mddes
+const baseCodeMirrorOptions = {
+    lineNumbers: true,
+    theme: 'codesplain',
+};
+
+// Options specific for edit mode should be set here
+const editModeOptions = {
+  ...baseCodeMirrorOptions,
+  readOnly: false,
+};
+
+// Options specific for annotation mode should be set here
+const annotationModeOptions = {
+  ...baseCodeMirrorOptions,
+  readOnly: true,
+};
 
 class SnippetArea extends React.Component {
   constructor(props) {
     super(props);
-  }
-  render() {
-    const codeMirrorOptions = {
-      lineNumbers: true,
-      theme: 'codesplain',
-      mode: snippetEditorModes[this.props.snippetLanguage],
-      readOnly: this.props.readOnly,
+    this.state = {
+      lockDialogOpen: false
     };
+
+    this.switchToReadOnlyMode = this.switchToReadOnlyMode.bind(this);
+    this.toggleLockDialogVisibility = this.toggleLockDialogVisibility.bind(this);
+  }
+
+  componentDidMount() {
+    const codeMirrorInst = this.codeMirror.getCodeMirror();
+    codeMirrorInst.on('gutterClick', (codeMirror, lineNumber) => {
+      // Clicking on a gutter in read-only mode should not do anything
+      if (!this.props.readOnly) {
+        return;
+      }
+      console.log(`clicked on line ${lineNumber}`);
+    })
+  }
+
+  switchToReadOnlyMode() {
+    // The lock dialog should not appear any more
+    this.setState({
+      lockDialogOpen: false,
+    });
+    // Invoke the callback to switch to read-only mode
+    this.props.switchReadOnlyMode();
+  }
+
+  toggleLockDialogVisibility() {
+    // Get the previous state of the lock dialog's visibility
+    const prevState = this.state.lockDialogOpen;
+    // Set the state to the NOT of the previous state
+    this.setState({
+      lockDialogOpen: !prevState,
+    });
+  }
+
+  render() {
+    // Inject any final options for the CodeMirror instance based on the props passed down
+    const codeMirrorOptions = {
+      ...(this.props.readOnly ? annotationModeOptions : editModeOptions),
+      mode: snippetEditorModes[this.props.snippetLanguage],
+    };
+
     return (
       <Card>
         <CardText>
@@ -41,18 +94,18 @@ class SnippetArea extends React.Component {
           onChange={this.props.onTitleChanged}
         />
         <LockButton
-          onClick={this.props.toggleConfirmLockDialogVisibility}
+          onClick={this.toggleLockDialogVisibility}
           readOnly={this.props.readOnly}
         />
         <ConfirmLockDialog
-          isOpen={this.props.isDialogOpen}
-          accept={this.props.switchReadOnlyMode}
-          reject={this.props.toggleConfirmLockDialogVisibility}
+          isOpen={this.state.lockDialogOpen}
+          accept={this.switchToReadOnlyMode}
+          reject={this.toggleLockDialogVisibility}
         />
         <CodeMirror
           ref={cm => {this.codeMirror = cm}}
           value={this.props.contents}
-          options={codeMirrorOptions}
+          options={ codeMirrorOptions }
           onChange={ev => this.props.onSnippetChanged(ev, this.codeMirror)}
         />
         <IconButton
@@ -69,14 +122,12 @@ class SnippetArea extends React.Component {
 
 SnippetArea.propTypes = {
   contents: PropTypes.string.isRequired,
-  isDialogOpen: PropTypes.bool.isRequired,
   onTitleChanged: PropTypes.func.isRequired,
   onSnippetChanged: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
   snippetLanguage: PropTypes.string.isRequired,
   onSaveClick: PropTypes.func.isRequired,
   switchReadOnlyMode: PropTypes.func.isRequired,
-  toggleConfirmLockDialogVisibility: PropTypes.func.isRequired,
 }
 
 export default SnippetArea;
