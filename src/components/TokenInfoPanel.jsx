@@ -12,9 +12,12 @@ const TokenInfoPanel = () => (
       <Tab label="Annotation">
         <CardText>Here is some annotation info about the token.</CardText>
       </Tab>
+      {/*
+      TODO Integrate tokens with SyntaxDB
       <Tab label="SyntaxDB">
         <CardText>Here is some info from SyntaxDB about the token.</CardText>
       </Tab>
+      */}
     </Tabs>
   </Card>
 );
