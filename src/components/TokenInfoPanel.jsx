@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
 import AnnotationDisplay from './AnnotationDisplay';
-import AnnotationEditor from './AnnotationEditor';
+import AnnotationCreator from './AnnotationCreator';
 
 const AnnotationSection = ({ displayStatus, displayProps }) => {
   switch (displayStatus) {
@@ -21,7 +21,7 @@ const AnnotationSection = ({ displayStatus, displayProps }) => {
   }
   case 'create': {
     return (
-      <AnnotationEditor
+      <AnnotationCreator
         {...displayProps}
       />
     );

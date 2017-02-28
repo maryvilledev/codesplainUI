@@ -75,6 +75,7 @@ class AppBody extends React.Component {
       annotationDisplay: 'display',
       annotationDisplayProps: {
         closeAnnotation: this.closeAnnotation,
+        lineNumber,
         lineText: codeMirrorInstance.getLine(lineNumber),
         text: this.state.annotations[String(lineNumber)],
       }

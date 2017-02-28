@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 
-class AnnotationEditor extends React.Component {
+class AnnotationCreator extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -34,11 +34,12 @@ class AnnotationEditor extends React.Component {
   render() {
     return (
       <div>
-        <code>{this.props.lineText}</code>
+        { this.props.lineNumber} - <code>{this.props.lineText}</code>
         <TextField
           name="annotationEditor"
           fullWidth={true}
           hintText="Enter your annotation here"
+          multiLine={true}
           onChange={this.onAnnotationChange}
           value={this.state.annotation}
         />
@@ -58,11 +59,11 @@ class AnnotationEditor extends React.Component {
   }
 }
 
-AnnotationEditor.propTypes = {
+AnnotationCreator.propTypes = {
   closeAnnotation: PropTypes.func.isRequired,
   lineNumber: PropTypes.number.isRequired,
   lineText: PropTypes.string.isRequired,
   saveAnnotation: PropTypes.func.isRequired,
 };
 
-export default AnnotationEditor;
+export default AnnotationCreator;

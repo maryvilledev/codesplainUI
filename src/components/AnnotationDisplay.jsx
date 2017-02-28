@@ -2,10 +2,10 @@ import React, { PropTypes } from 'react';
 
 import RaisedButton from 'material-ui/RaisedButton';
 
-const AnnotationDisplay = ({ closeAnnotation, lineText, text }) => {
+const AnnotationDisplay = ({ closeAnnotation, lineNumber, lineText, text }) => {
   return (
     <div>
-      <code>{lineText}</code> <br/>
+      {lineNumber} - <code>{lineText}</code> <br/>
       <pre>{text}</pre>
       <RaisedButton
         label="Close"
@@ -18,6 +18,7 @@ const AnnotationDisplay = ({ closeAnnotation, lineText, text }) => {
 
 AnnotationDisplay.propTypes = {
   closeAnnotation: PropTypes.func.isRequired,
+  lineNumber: PropTypes.string.isRequired,
   lineText: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
 };
