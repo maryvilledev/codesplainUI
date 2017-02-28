@@ -33,7 +33,7 @@ export default class SaveButtons extends React.Component {
           onTouchTap={this.handleTouchTap}
           tooltip="Save snippet" >
           <Save />
-        </IconButton >
+        </IconButton>
         <Snackbar
           open={this.state.open}
           message="Codesplaination Saved!"
