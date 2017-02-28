@@ -20,7 +20,7 @@ exports[`<TokenSelector /> matches snapshot 1`] = `
         "width": "100%",
       }
     }>
-    Token types to highlight
+    Select a token type to highlight all occurences
   </div>
   <div>
     <label
