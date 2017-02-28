@@ -11,15 +11,21 @@ const mockSnippetLanguage = "bash"
 
 describe('<SnippetArea />', () => {
   it('matches snapshot', () => {
-     const renderer = ReactTestUtils.createRenderer();
-     const tree = renderer.render(
+    const renderer = ReactTestUtils.createRenderer();
+    const tree = renderer.render(
       <MuiThemeProvider>
         <SnippetArea
           snippetLanguage={mockSnippetLanguage}
           onSnippetChanged={jest.fn()}
           onTitleChanged={jest.fn()}
+          isDialogOpen={false}
+          readOnly={false}
+          switchReadOnlyMode={jest.fn()}
+          toggleConfirmLockDialogVisibility={jest.fn()}
+          contents={''}
+          onSaveClick={jest.fn()}
         />
-    </MuiThemeProvider>
+      </MuiThemeProvider>
     );
     expect(tree).toMatchSnapshot();
   })

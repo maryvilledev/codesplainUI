@@ -1,4 +1,5 @@
 import React from 'react';
+import { browserHistory } from 'react-router'
 
 import { Card, CardText } from 'material-ui/Card';
 
@@ -8,6 +9,7 @@ import TokenSelector from './TokenSelector';
 import TokenInfoPanel from './TokenInfoPanel';
 
 import { parsePython3 } from '../parsers/python3';
+import { highlight }  from '../util/highlight.js';
 import axios from 'axios'
 
 const languages = [
@@ -27,13 +29,16 @@ const tokenTypes = [
   { text: "Return statement" },
 ];
 
+// Keeps track of how long until we're ready to parse another AST
+let parseReady = true;
+
 class AppBody extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isDialogOpen: false,
       readOnly: false,
-      selectedLanguage: '',
+      selectedLanguage: 'python3',
       snippetEditorMode: '',
       snippet: '',
       snippetTitle: '',
@@ -93,8 +98,26 @@ class AppBody extends React.Component {
       })
   }
 
+  componentDidMount() {
+    const { id } = this.props.params;
+    if (!id) {
+      return
+    }
+
+    axios.get(`/api/snippets/${id}`)
+      .then(res => {
+        const stateString = res.data.json;
+        const obj = JSON.parse(stateString)
+        this.setState(obj)
+      })
+      .catch(err => {
+        //Bad URL, redirect
+        browserHistory.push("/")
+      });
+  }
+
   // Callback to be invoked when user edits the code snippet
-  onSnippetChanged(snippet) {
+  onSnippetChanged(snippet, codeMirrorRef) {
     this.setState({ snippet });
     // Make sure a language is selected
     const currentLang = this.state.selectedLanguage;
@@ -110,9 +133,17 @@ class AppBody extends React.Component {
       return;
     }
 
-    // Generate an AST for the current state of the code snippet
-    const AST = parser(snippet);
-    this.setState({ AST: AST });
+    // Generate an AST for the current state of the code snippet, then
+    // highlight tokens in snippet and update state
+    if(parseReady) {
+      parseReady = false;
+      setTimeout(() => parseReady = true, 1000);
+      new Promise((resolve) => resolve(parser(snippet)))
+      .then((AST) => {
+        highlight(snippet, AST, codeMirrorRef);
+        this.setState({ AST: AST });
+      });
+    }
   }
 
   onFiltersChanged(filters) {
@@ -140,6 +171,7 @@ class AppBody extends React.Component {
           </div>
           <div className="col-md-5">
             <SnippetArea
+              title={this.state.snippetTitle}
               onSaveClick={this.onSaveState}
               contents={this.state.snippet}
               isDialogOpen={this.state.isDialogOpen}

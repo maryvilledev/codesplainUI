@@ -2466,7 +2466,7 @@ exports.getCachedPredictionContext = getCachedPredictionContext;
  * can be found in the LICENSE.txt file in the project root.
  */
 
-var LL1Analyzer = __webpack_require__(40).LL1Analyzer;
+var LL1Analyzer = __webpack_require__(41).LL1Analyzer;
 var IntervalSet = __webpack_require__(2).IntervalSet;
 
 function ATN(grammarType , maxTokenType) {
@@ -3762,19 +3762,19 @@ exports.PredPrediction = PredPrediction;
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
-exports.atn = __webpack_require__(46);
+exports.atn = __webpack_require__(47);
 exports.codepointat = __webpack_require__(30);
-exports.dfa = __webpack_require__(48);
+exports.dfa = __webpack_require__(49);
 exports.fromcodepoint = __webpack_require__(31);
-exports.tree = __webpack_require__(51);
-exports.error = __webpack_require__(50);
+exports.tree = __webpack_require__(52);
+exports.error = __webpack_require__(51);
 exports.Token = __webpack_require__(1).Token;
 exports.CommonToken = __webpack_require__(1).CommonToken;
 exports.InputStream = __webpack_require__(22).InputStream;
-exports.FileStream = __webpack_require__(39).FileStream;
-exports.CommonTokenStream = __webpack_require__(38).CommonTokenStream;
+exports.FileStream = __webpack_require__(40).FileStream;
+exports.CommonTokenStream = __webpack_require__(39).CommonTokenStream;
 exports.Lexer = __webpack_require__(13).Lexer;
-exports.Parser = __webpack_require__(41).Parser;
+exports.Parser = __webpack_require__(42).Parser;
 var pc = __webpack_require__(6);
 exports.PredictionContextCache = pc.PredictionContextCache;
 exports.ParserRuleContext = __webpack_require__(19).ParserRuleContext;
@@ -3798,7 +3798,7 @@ exports.Utils = __webpack_require__(0);
 
 var Token = __webpack_require__(1).Token;
 var Recognizer = __webpack_require__(23).Recognizer;
-var CommonTokenFactory = __webpack_require__(37).CommonTokenFactory;
+var CommonTokenFactory = __webpack_require__(38).CommonTokenFactory;
 var RecognitionException  = __webpack_require__(5).RecognitionException;
 var LexerNoViableAltException = __webpack_require__(5).LexerNoViableAltException;
 
@@ -15536,7 +15536,7 @@ exports.ATNDeserializationOptions = ATNDeserializationOptions;
 
 var Token = __webpack_require__(1).Token;
 var ATN = __webpack_require__(7).ATN;
-var ATNType = __webpack_require__(42).ATNType;
+var ATNType = __webpack_require__(43).ATNType;
 var ATNStates = __webpack_require__(4);
 var ATNState = ATNStates.ATNState;
 var BasicState = ATNStates.BasicState;
@@ -18259,7 +18259,7 @@ module.exports = ErrorListener;
 /* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
-let collapse = __webpack_require__(52).collapse;
+let collapse = __webpack_require__(36).collapse;
 
 module.exports = {
 	'language': 'Python3',
@@ -19176,25 +19176,32 @@ Python3Lexer.prototype.grammarFileName = "Python3.g4";
   let CommonToken = __webpack_require__(1).CommonToken;
   let Python3Parser = __webpack_require__(21).Python3Parser;
 
-  // A queue where extra tokens are pushed on (see the NEWLINE lexer rule).
-  Python3Lexer.prototype.tokens = [];
+  let old_lexer = Python3Lexer;
+  Python3Lexer = function() {
+    old_lexer.apply(this, arguments);
+    this.reset.call(this);
+  }
 
-  // The stack that keeps track of the indentation level.
-  Python3Lexer.prototype.indents = [];
+  Python3Lexer.prototype = Object.create(old_lexer.prototype);
+  Python3Lexer.prototype.constructor = Python3Lexer;
 
-  // The amount of opened braces, brackets and parenthesis.
-  Python3Lexer.prototype.opened = 0;
 
-  // The most recently produced token.
-  Python3Lexer.prototype.lastToken = null;
+  Python3Lexer.prototype.reset = function() {
+    // A queue where extra tokens are pushed on (see the NEWLINE lexer rule).
+    this.token_queue = [];
 
-  Python3Lexer.prototype.emit = function(t) {
-    if (typeof t === 'undefined') {
-      return antlr4.Lexer.prototype.emit.call(this);
-    }
+    // The stack that keeps track of the indentation level.
+    this.indents = [];
 
-    this._token = t;
-    this.tokens.push(t);
+    // The amount of opened braces, brackets and parenthesis.
+    this.opened = 0;
+
+    antlr4.Lexer.prototype.reset.call(this);
+  };
+
+  Python3Lexer.prototype.emitToken = function(token) {
+    this._token = token;
+    this.token_queue.push(token);
   };
 
   /**
@@ -19206,39 +19213,32 @@ Python3Lexer.prototype.grammarFileName = "Python3.g4";
    */
   Python3Lexer.prototype.nextToken = function() {
     // Check if the end-of-file is ahead and there are still some DEDENTS expected.
-    if (this._input.LA(1) === Python3Lexer.EOF && this.indents.length) {
+    if (this._input.LA(1) === Python3Parser.EOF && this.indents.length) {
 
       // Remove any trailing EOF tokens from our buffer.
-      this.tokens = this.tokens.filter(function(val) {
-        return val.type === Python3Lexer.EOF;
+      this.token_queue = this.token_queue.filter(function(val) {
+        return val.type !== Python3Parser.EOF;
       });
 
       // First emit an extra line break that serves as the end of the statement.
-      this.emit(this.commonToken(Python3Lexer.NEWLINE, "\n"));
+      this.emitToken(this.commonToken(Python3Parser.NEWLINE, "\n"));
 
       // Now emit as much DEDENT tokens as needed.
       while (this.indents.length) {
-        this.emit(this.createDedent());
+        this.emitToken(this.createDedent());
         this.indents.pop();
       }
 
       // Put the EOF back on the token stream.
-      this.emit(this.commonToken(Python3Lexer.EOF, "<EOF>"));
+      this.emitToken(this.commonToken(Python3Parser.EOF, "<EOF>"));
     }
 
     let next = antlr4.Lexer.prototype.nextToken.call(this);
-
-    if (next.channel === antlr4.Token.DEFAULT_CHANNEL) {
-      this.lastToken = next;
-    }
-
-    return this.tokens.length ? this.tokens.shift() : next;
+    return this.token_queue.length ? this.token_queue.shift() : next;
   };
 
   Python3Lexer.prototype.createDedent = function() {
-    let dedent = this.commonToken(Python3Parser.DEDENT, "");
-    dedent.line = this.lastToken.line;
-    return dedent;
+    return this.commonToken(Python3Parser.DEDENT, "");
   }
 
   Python3Lexer.prototype.commonToken = function(type, text) {
@@ -19268,7 +19268,7 @@ Python3Lexer.prototype.grammarFileName = "Python3.g4";
   }
 
   Python3Lexer.prototype.atStartOfInput = function() {
-    return false;
+    return this.getCharIndex() === 0;
   }
 
 
@@ -19308,13 +19308,12 @@ Python3Lexer.prototype.NEWLINE_action = function(localctx , actionIndex) {
 		     let spaces = this.text.replace(/[\r\n]+/g, '');
 		     let next = this._input.LA(1);
 
-		     if (this.opened > 0 || next === '\r' || next === '\n' || next === '#') {
+		     if (this.opened > 0 || next === 13 /* '\r' */ || next === 10 /* '\n' */ || next === 35 /* '#' */) {
 		       // If we're inside a list or on a blank line, ignore all indents,
 		       // dedents and line breaks.
 		       this.skip();
-		     }
-		     else {
-		       this.emit(this.commonToken(Python3Lexer.NEWLINE, newLine));
+		     } else {
+		       this.emitToken(this.commonToken(Python3Parser.NEWLINE, newLine));
 
 		       let indent = this.getIndentationCount(spaces);
 		       let previous = this.indents.length ? this.indents[this.indents.length - 1] : 0;
@@ -19322,15 +19321,13 @@ Python3Lexer.prototype.NEWLINE_action = function(localctx , actionIndex) {
 		       if (indent === previous) {
 		         // skip indents of the same size as the present indent-size
 		         this.skip();
-		       }
-		       else if (indent > previous) {
+		       } else if (indent > previous) {
 		         this.indents.push(indent);
-		         this.emit(this.commonToken(Python3Parser.INDENT, spaces));
-		       }
-		       else {
+		         this.emitToken(this.commonToken(Python3Parser.INDENT, spaces));
+		       } else {
 		         // Possibly emit more than 1 DEDENT token.
-		         while(this.indents.length && this.indents[this.indents.length - 1] > indent) {
-		           this.emit(this.createDedent());
+		         while (this.indents.length && this.indents[this.indents.length - 1] > indent) {
+		           this.emitToken(this.createDedent());
 		           this.indents.pop();
 		         }
 		       }
@@ -19427,6 +19424,25 @@ exports.Python3Lexer = Python3Lexer;
 
 /***/ }),
 /* 36 */
+/***/ (function(module, exports) {
+
+module.exports = {};
+
+module.exports.collapse = function(ast) {
+    // If there is only one child, and it is exactly the same as this node, then eliminate this node.
+    if (ast.children.length === 1
+        && ast.begin === ast.children[0].begin
+        && ast.end === ast.children[0].end
+    ) {
+        return ast.children[0];
+    } else {
+        return ast;
+    }
+};
+
+
+/***/ }),
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //
@@ -19807,7 +19823,7 @@ exports.BufferedTokenStream = BufferedTokenStream;
 
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //
@@ -19882,7 +19898,7 @@ exports.CommonTokenFactory = CommonTokenFactory;
 
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //
@@ -19918,7 +19934,7 @@ exports.CommonTokenFactory = CommonTokenFactory;
 ///
 
 var Token = __webpack_require__(1).Token;
-var BufferedTokenStream = __webpack_require__(36).BufferedTokenStream;
+var BufferedTokenStream = __webpack_require__(37).BufferedTokenStream;
 
 function CommonTokenStream(lexer, channel) {
 	BufferedTokenStream.call(this, lexer);
@@ -19991,7 +20007,7 @@ CommonTokenStream.prototype.getNumberOfOnChannelTokens = function() {
 exports.CommonTokenStream = CommonTokenStream;
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //
@@ -20023,7 +20039,7 @@ exports.FileStream = FileStream;
 
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //
@@ -20228,7 +20244,7 @@ exports.LL1Analyzer = LL1Analyzer;
 
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* Copyright (c) 2012-2016 The ANTLR Project. All rights reserved.
@@ -20907,7 +20923,7 @@ Parser.prototype.setTrace = function(trace) {
 exports.Parser = Parser;
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports) {
 
 /* Copyright (c) 2012-2016 The ANTLR Project. All rights reserved.
@@ -20930,7 +20946,7 @@ exports.ATNType = ATNType;
 
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //
@@ -20968,7 +20984,7 @@ var SingletonPredictionContext = __webpack_require__(6).SingletonPredictionConte
 var RuleStopState = __webpack_require__(4).RuleStopState;
 var LexerATNConfig = __webpack_require__(15).LexerATNConfig;
 var Transition = __webpack_require__(8).Transition;
-var LexerActionExecutor = __webpack_require__(44).LexerActionExecutor;
+var LexerActionExecutor = __webpack_require__(45).LexerActionExecutor;
 var LexerNoViableAltException = __webpack_require__(5).LexerNoViableAltException;
 
 function resetSimState(sim) {
@@ -21572,7 +21588,7 @@ exports.LexerATNSimulator = LexerATNSimulator;
 
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //
@@ -21744,7 +21760,7 @@ exports.LexerActionExecutor = LexerActionExecutor;
 
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //
@@ -23477,7 +23493,7 @@ ParserATNSimulator.prototype.reportAmbiguity = function(dfa, D, startIndex, stop
 exports.ParserATNSimulator = ParserATNSimulator;
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* Copyright (c) 2012-2016 The ANTLR Project. All rights reserved.
@@ -23487,13 +23503,13 @@ exports.ParserATNSimulator = ParserATNSimulator;
 
 exports.ATN = __webpack_require__(7).ATN;
 exports.ATNDeserializer = __webpack_require__(25).ATNDeserializer;
-exports.LexerATNSimulator = __webpack_require__(43).LexerATNSimulator;
-exports.ParserATNSimulator = __webpack_require__(45).ParserATNSimulator;
+exports.LexerATNSimulator = __webpack_require__(44).LexerATNSimulator;
+exports.ParserATNSimulator = __webpack_require__(46).ParserATNSimulator;
 exports.PredictionMode = __webpack_require__(28).PredictionMode;
 
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //
@@ -23652,7 +23668,7 @@ exports.DFA = DFA;
 
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* Copyright (c) 2012-2016 The ANTLR Project. All rights reserved.
@@ -23660,14 +23676,14 @@ exports.DFA = DFA;
  * can be found in the LICENSE.txt file in the project root.
  */
 
-exports.DFA = __webpack_require__(47).DFA;
+exports.DFA = __webpack_require__(48).DFA;
 exports.DFASerializer = __webpack_require__(16).DFASerializer;
 exports.LexerDFASerializer = __webpack_require__(16).LexerDFASerializer;
 exports.PredPrediction = __webpack_require__(11).PredPrediction;
 
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //
@@ -23783,7 +23799,7 @@ DiagnosticErrorListener.prototype.getConflictingAlts = function(reportedAlts, co
 exports.DiagnosticErrorListener = DiagnosticErrorListener;
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* Copyright (c) 2012-2016 The ANTLR Project. All rights reserved.
@@ -23796,13 +23812,13 @@ exports.NoViableAltException = __webpack_require__(5).NoViableAltException;
 exports.LexerNoViableAltException = __webpack_require__(5).LexerNoViableAltException;
 exports.InputMismatchException = __webpack_require__(5).InputMismatchException;
 exports.FailedPredicateException = __webpack_require__(5).FailedPredicateException;
-exports.DiagnosticErrorListener = __webpack_require__(49).DiagnosticErrorListener;
+exports.DiagnosticErrorListener = __webpack_require__(50).DiagnosticErrorListener;
 exports.BailErrorStrategy = __webpack_require__(29).BailErrorStrategy;
 exports.ErrorListener = __webpack_require__(17).ErrorListener;
 
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* Copyright (c) 2012-2016 The ANTLR Project. All rights reserved.
@@ -23816,25 +23832,6 @@ exports.RuleNode = Tree.RuleNode;
 exports.ParseTreeListener = Tree.ParseTreeListener;
 exports.ParseTreeVisitor = Tree.ParseTreeVisitor;
 exports.ParseTreeWalker = Tree.ParseTreeWalker;
-
-
-/***/ }),
-/* 52 */
-/***/ (function(module, exports) {
-
-module.exports = {};
-
-module.exports.collapse = function(ast) {
-    // If there is only one child, and it is exactly the same as this node, then eliminate this node.
-    if (ast.children.length === 1
-        && ast.begin === ast.children[0].begin
-        && ast.end === ast.children[0].end
-    ) {
-        return ast.children[0];
-    } else {
-        return ast;
-    }
-};
 
 
 /***/ }),
@@ -23879,7 +23876,7 @@ module.exports = function(input) {
 
     let process_node = function(node) {
         if (node instanceof TerminalNodeImpl) {
-            return node.symbol.type;
+            return parser.symbolicNames[node.symbol.type];
         } else {
             let ast = {
                 'type': parser.ruleNames[node.ruleIndex],
