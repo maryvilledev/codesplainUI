@@ -5,7 +5,7 @@ import SaveButton from '../../src/components/SaveButton';
 describe('Save />', () => {
   it('matches snapshot', () => {
     const renderer = ReactTestUtils.createRenderer();
-    const tree = renderer.render(
+    const tree = renderer.rendera(
       <SaveButton />
     );
     expect(tree).toMatchSnapshot();

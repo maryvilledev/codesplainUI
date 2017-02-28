@@ -140,6 +140,7 @@ class AppBody extends React.Component {
       setTimeout(() => parseReady = true, 1000);
       new Promise((resolve) => resolve(parser(snippet)))
       .then((AST) => {
+        console.log(JSON.stringify(AST));
         highlight(snippet, AST, codeMirrorRef);
         this.setState({ AST: AST });
       });
