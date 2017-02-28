@@ -35,7 +35,7 @@ class TokenSelector extends React.Component {
   render() {
     return (
       <List onChange={() => this.props.onChange(this.itemState)}>
-        <Subheader>Token types to highlight</Subheader>
+        <Subheader>Select a token type to highlight all occurences</Subheader>
         { this.makeListItems() }
       </List>
     );

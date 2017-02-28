@@ -9,6 +9,7 @@ import TokenInfoPanel from './TokenInfoPanel';
 
 import { parsePython3 } from '../parsers/python3';
 import { highlight }  from '../util/highlight.js';
+import { getTokenCount, getPrettyTokenName } from '../util/tokens.js';
 import axios from 'axios'
 
 const languages = [
@@ -19,14 +20,6 @@ const languages = [
 const parsers = {
   python3: parsePython3,
 }
-
-const tokenTypes = [
-  { text: "Function" },
-  { text: "For loop" },
-  { text: "If statement" },
-  { text: "Variable" },
-  { text: "Return statement" },
-];
 
 // Keeps track of how long until we're ready to parse another AST
 let parseReady = true;
@@ -43,7 +36,7 @@ class AppBody extends React.Component {
       snippetTitle: '',
       annotations: [],
       AST: [],
-      filters: {},
+      filters: [],
     };
     this.handleSelect = this.handleSelect.bind(this);
     this.onSnippetChanged = this.onSnippetChanged.bind(this);
@@ -114,15 +107,24 @@ class AppBody extends React.Component {
       return;
     }
 
-    // Generate an AST for the current state of the code snippet, then
-    // highlight tokens in snippet and update state
+    // Generate an AST for the current state of the code snippet, if ready
     if(parseReady) {
       parseReady = false;
       setTimeout(() => parseReady = true, 1000);
       new Promise((resolve) => resolve(parser(snippet)))
       .then((AST) => {
+        // Get an array mapping token types to their occurence count
+        const tokenCount = [];
+        getTokenCount(AST, tokenCount);
+
+        // Generate array of strings containing pretty token name and its count
+        const filters = Object.keys(tokenCount)
+                              .filter(t => getPrettyTokenName(t) !== undefined)
+                              .map(t => `${getPrettyTokenName(t)} (${tokenCount[t]})`);
+
+        // Highlight the code snippet and update state
         highlight(snippet, AST, codeMirrorRef);
-        this.setState({ AST: AST });
+        this.setState({ AST: AST , filters: filters });
       });
     }
   }
@@ -144,7 +146,7 @@ class AppBody extends React.Component {
                   selected={this.state.selectedLanguage}
                 />
                 <TokenSelector
-                  tokenTypes={tokenTypes}
+                  tokenTypes={this.state.filters.map(f => { return { text: f } })}
                   onChange={this.onFiltersChanged}
                 />
               </CardText>

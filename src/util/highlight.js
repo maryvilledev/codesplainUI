@@ -11,8 +11,7 @@ const ignoredTokens = [
 const tokenColors = {
   'for_stmt' :    '#F7ABAB',
   'if_stmt':      '#C23B22',
-  'number':       'DEA5A4',
-  'exptr_stmt':   '#F7ABD4',
+  'number':       '#DEA5A4',
   'expr':         '#F0ABF7',
   'str':          '#CAABF7',
   'atom':         '#ABDBF7',
