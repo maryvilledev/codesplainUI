@@ -4,7 +4,7 @@ import IconButton from 'material-ui/IconButton';
 import Save from 'material-ui/svg-icons/content/save';
 
 
-export default class SaveButtons extends React.Component {
+export default class SaveButton extends React.Component {
 
   constructor(props) {
     super(props);
