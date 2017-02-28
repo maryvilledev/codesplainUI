@@ -14,5 +14,5 @@ $DOCKER ps -a --format {{.Names}} | grep redis_container >/dev/null && \
 if [ $container_exists ]; then
   $DOCKER rm -f redis_container
 fi
-$DOCKER run --name redis_container -p 6379:6379 -v $(pwd)/data/redis:/data/redis:rw \
+$DOCKER run --name redis_container -p 6379:6379 -v $(pwd)/data/redis:/data:rw \
   -d redis redis-server --appendonly yes
