@@ -13,7 +13,7 @@ const mockFilters = {
     selected: false
   },
   'atom': {
-    prettyTOkenName: 'Atoms',
+    prettyTokenName: 'Atoms',
     count: 21,
     selected: true
   }

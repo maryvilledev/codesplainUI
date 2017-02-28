@@ -46,7 +46,7 @@ export function highlight(snippet, node, codeMirrorRef, filters, parentColor) {
     }
 
     // If this token's filter is not selected
-    if (!filters[node.type].selected) {
+    if (!filters[node.type] || !filters[node.type].selected) {
       color = parentColor;
     }
 
