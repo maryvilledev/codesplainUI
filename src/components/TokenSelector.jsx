@@ -46,9 +46,9 @@ class TokenSelector extends React.Component {
 }
 
 TokenSelector.propTypes = {
-  tokens: PropTypes.arrayOf(PropTypes.shape({
+  tokens: PropTypes.shape({
     text: PropTypes.string,
-  })).isRequired,
+  }).isRequired,
   onChange: PropTypes.func.isRequired,
 };
 export default TokenSelector;

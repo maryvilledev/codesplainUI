@@ -6,18 +6,25 @@ import TokenSelector from '../../src/components/TokenSelector';
 
 jest.mock('material-ui/Checkbox')
 
-const mockTokenTypes = [
-  {text: "for-each"},
-  {text: "for-in"},
-  {text: "for-of"}
-]
+const mockFilters = {
+  'for_stmt': {
+    prettyTokenName: 'For Loops',
+    count: 1,
+    selected: false
+  },
+  'atom': {
+    prettyTOkenName: 'Atoms',
+    count: 21,
+    selected: true
+  }
+}
 
 describe('<TokenSelector />', () => {
   it('matches snapshot', () => {
     const tree = renderer.create(
       <MuiThemeProvider>
         <TokenSelector
-          tokenTypes={mockTokenTypes}
+          tokens={mockFilters}
           onChange={jest.fn()}
         />
       </MuiThemeProvider>
