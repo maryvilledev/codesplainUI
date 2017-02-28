@@ -1,18 +1,21 @@
 import React, { PropTypes } from 'react';
 import CodeMirror from 'react-codemirror';
-import Save from 'material-ui/svg-icons/content/save'
-import IconButton from 'material-ui/IconButton'
 
 import { Card, CardText } from 'material-ui/Card';
-import '../styles/codesplain.css'
+import IconButton from 'material-ui/IconButton'
+import Save from 'material-ui/svg-icons/content/save'
 import TextField from 'material-ui/TextField';
+
 import ConfirmLockDialog from './ConfirmLockDialog.jsx'
 import LockButton from './LockButton';
+
 import { getIndexToRowColConverter } from '../util/util.js';
 
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/go/go.js';
 import 'codemirror/mode/python/python.js';
+
+import '../styles/codesplain.css'
 
 
 const snippetEditorModes = {
@@ -24,6 +27,7 @@ const snippetEditorModes = {
 const baseCodeMirrorOptions = {
     lineNumbers: true,
     theme: 'codesplain',
+    gutters: [ 'annotations', 'CodeMirror-linenumbers' ],
 };
 
 // Options specific for edit mode should be set here
@@ -56,8 +60,17 @@ class SnippetArea extends React.Component {
       if (!this.props.readOnly) {
         return;
       }
-      console.log(`clicked on line ${lineNumber}`);
-    })
+      // Get information about the line clicked on
+      this.props.onGutterClick(codeMirror, lineNumber);
+    });
+  }
+
+  componentWillUpdate() {
+    const codeMirrorInst = this.codeMirror.getCodeMirror();
+    codeMirrorInst.clearGutter('annotations');
+    this.props.annotatedLines.map((lineNumber) => {
+      codeMirrorInst.setGutterMarker(Number(lineNumber), 'annotations', makeMarker())
+    });
   }
 
   switchToReadOnlyMode() {
@@ -89,8 +102,8 @@ class SnippetArea extends React.Component {
       <Card>
         <CardText>
         <TextField
-          name="snippetName"
           hintText="Snippet Name"
+          name="snippetName"
           onChange={this.props.onTitleChanged}
         />
         <LockButton
@@ -98,15 +111,15 @@ class SnippetArea extends React.Component {
           readOnly={this.props.readOnly}
         />
         <ConfirmLockDialog
-          isOpen={this.state.lockDialogOpen}
           accept={this.switchToReadOnlyMode}
+          isOpen={this.state.lockDialogOpen}
           reject={this.toggleLockDialogVisibility}
         />
         <CodeMirror
+          onChange={ev => this.props.onSnippetChanged(ev, this.codeMirror)}
+          options={ codeMirrorOptions }
           ref={cm => {this.codeMirror = cm}}
           value={this.props.contents}
-          options={ codeMirrorOptions }
-          onChange={ev => this.props.onSnippetChanged(ev, this.codeMirror)}
         />
         <IconButton
           onTouchTap={this.props.onSaveClick}
@@ -121,12 +134,14 @@ class SnippetArea extends React.Component {
 };
 
 SnippetArea.propTypes = {
+  annotatedLines: PropTypes.arrayOf(PropTypes.string).isRequired,
   contents: PropTypes.string.isRequired,
-  onTitleChanged: PropTypes.func.isRequired,
+  onGutterClick: PropTypes.func.isRequired,
+  onSaveClick: PropTypes.func.isRequired,
   onSnippetChanged: PropTypes.func.isRequired,
+  onTitleChanged: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
   snippetLanguage: PropTypes.string.isRequired,
-  onSaveClick: PropTypes.func.isRequired,
   switchReadOnlyMode: PropTypes.func.isRequired,
 }
 
@@ -144,4 +159,11 @@ export function styleRegion(codeMirrorRef, start, end, css) {
   const snippet = cmElement.getValue();
   const convert = getIndexToRowColConverter(snippet);
   cmElement.markText(convert(start), convert(end), {css: css});
+}
+
+const makeMarker = () => {
+  const marker = document.createElement("div");
+  marker.style.color = "#822";
+  marker.innerHTML = "●";
+  return marker;
 }

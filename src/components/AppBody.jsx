@@ -35,21 +35,57 @@ class AppBody extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      annotationDisplay: 'none',
+      annotationDisplayProps: {},
+      annotations: {  },
+      AST: [],
+      displayedAnnotation: null,
+      filters: {},
       readOnly: false,
       selectedLanguage: 'python3',
-      snippetEditorMode: '',
       snippet: '',
+      snippetEditorMode: '',
       snippetTitle: '',
-      annotations: [],
-      AST: [],
-      filters: {},
     };
+    this.closeAnnotation = this.closeAnnotation.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
+    this.onFiltersChanged = this.onFiltersChanged.bind(this);
+    this.onGutterClick = this.onGutterClick.bind(this);
+    this.onSaveState = this.onSaveState.bind(this);
     this.onSnippetChanged = this.onSnippetChanged.bind(this);
     this.onSnippetTitleChanged = this.onSnippetTitleChanged.bind(this);
-    this.onFiltersChanged = this.onFiltersChanged.bind(this);
-    this.onSaveState = this.onSaveState.bind(this);
+    this.saveAnnotation = this.saveAnnotation.bind(this);
     this.switchReadOnlyMode = this.switchReadOnlyMode.bind(this);
+  }
+
+  onGutterClick(codeMirrorInstance, lineNumber) {
+    if (this.state.annotations[String(lineNumber)] === undefined) {
+      this.setState({
+        annotationDisplay: 'create',
+        annotationDisplayProps: {
+          closeAnnotation: this.closeAnnotation,
+          lineNumber,
+          lineText: codeMirrorInstance.getLine(lineNumber),
+          saveAnnotation: this.saveAnnotation,
+        },
+      });
+      return;
+    }
+    this.setState({
+      annotationDisplay: 'display',
+      annotationDisplayProps: {
+        closeAnnotation: this.closeAnnotation,
+        lineText: codeMirrorInstance.getLine(lineNumber),
+        text: this.state.annotations[String(lineNumber)],
+      }
+    })
+  }
+
+  closeAnnotation() {
+    this.setState({
+      annotationDisplay: 'none',
+      annotationDisplayProps: {},
+    });
   }
 
   handleSelect(ev, index, value) {
@@ -119,7 +155,17 @@ class AppBody extends React.Component {
   }
 
   onFiltersChanged(filters) {
-    this.setState({ filters: filters });
+    this.setState({ filters });
+  }
+
+  saveAnnotation(lineNumber, annotation) {
+    const annotations = this.state.annotations;
+    this.setState({
+      annotations: {
+        ...annotations,
+        [lineNumber]: annotation,
+      },
+    });
   }
 
   render() {
@@ -135,25 +181,30 @@ class AppBody extends React.Component {
                   selected={this.state.selectedLanguage}
                 />
                 <TokenSelector
-                  tokenTypes={tokenTypes}
                   onChange={this.onFiltersChanged}
+                  tokenTypes={tokenTypes}
                 />
               </CardText>
             </Card>
           </div>
           <div className="col-md-5">
             <SnippetArea
-              onSaveClick={this.onSaveState}
+              annotatedLines={Object.keys(this.state.annotations)}
               contents={this.state.snippet}
-              onTitleChanged={this.onSnippetTitleChanged}
+              onGutterClick={this.onGutterClick}
+              onSaveClick={this.onSaveState}
               onSnippetChanged={this.onSnippetChanged}
-              switchReadOnlyMode={this.switchReadOnlyMode}
+              onTitleChanged={this.onSnippetTitleChanged}
               readOnly={this.state.readOnly}
               snippetLanguage={this.state.selectedLanguage}
+              switchReadOnlyMode={this.switchReadOnlyMode}
             />
           </div>
           <div className="col-md-4">
-            <TokenInfoPanel />
+            <TokenInfoPanel
+              displayProps={this.state.annotationDisplayProps}
+              displayStatus={this.state.annotationDisplay}
+            />
           </div>
         </div>
       </div>
