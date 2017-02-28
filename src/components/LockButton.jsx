@@ -13,6 +13,9 @@ const LockButton = ({onClick, readOnly}) => {
       label={`Switch to ${ readOnly ? 'edit' : 'read-only' } mode`}
       onTouchTap={onClick}
       tooltip={toolTipText}
+      iconStyle={{
+        margin: '4 auto'
+      }}
     >
       {lockIcon}
     </IconButton>

@@ -155,7 +155,7 @@ class AppBody extends React.Component {
     return (
       <div className="container-fluid">
         <div className="row">
-          <div className="col-md-3">
+          <div className="col-md-2">
             <Card>
               <CardText>
                 <LanguageSelector
@@ -170,7 +170,7 @@ class AppBody extends React.Component {
               </CardText>
             </Card>
           </div>
-          <div className="col-md-5">
+          <div className="col-md-6">
             <SnippetArea
               title={this.state.snippetTitle}
               onSaveClick={this.onSaveState}
