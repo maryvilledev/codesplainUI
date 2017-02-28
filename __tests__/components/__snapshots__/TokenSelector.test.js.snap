@@ -81,7 +81,7 @@ exports[`<TokenSelector /> matches snapshot 1`] = `
             "muiPrepared": true,
           }
         }>
-        undefined (21)
+        Atoms (21)
       </div>
     </label>
   </div>
