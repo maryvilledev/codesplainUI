@@ -8,5 +8,6 @@ exports[`<SnippetArea /> matches snapshot 1`] = `
   readOnly={false}
   snippetLanguage="bash"
   switchReadOnlyMode={[Function]}
+  title=""
   toggleConfirmLockDialogVisibility={[Function]} />
 `;
