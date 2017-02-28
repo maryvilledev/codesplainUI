@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import CodeMirror from 'react-codemirror';
-import Save from 'material-ui/svg-icons/content/save'
-import IconButton from 'material-ui/IconButton'
+import SaveButton from './SaveButton.jsx';
 
 import { Card, CardText } from 'material-ui/Card';
 import '../styles/codesplain.css'
@@ -59,12 +58,9 @@ const SnippetArea = ({ contents, isDialogOpen, onTitleChanged, onSnippetChanged,
         options={codeMirrorOptions}
         onChange={ev => onSnippetChanged(ev, codeMirrorRef)}
       />
-    <IconButton
-      onTouchTap={onSaveClick}
-      tooltip="Save snippet"
-    >
-      <Save />
-    </IconButton>
+      <SaveButton
+      onSaveClick={onSaveClick}
+      />
       </CardText>
     </Card>
   );

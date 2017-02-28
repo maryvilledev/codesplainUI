@@ -23,6 +23,7 @@ describe('<SnippetArea />', () => {
           switchReadOnlyMode={jest.fn()}
           toggleConfirmLockDialogVisibility={jest.fn()}
           contents={''}
+          title={''}
           onSaveClick={jest.fn()}
         />
       </MuiThemeProvider>
