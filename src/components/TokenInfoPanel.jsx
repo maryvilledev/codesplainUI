@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
-  import { Card, CardTitle, CardText } from 'material-ui/Card';
+
+import { Card, CardTitle, CardText } from 'material-ui/Card';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
 import AnnotationDisplay from './AnnotationDisplay';
@@ -9,7 +10,7 @@ const AnnotationSection = ({ displayStatus, displayProps }) => {
   switch (displayStatus) {
   case 'none': {
     return (
-      <CardText>Click on a line to add an annotation or display one</CardText>
+      <CardText>Click on a line number to add an annotation or display one</CardText>
     );
   }
   case 'display': {
@@ -43,9 +44,6 @@ const TokenInfoPanel = ({ displayStatus, displayProps, saveAnnotationCallback })
             displayStatus={displayStatus}
             displayProps={displayProps}
           />
-        </Tab>
-        <Tab label="SyntaxDB">
-          <CardText>Here is some info from SyntaxDB about the token.</CardText>
         </Tab>
       </Tabs>
     </Card>

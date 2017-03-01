@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import CodeMirror from 'react-codemirror';
 
+
 import { Card, CardText } from 'material-ui/Card';
 import IconButton from 'material-ui/IconButton'
 import Save from 'material-ui/svg-icons/content/save'
@@ -8,6 +9,7 @@ import TextField from 'material-ui/TextField';
 
 import ConfirmLockDialog from './ConfirmLockDialog.jsx'
 import LockButton from './LockButton';
+import SaveButton from './SaveButton.jsx';
 
 import { getIndexToRowColConverter } from '../util/util.js';
 
@@ -103,6 +105,7 @@ class SnippetArea extends React.Component {
         <CardText>
         <TextField
           hintText="Snippet Name"
+          value={this.props.title}
           name="snippetName"
           onChange={this.props.onTitleChanged}
         />
@@ -121,12 +124,9 @@ class SnippetArea extends React.Component {
           ref={cm => {this.codeMirror = cm}}
           value={this.props.contents}
         />
-        <IconButton
-          onTouchTap={this.props.onSaveClick}
-          tooltip="Save snippet"
-        >
-          <Save />
-        </IconButton>
+        <SaveButton
+          onSaveClick={this.props.onSaveClick}
+        />
         </CardText>
       </Card>
     );
@@ -143,6 +143,7 @@ SnippetArea.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   snippetLanguage: PropTypes.string.isRequired,
   switchReadOnlyMode: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired
 }
 
 export default SnippetArea;

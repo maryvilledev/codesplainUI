@@ -1,4 +1,5 @@
 import React from 'react';
+import { browserHistory } from 'react-router'
 
 import { Card, CardText } from 'material-ui/Card';
 
@@ -125,6 +126,24 @@ class AppBody extends React.Component {
       })
   }
 
+  componentDidMount() {
+    const { id } = this.props.params;
+    if (!id) {
+      return
+    }
+
+    axios.get(`/api/snippets/${id}`)
+      .then(res => {
+        const stateString = res.data.json;
+        const obj = JSON.parse(stateString)
+        this.setState(obj)
+      })
+      .catch(err => {
+        //Bad URL, redirect
+        browserHistory.push("/")
+      });
+  }
+
   // Callback to be invoked when user edits the code snippet
   onSnippetChanged(snippet, codeMirrorRef) {
     this.setState({ snippet });
@@ -194,11 +213,13 @@ class AppBody extends React.Component {
               contents={this.state.snippet}
               onGutterClick={this.onGutterClick}
               onSaveClick={this.onSaveState}
+              onSaveClick={this.onSaveState}
               onSnippetChanged={this.onSnippetChanged}
               onTitleChanged={this.onSnippetTitleChanged}
               readOnly={this.state.readOnly}
               snippetLanguage={this.state.selectedLanguage}
               switchReadOnlyMode={this.switchReadOnlyMode}
+              title={this.state.snippetTitle}
             />
           </div>
           <div className="col-md-4">
