@@ -30,8 +30,6 @@ class TokenSelector extends React.Component {
     });
   }
 
-
-
   render() {
     return (
       <List onChange={() => this.props.onChange(this.itemState)}>

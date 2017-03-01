@@ -1,24 +1,20 @@
 import React, { PropTypes } from 'react';
 import CodeMirror from 'react-codemirror';
 import SaveButton from './SaveButton.jsx';
-
 import { Card, CardText } from 'material-ui/Card';
 import '../styles/codesplain.css'
 import TextField from 'material-ui/TextField';
 import ConfirmLockDialog from './ConfirmLockDialog.jsx'
 import LockButton from './LockButton';
 import { getIndexToRowColConverter } from '../util/util.js';
-
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/go/go.js';
 import 'codemirror/mode/python/python.js';
-
 
 const snippetEditorModes = {
   go: 'go',
   python3: 'python',
 };
-
 
 const SnippetArea = ({ contents, isDialogOpen, onTitleChanged, onSnippetChanged,
    readOnly, switchReadOnlyMode, snippetLanguage, toggleConfirmLockDialogVisibility,
@@ -34,8 +30,6 @@ const SnippetArea = ({ contents, isDialogOpen, onTitleChanged, onSnippetChanged,
   let codeMirrorRef;
   console.log(title)
 
-
-
   return (
     <Card>
       <CardText>
@@ -44,16 +38,12 @@ const SnippetArea = ({ contents, isDialogOpen, onTitleChanged, onSnippetChanged,
         value={title}
         hintText="Snippet Name"
         onChange={onTitleChanged}
-        style={{
-          paddingLeft: '0%',
-          width: '550px',
-          position: 'relative',
-         }}
+        className="style-textfield"
       />
       <LockButton
         onClick={toggleConfirmLockDialogVisibility}
         readOnly={readOnly}
-        iconStyle={{ positon: 'absolute'}}
+        className="style-lockbutton"
       />
       <ConfirmLockDialog
         isOpen={isDialogOpen}

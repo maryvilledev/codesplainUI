@@ -1,13 +1,10 @@
 import React from 'react';
 import { browserHistory } from 'react-router'
-
 import { Card, CardText } from 'material-ui/Card';
-
 import LanguageSelector from './LanguageSelector';
 import SnippetArea from './SnippetArea';
 import TokenSelector from './TokenSelector';
 import TokenInfoPanel from './TokenInfoPanel';
-
 import { parsePython3 } from '../parsers/python3';
 import { highlight }  from '../util/highlight.js';
 import axios from 'axios'
@@ -140,7 +137,6 @@ class AppBody extends React.Component {
       setTimeout(() => parseReady = true, 1000);
       new Promise((resolve) => resolve(parser(snippet)))
       .then((AST) => {
-        console.log(JSON.stringify(AST));
         highlight(snippet, AST, codeMirrorRef);
         this.setState({ AST: AST });
       });
@@ -183,8 +179,6 @@ class AppBody extends React.Component {
               readOnly={this.state.readOnly}
               snippetLanguage={this.state.selectedLanguage}
             />
-
-
           </div>
           <div className="col-md-4">
             <TokenInfoPanel />

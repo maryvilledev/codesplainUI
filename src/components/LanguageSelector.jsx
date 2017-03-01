@@ -1,14 +1,9 @@
 import React, { PropTypes } from 'react';
-
+import '../styles/codesplain.css';
 import MenuItem from 'material-ui/MenuItem';
 import SelectField from 'material-ui/SelectField';
 
 const LanguageSelector = ({ languages, onChange, selected }) => {
-  const styles = {
-    customWidth: {
-      width: 150,
-    },
-  };
 
   const languageMenuItems = languages.map((lang, index) => {
     return (
@@ -24,7 +19,7 @@ const LanguageSelector = ({ languages, onChange, selected }) => {
       floatingLabelText="Language"
       onChange={onChange}
       value={selected}
-      style={styles.customWidth}
+      className="styles-tokenselector"
     >
       <MenuItem value={null} primaryText="" />
       {languageMenuItems}
