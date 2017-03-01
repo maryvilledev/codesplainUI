@@ -10,6 +10,7 @@ import TokenInfoPanel from './TokenInfoPanel';
 
 import { parsePython3 } from '../parsers/python3';
 import { highlight }  from '../util/highlight.js';
+import { getTokenCount, getPrettyTokenName } from '../util/tokens.js';
 import axios from 'axios'
 
 const languages = [
@@ -20,14 +21,6 @@ const languages = [
 const parsers = {
   python3: parsePython3,
 }
-
-const tokenTypes = [
-  { text: "Function" },
-  { text: "For loop" },
-  { text: "If statement" },
-  { text: "Variable" },
-  { text: "Return statement" },
-];
 
 // Keeps track of how long until we're ready to parse another AST
 let parseReady = true;
@@ -146,7 +139,7 @@ class AppBody extends React.Component {
 
   // Callback to be invoked when user edits the code snippet
   onSnippetChanged(snippet, codeMirrorRef) {
-    this.setState({ snippet });
+    this.setState({ snippet, codeMirrorRef });
     // Make sure a language is selected
     const currentLang = this.state.selectedLanguage;
     if (!currentLang) {
@@ -161,21 +154,43 @@ class AppBody extends React.Component {
       return;
     }
 
-    // Generate an AST for the current state of the code snippet, then
-    // highlight tokens in snippet and update state
+    // Generate an AST for the current state of the code snippet, if ready
     if(parseReady) {
       parseReady = false;
       setTimeout(() => parseReady = true, 1000);
       new Promise((resolve) => resolve(parser(snippet)))
       .then((AST) => {
-        highlight(snippet, AST, codeMirrorRef);
-        this.setState({ AST: AST });
+        // Get an array mapping token types to their occurence count
+        const tokenCount = [];
+        getTokenCount(AST, tokenCount);
+
+        // Generate array of strings containing pretty token name and its count
+        const filters = this.state.filters;
+        let newFilters = {};
+        Object.keys(tokenCount).filter(t => getPrettyTokenName(t) !== undefined)
+                               .forEach(t => {
+                                 let selected = false;
+                                 if (filters[t]) selected = filters[t].selected;
+                                 newFilters[t] = { 
+                                   prettyTokenName: getPrettyTokenName(t),
+                                   count: tokenCount[t],
+                                   selected: selected,
+                                 }
+                               });
+
+        // Highlight the code snippet and update state
+        highlight(snippet, AST, codeMirrorRef, newFilters);
+        this.setState({ AST: AST , filters: newFilters });
       });
     }
   }
 
-  onFiltersChanged(filters) {
-    this.setState({ filters });
+  onFiltersChanged(token, checked) {
+    const newFilters = this.state.filters;
+    newFilters[token].selected = checked;
+    // Highlight the code snippet and update state
+    highlight(this.state.snippet, this.state.AST, this.state.codeMirrorRef, newFilters);
+    this.setState({ filters: newFilters });
   }
 
   saveAnnotation(lineNumber, annotation) {
@@ -201,8 +216,8 @@ class AppBody extends React.Component {
                   selected={this.state.selectedLanguage}
                 />
                 <TokenSelector
+                  tokens={this.state.filters}
                   onChange={this.onFiltersChanged}
-                  tokenTypes={tokenTypes}
                 />
               </CardText>
             </Card>

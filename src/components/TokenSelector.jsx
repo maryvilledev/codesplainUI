@@ -11,16 +11,19 @@ class TokenSelector extends React.Component {
   }
 
   makeListItems() {
-    return this.props.tokenTypes.map((tokenType, index) => {
-      const tokenText = tokenType.text
+    const tokens = this.props.tokens;
+    return Object.keys(tokens).map((token, index) => {
+      const tokenText = `${tokens[token].prettyTokenName} (${tokens[token].count})`;
       if (this.itemState[tokenText] === undefined)
         this.itemState[tokenText] = false;
       return (
         <ListItem
           key={`${tokenText}-index`}
           leftCheckbox={
-            <Checkbox onCheck={
-                (ev, checked) => this.itemState[tokenText] = checked
+            <Checkbox 
+              checked={tokens[token].selected}
+              onCheck={
+                (ev, checked) => this.props.onChange(token, checked)
               }
             />
           }
@@ -34,8 +37,8 @@ class TokenSelector extends React.Component {
 
   render() {
     return (
-      <List onChange={() => this.props.onChange(this.itemState)}>
-        <Subheader>Token types to highlight</Subheader>
+      <List>
+        <Subheader>Select a token type to highlight all occurences</Subheader>
         { this.makeListItems() }
       </List>
     );
@@ -43,9 +46,9 @@ class TokenSelector extends React.Component {
 }
 
 TokenSelector.propTypes = {
-  tokenTypes: PropTypes.arrayOf(PropTypes.shape({
+  tokens: PropTypes.shape({
     text: PropTypes.string,
-  })).isRequired,
+  }).isRequired,
   onChange: PropTypes.func.isRequired,
 };
 export default TokenSelector;
