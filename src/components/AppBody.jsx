@@ -115,8 +115,8 @@ class AppBody extends React.Component {
   }
 
   onSaveState() {
-    const {snippet, snippetTitle, annotations, AST, filters} = this.state;
-    const obj = {snippet, snippetTitle, annotations, AST, filters};
+    const {snippet, snippetTitle, annotations, AST, filters, readOnly} = this.state;
+    const obj = {snippet, snippetTitle, annotations, AST, filters, readOnly};
     const stateString = JSON.stringify(obj);
     axios.post('/api/snippets/', { json: stateString })
       .then(res => {
