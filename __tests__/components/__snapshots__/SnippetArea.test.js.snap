@@ -1,13 +1,19 @@
 exports[`<SnippetArea /> matches snapshot 1`] = `
 <SnippetArea
+  annotatedLines={
+    Array [
+      "1",
+      "2",
+      "3",
+    ]
+  }
   contents=""
-  isDialogOpen={false}
+  onGutterClick={[Function]}
   onSaveClick={[Function]}
   onSnippetChanged={[Function]}
   onTitleChanged={[Function]}
   readOnly={false}
   snippetLanguage="bash"
   switchReadOnlyMode={[Function]}
-  title=""
-  toggleConfirmLockDialogVisibility={[Function]} />
+  title="" />
 `;

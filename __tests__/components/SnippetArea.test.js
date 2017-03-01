@@ -15,16 +15,16 @@ describe('<SnippetArea />', () => {
     const tree = renderer.render(
       <MuiThemeProvider>
         <SnippetArea
-          snippetLanguage={mockSnippetLanguage}
+          annotatedLines={["1", "2", "3"]}
+          contents={''}
+          onGutterClick={jest.fn()}
+          onSaveClick={jest.fn()}
           onSnippetChanged={jest.fn()}
           onTitleChanged={jest.fn()}
-          isDialogOpen={false}
           readOnly={false}
+          snippetLanguage={mockSnippetLanguage}
           switchReadOnlyMode={jest.fn()}
-          toggleConfirmLockDialogVisibility={jest.fn()}
-          contents={''}
           title={''}
-          onSaveClick={jest.fn()}
         />
       </MuiThemeProvider>
     );
