@@ -29,6 +29,7 @@ const SnippetArea = ({ contents, isDialogOpen, onTitleChanged, onSnippetChanged,
     theme: 'codesplain',
     mode: snippetEditorModes[snippetLanguage],
     readOnly,
+    cursorBlinkRate: (readOnly ? -1 : 530)
   };
 
   let codeMirrorRef;
