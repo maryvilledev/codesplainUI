@@ -16,7 +16,6 @@ import 'codemirror/mode/python/python.js';
 
 import '../styles/codesplain.css'
 
-
 const snippetEditorModes = {
   go: 'go',
   python3: 'python',
@@ -41,6 +40,13 @@ const annotationModeOptions = {
   readOnly: true,
   cursorBlinkRate: -1,
 };
+
+const makeMarker = () => {
+  const marker = document.createElement("div");
+  marker.style.color = "#822";
+  marker.innerHTML = "●";
+  return marker;
+}
 
 class SnippetArea extends React.Component {
   constructor(props) {
@@ -68,6 +74,7 @@ class SnippetArea extends React.Component {
   componentWillUpdate() {
     const codeMirrorInst = this.codeMirror.getCodeMirror();
     codeMirrorInst.clearGutter('annotations');
+    // eslint-disable-next-line array-callback-return
     this.props.annotatedLines.map((lineNumber) => {
       codeMirrorInst.setGutterMarker(Number(lineNumber), 'annotations', makeMarker())
     });
@@ -158,11 +165,4 @@ export function styleRegion(codeMirrorRef, start, end, css) {
   const snippet = cmElement.getValue();
   const convert = getIndexToRowColConverter(snippet);
   cmElement.markText(convert(start), convert(end), {css: css});
-}
-
-const makeMarker = () => {
-  const marker = document.createElement("div");
-  marker.style.color = "#822";
-  marker.innerHTML = "●";
-  return marker;
 }
