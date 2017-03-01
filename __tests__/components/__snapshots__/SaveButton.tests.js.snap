@@ -17,3 +17,23 @@ exports[`Save /> matches snapshot 1`] = `
     open={false} />
 </div>
 `;
+
+exports[`SaveButton /> matches snapshot 1`] = `
+<div>
+  <IconButton
+    disableTouchRipple={false}
+    disabled={false}
+    iconStyle={Object {}}
+    onTouchTap={[Function]}
+    tooltip="Save snippet"
+    tooltipPosition="bottom-center"
+    touch={false}>
+    <ContentSave />
+  </IconButton>
+  <Snackbar
+    autoHideDuration={2000}
+    message="Codesplaination Saved!"
+    onRequestClose={[Function]}
+    open={false} />
+</div>
+`;
