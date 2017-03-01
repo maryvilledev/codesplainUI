@@ -39,6 +39,7 @@ const editModeOptions = {
 const annotationModeOptions = {
   ...baseCodeMirrorOptions,
   readOnly: true,
+  cursorBlinkRate: -1,
 };
 
 class SnippetArea extends React.Component {

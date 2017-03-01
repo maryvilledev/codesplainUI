@@ -9,7 +9,7 @@ const baseOptions = {
   lineNumbers: true,
   theme: 'codesplain',
   readOnly: true,
-  cursorBlinkRate: 0,
+  cursorBlinkRate: -1,
 };
 
 class AnnotationCreator extends React.Component {

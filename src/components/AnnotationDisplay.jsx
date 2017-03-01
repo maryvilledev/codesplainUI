@@ -8,7 +8,7 @@ const baseOptions = {
   lineNumbers: true,
   theme: 'codesplain',
   readOnly: true,
-  cursorBlinkRate: 0,
+  cursorBlinkRate: -1,
 };
 
 const AnnotationDisplay = ({ closeAnnotation, lineNumber, lineText, snippetLanugage, text }) => {
