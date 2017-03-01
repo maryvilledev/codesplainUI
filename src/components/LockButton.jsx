@@ -4,6 +4,10 @@ import IconButton from 'material-ui/IconButton';
 import LockOpen from 'material-ui/svg-icons/action/lock-open';
 import Lock from 'material-ui/svg-icons/action/lock';
 
+const style = {
+  zIndex: 5
+}
+
 const LockButton = ({onClick, readOnly}) => {
   const lockIcon = readOnly ? <Lock /> : <LockOpen />;
   const toolTipText = readOnly ? "Switching back to edit mode not supported yet" : "Click to lock the snippet (this will prevent further changes.)";
@@ -13,7 +17,7 @@ const LockButton = ({onClick, readOnly}) => {
       label={`Switch to ${ readOnly ? 'edit' : 'read-only' } mode`}
       onTouchTap={onClick}
       tooltip={toolTipText}
-      style={{zIndex: 5}}
+      style={style}
     >
       {lockIcon}
     </IconButton>
