@@ -14,7 +14,7 @@ import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/go/go.js';
 import 'codemirror/mode/python/python.js';
 
-import '../styles/codesplain.css'
+import '../styles/codesplain.css';
 
 const snippetEditorModes = {
   go: 'go',
