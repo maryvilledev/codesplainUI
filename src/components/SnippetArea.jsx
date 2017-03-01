@@ -1,15 +1,12 @@
 import React, { PropTypes } from 'react';
 import CodeMirror from 'react-codemirror';
 
-
 import { Card, CardText } from 'material-ui/Card';
-import IconButton from 'material-ui/IconButton'
-import Save from 'material-ui/svg-icons/content/save'
 import TextField from 'material-ui/TextField';
 
-import ConfirmLockDialog from './ConfirmLockDialog.jsx'
+import ConfirmLockDialog from './ConfirmLockDialog';
 import LockButton from './LockButton';
-import SaveButton from './SaveButton.jsx';
+import SaveButton from './SaveButton';
 
 import { getIndexToRowColConverter } from '../util/util.js';
 

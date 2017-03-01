@@ -1,11 +1,30 @@
 import React, { PropTypes } from 'react';
+import CodeMirror from 'react-codemirror';
 
 import RaisedButton from 'material-ui/RaisedButton';
 
-const AnnotationDisplay = ({ closeAnnotation, lineNumber, lineText, text }) => {
+// Base options for CodeMirror instances for an AnnotationDisplay
+const baseOptions = {
+  lineNumbers: true,
+  theme: 'codesplain',
+  readOnly: true,
+  cursorBlinkRate: 0,
+};
+
+const AnnotationDisplay = ({ closeAnnotation, lineNumber, lineText, snippetLanugage, text }) => {
+  const codeMirrorOptions = {
+    ...baseOptions,
+    firstLineNumber: lineNumber + 1,
+  }
   return (
     <div>
-      {lineNumber} - <code>{lineText}</code> <br/>
+      <CodeMirror
+        style={{
+          height: 'auto',
+        }}
+        value={lineText}
+        options={codeMirrorOptions}
+      />
       <pre>{text}</pre>
       <RaisedButton
         label="Close"
@@ -18,8 +37,9 @@ const AnnotationDisplay = ({ closeAnnotation, lineNumber, lineText, text }) => {
 
 AnnotationDisplay.propTypes = {
   closeAnnotation: PropTypes.func.isRequired,
-  lineNumber: PropTypes.string.isRequired,
+  lineNumber: PropTypes.number.isRequired,
   lineText: PropTypes.string.isRequired,
+  snippetLanguage: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
 };
 

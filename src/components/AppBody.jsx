@@ -68,6 +68,7 @@ class AppBody extends React.Component {
           lineNumber,
           lineText: codeMirrorInstance.getLine(lineNumber),
           saveAnnotation: this.saveAnnotation,
+          snippetLanguage: this.state.selectedLanguage,
         },
       });
       return;
@@ -78,6 +79,7 @@ class AppBody extends React.Component {
         closeAnnotation: this.closeAnnotation,
         lineNumber,
         lineText: codeMirrorInstance.getLine(lineNumber),
+        snippetLanguage: this.state.selectedLanguage,
         text: this.state.annotations[String(lineNumber)],
       }
     })
@@ -212,7 +214,6 @@ class AppBody extends React.Component {
               annotatedLines={Object.keys(this.state.annotations)}
               contents={this.state.snippet}
               onGutterClick={this.onGutterClick}
-              onSaveClick={this.onSaveState}
               onSaveClick={this.onSaveState}
               onSnippetChanged={this.onSnippetChanged}
               onTitleChanged={this.onSnippetTitleChanged}
