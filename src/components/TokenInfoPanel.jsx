@@ -1,25 +1,58 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
+
 import { Card, CardTitle, CardText } from 'material-ui/Card';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
-const TokenInfoPanel = () => (
-  <Card>
-    <CardTitle
-      title="Info Panel"
-    />
-    <CardText>General info about the selected token goes here</CardText>
-    <Tabs>
-      <Tab label="Annotation">
-        <CardText>Here is some annotation info about the token.</CardText>
-      </Tab>
-      {/*
-      TODO Integrate tokens with SyntaxDB
-      <Tab label="SyntaxDB">
-        <CardText>Here is some info from SyntaxDB about the token.</CardText>
-      </Tab>
-      */}
-    </Tabs>
-  </Card>
-);
+import AnnotationDisplay from './AnnotationDisplay';
+import AnnotationCreator from './AnnotationCreator';
+
+const AnnotationSection = ({ displayStatus, displayProps }) => {
+  switch (displayStatus) {
+  case 'none': {
+    return (
+      <CardText>Click on a line number to add an annotation or display one</CardText>
+    );
+  }
+  case 'display': {
+    return (
+      <AnnotationDisplay
+        {...displayProps}
+      />
+    );
+  }
+  case 'create': {
+    return (
+      <AnnotationCreator
+        {...displayProps}
+      />
+    );
+  }
+  default: {
+    return null;
+  }
+  }
+}
+
+const TokenInfoPanel = ({ displayStatus, displayProps, saveAnnotationCallback }) => {
+  return (
+    <Card>
+      <CardTitle title="Info Panel" />
+      <CardText>General info about the selected token goes here</CardText>
+      <Tabs>
+        <Tab label="Annotation">
+          <AnnotationSection
+            displayStatus={displayStatus}
+            displayProps={displayProps}
+          />
+        </Tab>
+      </Tabs>
+    </Card>
+  );
+};
+
+TokenInfoPanel.propTypes = {
+  displayStatus: PropTypes.string.isRequired,
+  displayProps: PropTypes.object.isRequired,
+};
 
 export default TokenInfoPanel;
