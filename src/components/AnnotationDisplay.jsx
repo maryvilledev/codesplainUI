@@ -1,29 +1,15 @@
 import React, { PropTypes } from 'react';
-import CodeMirror from 'react-codemirror';
 
 import RaisedButton from 'material-ui/RaisedButton';
 
-// Base options for CodeMirror instances for an AnnotationDisplay
-const baseOptions = {
-  lineNumbers: true,
-  theme: 'codesplain',
-  readOnly: true,
-  cursorBlinkRate: -1,
-};
+import LineSnippet from './LineSnippet';
 
 const AnnotationDisplay = ({ closeAnnotation, lineNumber, lineText, snippetLanugage, text }) => {
-  const codeMirrorOptions = {
-    ...baseOptions,
-    firstLineNumber: lineNumber + 1,
-  }
   return (
     <div>
-      <CodeMirror
-        style={{
-          height: 'auto',
-        }}
+      <LineSnippet
+        lineNumber={lineNumber + 1}
         value={lineText}
-        options={codeMirrorOptions}
       />
       <pre>{text}</pre>
       <RaisedButton
