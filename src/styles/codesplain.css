@@ -5,6 +5,22 @@
   padding-bottom: 2px;
 }
 
+
+.styles-tokenselector {
+  width: 150 !important;
+}
+
+.style-textfield {
+  paddingLeft: 0%;
+  width: 550px;
+  position: relative;
+}
+
+.style-lockbutton {
+  position: absolute;
+}
+
 .CodeMirror {
   height: auto;
+
 }

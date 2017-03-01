@@ -1,15 +1,14 @@
 import React, { PropTypes } from 'react';
 import CodeMirror from 'react-codemirror';
-
+import SaveButton from './SaveButton.jsx';
 import { Card, CardText } from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
 
 import ConfirmLockDialog from './ConfirmLockDialog';
 import LockButton from './LockButton';
-import SaveButton from './SaveButton';
+
 
 import { getIndexToRowColConverter } from '../util/util.js';
-
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/go/go.js';
 import 'codemirror/mode/python/python.js';
@@ -113,10 +112,12 @@ class SnippetArea extends React.Component {
           value={this.props.title}
           name="snippetName"
           onChange={this.props.onTitleChanged}
+          className="style-textfield"
         />
         <LockButton
           onClick={this.toggleLockDialogVisibility}
           readOnly={this.props.readOnly}
+          className="style-lockbutton"
         />
         <ConfirmLockDialog
           accept={this.switchToReadOnlyMode}

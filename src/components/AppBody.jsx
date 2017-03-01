@@ -1,13 +1,10 @@
 import React from 'react';
 import { browserHistory } from 'react-router'
-
 import { Card, CardText } from 'material-ui/Card';
-
 import LanguageSelector from './LanguageSelector';
 import SnippetArea from './SnippetArea';
 import TokenSelector from './TokenSelector';
 import TokenInfoPanel from './TokenInfoPanel';
-
 import { parsePython3 } from '../parsers/python3';
 import { highlight }  from '../util/highlight.js';
 import axios from 'axios'
@@ -192,7 +189,7 @@ class AppBody extends React.Component {
     return (
       <div className="container-fluid">
         <div className="row">
-          <div className="col-md-3">
+          <div className="col-md-2">
             <Card>
               <CardText>
                 <LanguageSelector
@@ -207,7 +204,7 @@ class AppBody extends React.Component {
               </CardText>
             </Card>
           </div>
-          <div className="col-md-5">
+          <div className="col-md-6">
             <SnippetArea
               annotatedLines={Object.keys(this.state.annotations)}
               contents={this.state.snippet}
