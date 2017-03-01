@@ -71,7 +71,7 @@ class SnippetArea extends React.Component {
     });
   }
 
-  componentWillUpdate() {
+  componentDidUpdate() {
     const codeMirrorInst = this.codeMirror.getCodeMirror();
     codeMirrorInst.clearGutter('annotations');
     // eslint-disable-next-line array-callback-return
