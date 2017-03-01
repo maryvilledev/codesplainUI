@@ -85,34 +85,32 @@ class AppBody extends React.Component {
   }
 
   onSaveState() {
-    const {snippet, snippetTitle, annotations, AST, filters} = this.state
-    const obj = {snippet, snippetTitle, annotations, AST, filters}
-    const stateString = JSON.stringify(obj)
+    const {snippet, snippetTitle, annotations, AST, filters} = this.state;
+    const obj = {snippet, snippetTitle, annotations, AST, filters};
+    const stateString = JSON.stringify(obj);
     axios.post('/api/snippets/',{ json: stateString })
       .then(res => {
-        const id = res.data.id
-        this.setState({ id: id })
+        const id = res.data.id;
+        this.setState({ id: id });
+        browserHistory.push(`/${id}`);
       })
       .catch(err => {
-        console.error(err)
+        console.error(err);
       })
   }
 
   componentDidMount() {
     const { id } = this.props.params;
-    if (!id) {
-      return
-    }
-
+    if (!id) return;
     axios.get(`/api/snippets/${id}`)
       .then(res => {
         const stateString = res.data.json;
-        const obj = JSON.parse(stateString)
-        this.setState(obj)
+        const obj = JSON.parse(stateString);
+        this.setState(obj);
       })
       .catch(err => {
-        //Bad URL, redirect
-        browserHistory.push("/")
+        // Bad URL, redirect
+        browserHistory.push('/');
       });
   }
 
