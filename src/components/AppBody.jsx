@@ -1,4 +1,5 @@
 import React from 'react';
+import { browserHistory } from 'react-router'
 
 import { Card, CardText } from 'material-ui/Card';
 
@@ -28,23 +29,60 @@ class AppBody extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isDialogOpen: false,
+      annotationDisplay: 'none',
+      annotationDisplayProps: {},
+      annotations: {  },
+      AST: [],
+      displayedAnnotation: null,
+      filters: {},
       readOnly: false,
       selectedLanguage: 'python3',
-      snippetEditorMode: '',
       snippet: '',
+      snippetEditorMode: '',
       snippetTitle: '',
-      annotations: [],
-      AST: [],
-      filters: {},
     };
+    this.closeAnnotation = this.closeAnnotation.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
+    this.onFiltersChanged = this.onFiltersChanged.bind(this);
+    this.onGutterClick = this.onGutterClick.bind(this);
+    this.onSaveState = this.onSaveState.bind(this);
     this.onSnippetChanged = this.onSnippetChanged.bind(this);
     this.onSnippetTitleChanged = this.onSnippetTitleChanged.bind(this);
-    this.onFiltersChanged = this.onFiltersChanged.bind(this);
-    this.onSaveState = this.onSaveState.bind(this);
+    this.saveAnnotation = this.saveAnnotation.bind(this);
     this.switchReadOnlyMode = this.switchReadOnlyMode.bind(this);
-    this.toggleConfirmLockDialogVisibility = this.toggleConfirmLockDialogVisibility.bind(this);
+  }
+
+  onGutterClick(codeMirrorInstance, lineNumber) {
+    if (this.state.annotations[String(lineNumber)] === undefined) {
+      this.setState({
+        annotationDisplay: 'create',
+        annotationDisplayProps: {
+          closeAnnotation: this.closeAnnotation,
+          lineNumber,
+          lineText: codeMirrorInstance.getLine(lineNumber),
+          saveAnnotation: this.saveAnnotation,
+          snippetLanguage: this.state.selectedLanguage,
+        },
+      });
+      return;
+    }
+    this.setState({
+      annotationDisplay: 'display',
+      annotationDisplayProps: {
+        closeAnnotation: this.closeAnnotation,
+        lineNumber,
+        lineText: codeMirrorInstance.getLine(lineNumber),
+        snippetLanguage: this.state.selectedLanguage,
+        text: this.state.annotations[String(lineNumber)],
+      }
+    })
+  }
+
+  closeAnnotation() {
+    this.setState({
+      annotationDisplay: 'none',
+      annotationDisplayProps: {},
+    });
   }
 
   handleSelect(ev, index, value) {
@@ -53,19 +91,12 @@ class AppBody extends React.Component {
     });
   }
 
-  toggleConfirmLockDialogVisibility() {
-    this.setState({
-      isDialogOpen: !(this.state.isDialogOpen),
-    })
-  }
-
   switchReadOnlyMode() {
     if (this.state.readOnly) {
       console.log("Switching back to editing mode not supported yet");
       return;
     }
     this.setState({
-      isDialogOpen: false,
       readOnly: !(this.state.readOnly),
     });
   }
@@ -77,17 +108,33 @@ class AppBody extends React.Component {
   }
 
   onSaveState() {
-    const {snippet, snippetTitle, annotations, AST, filters} = this.state
-    const obj = {snippet, snippetTitle, annotations, AST, filters}
-    const stateString = JSON.stringify(obj)
-    axios.post('/api/snippets/',{ json: stateString })
+    const {snippet, snippetTitle, annotations, AST, filters} = this.state;
+    const obj = {snippet, snippetTitle, annotations, AST, filters};
+    const stateString = JSON.stringify(obj);
+    axios.post('/api/snippets/', { json: stateString })
       .then(res => {
-        const id = res.data.id
-        this.setState({ id: id })
+        const id = res.data.id;
+        this.setState({ id: id });
+        browserHistory.push(`/${id}`);
       })
       .catch(err => {
-        console.error(err)
+        console.error(err);
       })
+  }
+
+  componentDidMount() {
+    const { id } = this.props.params;
+    if (!id) return;
+    axios.get(`/api/snippets/${id}`)
+      .then(res => {
+        const stateString = res.data.json;
+        const obj = JSON.parse(stateString);
+        this.setState(obj);
+      })
+      .catch(err => {
+        // Bad URL, redirect
+        browserHistory.push('/');
+      });
   }
 
   // Callback to be invoked when user edits the code snippet
@@ -146,6 +193,16 @@ class AppBody extends React.Component {
     this.setState({ filters: newFilters });
   }
 
+  saveAnnotation(lineNumber, annotation) {
+    const annotations = this.state.annotations;
+    this.setState({
+      annotations: {
+        ...annotations,
+        [lineNumber]: annotation,
+      },
+    });
+  }
+
   render() {
     return (
       <div className="container-fluid">
@@ -167,19 +224,23 @@ class AppBody extends React.Component {
           </div>
           <div className="col-md-5">
             <SnippetArea
-              onSaveClick={this.onSaveState}
+              annotatedLines={Object.keys(this.state.annotations)}
               contents={this.state.snippet}
-              isDialogOpen={this.state.isDialogOpen}
-              onTitleChanged={this.onSnippetTitleChanged}
+              onGutterClick={this.onGutterClick}
+              onSaveClick={this.onSaveState}
               onSnippetChanged={this.onSnippetChanged}
-              toggleConfirmLockDialogVisibility={this.toggleConfirmLockDialogVisibility}
-              switchReadOnlyMode={this.switchReadOnlyMode}
+              onTitleChanged={this.onSnippetTitleChanged}
               readOnly={this.state.readOnly}
               snippetLanguage={this.state.selectedLanguage}
+              switchReadOnlyMode={this.switchReadOnlyMode}
+              title={this.state.snippetTitle}
             />
           </div>
           <div className="col-md-4">
-            <TokenInfoPanel />
+            <TokenInfoPanel
+              displayProps={this.state.annotationDisplayProps}
+              displayStatus={this.state.annotationDisplay}
+            />
           </div>
         </div>
       </div>

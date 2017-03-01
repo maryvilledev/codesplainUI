@@ -1,4 +1,5 @@
 var express = require('express')
+var morgan = require('morgan')
 var Redis = require('ioredis')
 var path = require('path')
 var uuid = require('uuid/v4')
@@ -7,12 +8,13 @@ var bodyParser = require('body-parser')
 var app = express()
 var redis = Redis(process.env.REDIS_URL || "redis://localhost:6379")
 
+app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-app.use('/', express.static(path.resolve(__dirname, "..", 'build')));
+app.use(express.static(path.resolve(__dirname, "..", 'build')));
 
 app.post('/api/snippets/', function(req, res) {
   var id = uuid();
@@ -32,6 +34,10 @@ app.get('/api/snippets/:id', function(req, res) {
         res.json({json: json})
       }
     })
+})
+
+app.get('*', function (req, res) {
+  res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
 })
 
 app.listen(process.env.PORT)

@@ -6,12 +6,15 @@ const ignoredTokens = [
   'simple_stmt',
   'trailed_atom',
   'trailer',
+  'comparison', //Dont ignore after boxes are added
+  'testlist_comp',
 ]
 
 const tokenColors = {
   'for_stmt' :    '#F7ABAB',
-  'if_stmt':      '#C23B22',
-  'number':       '#DEA5A4',
+  'if_stmt':      '#FFFF00',
+  'number':       'DEA5A4',
+  'exptr_stmt':   '#F7ABD4',
   'expr':         '#F0ABF7',
   'str':          '#CAABF7',
   'atom':         '#ABDBF7',
@@ -25,6 +28,11 @@ const tokenColors = {
   'try_stmt':     '#966FD6',
   'pass_stmt':    '#FDFD96',
   'except_clause':'#779ECB',
+  'while_stmt':   '#F0E68C',
+  'and_expr':     '#F0E68C',
+  'arith_expr':   '#FFA500',
+  'comp_op':      '#DAA520',
+  'dictorsetmaker':'#00FF7F',
 }
 
 function getColor(type) {
@@ -52,9 +60,9 @@ export function highlight(snippet, node, codeMirrorRef, filters, parentColor) {
 
     // Apply the background color CSS to this token
     styleRegion(
-      codeMirrorRef, 
-      node.begin, 
-      node.end, 
+      codeMirrorRef,
+      node.begin,
+      node.end,
       `background-color: ${color};`
     );
   }
