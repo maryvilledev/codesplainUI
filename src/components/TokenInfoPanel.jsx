@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-import { Card, CardTitle, CardText } from 'material-ui/Card';
+import { Card, CardText } from 'material-ui/Card';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
 import AnnotationDisplay from './AnnotationDisplay';
