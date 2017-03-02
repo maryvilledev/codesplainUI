@@ -136,6 +136,7 @@ class SnippetArea extends React.Component {
       const snippet = this.state.snippet;
       if (snippet === undefined) return;
       if (snippet === this.state.prevSnippet) return;
+      if (snippet === '') return;
 
       // Generate an AST for the current state of the code snippet, if ready
       const AST = parser(snippet);
