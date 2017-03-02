@@ -9,6 +9,7 @@ exports[`<SnippetArea /> matches snapshot 1`] = `
   }
   contents=""
   onGutterClick={[Function]}
+  onParserRun={[Function]}
   onSaveClick={[Function]}
   onSnippetChanged={[Function]}
   onTitleChanged={[Function]}

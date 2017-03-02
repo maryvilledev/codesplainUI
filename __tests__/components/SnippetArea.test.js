@@ -21,6 +21,7 @@ describe('<SnippetArea />', () => {
           onSaveClick={jest.fn()}
           onSnippetChanged={jest.fn()}
           onTitleChanged={jest.fn()}
+          onParserRun={jest.fn()}
           readOnly={false}
           snippetLanguage={mockSnippetLanguage}
           switchReadOnlyMode={jest.fn()}

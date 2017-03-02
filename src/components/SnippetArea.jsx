@@ -10,6 +10,10 @@ import SaveButton from './SaveButton';
 
 import { getIndexToRowColConverter } from '../util/util.js';
 
+import { parsePython3 } from '../parsers/python3';
+import { highlight }  from '../util/highlight.js';
+import { getTokenCount, getPrettyTokenName } from '../util/tokens.js';
+
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/go/go.js';
 import 'codemirror/mode/python/python.js';
@@ -20,6 +24,10 @@ const snippetEditorModes = {
   go: 'go',
   python3: 'python',
 };
+
+const parsers = {
+  python3: parsePython3,
+}
 
 // Options for the CodeMirror instance that are shared by edit and annotation mddes
 const baseCodeMirrorOptions = {
@@ -41,6 +49,8 @@ const annotationModeOptions = {
   cursorBlinkRate: -1,
 };
 
+
+
 const makeMarker = () => {
   const marker = document.createElement("div");
   marker.style.color = "#822";
@@ -57,6 +67,9 @@ class SnippetArea extends React.Component {
 
     this.switchToReadOnlyMode = this.switchToReadOnlyMode.bind(this);
     this.toggleLockDialogVisibility = this.toggleLockDialogVisibility.bind(this);
+    this.onSnippetChanged = this.onSnippetChanged.bind(this);
+    this.startParserDaemon = this.startParserDaemon.bind(this);
+    this.triggerHighlight = this.triggerHighlight.bind(this);
   }
 
   componentDidMount() {
@@ -69,6 +82,21 @@ class SnippetArea extends React.Component {
       // Get information about the line clicked on
       this.props.onGutterClick(codeMirror, lineNumber);
     });
+
+    // Make sure a language prop was specified
+    const currentLang = this.props.snippetLanguage;
+    if (!currentLang) {
+      console.warn('Cannot parse snippet. No language selected.');
+    } else {
+      // Map selected language to its parser, if one exists
+      const parser = parsers[currentLang];
+      if (parser === undefined) {
+        console.warn(`No parser available for the ${currentLang} language`);
+      } else {
+        // Kick off the parsing 'daemon'
+        this.startParserDaemon(parser);
+      }
+    }
   }
 
   componentDidUpdate() {
@@ -98,12 +126,59 @@ class SnippetArea extends React.Component {
     });
   }
 
+  onSnippetChanged(newSnippet) {
+    this.setState({ snippet: newSnippet });
+    this.props.onSnippetChanged(newSnippet);
+  }
+
+  // Runs the parser every second
+  startParserDaemon(parser) {
+    setInterval(function() {
+      const snippet = this.state.snippet;
+      if (snippet === undefined) return;
+
+      // Generate an AST for the current state of the code snippet, if ready
+      const AST = parser(snippet);
+
+      // Get an array mapping token types to their occurence count
+      const tokenCount = [];
+      getTokenCount(AST, tokenCount);
+
+      // Generate array of strings containing pretty token name and its count
+      const filters = this.props.filters;
+      let newFilters = {};
+      Object.keys(tokenCount).filter(t => getPrettyTokenName(t) !== undefined)
+                              .forEach(t => {
+                                let selected = false;
+                                if (filters[t]) selected = filters[t].selected;
+                                newFilters[t] = { 
+                                  prettyTokenName: getPrettyTokenName(t),
+                                  count: tokenCount[t],
+                                  selected: selected,
+                                }
+                              });
+
+      // Highlight the code snippet and invoke prop callback
+      highlight(snippet, AST, this.codeMirror, newFilters);
+      this.props.onParserRun(AST, newFilters);
+    }.bind(this), 1000);
+  }
+
+  // Can be used to trigger a highlight of the snippet via a ref
+  triggerHighlight(snippet, AST, filters) {
+    highlight(snippet, AST, this.codeMirror, filters);
+  }
+
   render() {
     // Inject any final options for the CodeMirror instance based on the props passed down
     const codeMirrorOptions = {
       ...(this.props.readOnly ? annotationModeOptions : editModeOptions),
       mode: snippetEditorModes[this.props.snippetLanguage],
     };
+
+    // Make sure snippet state is same as prop
+    if (this.state.snippet !== this.props.contents)
+      this.setState({ snippet: this.props.contents });
 
     return (
       <Card>
@@ -124,8 +199,8 @@ class SnippetArea extends React.Component {
           reject={this.toggleLockDialogVisibility}
         />
         <CodeMirror
-          onChange={ev => this.props.onSnippetChanged(ev, this.codeMirror)}
-          options={ codeMirrorOptions }
+          onChange={ev => this.onSnippetChanged(ev)}
+          options={codeMirrorOptions}
           ref={cm => {this.codeMirror = cm}}
           value={this.props.contents}
         />
@@ -145,10 +220,16 @@ SnippetArea.propTypes = {
   onSaveClick: PropTypes.func.isRequired,
   onSnippetChanged: PropTypes.func.isRequired,
   onTitleChanged: PropTypes.func.isRequired,
+  onParserRun: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
   snippetLanguage: PropTypes.string.isRequired,
   switchReadOnlyMode: PropTypes.func.isRequired,
-  title: PropTypes.string.isRequired
+  title: PropTypes.string.isRequired,
+  filters: PropTypes.shape({
+    prettyTokenName: PropTypes.string,
+    count: PropTypes.number,
+    selected: PropTypes.bool
+  }),
 }
 
 export default SnippetArea;
