@@ -12,9 +12,10 @@ class TokenSelector extends React.Component {
 
   makeListItems() {
     return this.props.tokenTypes.map((tokenType, index) => {
-      const tokenText = tokenType.text
-      if (this.itemState[tokenText] === undefined)
+      const tokenText = tokenType.text;
+      if (this.itemState[tokenText] === undefined) {
         this.itemState[tokenText] = false;
+      }
       return (
         <ListItem
           key={`${tokenText}-index`}

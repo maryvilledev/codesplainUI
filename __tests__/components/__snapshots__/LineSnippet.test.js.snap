@@ -1,0 +1,5 @@
+exports[`<LanguageSelector /> matches snapshot 1`] = `
+<LineSnippet
+  lineNumber={1}
+  value="foo bar baz" />
+`;
