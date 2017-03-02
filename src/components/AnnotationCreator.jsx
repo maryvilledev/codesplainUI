@@ -41,6 +41,7 @@ class AnnotationCreator extends React.Component {
           value={this.props.lineText}
         />
         <TextField
+          autoFocus
           name="annotationEditor"
           floatingLabelText="Annotation"
           fullWidth={true}
