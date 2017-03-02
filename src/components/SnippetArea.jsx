@@ -136,6 +136,7 @@ class SnippetArea extends React.Component {
     setInterval(function() {
       const snippet = this.state.snippet;
       if (snippet === undefined) return;
+      if (snippet === this.state.prevSnippet) return;
 
       // Generate an AST for the current state of the code snippet, if ready
       const AST = parser(snippet);
@@ -160,6 +161,7 @@ class SnippetArea extends React.Component {
 
       // Highlight the code snippet and invoke prop callback
       highlight(snippet, AST, this.codeMirror, newFilters);
+      this.setState({ prevSnippet: snippet });
       this.props.onParserRun(AST, newFilters);
     }.bind(this), 1000);
   }
