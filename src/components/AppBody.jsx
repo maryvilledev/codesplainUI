@@ -160,6 +160,9 @@ class AppBody extends React.Component {
   }
 
   render() {
+    const infoPanelPrompt = this.state.readOnly ? 
+      'Click on a line number to add an annotation or display one' :
+      'Lock this snippet to add annotations';
     return (
       <div className="container-fluid">
         <div className="row">
@@ -199,6 +202,7 @@ class AppBody extends React.Component {
             <TokenInfoPanel
               displayProps={this.state.annotationDisplayProps}
               displayStatus={this.state.annotationDisplay}
+              prompt={infoPanelPrompt}
             />
           </div>
         </div>
