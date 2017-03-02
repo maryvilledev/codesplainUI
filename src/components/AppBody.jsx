@@ -14,7 +14,6 @@ import { getTokenCount, getPrettyTokenName } from '../util/tokens.js';
 import axios from 'axios'
 
 const languages = [
-  { text: 'Go' , value: 'go' },
   { text: 'Python 3' , value: 'python3' },
 ];
 
@@ -168,15 +167,17 @@ class AppBody extends React.Component {
         const filters = this.state.filters;
         let newFilters = {};
         Object.keys(tokenCount).filter(t => getPrettyTokenName(t) !== undefined)
-                               .forEach(t => {
-                                 let selected = false;
-                                 if (filters[t]) selected = filters[t].selected;
-                                 newFilters[t] = { 
-                                   prettyTokenName: getPrettyTokenName(t),
-                                   count: tokenCount[t],
-                                   selected: selected,
-                                 }
-                               });
+          .forEach(t => {
+            let selected = false;
+            if (filters[t]) {
+              selected = filters[t].selected;
+            }
+            newFilters[t] = {
+              prettyTokenName: getPrettyTokenName(t),
+              count: tokenCount[t],
+              selected,
+            }
+          });
 
         // Highlight the code snippet and update state
         highlight(snippet, AST, codeMirrorRef, newFilters);
