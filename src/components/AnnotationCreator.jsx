@@ -29,7 +29,7 @@ class AnnotationCreator extends React.Component {
 
   saveAnnotation() {
     const { annotation } = this.state;
-    this.props.saveAnnotation(String(this.props.lineNumber), annotation);
+    this.props.saveAnnotation(this.props.lineNumber, this.props.lineText, annotation);
   }
 
   render() {

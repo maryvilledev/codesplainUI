@@ -142,19 +142,27 @@ class AppBody extends React.Component {
     newFilters[token].selected = checked;
     // Highlight the code snippet and update state
     this.snippetArea.triggerHighlight(
-      this.state.snippet, 
-      this.state.AST, 
+      this.state.snippet,
+      this.state.AST,
       newFilters
     );
     this.setState({ filters: newFilters });
   }
 
-  saveAnnotation(lineNumber, annotation) {
+  saveAnnotation(lineNumber, lineText, annotation) {
     const annotations = this.state.annotations;
     this.setState({
       annotations: {
         ...annotations,
         [lineNumber]: annotation,
+      },
+      annotationDisplay: 'display',
+      annotationDisplayProps: {
+        closeAnnotation: this.closeAnnotation,
+        lineNumber,
+        lineText: lineText,
+        snippetLanguage: this.state.selectedLanguage,
+        text: annotation,
       },
     });
   }
