@@ -5,7 +5,9 @@ import RaisedButton from 'material-ui/RaisedButton';
 import LineSnippet from './LineSnippet';
 
 const style = {
-  fontFamily: 'monospace'
+  fontFamily: 'monospace',
+  whiteSpace: 'pre-wrap',
+  overflow: 'scroll'
 }
 
 const AnnotationDisplay = ({ closeAnnotation, lineNumber, lineText, snippetLanugage, text }) => {
