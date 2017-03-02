@@ -1,11 +1,10 @@
-import React from 'react';
-import Snackbar from 'material-ui/Snackbar';
+import React, { PropTypes } from 'react';
+
 import IconButton from 'material-ui/IconButton';
 import Save from 'material-ui/svg-icons/content/save';
-
+import Snackbar from 'material-ui/Snackbar';
 
 export default class SaveButton extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -44,3 +43,7 @@ export default class SaveButton extends React.Component {
     );
   }
 }
+
+SaveButton.propTypes = {
+  onSaveClick: PropTypes.func.isRequired,
+};

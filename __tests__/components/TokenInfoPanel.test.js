@@ -43,7 +43,7 @@ describe('<TokenInfoPanel />', () => {
             displayStatus={'display'}
             displayProps={{
               closeAnnotation: jest.fn(),
-              lineNumber: '0',
+              lineNumber: 0,
               lineText: 'line text',
               text: 'annotation text',
             }}
