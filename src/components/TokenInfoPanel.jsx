@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-import { Card, CardTitle, CardText } from 'material-ui/Card';
+import { Card, CardText } from 'material-ui/Card';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
 import AnnotationDisplay from './AnnotationDisplay';
@@ -36,8 +36,6 @@ const AnnotationSection = ({ displayStatus, displayProps }) => {
 const TokenInfoPanel = ({ displayStatus, displayProps, saveAnnotationCallback }) => {
   return (
     <Card>
-      <CardTitle title="Info Panel" />
-      <CardText>General info about the selected token goes here</CardText>
       <Tabs>
         <Tab label="Annotation">
           <AnnotationSection
