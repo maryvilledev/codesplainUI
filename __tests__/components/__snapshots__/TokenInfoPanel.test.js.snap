@@ -16,7 +16,7 @@ exports[`<TokenInfoPanel /> snapshot tests matches the snapshot of when it displ
   displayProps={
     Object {
       "closeAnnotation": [Function],
-      "lineNumber": "0",
+      "lineNumber": 0,
       "lineText": "line text",
       "text": "annotation text",
     }

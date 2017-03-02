@@ -1,4 +1,4 @@
-exports[`<SnippetArea /> matches snapshot 1`] = `
+exports[`<SnippetArea /> matches snapshot of when it is not read-only 1`] = `
 <SnippetArea
   annotatedLines={
     Array [
@@ -14,6 +14,27 @@ exports[`<SnippetArea /> matches snapshot 1`] = `
   onSnippetChanged={[Function]}
   onTitleChanged={[Function]}
   readOnly={false}
+  snippetLanguage="bash"
+  switchReadOnlyMode={[Function]}
+  title="" />
+`;
+
+exports[`<SnippetArea /> matches snapshot of when it is read-only 1`] = `
+<SnippetArea
+  annotatedLines={
+    Array [
+      "1",
+      "2",
+      "3",
+    ]
+  }
+  contents=""
+  onGutterClick={[Function]}
+  onParserRun={[Function]}
+  onSaveClick={[Function]}
+  onSnippetChanged={[Function]}
+  onTitleChanged={[Function]}
+  readOnly={true}
   snippetLanguage="bash"
   switchReadOnlyMode={[Function]}
   title="" />

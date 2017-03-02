@@ -14,13 +14,14 @@ class TokenSelector extends React.Component {
     const tokens = this.props.tokens;
     return Object.keys(tokens).map((token, index) => {
       const tokenText = `${tokens[token].prettyTokenName} (${tokens[token].count})`;
-      if (this.itemState[tokenText] === undefined)
+      if (this.itemState[tokenText] === undefined) {
         this.itemState[tokenText] = false;
+      }
       return (
         <ListItem
           key={`${tokenText}-index`}
           leftCheckbox={
-            <Checkbox 
+            <Checkbox
               checked={tokens[token].selected}
               onCheck={
                 (ev, checked) => this.props.onChange(token, checked)
