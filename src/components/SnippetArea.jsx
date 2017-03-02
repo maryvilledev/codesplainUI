@@ -8,6 +8,7 @@ import LockButton from './LockButton';
 import { parsePython3 } from '../parsers/python3';
 import { highlight }  from '../util/highlight.js';
 import { getTokenCount, getPrettyTokenName } from '../util/tokens.js';
+import { getIndexToRowColConverter }  from '../util/util.js';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/python/python.js';
 import '../styles/codesplain.css';
