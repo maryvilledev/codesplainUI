@@ -25,6 +25,11 @@ describe('<SnippetArea />', () => {
         <SnippetArea
           annotatedLines={["1", "2", "3"]}
           contents={''}
+          onGutterClick={jest.fn()}
+          onSaveClick={jest.fn()}
+          onSnippetChanged={jest.fn()}
+          onTitleChanged={jest.fn()}
+          onParserRun={jest.fn()}
           readOnly={false}
           snippetLanguage={mockSnippetLanguage}
           title={''}
@@ -43,6 +48,7 @@ describe('<SnippetArea />', () => {
           contents={''}
           readOnly={true}
           snippetLanguage={mockSnippetLanguage}
+          onParserRun={jest.fn()}
           title={''}
           {...mockProps}
         />

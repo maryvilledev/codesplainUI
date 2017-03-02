@@ -8,21 +8,11 @@ import SnippetArea from './SnippetArea';
 import TokenSelector from './TokenSelector';
 import TokenInfoPanel from './TokenInfoPanel';
 
-import { parsePython3 } from '../parsers/python3';
-import { highlight }  from '../util/highlight.js';
-import { getTokenCount, getPrettyTokenName } from '../util/tokens.js';
 import axios from 'axios'
 
 const languages = [
   { text: 'Python 3' , value: 'python3' },
 ];
-
-const parsers = {
-  python3: parsePython3,
-}
-
-// Keeps track of how long until we're ready to parse another AST
-let parseReady = true;
 
 class AppBody extends React.Component {
   constructor(props) {
@@ -49,6 +39,7 @@ class AppBody extends React.Component {
     this.onSnippetTitleChanged = this.onSnippetTitleChanged.bind(this);
     this.saveAnnotation = this.saveAnnotation.bind(this);
     this.switchReadOnlyMode = this.switchReadOnlyMode.bind(this);
+    this.onParserRun = this.onParserRun.bind(this);
   }
 
   onGutterClick(codeMirrorInstance, lineNumber) {
@@ -137,60 +128,24 @@ class AppBody extends React.Component {
   }
 
   // Callback to be invoked when user edits the code snippet
-  onSnippetChanged(snippet, codeMirrorRef) {
-    this.setState({ snippet, codeMirrorRef });
-    // Make sure a language is selected
-    const currentLang = this.state.selectedLanguage;
-    if (!currentLang) {
-      console.warn('Cannot parse snippet. No language selected.');
-      return;
-    }
+  onSnippetChanged(snippet, AST, filters) {
+    this.setState({ snippet });
+  }
 
-    // Map to selected language to its parser, if one exists
-    const parser = parsers[currentLang];
-    if (parser === undefined) {
-      console.warn(`No parser available for the ${currentLang} language`);
-      return;
-    }
-
-    // Generate an AST for the current state of the code snippet, if ready
-    if(parseReady) {
-      parseReady = false;
-      setTimeout(() => parseReady = true, 1000);
-      new Promise((resolve) => resolve(parser(snippet)))
-      .then((AST) => {
-        // Get an array mapping token types to their occurence count
-        const tokenCount = [];
-        getTokenCount(AST, tokenCount);
-
-        // Generate array of strings containing pretty token name and its count
-        const filters = this.state.filters;
-        let newFilters = {};
-        Object.keys(tokenCount).filter(t => getPrettyTokenName(t) !== undefined)
-          .forEach(t => {
-            let selected = false;
-            if (filters[t]) {
-              selected = filters[t].selected;
-            }
-            newFilters[t] = {
-              prettyTokenName: getPrettyTokenName(t),
-              count: tokenCount[t],
-              selected,
-            }
-          });
-
-        // Highlight the code snippet and update state
-        highlight(snippet, AST, codeMirrorRef, newFilters);
-        this.setState({ AST: AST , filters: newFilters });
-      });
-    }
+  // Callback to be invoked when the SnippetArea's 'daemon' runs the parser
+  onParserRun(AST, filters) {
+    this.setState({ AST, filters });
   }
 
   onFiltersChanged(token, checked) {
     const newFilters = this.state.filters;
     newFilters[token].selected = checked;
     // Highlight the code snippet and update state
-    highlight(this.state.snippet, this.state.AST, this.state.codeMirrorRef, newFilters);
+    this.snippetArea.triggerHighlight(
+      this.state.snippet, 
+      this.state.AST, 
+      newFilters
+    );
     this.setState({ filters: newFilters });
   }
 
@@ -225,16 +180,19 @@ class AppBody extends React.Component {
           </div>
           <div className="col-md-5">
             <SnippetArea
+              ref={sa => {this.snippetArea = sa}}
               annotatedLines={Object.keys(this.state.annotations)}
               contents={this.state.snippet}
               onGutterClick={this.onGutterClick}
               onSaveClick={this.onSaveState}
               onSnippetChanged={this.onSnippetChanged}
               onTitleChanged={this.onSnippetTitleChanged}
+              onParserRun={this.onParserRun}
               readOnly={this.state.readOnly}
               snippetLanguage={this.state.selectedLanguage}
               switchReadOnlyMode={this.switchReadOnlyMode}
               title={this.state.snippetTitle}
+              filters={this.state.filters}
             />
           </div>
           <div className="col-md-4">
