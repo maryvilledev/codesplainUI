@@ -9,7 +9,6 @@ import AnnotationCreator from './AnnotationCreator';
 const AnnotationSection = ({ displayStatus, displayProps, prompt }) => {
   switch (displayStatus) {
   case 'none': {
-    console.log('prompt: ' + prompt)
     return (
       <CardText>{prompt}</CardText>
     );
@@ -34,7 +33,7 @@ const AnnotationSection = ({ displayStatus, displayProps, prompt }) => {
   }
 }
 
-const TokenInfoPanel = ({ displayStatus, displayProps, prompt, 
+const TokenInfoPanel = ({ displayStatus, displayProps, prompt,
   saveAnnotationCallback }) => {
   return (
     <Card>
