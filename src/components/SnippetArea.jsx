@@ -20,7 +20,6 @@ import 'codemirror/mode/python/python.js';
 import '../styles/codesplain.css';
 
 const snippetEditorModes = {
-  go: 'go',
   python3: 'python',
 };
 
@@ -47,8 +46,6 @@ const annotationModeOptions = {
   readOnly: true,
   cursorBlinkRate: -1,
 };
-
-
 
 const makeMarker = () => {
   const marker = document.createElement("div");
@@ -133,10 +130,10 @@ class SnippetArea extends React.Component {
   // Runs the parser every second
   startParserDaemon(parser) {
     setInterval(function() {
-      const snippet = this.state.snippet;
-      if (snippet === undefined) return;
-      if (snippet === this.state.prevSnippet) return;
-      if (snippet === '') return;
+      const snippet = this.props.contents;
+      if (!snippet || snippet === this.state.prevSnippet) {
+        return;
+      }
 
       // Generate an AST for the current state of the code snippet, if ready
       const AST = parser(snippet);
@@ -148,20 +145,25 @@ class SnippetArea extends React.Component {
       // Generate array of strings containing pretty token name and its count
       const filters = this.props.filters;
       let newFilters = {};
-      Object.keys(tokenCount).filter(t => getPrettyTokenName(t) !== undefined)
-                              .forEach(t => {
-                                let selected = false;
-                                if (filters[t]) selected = filters[t].selected;
-                                newFilters[t] = { 
-                                  prettyTokenName: getPrettyTokenName(t),
-                                  count: tokenCount[t],
-                                  selected: selected,
-                                }
-                              });
+      Object.keys(tokenCount)
+        .filter(t => getPrettyTokenName(t) !== undefined)
+        .forEach(t => {
+          let selected = false;
+          if (filters[t]) {
+            let selected = false;
+          }
+          newFilters[t] = {
+            prettyTokenName: getPrettyTokenName(t),
+            count: tokenCount[t],
+            selected,
+          }
+        });
 
       // Highlight the code snippet and invoke prop callback
       highlight(snippet, AST, this.codeMirror, newFilters);
-      this.setState({ prevSnippet: snippet });
+      this.setState({
+        prevSnippet: snippet
+      });
       this.props.onParserRun(AST, newFilters);
     }.bind(this), 1000);
   }
@@ -178,37 +180,33 @@ class SnippetArea extends React.Component {
       mode: snippetEditorModes[this.props.snippetLanguage],
     };
 
-    // Make sure snippet state is same as prop
-    if (this.state.snippet !== this.props.contents)
-      this.setState({ snippet: this.props.contents });
-
     return (
       <Card>
         <CardText>
-        <TextField
-          hintText="Snippet Name"
-          value={this.props.title}
-          name="snippetName"
-          onChange={this.props.onTitleChanged}
-        />
-        <LockButton
-          onClick={this.toggleLockDialogVisibility}
-          readOnly={this.props.readOnly}
-        />
-        <ConfirmLockDialog
-          accept={this.switchToReadOnlyMode}
-          isOpen={this.state.lockDialogOpen}
-          reject={this.toggleLockDialogVisibility}
-        />
-        <CodeMirror
-          onChange={ev => this.onSnippetChanged(ev)}
-          options={codeMirrorOptions}
-          ref={cm => {this.codeMirror = cm}}
-          value={this.props.contents}
-        />
-        <SaveButton
-          onSaveClick={this.props.onSaveClick}
-        />
+          <TextField
+            hintText="Snippet Name"
+            value={this.props.title}
+            name="snippetName"
+            onChange={this.props.onTitleChanged}
+          />
+          <LockButton
+            onClick={this.toggleLockDialogVisibility}
+            readOnly={this.props.readOnly}
+          />
+          <ConfirmLockDialog
+            accept={this.switchToReadOnlyMode}
+            isOpen={this.state.lockDialogOpen}
+            reject={this.toggleLockDialogVisibility}
+          />
+          <CodeMirror
+            onChange={ev => this.onSnippetChanged(ev)}
+            options={codeMirrorOptions}
+            ref={cm => {this.codeMirror = cm}}
+            value={this.props.contents}
+          />
+          <SaveButton
+            onSaveClick={this.props.onSaveClick}
+          />
         </CardText>
       </Card>
     );
