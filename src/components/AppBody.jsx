@@ -5,26 +5,11 @@ import LanguageSelector from './LanguageSelector';
 import SnippetArea from './SnippetArea';
 import TokenSelector from './TokenSelector';
 import TokenInfoPanel from './TokenInfoPanel';
-import { parsePython3 } from '../parsers/python3';
-import { highlight }  from '../util/highlight.js';
-import axios from 'axios';
+import axios from 'axios'
 import '../styles/codesplain.css';
 
 const languages = [
-  { text: 'Go' , value: 'go' },
   { text: 'Python 3' , value: 'python3' },
-];
-
-const parsers = {
-  python3: parsePython3,
-}
-
-const tokenTypes = [
-  { text: "Function" },
-  { text: "For loop" },
-  { text: "If statement" },
-  { text: "Variable" },
-  { text: "Return statement" },
 ];
 
 const style = {
@@ -35,9 +20,6 @@ const style = {
     margin: '20%'
   }
 }
-
-// Keeps track of how long until we're ready to parse another AST
-let parseReady = true;
 
 class AppBody extends React.Component {
   constructor(props) {
@@ -64,6 +46,7 @@ class AppBody extends React.Component {
     this.onSnippetTitleChanged = this.onSnippetTitleChanged.bind(this);
     this.saveAnnotation = this.saveAnnotation.bind(this);
     this.switchReadOnlyMode = this.switchReadOnlyMode.bind(this);
+    this.onParserRun = this.onParserRun.bind(this);
   }
 
   onGutterClick(codeMirrorInstance, lineNumber) {
@@ -122,8 +105,8 @@ class AppBody extends React.Component {
   }
 
   onSaveState() {
-    const {snippet, snippetTitle, annotations, AST, filters} = this.state;
-    const obj = {snippet, snippetTitle, annotations, AST, filters};
+    const {snippet, snippetTitle, annotations, AST, filters, readOnly} = this.state;
+    const obj = {snippet, snippetTitle, annotations, AST, filters, readOnly};
     const stateString = JSON.stringify(obj);
     axios.post('/api/snippets/', { json: stateString })
       .then(res => {
@@ -152,50 +135,49 @@ class AppBody extends React.Component {
   }
 
   // Callback to be invoked when user edits the code snippet
-  onSnippetChanged(snippet, codeMirrorRef) {
+  onSnippetChanged(snippet, AST, filters) {
     this.setState({ snippet });
-    // Make sure a language is selected
-    const currentLang = this.state.selectedLanguage;
-    if (!currentLang) {
-      console.warn('Cannot parse snippet. No language selected.');
-      return;
-    }
-
-    // Map to selected language to its parser, if one exists
-    const parser = parsers[currentLang];
-    if (parser === undefined) {
-      console.warn(`No parser available for the ${currentLang} language`);
-      return;
-    }
-
-    // Generate an AST for the current state of the code snippet, then
-    // highlight tokens in snippet and update state
-    if(parseReady) {
-      parseReady = false;
-      setTimeout(() => parseReady = true, 1000);
-      new Promise((resolve) => resolve(parser(snippet)))
-      .then((AST) => {
-        highlight(snippet, AST, codeMirrorRef);
-        this.setState({ AST: AST });
-      });
-    }
   }
 
-  onFiltersChanged(filters) {
-    this.setState({ filters });
+  // Callback to be invoked when the SnippetArea's 'daemon' runs the parser
+  onParserRun(AST, filters) {
+    this.setState({ AST, filters });
   }
 
-  saveAnnotation(lineNumber, annotation) {
+  onFiltersChanged(token, checked) {
+    const newFilters = this.state.filters;
+    newFilters[token].selected = checked;
+    // Highlight the code snippet and update state
+    this.snippetArea.triggerHighlight(
+      this.state.snippet,
+      this.state.AST,
+      newFilters
+    );
+    this.setState({ filters: newFilters });
+  }
+
+  saveAnnotation(lineNumber, lineText, annotation) {
     const annotations = this.state.annotations;
     this.setState({
       annotations: {
         ...annotations,
         [lineNumber]: annotation,
       },
+      annotationDisplay: 'display',
+      annotationDisplayProps: {
+        closeAnnotation: this.closeAnnotation,
+        lineNumber,
+        lineText: lineText,
+        snippetLanguage: this.state.selectedLanguage,
+        text: annotation,
+      },
     });
   }
 
   render() {
+    const infoPanelPrompt = this.state.readOnly ?
+      'Click on a line number to add an annotation or display one' :
+      'Lock this snippet to add annotations';
     return (
       <div className="container-fluid">
         <div className="row">
@@ -208,14 +190,15 @@ class AppBody extends React.Component {
                   selected={this.state.selectedLanguage}
                 />
                 <TokenSelector
+                  tokens={this.state.filters}
                   onChange={this.onFiltersChanged}
-                  tokenTypes={tokenTypes}
                 />
               </CardText>
             </Card>
           </div>
           <div className="col-md-5">
             <SnippetArea
+              ref={sa => {this.snippetArea = sa}}
               style={style.snippetAreaStyle}
               annotatedLines={Object.keys(this.state.annotations)}
               contents={this.state.snippet}
@@ -223,16 +206,19 @@ class AppBody extends React.Component {
               onSaveClick={this.onSaveState}
               onSnippetChanged={this.onSnippetChanged}
               onTitleChanged={this.onSnippetTitleChanged}
+              onParserRun={this.onParserRun}
               readOnly={this.state.readOnly}
               snippetLanguage={this.state.selectedLanguage}
               switchReadOnlyMode={this.switchReadOnlyMode}
               title={this.state.snippetTitle}
+              filters={this.state.filters}
             />
           </div>
           <div className="col-md-5">
             <TokenInfoPanel
               displayProps={this.state.annotationDisplayProps}
               displayStatus={this.state.annotationDisplay}
+              prompt={infoPanelPrompt}
             />
           </div>
         </div>

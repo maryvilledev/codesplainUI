@@ -8,7 +8,8 @@ exports[`<TokenInfoPanel /> snapshot tests matches the snapshot of when a user i
       "saveAnnotation": [Function],
     }
   }
-  displayStatus="create" />
+  displayStatus="create"
+  prompt="" />
 `;
 
 exports[`<TokenInfoPanel /> snapshot tests matches the snapshot of when it displays an annotation 1`] = `
@@ -16,16 +17,18 @@ exports[`<TokenInfoPanel /> snapshot tests matches the snapshot of when it displ
   displayProps={
     Object {
       "closeAnnotation": [Function],
-      "lineNumber": "0",
+      "lineNumber": 0,
       "lineText": "line text",
       "text": "annotation text",
     }
   }
-  displayStatus="display" />
+  displayStatus="display"
+  prompt="" />
 `;
 
 exports[`<TokenInfoPanel /> snapshot tests matches the snapshot of when no annotation is being created or displayed  1`] = `
 <TokenInfoPanel
   displayProps={Object {}}
-  displayStatus="none" />
+  displayStatus="none"
+  prompt="" />
 `;

@@ -1,16 +1,16 @@
 import React, { PropTypes } from 'react';
 
-import { Card, CardTitle, CardText } from 'material-ui/Card';
+import { Card, CardText } from 'material-ui/Card';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
 import AnnotationDisplay from './AnnotationDisplay';
 import AnnotationCreator from './AnnotationCreator';
 
-const AnnotationSection = ({ displayStatus, displayProps }) => {
+const AnnotationSection = ({ displayStatus, displayProps, prompt }) => {
   switch (displayStatus) {
   case 'none': {
     return (
-      <CardText>Click on a line number to add an annotation or display one</CardText>
+      <CardText>{prompt}</CardText>
     );
   }
   case 'display': {
@@ -33,16 +33,16 @@ const AnnotationSection = ({ displayStatus, displayProps }) => {
   }
 }
 
-const TokenInfoPanel = ({ displayStatus, displayProps, saveAnnotationCallback }) => {
+const TokenInfoPanel = ({ displayStatus, displayProps, prompt,
+  saveAnnotationCallback }) => {
   return (
     <Card>
-      <CardTitle title="Info Panel" />
-      <CardText>General info about the selected token goes here</CardText>
       <Tabs>
         <Tab label="Annotation">
           <AnnotationSection
             displayStatus={displayStatus}
             displayProps={displayProps}
+            prompt={prompt}
           />
         </Tab>
       </Tabs>
@@ -53,6 +53,7 @@ const TokenInfoPanel = ({ displayStatus, displayProps, saveAnnotationCallback })
 TokenInfoPanel.propTypes = {
   displayStatus: PropTypes.string.isRequired,
   displayProps: PropTypes.object.isRequired,
+  prompt: PropTypes.string.isRequired,
 };
 
 export default TokenInfoPanel;

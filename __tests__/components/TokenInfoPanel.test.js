@@ -13,6 +13,7 @@ describe('<TokenInfoPanel />', () => {
           <TokenInfoPanel
             displayStatus={'none'}
             displayProps={{}}
+            prompt={''}
           />
         </MuiThemeProvider>
       );
@@ -30,6 +31,7 @@ describe('<TokenInfoPanel />', () => {
               lineText: 'line text',
               saveAnnotation: jest.fn(),
             }}
+            prompt={''}
           />
         </MuiThemeProvider>
       );
@@ -43,10 +45,11 @@ describe('<TokenInfoPanel />', () => {
             displayStatus={'display'}
             displayProps={{
               closeAnnotation: jest.fn(),
-              lineNumber: '0',
+              lineNumber: 0,
               lineText: 'line text',
               text: 'annotation text',
             }}
+            prompt={''}
           />
         </MuiThemeProvider>
       );

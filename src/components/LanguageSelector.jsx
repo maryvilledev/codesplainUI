@@ -16,6 +16,7 @@ const LanguageSelector = ({ languages, onChange, selected }) => {
   })
   return (
     <SelectField
+      disabled
       floatingLabelText="Language"
       onChange={onChange}
       value={selected}

@@ -1,16 +1,9 @@
 import React, { PropTypes } from 'react';
-import CodeMirror from 'react-codemirror';
 
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 
-// Base options for CodeMirror instances for an AnnotationDisplay
-const baseOptions = {
-  lineNumbers: true,
-  theme: 'codesplain',
-  readOnly: true,
-  cursorBlinkRate: -1,
-};
+import LineSnippet from './LineSnippet';
 
 class AnnotationCreator extends React.Component {
   constructor(props) {
@@ -36,25 +29,19 @@ class AnnotationCreator extends React.Component {
 
   saveAnnotation() {
     const { annotation } = this.state;
-    this.clearAnnotation();
-    this.props.saveAnnotation(String(this.props.lineNumber), annotation);
+    this.props.saveAnnotation(this.props.lineNumber, this.props.lineText, annotation);
   }
 
   render() {
-    const codeMirrorOptions = {
-      ...baseOptions,
-      firstLineNumber: this.props.lineNumber + 1,
-    }
+
     return (
       <div>
-        <CodeMirror
-          style={{
-            height: 'auto',
-          }}
+        <LineSnippet
+          lineNumber={this.props.lineNumber + 1}
           value={this.props.lineText}
-          options={codeMirrorOptions}
         />
         <TextField
+          autoFocus
           name="annotationEditor"
           floatingLabelText="Annotation"
           fullWidth={true}
