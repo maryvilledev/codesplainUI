@@ -15,7 +15,6 @@ import { highlight }  from '../util/highlight.js';
 import { getTokenCount, getPrettyTokenName } from '../util/tokens.js';
 
 import 'codemirror/lib/codemirror.css';
-import 'codemirror/mode/go/go.js';
 import 'codemirror/mode/python/python.js';
 
 import '../styles/codesplain.css';

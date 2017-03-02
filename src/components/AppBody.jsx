@@ -11,7 +11,6 @@ import TokenInfoPanel from './TokenInfoPanel';
 import axios from 'axios'
 
 const languages = [
-  { text: 'Go' , value: 'go' },
   { text: 'Python 3' , value: 'python3' },
 ];
 

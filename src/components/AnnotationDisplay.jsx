@@ -4,6 +4,10 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 import LineSnippet from './LineSnippet';
 
+const style = {
+  fontFamily: 'monospace'
+}
+
 const AnnotationDisplay = ({ closeAnnotation, lineNumber, lineText, snippetLanugage, text }) => {
   return (
     <div>
@@ -11,7 +15,7 @@ const AnnotationDisplay = ({ closeAnnotation, lineNumber, lineText, snippetLanug
         lineNumber={lineNumber + 1}
         value={lineText}
       />
-      <pre>{text}</pre>
+      <p style={style}>{text}</p>
       <RaisedButton
         label="Close"
         secondary
