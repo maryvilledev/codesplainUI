@@ -7,7 +7,8 @@ import TokenSelector from './TokenSelector';
 import TokenInfoPanel from './TokenInfoPanel';
 import { parsePython3 } from '../parsers/python3';
 import { highlight }  from '../util/highlight.js';
-import axios from 'axios'
+import axios from 'axios';
+import '../styles/codesplain.css';
 
 const languages = [
   { text: 'Go' , value: 'go' },
@@ -25,6 +26,15 @@ const tokenTypes = [
   { text: "Variable" },
   { text: "Return statement" },
 ];
+
+const style = {
+  cardStyle: {
+    width: '90%'
+  },
+  snippetAreaStyle: {
+    margin: '20%'
+  }
+}
 
 // Keeps track of how long until we're ready to parse another AST
 let parseReady = true;
@@ -189,8 +199,8 @@ class AppBody extends React.Component {
     return (
       <div className="container-fluid">
         <div className="row">
-          <div className="col-md-2">
-            <Card>
+          <div className="col-md-2 style-selector">
+            <Card style={style.cardStyle}>
               <CardText>
                 <LanguageSelector
                   languages={languages}
@@ -204,8 +214,9 @@ class AppBody extends React.Component {
               </CardText>
             </Card>
           </div>
-          <div className="col-md-6">
+          <div className="col-md-5">
             <SnippetArea
+              style={style.snippetAreaStyle}
               annotatedLines={Object.keys(this.state.annotations)}
               contents={this.state.snippet}
               onGutterClick={this.onGutterClick}
@@ -218,7 +229,7 @@ class AppBody extends React.Component {
               title={this.state.snippetTitle}
             />
           </div>
-          <div className="col-md-4">
+          <div className="col-md-5">
             <TokenInfoPanel
               displayProps={this.state.annotationDisplayProps}
               displayStatus={this.state.annotationDisplay}

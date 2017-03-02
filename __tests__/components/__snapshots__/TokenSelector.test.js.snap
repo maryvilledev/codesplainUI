@@ -24,6 +24,7 @@ exports[`<TokenSelector /> matches snapshot 1`] = `
   </div>
   <div>
     <label
+      className="style-listheight"
       onTouchEnd={[Function]}
       open={null}
       style={
@@ -56,6 +57,7 @@ exports[`<TokenSelector /> matches snapshot 1`] = `
   </div>
   <div>
     <label
+      className="style-listheight"
       onTouchEnd={[Function]}
       open={null}
       style={
@@ -88,6 +90,7 @@ exports[`<TokenSelector /> matches snapshot 1`] = `
   </div>
   <div>
     <label
+      className="style-listheight"
       onTouchEnd={[Function]}
       open={null}
       style={

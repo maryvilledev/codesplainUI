@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import { List, ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import Checkbox from 'material-ui/Checkbox';
+import '../styles/codesplain.css';
 
 class TokenSelector extends React.Component {
   constructor(props) {
@@ -17,11 +18,13 @@ class TokenSelector extends React.Component {
         this.itemState[tokenText] = false;
       return (
         <ListItem
+          className="style-listheight"
           key={`${tokenText}-index`}
           leftCheckbox={
             <Checkbox onCheck={
                 (ev, checked) => this.itemState[tokenText] = checked
               }
+              className="styles-checkbox"
             />
           }
           primaryText={tokenText}
@@ -32,7 +35,7 @@ class TokenSelector extends React.Component {
 
   render() {
     return (
-      <List onChange={() => this.props.onChange(this.itemState)}>
+      <List  onChange={() => this.props.onChange(this.itemState)}>
         <Subheader>Token types to highlight</Subheader>
         { this.makeListItems() }
       </List>

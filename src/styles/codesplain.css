@@ -5,9 +5,13 @@
   padding-bottom: 2px;
 }
 
+.snippetarea {
+  width: 20% !important;
+  padding-left: 10
+}
 
 .styles-tokenselector {
-  width: 150 !important;
+  width: 75% !important;
 }
 
 .style-textfield {
@@ -22,5 +26,21 @@
 
 .CodeMirror {
   height: auto;
-
 }
+
+.style-listheight {
+  height: 30px !important;
+  font-size: 14px !important;
+  padding-left: 30% !important;
+}
+
+.style-selector {
+  width: 20 !important;
+}
+
+
+
+
+/*.col-md-6-style-snippetarea {
+  padding-left: 4% !important;
+}*/
