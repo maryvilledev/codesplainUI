@@ -36,8 +36,6 @@ const AnnotationSection = ({ displayStatus, displayProps }) => {
 const TokenInfoPanel = ({ displayStatus, displayProps, saveAnnotationCallback }) => {
   return (
     <Card>
-      <CardTitle title="Info Panel" />
-      <CardText>General info about the selected token goes here</CardText>
       <Tabs>
         <Tab label="Annotation">
           <AnnotationSection
