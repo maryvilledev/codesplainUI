@@ -11,27 +11,27 @@ const ignoredTokens = [
 ]
 
 const tokenColors = {
-  'for_stmt' :    '#F7ABAB',
-  'if_stmt':      '#FFFF00',
-  'number':       'DEA5A4',
-  'exptr_stmt':   '#F7ABD4',
-  'expr':         '#F0ABF7',
-  'str':          '#CAABF7',
-  'atom':         '#ABDBF7',
-  'expr_stmt':    '#BEDA0B',
-  'arglist':      '#F7CDAB',
-  'argument':     '#EAF7AB',
-  'integer':      '#ABF7C6',
-  'funcdef':      '#AEC6CF',
-  'parameters':   '#FFB347',
-  'classdef':     '#03C03C',
-  'try_stmt':     '#966FD6',
-  'pass_stmt':    '#FDFD96',
-  'except_clause':'#779ECB',
-  'while_stmt':   '#F0E68C',
-  'and_expr':     '#F0E68C',
-  'arith_expr':   '#FFA500',
-  'comp_op':      '#DAA520',
+  'for_stmt' :     '#F7ABAB',
+  'if_stmt':       '#FFFF00',
+  'number':        '#DEA5A4',
+  'exptr_stmt':    '#F7ABD4',
+  'expr':          '#F0ABF7',
+  'str':           '#CAABF7',
+  'atom':          '#ABDBF7',
+  'expr_stmt':     '#BEDA0B',
+  'arglist':       '#F7CDAB',
+  'argument':      '#EAF7AB',
+  'integer':       '#ABF7C6',
+  'funcdef':       '#AEC6CF',
+  'parameters':    '#FFB347',
+  'classdef':      '#03C03C',
+  'try_stmt':      '#966FD6',
+  'pass_stmt':     '#FDFD96',
+  'except_clause': '#779ECB',
+  'while_stmt':    '#F0E68C',
+  'and_expr':      '#F0E68C',
+  'arith_expr':    '#FFA500',
+  'comp_op':       '#DAA520',
   'dictorsetmaker':'#00FF7F',
 }
 
@@ -47,7 +47,7 @@ export function highlight(snippet, node, codeMirrorRef, filters, parentColor) {
   if (ignoredTokens.indexOf(node.type) === -1) {
     color = getColor(node.type); // Get the color for this token's type
 
-    // If this token has no color 
+    // If this token has no color
     if (!color) {
       color = 'inherit';
       console.warn(`token "${node.type}" has no color specified!`);
@@ -69,7 +69,7 @@ export function highlight(snippet, node, codeMirrorRef, filters, parentColor) {
 
   // Highlight all children of this token
   node.children.forEach(child => {
-    if (child === Object(child)) 
+    if (child === Object(child))
       highlight(snippet, child, codeMirrorRef, filters, color);
   });
 }
