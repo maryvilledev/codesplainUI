@@ -23,7 +23,6 @@ exports[`<TokenSelector /> matches snapshot 1`] = `
   </div>
   <div>
     <label
-      className="style-listheight"
       onTouchEnd={[Function]}
       open={null}
       style={
@@ -32,12 +31,14 @@ exports[`<TokenSelector /> matches snapshot 1`] = `
           "color": "rgba(0, 0, 0, 0.87)",
           "cursor": "pointer",
           "display": "block",
+          "font": "14px",
           "fontSize": 16,
+          "height": "30px",
           "lineHeight": "16px",
           "marginLeft": 0,
           "muiPrepared": true,
           "paddingBottom": 16,
-          "paddingLeft": 72,
+          "paddingLeft": "30%",
           "paddingRight": 16,
           "paddingTop": 16,
           "position": "relative",
@@ -56,7 +57,6 @@ exports[`<TokenSelector /> matches snapshot 1`] = `
   </div>
   <div>
     <label
-      className="style-listheight"
       onTouchEnd={[Function]}
       open={null}
       style={
@@ -65,12 +65,14 @@ exports[`<TokenSelector /> matches snapshot 1`] = `
           "color": "rgba(0, 0, 0, 0.87)",
           "cursor": "pointer",
           "display": "block",
+          "font": "14px",
           "fontSize": 16,
+          "height": "30px",
           "lineHeight": "16px",
           "marginLeft": 0,
           "muiPrepared": true,
           "paddingBottom": 16,
-          "paddingLeft": 72,
+          "paddingLeft": "30%",
           "paddingRight": 16,
           "paddingTop": 16,
           "position": "relative",

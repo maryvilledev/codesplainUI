@@ -51,7 +51,7 @@ const makeMarker = () => {
 
 const styles = {
   textFieldStyle: {
-    width: '550px',
+    width: '400px',
     position: 'relative',
   },
   lockButtonStyle: {
