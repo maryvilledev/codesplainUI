@@ -33,6 +33,9 @@ const tokenColors = {
   'arith_expr':    '#FFA500',
   'comp_op':       '#DAA520',
   'dictorsetmaker':'#00FF7F',
+  'import_name':   '#FF6666',
+  'return_stmt':   '#966FD6',
+  'augassign':     '#00ffff',
 }
 
 function getColor(type) {
