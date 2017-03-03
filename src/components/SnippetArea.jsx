@@ -137,9 +137,7 @@ class SnippetArea extends React.Component {
   startParserDaemon(parser) {
     setInterval(function() {
       const snippet = this.props.contents;
-      if (snippet !== undefined &&
-          snippet !== this.state.prevSnippet &&
-          snippet !== '') {
+      if (snippet && snippet !== this.state.prevSnippet) {
         // Generate an AST for the current state of the code snippet, if ready
         const AST = parser(snippet);
 
