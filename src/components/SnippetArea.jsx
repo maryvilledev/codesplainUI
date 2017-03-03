@@ -8,10 +8,8 @@ import ConfirmLockDialog from './ConfirmLockDialog';
 import LockButton from './LockButton';
 import SaveButton from './SaveButton';
 
-import { getIndexToRowColConverter } from '../util/util.js';
-
 import { parsePython3 } from '../parsers/python3';
-import { highlight }  from '../util/highlight.js';
+import { styleLine, styleAll, highlight } from '../util/codemirror-utils.js';
 import { getTokenCount, getPrettyTokenName } from '../util/tokens.js';
 
 import 'codemirror/lib/codemirror.css';
@@ -48,8 +46,6 @@ const annotationModeOptions = {
   cursorBlinkRate: -1,
 };
 
-
-
 const makeMarker = () => {
   const marker = document.createElement("div");
   marker.style.color = "#822";
@@ -64,14 +60,13 @@ class SnippetArea extends React.Component {
       lockDialogOpen: false,
     };
 
-    this.shouldDoHighlighting = true;
     this.switchToReadOnlyMode = this.switchToReadOnlyMode.bind(this);
     this.toggleLockDialogVisibility = this.toggleLockDialogVisibility.bind(this);
     this.onSnippetChanged = this.onSnippetChanged.bind(this);
     this.startParserDaemon = this.startParserDaemon.bind(this);
     this.triggerHighlight = this.triggerHighlight.bind(this);
     this.emphasizeLine = this.emphasizeLine.bind(this);
-    this.doHighlighting = this.doHighlighting.bind(this);
+    this.deEmphasize = this.deEmphasize.bind(this);
   }
 
   componentDidMount() {
@@ -137,8 +132,7 @@ class SnippetArea extends React.Component {
   startParserDaemon(parser) {
     setInterval(function() {
       const snippet = this.state.snippet;
-      if (this.shouldDoHighlighting &&
-          snippet !== undefined &&
+      if (snippet !== undefined &&
           snippet !== this.state.prevSnippet &&
           snippet !== '') {
         // Generate an AST for the current state of the code snippet, if ready
@@ -163,7 +157,7 @@ class SnippetArea extends React.Component {
                                 });
 
         // Highlight the code snippet and invoke prop callback
-        highlight(snippet, AST, this.codeMirror, newFilters);
+        highlight(this.codeMirror.getCodeMirror(), AST, newFilters);
         this.setState({ prevSnippet: snippet });
         this.props.onParserRun(AST, newFilters);
       }
@@ -172,42 +166,25 @@ class SnippetArea extends React.Component {
 
   // Can be used to trigger a highlight of the snippet via a ref
   triggerHighlight(snippet, AST, filters) {
-    if (this.shouldDoHighlighting)
-      highlight(snippet, AST, this.codeMirror, filters);
+    highlight(this.codeMirror.getCodeMirror(), AST, filters);
   }
 
-  // Can be used to emphasize a region of text when annotating
-  // Stops AST generation and normal snippet highlighting until
-  // doHighlighting method is called
-  emphasizeLine(snippet, line) {
-    const codeMirror = this.codeMirror.getCodeMirror();
-    // Stop the highlighting while we emphasize
-    this.shouldDoHighlighting = false;
-    
-    // Style the background
-    const backgroundCSS = 
-      'background-color: #fff;' +
-      'color: #b1b1cd;'; // light grey
-    styleRegion(this.codeMirror, 0, snippet.length, backgroundCSS);
+  // Can be used to emphasize a line of text when annotating.
+  emphasizeLine(line) {
+    const codeMirror = this.codeMirror.getCodeMirror()
+    // Fade out the background
+    const backgroundCSS = 'opacity: 0.5;';
+    styleAll(codeMirror, backgroundCSS);
 
-    // Style the passed-in line
-    const foregroundCSS = 
-      'font-weight: bold;' +
-      'color: #000;' +
-      'background-color: #ff9966;'; // light orange
-    const lineStart = { line: line, ch: 0 };
-    const lineEnd = { line: line, ch: codeMirror.getLine(line).length };
-    codeMirror.markText(lineStart, lineEnd, {css: foregroundCSS});
+    // Bold the passed-in line
+    const foregroundCSS = 'font-weight: bold; opacity: 1.0;';
+    styleLine(codeMirror, line, foregroundCSS);
   }
 
-  // If a region has been previously emphasized, this will de-emphasise it, 
-  // and return to the normal parsing and highlighting mode
-  doHighlighting() {
-    this.shouldDoHighlighting = true;
-    const css = 
-      'font-weight: normal;' +
-      'color: #000;';
-    styleRegion(this.codeMirror, 0, this.props.contents.length, css);
+  // If a line has been previously emphasized, this will de-emphasise it.
+  deEmphasize() {
+    const css = 'font-weight: normal; opacity: 1.0;';
+    styleAll(this.codeMirror.getCodeMirror(), css);
   }
 
   render() {
@@ -220,6 +197,14 @@ class SnippetArea extends React.Component {
     // Make sure snippet state is same as prop
     if (this.state.snippet !== this.props.contents)
       this.setState({ snippet: this.props.contents });
+
+    // If the emphasizeLine prop was specified, then emphasize that line,
+    // otherwise apply deEmphasis styling.
+    const emphasizeLine = this.props.emphasizeLine;
+    if (this.props.emphasizeLine !== undefined)
+      this.emphasizeLine(emphasizeLine);
+    else if (this.codeMirror)
+      this.deEmphasize();
 
     return (
       <Card>
@@ -274,17 +259,3 @@ SnippetArea.propTypes = {
 }
 
 export default SnippetArea;
-
-/*
-Given a CodeMirror ref, styleRegion() will apply the specified css style to the
-given region of code. The code is treated as a single string, and characters in
-that string must be identified by their index (as opposed to row/col). Both
-start and end are inclusive.
-*/
-export function styleRegion(codeMirrorRef, start, end, css) {
-  if (end < start) throw new Error('end must be greater than start');
-  const cmElement = codeMirrorRef.getCodeMirror();
-  const snippet = cmElement.getValue();
-  const convert = getIndexToRowColConverter(snippet);
-  cmElement.markText(convert(start), convert(end), {css: css});
-}
