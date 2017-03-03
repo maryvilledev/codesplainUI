@@ -172,7 +172,7 @@ class SnippetArea extends React.Component {
   emphasizeLine(line) {
     const codeMirror = this.codeMirror.getCodeMirror()
     // Fade out the background
-    const backgroundCSS = 'opacity: 0.5;';
+    const backgroundCSS = 'opacity: 0.5; font-weight: normal;';
     styleAll(codeMirror, backgroundCSS);
 
     // Bold the passed-in line
