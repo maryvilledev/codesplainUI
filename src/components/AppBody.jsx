@@ -18,6 +18,9 @@ const style = {
   },
   snippetAreaStyle: {
     margin: '20%'
+  },
+  selector: {
+      width: 20
   }
 }
 
@@ -181,7 +184,10 @@ class AppBody extends React.Component {
     return (
       <div className="container-fluid">
         <div className="row">
-          <div className="col-md-2 style-selector">
+          <div
+            className="col-md-2"
+            style={styles.selector}
+            >
             <Card style={style.cardStyle}>
               <CardText>
                 <LanguageSelector

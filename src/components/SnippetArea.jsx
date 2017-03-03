@@ -162,7 +162,7 @@ class SnippetArea extends React.Component {
             selected,
           }
         });
-
+        
       // Highlight the code snippet and invoke prop callback
       highlight(snippet, AST, this.codeMirror, newFilters);
       this.setState({
