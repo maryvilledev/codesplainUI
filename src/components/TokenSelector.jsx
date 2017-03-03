@@ -4,6 +4,18 @@ import Subheader from 'material-ui/Subheader';
 import Checkbox from 'material-ui/Checkbox';
 import '../styles/codesplain.css';
 
+const styles = {
+  list: {
+    height: '20px',
+    fontSize: '13px',
+    paddingLeft: '20%',
+  },
+  Subheader: {
+    lineHeight: '',
+    paddingLeft: '',
+  },
+}
+
 class TokenSelector extends React.Component {
   constructor(props) {
     super(props);
@@ -19,16 +31,10 @@ class TokenSelector extends React.Component {
         this.itemState[tokenText] = false;
       }
 
-const styles = {
-  listStyle: {
-    height: '30px',
-    font: '14px',
-    paddingLeft: '30%',
-  }
-}
+
       return (
         <ListItem
-          style={styles.listStyle}
+          style={styles.list}
           key={`${tokenText}-index`}
           leftCheckbox={
             <Checkbox
@@ -47,7 +53,11 @@ const styles = {
   render() {
     return (
       <List>
-        <Subheader>Select a token type to highlight all occurences</Subheader>
+        <Subheader
+          style={styles.Subheader}
+          >
+          Select a token type to highlight all occurences
+        </Subheader>
         { this.makeListItems() }
       </List>
     );
