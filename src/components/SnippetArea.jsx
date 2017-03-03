@@ -18,7 +18,6 @@ import 'codemirror/mode/python/python.js';
 import '../styles/codesplain.css';
 
 const snippetEditorModes = {
-  go: 'go',
   python3: 'python',
 };
 
@@ -131,7 +130,7 @@ class SnippetArea extends React.Component {
   // Runs the parser every second
   startParserDaemon(parser) {
     setInterval(function() {
-      const snippet = this.state.snippet;
+      const snippet = this.props.contents;
       if (snippet !== undefined &&
           snippet !== this.state.prevSnippet &&
           snippet !== '') {
@@ -160,7 +159,7 @@ class SnippetArea extends React.Component {
         highlight(this.codeMirror.getCodeMirror(), AST, newFilters);
         this.setState({ prevSnippet: snippet });
         this.props.onParserRun(AST, newFilters);
-      }
+      } 
     }.bind(this), 1000);
   }
 
@@ -192,12 +191,7 @@ class SnippetArea extends React.Component {
     const codeMirrorOptions = {
       ...(this.props.readOnly ? annotationModeOptions : editModeOptions),
       mode: snippetEditorModes[this.props.snippetLanguage],
-    };
-
-    // Make sure snippet state is same as prop
-    if (this.state.snippet !== this.props.contents)
-      this.setState({ snippet: this.props.contents });
-
+    }; 
     // If the emphasizeLine prop was specified, then emphasize that line,
     // otherwise apply deEmphasis styling.
     const emphasizeLine = this.props.emphasizeLine;
@@ -209,30 +203,30 @@ class SnippetArea extends React.Component {
     return (
       <Card>
         <CardText>
-        <TextField
-          hintText="Snippet Name"
-          value={this.props.title}
-          name="snippetName"
-          onChange={this.props.onTitleChanged}
-        />
-        <LockButton
-          onClick={this.toggleLockDialogVisibility}
-          readOnly={this.props.readOnly}
-        />
-        <ConfirmLockDialog
-          accept={this.switchToReadOnlyMode}
-          isOpen={this.state.lockDialogOpen}
-          reject={this.toggleLockDialogVisibility}
-        />
-        <CodeMirror
-          onChange={ev => this.onSnippetChanged(ev)}
-          options={codeMirrorOptions}
-          ref={cm => {this.codeMirror = cm}}
-          value={this.props.contents}
-        />
-        <SaveButton
-          onSaveClick={this.props.onSaveClick}
-        />
+          <TextField
+            hintText="Snippet Name"
+            value={this.props.title}
+            name="snippetName"
+            onChange={this.props.onTitleChanged}
+          />
+          <LockButton
+            onClick={this.toggleLockDialogVisibility}
+            readOnly={this.props.readOnly}
+          />
+          <ConfirmLockDialog
+            accept={this.switchToReadOnlyMode}
+            isOpen={this.state.lockDialogOpen}
+            reject={this.toggleLockDialogVisibility}
+          />
+          <CodeMirror
+            onChange={ev => this.onSnippetChanged(ev)}
+            options={codeMirrorOptions}
+            ref={cm => {this.codeMirror = cm}}
+            value={this.props.contents}
+          />
+          <SaveButton
+            onSaveClick={this.props.onSaveClick}
+          />
         </CardText>
       </Card>
     );

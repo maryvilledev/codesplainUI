@@ -33,8 +33,7 @@ const AnnotationSection = ({ displayStatus, displayProps, prompt }) => {
   }
 }
 
-const TokenInfoPanel = ({ displayStatus, displayProps, prompt,
-  saveAnnotationCallback }) => {
+const TokenInfoPanel = ({ displayStatus, displayProps, prompt, saveAnnotationCallback }) => {
   return (
     <Card>
       <Tabs>
