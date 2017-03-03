@@ -150,7 +150,7 @@ class SnippetArea extends React.Component {
         .forEach(t => {
           let selected = false;
           if (filters[t]) {
-            let selected = false;
+            selected = false;
           }
           newFilters[t] = {
             prettyTokenName: getPrettyTokenName(t),
