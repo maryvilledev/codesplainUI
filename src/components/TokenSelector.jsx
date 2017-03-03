@@ -7,7 +7,7 @@ const styles = {
   list: {
     height: '20px',
     fontSize: '13px',
-    paddingLeft: '20%',
+    paddingLeft: '30%',
   },
   Subheader: {
     lineHeight: '',
