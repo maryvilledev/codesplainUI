@@ -12,11 +12,11 @@ const languages = [
   { text: 'Python 3' , value: 'python3' },
 ];
 
-const style = {
-  cardStyle: {
+const styles = {
+  card: {
     width: '90%'
   },
-  snippetAreaStyle: {
+  snippetArea: {
     margin: '20%'
   },
   selector: {
@@ -188,7 +188,7 @@ class AppBody extends React.Component {
             className="col-md-2"
             style={styles.selector}
             >
-            <Card style={style.cardStyle}>
+            <Card style={styles.card}>
               <CardText>
                 <LanguageSelector
                   languages={languages}
@@ -205,7 +205,7 @@ class AppBody extends React.Component {
           <div className="col-md-5">
             <SnippetArea
               ref={sa => {this.snippetArea = sa}}
-              style={style.snippetAreaStyle}
+              style={styles.snippetArea}
               annotatedLines={Object.keys(this.state.annotations)}
               contents={this.state.snippet}
               onGutterClick={this.onGutterClick}

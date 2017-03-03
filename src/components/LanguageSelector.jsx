@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import '../styles/codesplain.css';
 import MenuItem from 'material-ui/MenuItem';
 import SelectField from 'material-ui/SelectField';
 
