@@ -3,6 +3,11 @@ import '../styles/codesplain.css';
 import MenuItem from 'material-ui/MenuItem';
 import SelectField from 'material-ui/SelectField';
 
+const styles = {
+  tokenSelectorStyle: {
+    width: '80%'
+  }
+}
 const LanguageSelector = ({ languages, onChange, selected }) => {
 
   const languageMenuItems = languages.map((lang, index) => {
@@ -20,7 +25,7 @@ const LanguageSelector = ({ languages, onChange, selected }) => {
       floatingLabelText="Language"
       onChange={onChange}
       value={selected}
-      className="styles-tokenselector"
+      style={styles.tokenSelectorStyle}
     >
       <MenuItem value={null} primaryText="" />
       {languageMenuItems}

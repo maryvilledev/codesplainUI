@@ -42,14 +42,22 @@ const annotationModeOptions = {
   cursorBlinkRate: -1,
 };
 
-
-
 const makeMarker = () => {
   const marker = document.createElement("div");
   marker.style.color = "#822";
   marker.innerHTML = "●";
   return marker;
 }
+
+const styles = {
+  textFieldStyle: {
+    width: '550px',
+    position: 'relative',
+  },
+  lockButtonStyle: {
+    position: 'absolute',
+  }
+};
 
 class SnippetArea extends React.Component {
   constructor(props) {
@@ -184,12 +192,12 @@ class SnippetArea extends React.Component {
           value={this.props.title}
           name="snippetName"
           onChange={this.props.onTitleChanged}
-          className="style-textfield"
+          style={styles.textFieldStyle}
         />
         <LockButton
           onClick={this.toggleLockDialogVisibility}
           readOnly={this.props.readOnly}
-          className="style-lockbutton"
+          style={styles.lockButtonStyle}
         />
         <ConfirmLockDialog
           accept={this.switchToReadOnlyMode}

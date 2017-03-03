@@ -5,33 +5,8 @@
   padding-bottom: 2px;
 }
 
-.snippetarea {
-  width: 20% !important;
-  padding-left: 10
-}
-
-.styles-tokenselector {
-  width: 75% !important;
-}
-
-.style-textfield {
-  paddingLeft: 0%;
-  width: 550px;
-  position: relative;
-}
-
-.style-lockbutton {
-  position: absolute;
-}
-
 .CodeMirror {
   height: auto;
-}
-
-.style-listheight {
-  height: 30px !important;
-  font-size: 14px !important;
-  padding-left: 30% !important;
 }
 
 .style-selector {

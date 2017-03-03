@@ -18,9 +18,17 @@ class TokenSelector extends React.Component {
       if (this.itemState[tokenText] === undefined) {
         this.itemState[tokenText] = false;
       }
+
+const styles = {
+  listStyle: {
+    height: '30px',
+    font: '14px',
+    paddingLeft: '30%',
+  }
+}
       return (
         <ListItem
-          className="style-listheight"
+          style={styles.listStyle}
           key={`${tokenText}-index`}
           leftCheckbox={
             <Checkbox
@@ -28,7 +36,6 @@ class TokenSelector extends React.Component {
               onCheck={
                 (ev, checked) => this.props.onChange(token, checked)
               }
-              className="styles-checkbox"
             />
           }
           primaryText={tokenText}
