@@ -1,18 +1,27 @@
 import React from 'react';
 import { browserHistory } from 'react-router'
-
 import { Card, CardText } from 'material-ui/Card';
-
 import LanguageSelector from './LanguageSelector';
 import SnippetArea from './SnippetArea';
 import TokenSelector from './TokenSelector';
 import TokenInfoPanel from './TokenInfoPanel';
-
 import axios from 'axios'
 
 const languages = [
   { text: 'Python 3' , value: 'python3' },
 ];
+
+const styles = {
+  card: {
+    width: '90%'
+  },
+  snippetArea: {
+    margin: '20%'
+  },
+  selector: {
+      width: 20
+  }
+}
 
 class AppBody extends React.Component {
   constructor(props) {
@@ -168,14 +177,17 @@ class AppBody extends React.Component {
   }
 
   render() {
-    const infoPanelPrompt = this.state.readOnly ? 
+    const infoPanelPrompt = this.state.readOnly ?
       'Click on a line number to add an annotation or display one' :
       'Lock this snippet to add annotations';
     return (
       <div className="container-fluid">
         <div className="row">
-          <div className="col-md-3">
-            <Card>
+          <div
+            className="col-md-2"
+            style={styles.selector}
+            >
+            <Card style={styles.card}>
               <CardText>
                 <LanguageSelector
                   languages={languages}
@@ -192,6 +204,7 @@ class AppBody extends React.Component {
           <div className="col-md-5">
             <SnippetArea
               ref={sa => {this.snippetArea = sa}}
+              style={styles.snippetArea}
               annotatedLines={Object.keys(this.state.annotations)}
               contents={this.state.snippet}
               onGutterClick={this.onGutterClick}
@@ -206,7 +219,7 @@ class AppBody extends React.Component {
               filters={this.state.filters}
             />
           </div>
-          <div className="col-md-4">
+          <div className="col-md-5">
             <TokenInfoPanel
               displayProps={this.state.annotationDisplayProps}
               displayStatus={this.state.annotationDisplay}

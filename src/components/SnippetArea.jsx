@@ -1,23 +1,16 @@
 import React, { PropTypes } from 'react';
 import CodeMirror from 'react-codemirror';
-
+import SaveButton from './SaveButton.jsx';
 import { Card, CardText } from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
-
 import ConfirmLockDialog from './ConfirmLockDialog';
 import LockButton from './LockButton';
-import SaveButton from './SaveButton';
-
-import { getIndexToRowColConverter } from '../util/util.js';
-
 import { parsePython3 } from '../parsers/python3';
 import { highlight }  from '../util/highlight.js';
 import { getTokenCount, getPrettyTokenName } from '../util/tokens.js';
-
+import { getIndexToRowColConverter }  from '../util/util.js';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/python/python.js';
-
-import '../styles/codesplain.css';
 
 const snippetEditorModes = {
   python3: 'python',
@@ -53,6 +46,16 @@ const makeMarker = () => {
   marker.innerHTML = "●";
   return marker;
 }
+
+const styles = {
+  textFieldStyle: {
+    width: '400px',
+    position: 'relative',
+  },
+  lockButtonStyle: {
+    position: 'absolute',
+  }
+};
 
 class SnippetArea extends React.Component {
   constructor(props) {
@@ -183,30 +186,32 @@ class SnippetArea extends React.Component {
     return (
       <Card>
         <CardText>
-          <TextField
-            hintText="Snippet Name"
-            value={this.props.title}
-            name="snippetName"
-            onChange={this.props.onTitleChanged}
-          />
-          <LockButton
-            onClick={this.toggleLockDialogVisibility}
-            readOnly={this.props.readOnly}
-          />
-          <ConfirmLockDialog
-            accept={this.switchToReadOnlyMode}
-            isOpen={this.state.lockDialogOpen}
-            reject={this.toggleLockDialogVisibility}
-          />
-          <CodeMirror
-            onChange={ev => this.onSnippetChanged(ev)}
-            options={codeMirrorOptions}
-            ref={cm => {this.codeMirror = cm}}
-            value={this.props.contents}
-          />
-          <SaveButton
-            onSaveClick={this.props.onSaveClick}
-          />
+        <TextField
+          hintText="Snippet Name"
+          value={this.props.title}
+          name="snippetName"
+          onChange={this.props.onTitleChanged}
+          style={styles.textFieldStyle}
+        />
+        <LockButton
+          onClick={this.toggleLockDialogVisibility}
+          readOnly={this.props.readOnly}
+          style={styles.lockButtonStyle}
+        />
+        <ConfirmLockDialog
+          accept={this.switchToReadOnlyMode}
+          isOpen={this.state.lockDialogOpen}
+          reject={this.toggleLockDialogVisibility}
+        />
+        <CodeMirror
+          onChange={ev => this.onSnippetChanged(ev)}
+          options={codeMirrorOptions}
+          ref={cm => {this.codeMirror = cm}}
+          value={this.props.contents}
+        />
+        <SaveButton
+          onSaveClick={this.props.onSaveClick}
+        />
         </CardText>
       </Card>
     );
