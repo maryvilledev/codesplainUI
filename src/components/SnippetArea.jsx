@@ -61,14 +61,17 @@ class SnippetArea extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      lockDialogOpen: false
+      lockDialogOpen: false,
     };
 
+    this.shouldDoHighlighting = true;
     this.switchToReadOnlyMode = this.switchToReadOnlyMode.bind(this);
     this.toggleLockDialogVisibility = this.toggleLockDialogVisibility.bind(this);
     this.onSnippetChanged = this.onSnippetChanged.bind(this);
     this.startParserDaemon = this.startParserDaemon.bind(this);
     this.triggerHighlight = this.triggerHighlight.bind(this);
+    this.emphasizeLine = this.emphasizeLine.bind(this);
+    this.doHighlighting = this.doHighlighting.bind(this);
   }
 
   componentDidMount() {
@@ -134,41 +137,77 @@ class SnippetArea extends React.Component {
   startParserDaemon(parser) {
     setInterval(function() {
       const snippet = this.state.snippet;
-      if (snippet === undefined) return;
-      if (snippet === this.state.prevSnippet) return;
-      if (snippet === '') return;
+      if (this.shouldDoHighlighting &&
+          snippet !== undefined &&
+          snippet !== this.state.prevSnippet &&
+          snippet !== '') {
+        // Generate an AST for the current state of the code snippet, if ready
+        const AST = parser(snippet);
 
-      // Generate an AST for the current state of the code snippet, if ready
-      const AST = parser(snippet);
+        // Get an array mapping token types to their occurence count
+        const tokenCount = [];
+        getTokenCount(AST, tokenCount);
 
-      // Get an array mapping token types to their occurence count
-      const tokenCount = [];
-      getTokenCount(AST, tokenCount);
+        // Generate array of strings containing pretty token name and its count
+        const filters = this.props.filters;
+        let newFilters = {};
+        Object.keys(tokenCount).filter(t => getPrettyTokenName(t) !== undefined)
+                                .forEach(t => {
+                                  let selected = false;
+                                  if (filters[t]) selected = filters[t].selected;
+                                  newFilters[t] = { 
+                                    prettyTokenName: getPrettyTokenName(t),
+                                    count: tokenCount[t],
+                                    selected: selected,
+                                  }
+                                });
 
-      // Generate array of strings containing pretty token name and its count
-      const filters = this.props.filters;
-      let newFilters = {};
-      Object.keys(tokenCount).filter(t => getPrettyTokenName(t) !== undefined)
-                              .forEach(t => {
-                                let selected = false;
-                                if (filters[t]) selected = filters[t].selected;
-                                newFilters[t] = { 
-                                  prettyTokenName: getPrettyTokenName(t),
-                                  count: tokenCount[t],
-                                  selected: selected,
-                                }
-                              });
-
-      // Highlight the code snippet and invoke prop callback
-      highlight(snippet, AST, this.codeMirror, newFilters);
-      this.setState({ prevSnippet: snippet });
-      this.props.onParserRun(AST, newFilters);
+        // Highlight the code snippet and invoke prop callback
+        highlight(snippet, AST, this.codeMirror, newFilters);
+        this.setState({ prevSnippet: snippet });
+        this.props.onParserRun(AST, newFilters);
+      }
     }.bind(this), 1000);
   }
 
   // Can be used to trigger a highlight of the snippet via a ref
   triggerHighlight(snippet, AST, filters) {
-    highlight(snippet, AST, this.codeMirror, filters);
+    if (this.shouldDoHighlighting)
+      highlight(snippet, AST, this.codeMirror, filters);
+  }
+
+  // Can be used to emphasize a region of text when annotating
+  // Stops AST generation and normal snippet highlighting until
+  // doHighlighting method is called
+  emphasizeLine(snippet, line) {
+    const codeMirror = this.codeMirror.getCodeMirror();
+    // Stop the highlighting while we emphasize
+    this.shouldDoHighlighting = false;
+    
+    // Style the background
+    const backgroundCSS = 
+      'background-color: #fff;' +
+      'color: #b1b1cd;'; // light grey
+    styleRegion(this.codeMirror, 0, snippet.length, backgroundCSS);
+
+    // Style the passed-in line
+    const foregroundCSS = 
+      'font-weight: bold;' +
+      'color: #000;' +
+      'background-color: #ff9966;'; // light orange
+    const lineStart = { line: line, ch: 0 };
+    const lineEnd = { line: line, ch: codeMirror.getLine(line).length };
+    codeMirror.markText(lineStart, lineEnd, {css: foregroundCSS});
+  }
+
+  // If a region has been previously emphasized, this will de-emphasise it, 
+  // and return to the normal parsing and highlighting mode
+  doHighlighting() {
+    this.shouldDoHighlighting = true;
+    const css = 
+      'font-weight: normal;' +
+      'color: #000;';
+    styleRegion(this.codeMirror, 0, this.props.contents.length, css);
   }
 
   render() {
