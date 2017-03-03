@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react';
 import { List, ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import Checkbox from 'material-ui/Checkbox';
-import '../styles/codesplain.css';
 
 const styles = {
   list: {

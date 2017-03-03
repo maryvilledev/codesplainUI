@@ -6,7 +6,6 @@ import SnippetArea from './SnippetArea';
 import TokenSelector from './TokenSelector';
 import TokenInfoPanel from './TokenInfoPanel';
 import axios from 'axios'
-import '../styles/codesplain.css';
 
 const languages = [
   { text: 'Python 3' , value: 'python3' },

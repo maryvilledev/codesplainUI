@@ -11,7 +11,6 @@ import { getTokenCount, getPrettyTokenName } from '../util/tokens.js';
 import { getIndexToRowColConverter }  from '../util/util.js';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/python/python.js';
-import '../styles/codesplain.css';
 
 const snippetEditorModes = {
   python3: 'python',
@@ -162,7 +161,7 @@ class SnippetArea extends React.Component {
             selected,
           }
         });
-        
+
       // Highlight the code snippet and invoke prop callback
       highlight(snippet, AST, this.codeMirror, newFilters);
       this.setState({
