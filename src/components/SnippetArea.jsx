@@ -151,15 +151,15 @@ class SnippetArea extends React.Component {
         const filters = this.props.filters;
         let newFilters = {};
         Object.keys(tokenCount).filter(t => getPrettyTokenName(t) !== undefined)
-                                .forEach(t => {
-                                  let selected = false;
-                                  if (filters[t]) selected = filters[t].selected;
-                                  newFilters[t] = { 
-                                    prettyTokenName: getPrettyTokenName(t),
-                                    count: tokenCount[t],
-                                    selected: selected,
-                                  }
-                                });
+          .forEach(t => {
+            let selected = false;
+            if (filters[t]) selected = filters[t].selected;
+            newFilters[t] = { 
+              prettyTokenName: getPrettyTokenName(t),
+              count: tokenCount[t],
+              selected: selected,
+            }
+          });
 
         // Highlight the code snippet and invoke prop callback
         highlight(this.codeMirror.getCodeMirror(), AST, newFilters);
