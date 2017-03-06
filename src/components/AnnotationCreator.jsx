@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
-
+import MarkdownRenderer from 'react-markdown-renderer';
 import RaisedButton from 'material-ui/RaisedButton';
+import { Tab, Tabs } from 'material-ui/Tabs';
 import TextField from 'material-ui/TextField';
 
 import LineSnippet from './LineSnippet';
@@ -40,17 +41,31 @@ class AnnotationCreator extends React.Component {
           lineNumber={this.props.lineNumber + 1}
           value={this.props.lineText}
         />
-        <TextField
-          autoFocus
-          name="annotationEditor"
-          floatingLabelText="Annotation"
-          fullWidth={true}
-          hintText="Enter your annotation here"
-          multiLine={true}
-          onChange={this.onAnnotationChange}
-          rows={4}
-          value={this.state.annotation}
-        />
+      <Tabs>
+        <Tab
+          onActive={() => { this.textField.focus() }}
+          label="Write"
+        >
+          <TextField
+            autoFocus
+            name="annotationEditor"
+            floatingLabelText="Annotation"
+            fullWidth={true}
+            hintText="Enter your annotation here"
+            multiLine={true}
+            onChange={this.onAnnotationChange}
+            ref={textField => this.textField = textField}
+            rows={4}
+            value={this.state.annotation}
+          />
+        </Tab>
+        <Tab label="Preview">
+          <MarkdownRenderer
+            markdown={this.state.annotation}
+          />
+        </Tab>
+      </Tabs>
+
         <RaisedButton
           label="Cancel"
           secondary
