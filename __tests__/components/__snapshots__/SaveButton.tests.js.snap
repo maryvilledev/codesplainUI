@@ -12,7 +12,7 @@ exports[`SaveButton /> matches snapshot 1`] = `
   </IconButton>
   <Snackbar
     autoHideDuration={2000}
-    message="Codesplaination Saved!"
+    message=""
     onRequestClose={[Function]}
     open={false} />
 </div>
