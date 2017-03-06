@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-export const parsePython3 =
+module.exports.parsePython3 =
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -23838,7 +23838,7 @@ exports.ParseTreeWalker = Tree.ParseTreeWalker;
 /* 53 */
 /***/ (function(module, exports) {
 
-module.exports = fs;
+// module.exports = fs;
 
 /***/ }),
 /* 54 */
@@ -23847,7 +23847,7 @@ module.exports = fs;
 let antlr = __webpack_require__(12);
 
 // LANGUAGE_CONFIG_PATH and LANGUAGE_CACHE_DIR are defined in webpack.config.js
-let lang_config = __webpack_require__(34);
+lang_config = __webpack_require__(34);
 
 let lexer_classname = lang_config.language + 'Lexer';
 let parser_classname = lang_config.language + 'Parser';
@@ -23900,3 +23900,7 @@ module.exports = function(input) {
 
 /***/ })
 /******/ ]);
+
+// TODO: ASK JOEL IF MAKING lang_config A GLOBAL VAR (line 23850)
+// AND EXPORTING IT IN THIS FASHION IS APPROPRIATE
+module.exports.tokens = Object.keys(lang_config.rules);

@@ -31,7 +31,12 @@
     "eject": "react-scripts eject",
     "serve": "node server",
     "postinstall": "react-scripts build",
-    "makeTokenCSVFile": "babel-node --presets es2015 MakeTokenCSVFile.js"
+    "make-tokens-csv": "babel-node --presets es2015 make-tokens-csv.js"
+  },
+  "babel": {
+    "ignore": [
+      "src/parsers/python3.js"
+    ]
   },
   "jest": {
     "transformIgnorePatterns": [

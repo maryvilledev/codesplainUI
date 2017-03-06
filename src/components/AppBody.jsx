@@ -143,7 +143,7 @@ class AppBody extends React.Component {
   }
 
   // Callback to be invoked when user edits the code snippet
-  onSnippetChanged(snippet, AST, filters) {
+  onSnippetChanged(snippet) {
     this.setState({ snippet });
   }
 

@@ -1,10 +1,13 @@
 import * as fs from 'fs';
 import { tokens } from './src/util/tokens.js';
+import * as Python3 from './src/parsers/python3.js';
 
 let csvBody = 'Token Types, AST, Pretty Name, Color\n';
-Object.keys(tokens)
+Python3.tokens
   .forEach(token => {
-    csvBody += `,,${tokens[token].prettyName},${tokens[token].color}\n`;
+    const prettyName = tokens[token] ? tokens[token].prettyName : 'X';
+    const color      = tokens[token] ? tokens[token].color : 'X';
+    csvBody += `${token},,${prettyName},${color}\n`;
   });
 
 console.log('Writing token.csv file...');
