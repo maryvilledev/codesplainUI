@@ -4,7 +4,7 @@ import { Card, CardText } from 'material-ui/Card';
 import LanguageSelector from './LanguageSelector';
 import SnippetArea from './SnippetArea';
 import TokenSelector from './TokenSelector';
-import TokenInfoPanel from './TokenInfoPanel';
+import AnnotationPanel from './AnnotationPanel';
 import axios from 'axios'
 
 const languages = [
@@ -40,6 +40,7 @@ class AppBody extends React.Component {
       snippetTitle: '',
     };
     this.closeAnnotation = this.closeAnnotation.bind(this);
+    this.editAnnotation = this.editAnnotation.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
     this.onFiltersChanged = this.onFiltersChanged.bind(this);
     this.onGutterClick = this.onGutterClick.bind(this);
@@ -69,13 +70,14 @@ class AppBody extends React.Component {
     this.setState({
       annotationDisplay: 'display',
       annotationDisplayProps: {
+        annotation: this.state.annotations[String(lineNumber)],
         closeAnnotation: this.closeAnnotation,
+        editAnnotation: this.editAnnotation,
         lineNumber,
         lineText: codeMirrorInstance.getLine(lineNumber),
         snippetLanguage: this.state.selectedLanguage,
-        text: this.state.annotations[String(lineNumber)],
-      }
-    })
+      },
+    });
   }
 
   closeAnnotation() {
@@ -88,6 +90,16 @@ class AppBody extends React.Component {
       annotationDisplay: 'none',
       annotationDisplayProps: {},
     });
+  }
+
+  editAnnotation() {
+    this.setState({
+      annotationDisplay: 'create',
+      annotationDisplayProps: {
+        ...this.state.annotationDisplayProps,
+        saveAnnotation: this.saveAnnotation,
+      }
+    })
   }
 
   handleSelect(ev, index, value) {
@@ -173,11 +185,10 @@ class AppBody extends React.Component {
       },
       annotationDisplay: 'display',
       annotationDisplayProps: {
+        ...this.state.annotationDisplayProps,
+        annotation,
         closeAnnotation: this.closeAnnotation,
-        lineNumber,
-        lineText: lineText,
-        snippetLanguage: this.state.selectedLanguage,
-        text: annotation,
+        editAnnotation: this.editAnnotation,
       },
     });
   }
@@ -227,7 +238,7 @@ class AppBody extends React.Component {
             />
           </div>
           <div className="col-md-5">
-            <TokenInfoPanel
+            <AnnotationPanel
               displayProps={this.state.annotationDisplayProps}
               displayStatus={this.state.annotationDisplay}
               prompt={infoPanelPrompt}

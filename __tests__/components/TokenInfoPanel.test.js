@@ -2,15 +2,15 @@ import React from 'react'
 import ReactTestUtils from 'react-addons-test-utils';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-import TokenInfoPanel from '../../src/components/TokenInfoPanel';
+import AnnotationPanel from '../../src/components/AnnotationPanel';
 
-describe('<TokenInfoPanel />', () => {
+describe('<AnnotationPanel />', () => {
   describe('snapshot tests', () => {
     it('matches the snapshot of when no annotation is being created or displayed ', () => {
       const renderer = ReactTestUtils.createRenderer();
       const tree = renderer.render(
         <MuiThemeProvider>
-          <TokenInfoPanel
+          <AnnotationPanel
             displayStatus={'none'}
             displayProps={{}}
             prompt={''}
@@ -23,7 +23,7 @@ describe('<TokenInfoPanel />', () => {
       const renderer = ReactTestUtils.createRenderer();
       const tree = renderer.render(
         <MuiThemeProvider>
-          <TokenInfoPanel
+          <AnnotationPanel
             displayStatus={'create'}
             displayProps={{
               closeAnnotation: jest.fn(),
@@ -41,7 +41,7 @@ describe('<TokenInfoPanel />', () => {
       const renderer = ReactTestUtils.createRenderer();
       const tree = renderer.render(
         <MuiThemeProvider>
-          <TokenInfoPanel
+          <AnnotationPanel
             displayStatus={'display'}
             displayProps={{
               closeAnnotation: jest.fn(),
