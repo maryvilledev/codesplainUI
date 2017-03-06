@@ -1,14 +1,8 @@
 import React, { PropTypes } from 'react';
-
+import MarkdownRenderer from 'react-markdown-renderer';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import LineSnippet from './LineSnippet';
-
-const style = {
-  fontFamily: 'monospace',
-  whiteSpace: 'pre-wrap',
-  overflow: 'scroll'
-}
 
 const AnnotationDisplay = ({ closeAnnotation, lineNumber, lineText, snippetLanugage, text }) => {
   return (
@@ -17,7 +11,9 @@ const AnnotationDisplay = ({ closeAnnotation, lineNumber, lineText, snippetLanug
         lineNumber={lineNumber + 1}
         value={lineText}
       />
-      <p style={style}>{text}</p>
+      <MarkdownRenderer
+        markdown={text}
+      />
       <RaisedButton
         label="Close"
         secondary
