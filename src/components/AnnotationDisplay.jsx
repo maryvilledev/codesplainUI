@@ -10,29 +10,34 @@ const style = {
   overflow: 'scroll'
 }
 
-const AnnotationDisplay = ({ closeAnnotation, lineNumber, lineText, snippetLanugage, text }) => {
+const AnnotationDisplay = ({ annotation, closeAnnotation, editAnnotation, lineNumber, lineText, snippetLanugage, }) => {
   return (
     <div>
       <LineSnippet
         lineNumber={lineNumber + 1}
         value={lineText}
       />
-      <p style={style}>{text}</p>
+    <p style={style}>{annotation}</p>
       <RaisedButton
         label="Close"
         secondary
         onTouchTap={closeAnnotation}
+      />
+      <RaisedButton
+        label="Edit"
+        primary
+        onTouchTap={editAnnotation}
       />
     </div>
   );
 };
 
 AnnotationDisplay.propTypes = {
+  annotation: PropTypes.string.isRequired,
   closeAnnotation: PropTypes.func.isRequired,
   lineNumber: PropTypes.number.isRequired,
   lineText: PropTypes.string.isRequired,
   snippetLanguage: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired,
 };
 
 export default AnnotationDisplay;

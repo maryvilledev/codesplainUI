@@ -1,5 +1,5 @@
-exports[`<TokenInfoPanel /> snapshot tests matches the snapshot of when a user is creating an annotation 1`] = `
-<TokenInfoPanel
+exports[`<AnnotationPanel /> snapshot tests matches the snapshot of when a user is creating an annotation 1`] = `
+<AnnotationPanel
   displayProps={
     Object {
       "closeAnnotation": [Function],
@@ -12,8 +12,8 @@ exports[`<TokenInfoPanel /> snapshot tests matches the snapshot of when a user i
   prompt="" />
 `;
 
-exports[`<TokenInfoPanel /> snapshot tests matches the snapshot of when it displays an annotation 1`] = `
-<TokenInfoPanel
+exports[`<AnnotationPanel /> snapshot tests matches the snapshot of when it displays an annotation 1`] = `
+<AnnotationPanel
   displayProps={
     Object {
       "closeAnnotation": [Function],
@@ -26,8 +26,8 @@ exports[`<TokenInfoPanel /> snapshot tests matches the snapshot of when it displ
   prompt="" />
 `;
 
-exports[`<TokenInfoPanel /> snapshot tests matches the snapshot of when no annotation is being created or displayed  1`] = `
-<TokenInfoPanel
+exports[`<AnnotationPanel /> snapshot tests matches the snapshot of when no annotation is being created or displayed  1`] = `
+<AnnotationPanel
   displayProps={Object {}}
   displayStatus="none"
   prompt="" />
