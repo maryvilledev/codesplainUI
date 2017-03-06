@@ -2,7 +2,10 @@
   "name": "codesplainui",
   "version": "0.1.0",
   "private": true,
-  "devDependencies": {},
+  "devDependencies": {
+    "babel-cli": "^6.23.0",
+    "babel-preset-es2015": "^6.22.0"
+  },
   "dependencies": {
     "axios": "^0.15.3",
     "body-parser": "^1.16.1",
@@ -27,7 +30,8 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "serve": "node server",
-    "postinstall": "react-scripts build"
+    "postinstall": "react-scripts build",
+    "makeTokenCSVFile": "babel-node --presets es2015 MakeTokenCSVFile.js"
   },
   "jest": {
     "transformIgnorePatterns": [

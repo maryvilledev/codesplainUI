@@ -1,0 +1,25 @@
+Token Types, AST, Pretty Name, Color
+,,For Loops,#F7ABAB
+,,If Statements,#FFFF00
+,,Numbers,#DEA5A4
+,,Expressions,#F0ABF7
+,,Strings,#CAABF7
+,,Atoms,#ABDBF7
+,,Arguments,#EAF7AB
+,,Integers,#ABF7C6
+,,And,#F0E68C
+,,Try Statements,#966FD6
+,,Argument Lists,#F7CDAB
+,,Function Definitions,#AEC6CF
+,,Class Definitions,#03C03C
+,,Comparison Operator,#DAA520
+,,Augmented Assignment,#00ffff
+,,Import Statement,#FF6666
+,,Return Statement,#966FD6
+,,While Loops,#F0E68C
+,,Pass Statements,#FDFD96
+,,Expression Statements,#BEDA0B
+,,Arithmetic Expression,#FFA500
+,,Parameters,#FFB347
+,,Dictionary,#00FF7F
+,,Except Clauses,#779ECB
