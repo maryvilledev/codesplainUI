@@ -52,6 +52,7 @@ class AppBody extends React.Component {
   }
 
   onGutterClick(codeMirrorInstance, lineNumber) {
+    // this.snippetArea.emphasizeLine(this.state.snippet, lineNumber);
     if (this.state.annotations[String(lineNumber)] === undefined) {
       this.setState({
         annotationDisplay: 'create',
@@ -78,6 +79,11 @@ class AppBody extends React.Component {
   }
 
   closeAnnotation() {
+    this.snippetArea.triggerHighlight(
+      this.state.snippet, 
+      this.state.AST, 
+      this.state.filters
+    );
     this.setState({
       annotationDisplay: 'none',
       annotationDisplayProps: {},
@@ -217,6 +223,7 @@ class AppBody extends React.Component {
               switchReadOnlyMode={this.switchReadOnlyMode}
               title={this.state.snippetTitle}
               filters={this.state.filters}
+              emphasizeLine={this.state.annotationDisplayProps.lineNumber}
             />
           </div>
           <div className="col-md-5">
