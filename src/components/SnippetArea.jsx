@@ -8,7 +8,7 @@ import LockButton from './LockButton';
 
 import { parsePython3 } from '../parsers/python3';
 import { styleLine, styleAll, highlight } from '../util/codemirror-utils.js';
-import { getTokenCount, getPrettyTokenName } from '../util/tokens.js';
+import { getTokenCount, tokens } from '../util/tokens.js';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/python/python.js';
 import '../styles/codesplain.css';
@@ -148,14 +148,14 @@ class SnippetArea extends React.Component {
         // Generate array of strings containing pretty token name and its count
         const filters = this.props.filters;
         let newFilters = {};
-        Object.keys(tokenCount).filter(t => getPrettyTokenName(t) !== undefined)
+        Object.keys(tokenCount).filter(t => tokens[t] !== undefined)
           .forEach(t => {
             let selected = false;
             if (filters[t]) selected = filters[t].selected;
             newFilters[t] = { 
-              prettyTokenName: getPrettyTokenName(t),
-              count: tokenCount[t],
-              selected: selected,
+              prettyTokenName: tokens[t].prettyName,
+              count:           tokenCount[t],
+              selected:        selected,
             }
           });
 

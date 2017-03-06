@@ -1,41 +1,4 @@
-const ignoredTokens = [
-  'suite',
-  'file_input',
-  'simple_stmt',
-  'trailed_atom',
-  'trailer',
-  'comparison', //Dont ignore after boxes are added
-  'testlist_comp',
-]
-
-const tokenColors = {
-  'for_stmt' :    '#F7ABAB',
-  'if_stmt':      '#FFFF00',
-  'number':       'DEA5A4',
-  'exptr_stmt':   '#F7ABD4',
-  'expr':         '#F0ABF7',
-  'str':          '#CAABF7',
-  'atom':         '#ABDBF7',
-  'expr_stmt':    '#BEDA0B',
-  'arglist':      '#F7CDAB',
-  'argument':     '#EAF7AB',
-  'integer':      '#ABF7C6',
-  'funcdef':      '#AEC6CF',
-  'parameters':   '#FFB347',
-  'classdef':     '#03C03C',
-  'try_stmt':     '#966FD6',
-  'pass_stmt':    '#FDFD96',
-  'except_clause':'#779ECB',
-  'while_stmt':   '#F0E68C',
-  'and_expr':     '#F0E68C',
-  'arith_expr':   '#FFA500',
-  'comp_op':      '#DAA520',
-  'dictorsetmaker':'#00FF7F',
-}
-
-function getColor(type) {
-  return tokenColors[type];
-}
+import { tokens, ignoredTokens } from './tokens.js';
 
 /*
 Given a CodeMirror instance, highlight() will use the specified AST and filters
@@ -45,14 +8,16 @@ export function highlight(codeMirror, AST, filters) {
   highlightNode(codeMirror, AST, filters, 'transparent');
 }
 
-// Recursive function for highlighting code in a CodeMirror. highlight() is an
-// exported wrapper func for this, and starts the recursion.
+/*
+Recursive function for highlighting code in a CodeMirror. highlight() is an
+exported wrapper func for this, and starts the recursion.
+*/
 function highlightNode(codeMirror, node, filters, parentColor) {
   let color = parentColor;
 
   // If we aren't ignoring this token...
   if (ignoredTokens.indexOf(node.type) === -1) {
-    color = getColor(node.type); // Get the color for this token's type
+    color = tokens[node.type].color; // Get the color for this token's type
 
     // If this token has no color 
     if (!color) {
