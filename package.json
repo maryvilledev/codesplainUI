@@ -6,9 +6,11 @@
   "dependencies": {
     "axios": "^0.15.3",
     "body-parser": "^1.16.1",
+    "congruence": "^1.6.11",
     "enzyme": "^2.7.1",
     "express": "^4.14.1",
     "ioredis": "^2.5.0",
+    "lodash": "^4.17.4",
     "material-ui": "^0.17.0",
     "morgan": "^1.8.1",
     "react": "^15.4.2",
