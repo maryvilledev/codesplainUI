@@ -1,23 +1,19 @@
 import React, { PropTypes } from 'react';
-
+import MarkdownRenderer from 'react-markdown-renderer';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import LineSnippet from './LineSnippet';
 
-const style = {
-  fontFamily: 'monospace',
-  whiteSpace: 'pre-wrap',
-  overflow: 'scroll'
-}
-
-const AnnotationDisplay = ({ annotation, closeAnnotation, editAnnotation, lineNumber, lineText, snippetLanugage, }) => {
+const AnnotationDisplay = ({ annotation, closeAnnotation, editAnnotation, lineNumber, lineText, snippetLanugage }) => {
   return (
     <div>
       <LineSnippet
         lineNumber={lineNumber + 1}
         value={lineText}
       />
-    <p style={style}>{annotation}</p>
+      <MarkdownRenderer
+        markdown={annotation}
+      />
       <RaisedButton
         label="Close"
         secondary
