@@ -5,8 +5,32 @@ var path = require('path')
 var uuid = require('uuid/v4')
 var bodyParser = require('body-parser')
 
+var _ = require('lodash');
+_.mixin(require('congruence'));
+
 var app = express()
 var redis = Redis(process.env.REDIS_URL || "redis://localhost:6379")
+
+const ASTTemplate = {
+  type: _.isString,
+  begin: _.isNumber,
+  end: _.isNumber,
+  children: _.isArray
+};
+
+const validateAST = function(AST) {
+  if (_.isString(AST)) { return true; }
+  return _.congruent(ASTTemplate, AST) && (AST.children && AST.children.every(validateAST))
+}
+
+const requestTemplate = {
+  snippet: _.isString,
+  snippetTitle: _.isString,
+  annotations: _.isObject,
+  AST: validateAST,
+  filters: _.isObject,
+  readOnly: _.isBoolean
+};
 
 app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'));
 app.use(bodyParser.json());
@@ -18,9 +42,13 @@ app.use(express.static(path.resolve(__dirname, "..", 'build')));
 
 app.post('/api/snippets/', function(req, res) {
   var id = uuid();
-  var json = req.body.json;
-  redis.set(id, json);
-  res.json({id: id});
+  var json = JSON.parse(req.body.json);
+  if (_.isObject(json) && _.congruent(requestTemplate, json)) {
+    redis.set(id, json);
+    res.json({id: id});
+  } else {
+    res.status(400).send('Invalid POST request body');
+  }
 })
 
 app.get('/api/snippets/:id', function(req, res) {
