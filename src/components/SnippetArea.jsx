@@ -5,12 +5,13 @@ import { Card, CardText } from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
 import ConfirmLockDialog from './ConfirmLockDialog';
 import LockButton from './LockButton';
+
 import { parsePython3 } from '../parsers/python3';
-import { highlight }  from '../util/highlight.js';
+import { styleLine, styleAll, highlight } from '../util/codemirror-utils.js';
 import { getTokenCount, getPrettyTokenName } from '../util/tokens.js';
-import { getIndexToRowColConverter }  from '../util/util.js';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/python/python.js';
+import '../styles/codesplain.css';
 
 const snippetEditorModes = {
   python3: 'python',
@@ -61,7 +62,7 @@ class SnippetArea extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      lockDialogOpen: false
+      lockDialogOpen: false,
     };
 
     this.switchToReadOnlyMode = this.switchToReadOnlyMode.bind(this);
@@ -69,6 +70,8 @@ class SnippetArea extends React.Component {
     this.onSnippetChanged = this.onSnippetChanged.bind(this);
     this.startParserDaemon = this.startParserDaemon.bind(this);
     this.triggerHighlight = this.triggerHighlight.bind(this);
+    this.emphasizeLine = this.emphasizeLine.bind(this);
+    this.deEmphasize = this.deEmphasize.bind(this);
   }
 
   componentDidMount() {
@@ -134,46 +137,57 @@ class SnippetArea extends React.Component {
   startParserDaemon(parser) {
     setInterval(function() {
       const snippet = this.props.contents;
-      if (!snippet || snippet === this.state.prevSnippet) {
-        return;
-      }
+      if (snippet && snippet !== this.state.prevSnippet) {
+        // Generate an AST for the current state of the code snippet, if ready
+        const AST = parser(snippet);
 
-      // Generate an AST for the current state of the code snippet, if ready
-      const AST = parser(snippet);
+        // Get an array mapping token types to their occurence count
+        const tokenCount = [];
+        getTokenCount(AST, tokenCount);
 
-      // Get an array mapping token types to their occurence count
-      const tokenCount = [];
-      getTokenCount(AST, tokenCount);
+        // Generate array of strings containing pretty token name and its count
+        const filters = this.props.filters;
+        let newFilters = {};
+        Object.keys(tokenCount).filter(t => getPrettyTokenName(t) !== undefined)
+          .forEach(t => {
+            let selected = false;
+            if (filters[t]) selected = filters[t].selected;
+            newFilters[t] = { 
+              prettyTokenName: getPrettyTokenName(t),
+              count: tokenCount[t],
+              selected: selected,
+            }
+          });
 
-      // Generate array of strings containing pretty token name and its count
-      const filters = this.props.filters;
-      let newFilters = {};
-      Object.keys(tokenCount)
-        .filter(t => getPrettyTokenName(t) !== undefined)
-        .forEach(t => {
-          let selected = false;
-          if (filters[t]) {
-            selected = filters[t].selected;
-          }
-          newFilters[t] = {
-            prettyTokenName: getPrettyTokenName(t),
-            count: tokenCount[t],
-            selected,
-          }
-        });
-
-      // Highlight the code snippet and invoke prop callback
-      highlight(snippet, AST, this.codeMirror, newFilters);
-      this.setState({
-        prevSnippet: snippet
-      });
-      this.props.onParserRun(AST, newFilters);
+        // Highlight the code snippet and invoke prop callback
+        highlight(this.codeMirror.getCodeMirror(), AST, newFilters);
+        this.setState({ prevSnippet: snippet });
+        this.props.onParserRun(AST, newFilters);
+      } 
     }.bind(this), 1000);
   }
 
   // Can be used to trigger a highlight of the snippet via a ref
   triggerHighlight(snippet, AST, filters) {
-    highlight(snippet, AST, this.codeMirror, filters);
+    highlight(this.codeMirror.getCodeMirror(), AST, filters);
+  }
+
+  // Can be used to emphasize a line of text when annotating.
+  emphasizeLine(line) {
+    const codeMirror = this.codeMirror.getCodeMirror()
+    // Fade out the background
+    const backgroundCSS = 'opacity: 0.5; font-weight: normal;';
+    styleAll(codeMirror, backgroundCSS);
+
+    // Bold the passed-in line
+    const foregroundCSS = 'font-weight: bold; opacity: 1.0;';
+    styleLine(codeMirror, line, foregroundCSS);
+  }
+
+  // If a line has been previously emphasized, this will de-emphasise it.
+  deEmphasize() {
+    const css = 'font-weight: normal; opacity: 1.0;';
+    styleAll(this.codeMirror.getCodeMirror(), css);
   }
 
   render() {
@@ -181,7 +195,14 @@ class SnippetArea extends React.Component {
     const codeMirrorOptions = {
       ...(this.props.readOnly ? annotationModeOptions : editModeOptions),
       mode: snippetEditorModes[this.props.snippetLanguage],
-    };
+    }; 
+    // If the emphasizeLine prop was specified, then emphasize that line,
+    // otherwise apply deEmphasis styling.
+    const emphasizeLine = this.props.emphasizeLine;
+    if (this.props.emphasizeLine !== undefined)
+      this.emphasizeLine(emphasizeLine);
+    else if (this.codeMirror)
+      this.deEmphasize();
 
     return (
       <Card>
@@ -238,17 +259,3 @@ SnippetArea.propTypes = {
 }
 
 export default SnippetArea;
-
-/*
-Given a CodeMirror ref, styleRegion() will apply the specified css style to the
-given region of code. The code is treated as a single string, and characters in
-that string must be identified by their index (as opposed to row/col). Both
-start and end are inclusive.
-*/
-export function styleRegion(codeMirrorRef, start, end, css) {
-  if (end < start) throw new Error('end must be greater than start');
-  const cmElement = codeMirrorRef.getCodeMirror();
-  const snippet = cmElement.getValue();
-  const convert = getIndexToRowColConverter(snippet);
-  cmElement.markText(convert(start), convert(end), {css: css});
-}

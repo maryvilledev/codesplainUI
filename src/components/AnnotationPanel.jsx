@@ -4,7 +4,7 @@ import { Card, CardText } from 'material-ui/Card';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
 import AnnotationDisplay from './AnnotationDisplay';
-import AnnotationCreator from './AnnotationCreator';
+import AnnotationEditor from './AnnotationEditor';
 
 const AnnotationSection = ({ displayStatus, displayProps, prompt }) => {
   switch (displayStatus) {
@@ -22,7 +22,7 @@ const AnnotationSection = ({ displayStatus, displayProps, prompt }) => {
   }
   case 'create': {
     return (
-      <AnnotationCreator
+      <AnnotationEditor
         {...displayProps}
       />
     );
@@ -33,7 +33,7 @@ const AnnotationSection = ({ displayStatus, displayProps, prompt }) => {
   }
 }
 
-const TokenInfoPanel = ({ displayStatus, displayProps, prompt, saveAnnotationCallback }) => {
+const AnnotationPanel = ({ displayStatus, displayProps, prompt, saveAnnotationCallback }) => {
   return (
     <Card>
       <Tabs>
@@ -49,10 +49,10 @@ const TokenInfoPanel = ({ displayStatus, displayProps, prompt, saveAnnotationCal
   );
 };
 
-TokenInfoPanel.propTypes = {
+AnnotationPanel.propTypes = {
   displayStatus: PropTypes.string.isRequired,
   displayProps: PropTypes.object.isRequired,
   prompt: PropTypes.string.isRequired,
 };
 
-export default TokenInfoPanel;
+export default AnnotationPanel;

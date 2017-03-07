@@ -20,7 +20,7 @@ app.post('/api/snippets/', function(req, res) {
   var id = uuid();
   var json = req.body.json;
   redis.set(id, json);
-  res.json({id: id})
+  res.json({id: id});
 })
 
 app.get('/api/snippets/:id', function(req, res) {

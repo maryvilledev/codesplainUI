@@ -4,7 +4,7 @@ import { Card, CardText } from 'material-ui/Card';
 import LanguageSelector from './LanguageSelector';
 import SnippetArea from './SnippetArea';
 import TokenSelector from './TokenSelector';
-import TokenInfoPanel from './TokenInfoPanel';
+import AnnotationPanel from './AnnotationPanel';
 import axios from 'axios'
 
 const languages = [
@@ -19,7 +19,7 @@ const styles = {
     margin: '20%'
   },
   selector: {
-      width: 20
+    width: 20
   }
 }
 
@@ -40,6 +40,7 @@ class AppBody extends React.Component {
       snippetTitle: '',
     };
     this.closeAnnotation = this.closeAnnotation.bind(this);
+    this.editAnnotation = this.editAnnotation.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
     this.onFiltersChanged = this.onFiltersChanged.bind(this);
     this.onGutterClick = this.onGutterClick.bind(this);
@@ -52,6 +53,7 @@ class AppBody extends React.Component {
   }
 
   onGutterClick(codeMirrorInstance, lineNumber) {
+    // this.snippetArea.emphasizeLine(this.state.snippet, lineNumber);
     if (this.state.annotations[String(lineNumber)] === undefined) {
       this.setState({
         annotationDisplay: 'create',
@@ -68,20 +70,36 @@ class AppBody extends React.Component {
     this.setState({
       annotationDisplay: 'display',
       annotationDisplayProps: {
+        annotation: this.state.annotations[String(lineNumber)],
         closeAnnotation: this.closeAnnotation,
+        editAnnotation: this.editAnnotation,
         lineNumber,
         lineText: codeMirrorInstance.getLine(lineNumber),
         snippetLanguage: this.state.selectedLanguage,
-        text: this.state.annotations[String(lineNumber)],
-      }
-    })
+      },
+    });
   }
 
   closeAnnotation() {
+    this.snippetArea.triggerHighlight(
+      this.state.snippet,
+      this.state.AST,
+      this.state.filters
+    );
     this.setState({
       annotationDisplay: 'none',
       annotationDisplayProps: {},
     });
+  }
+
+  editAnnotation() {
+    this.setState({
+      annotationDisplay: 'create',
+      annotationDisplayProps: {
+        ...this.state.annotationDisplayProps,
+        saveAnnotation: this.saveAnnotation,
+      }
+    })
   }
 
   handleSelect(ev, index, value) {
@@ -110,15 +128,7 @@ class AppBody extends React.Component {
     const {snippet, snippetTitle, annotations, AST, filters, readOnly} = this.state;
     const obj = {snippet, snippetTitle, annotations, AST, filters, readOnly};
     const stateString = JSON.stringify(obj);
-    axios.post('/api/snippets/', { json: stateString })
-      .then(res => {
-        const id = res.data.id;
-        this.setState({ id: id });
-        browserHistory.push(`/${id}`);
-      })
-      .catch(err => {
-        console.error(err);
-      })
+    return axios.post('/api/snippets/', { json : stateString });
   }
 
   componentDidMount() {
@@ -167,11 +177,10 @@ class AppBody extends React.Component {
       },
       annotationDisplay: 'display',
       annotationDisplayProps: {
+        ...this.state.annotationDisplayProps,
+        annotation,
         closeAnnotation: this.closeAnnotation,
-        lineNumber,
-        lineText: lineText,
-        snippetLanguage: this.state.selectedLanguage,
-        text: annotation,
+        editAnnotation: this.editAnnotation,
       },
     });
   }
@@ -217,10 +226,11 @@ class AppBody extends React.Component {
               switchReadOnlyMode={this.switchReadOnlyMode}
               title={this.state.snippetTitle}
               filters={this.state.filters}
+              emphasizeLine={this.state.annotationDisplayProps.lineNumber}
             />
           </div>
           <div className="col-md-5">
-            <TokenInfoPanel
+            <AnnotationPanel
               displayProps={this.state.annotationDisplayProps}
               displayStatus={this.state.annotationDisplay}
               prompt={infoPanelPrompt}
