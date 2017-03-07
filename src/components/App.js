@@ -23,9 +23,14 @@ class App extends Component {
         </div>
       </MuiThemeProvider>
     )
+    const auth = (props) => (
+      <MuiThemeProvider>
+        <Auth {...props}/>
+      </MuiThemeProvider>
+    )
     return (
       <Router history={browserHistory}>
-        <Route path="auth" component={Auth} />
+        <Route path="auth" component={auth} />
         <Route path="/(:id)" component={component} />
       </Router>
     );

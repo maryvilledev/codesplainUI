@@ -63,7 +63,7 @@ app.post('/api/auth/', function(req, res) {
       if(data.error) {
         res.status(400).send("The authentication code is invalid")
       } else {
-        res.json({token: data.token})
+        res.json({token: data.access_token})
       }
     })
     .catch(function(error) {

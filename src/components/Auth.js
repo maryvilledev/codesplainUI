@@ -2,6 +2,11 @@ import React from 'react'
 import axios from 'axios'
 import cookie from 'react-cookie'
 import { Link } from 'react-router'
+import { RaisedButton } from 'material-ui'
+
+const CLIENT_ID = process.env.REACT_APP_CLIENT_ID
+const AUTH_URL = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}`
+
 //Code is passed in from Github
 class Auth extends React.Component {
   constructor() {
@@ -37,7 +42,9 @@ class Auth extends React.Component {
       )
     } else {
       return (
-        <Link to="/">Login failed, please try again</Link>
+        <RaisedButton
+          onClick={() => window.location = AUTH_URL}
+        >Login</RaisedButton>
       )
     }
   }
