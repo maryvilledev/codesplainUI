@@ -19,7 +19,7 @@ const styles = {
     margin: '20%'
   },
   selector: {
-      width: 20
+    width: 20
   }
 }
 
@@ -82,8 +82,8 @@ class AppBody extends React.Component {
 
   closeAnnotation() {
     this.snippetArea.triggerHighlight(
-      this.state.snippet, 
-      this.state.AST, 
+      this.state.snippet,
+      this.state.AST,
       this.state.filters
     );
     this.setState({
@@ -128,15 +128,7 @@ class AppBody extends React.Component {
     const {snippet, snippetTitle, annotations, AST, filters, readOnly} = this.state;
     const obj = {snippet, snippetTitle, annotations, AST, filters, readOnly};
     const stateString = JSON.stringify(obj);
-    axios.post('/api/snippets/', { json: stateString })
-      .then(res => {
-        const id = res.data.id;
-        this.setState({ id: id });
-        browserHistory.push(`/${id}`);
-      })
-      .catch(err => {
-        console.error(err);
-      })
+    return axios.post('/api/snippets/', { json : stateString });
   }
 
   componentDidMount() {
