@@ -18,7 +18,7 @@ class Auth extends React.Component {
     }).then((res) => {
       //Code was accepted, the token should be in the response data
       const { token } = res.data
-      cookie.save('token', token)
+      cookie.save('token', token, {path: '/'})
       this.setState({waiting: false, authenticated: true})
     }).catch((err) => {
       console.error(err)
