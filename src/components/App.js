@@ -25,7 +25,7 @@ class App extends Component {
     )
     return (
       <Router history={browserHistory}>
-        <Route path="/auth/" component={Auth} />
+        <Route path="auth" component={Auth} />
         <Route path="/(:id)" component={component} />
       </Router>
     );
