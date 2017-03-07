@@ -1,14 +1,14 @@
 import React from 'react'
 import axios from 'axios'
 import cookie from 'react-cookie'
+import { CircularProgress } from 'material-ui'
 
 //Code is passed in from Github
 class Auth extends React.Component {
   constructor() {
     super()
     this.state = {
-      waiting: true,
-      authenticated: false,
+      waiting: true
     }
   }
   componentDidMount() {
@@ -19,23 +19,21 @@ class Auth extends React.Component {
       //Code was accepted, the token should be in the response data
       const { token } = res.data
       cookie.save('token', token, {path: '/'})
-      this.setState({waiting: false, authenticated: true})
+      this.setState({waiting: false})
     }).catch((err) => {
       console.error(err)
-      this.setState({waiting: false, authenticated: false})
+      this.setState({waiting: false})
     })
   }
   render() {
-    const { waiting, authenticated } = this.state
-    if(waiting) {
+    const { waiting } = this.state
+    if( waiting ) {
       return (
-        <div>Waiting on Github...</div>
+        <CircularProgress size={100} thickness={7} />
       )
-    } else if (authenticated) {
-      window.location = '/'
-      return null
     } else {
       window.location = '/'
+      return null
     }
   }
 }
