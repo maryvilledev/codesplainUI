@@ -1,5 +1,5 @@
 /* Object mapping token types to pretty names and colors for display */
-export const tokens = {
+export const rules = {
   'for_stmt': { prettyName: 'For Loops',     color: '#F7ABAB' },      
   'if_stmt':  { prettyName: 'If Statements', color: '#FFFF00' },
   'number':   { prettyName: 'Numbers',       color: '#DEA5A4' },
@@ -26,8 +26,8 @@ export const tokens = {
   'except_clause':  { prettyName: 'Except Clauses', color: '#779ECB' },
 }
 
-/* Array of tokens produced by parser, but ignored by the UI layer */
-export const ignoredTokens = [
+/* Array of rules produced by parser, but ignored by the UI layer */
+export const ignoredRules = [
   'suite',
   'file_input',
   'simple_stmt',
@@ -38,14 +38,14 @@ export const ignoredTokens = [
 ]
 
 /* 
-Given an AST getTokenCount() recursively populates the specified map with 
+Given an AST getRuleCount() recursively populates the specified map with 
 each token type's occurence count in the AST.
 */
-export function getTokenCount(node, map) {
+export function getRuleCount(node, map) {
   if (node.type === undefined) return;
   if (map[node.type] === undefined)
     map[node.type] = 1;
   else
     map[node.type] += 1;
-  node.children.forEach(child => getTokenCount(child, map));
+  node.children.forEach(child => getRuleCount(child, map));
 }

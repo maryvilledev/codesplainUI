@@ -1,4 +1,4 @@
-import { tokens, ignoredTokens } from './tokens.js';
+import { rules, ignoredRules } from './rules.js';
 
 /*
 Given a CodeMirror instance, highlight() will use the specified AST and filters
@@ -16,8 +16,8 @@ function highlightNode(codeMirror, node, filters, parentColor) {
   let color = parentColor;
 
   // If we aren't ignoring this token...
-  if (ignoredTokens.indexOf(node.type) === -1) {
-    color = tokens[node.type].color; // Get the color for this token's type
+  if (ignoredRules.indexOf(node.type) === -1) {
+    color = rules[node.type].color; // Get the color for this token's type
 
     // If this token has no color 
     if (!color) {

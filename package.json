@@ -31,7 +31,7 @@
     "eject": "react-scripts eject",
     "serve": "node server",
     "postinstall": "react-scripts build",
-    "make-tokens-csv": "babel-node --presets es2015 make-tokens-csv.js"
+    "make-rules-csv": "babel-node --presets es2015 make-rules-csv.js"
   },
   "babel": {
     "ignore": [
