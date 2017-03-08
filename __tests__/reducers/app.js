@@ -123,4 +123,12 @@ describe('Reducer: Snippets', () => {
     };
     expect(reducer(undefined, action)).toEqual(savedState);
   });
+  it('should handle SET_SNIPPET_TITLE', () => {
+    const snippetTitle = 'Get Schwifty'
+    const action = {
+      type: actions.SET_SNIPPET_TITLE,
+      payload: snippetTitle
+    }
+    expect(reducer(undefined, action)).toEqual(expect.objectContaining({snippetTitle}))
+  })
 });
