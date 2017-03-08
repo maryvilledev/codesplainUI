@@ -22,6 +22,9 @@ const AppReducer = (state = initialState, action) => {
       });
     }
     case actions.TOGGLE_EDITING_STATE: {
+      if (state.readOnly) {
+        return state;
+      }
       return Object.assign({}, state, {
         readOnly: !state.readOnly,
       });
