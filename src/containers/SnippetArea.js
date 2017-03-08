@@ -28,8 +28,7 @@ class SnippetArea extends React.Component{
   }
   handleTitleChanged(snippetTitle) {
     const { dispatch } = this.props
-    //TODO: Restore when pr #2 is closed
-    //dispatch(setSnippetTitle(snippetTitle))
+    dispatch(setSnippetTitle(snippetTitle))
   }
   handleLock() {
     this.setState({
