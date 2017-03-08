@@ -26,7 +26,8 @@ class SnippetArea extends React.Component{
     const { dispatch } = this.props
     dispatch(setSnippetContents(snippetContents))
   }
-  handleTitleChanged(snippetTitle) {
+  handleTitleChanged(ev) {
+    const snippetTitle = ev.target.value
     const { dispatch } = this.props
     dispatch(setSnippetTitle(snippetTitle))
   }
