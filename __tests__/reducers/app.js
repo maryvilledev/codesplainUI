@@ -29,17 +29,11 @@ describe('Reducer: Snippets', () => {
     const action = {
       type: actions.TOGGLE_EDITING_STATE,
     };
-    const expectedOnce = {
+    const expected = {
       ...initialState,
       readOnly: true,
     };
-    const toggledOnce = reducer(undefined, action);
-    expect(toggledOnce).toEqual(expectedOnce);
-    const expectedTwice = {
-      ...expectedOnce,
-      readOnly: false,
-    }
-    expect(reducer(toggledOnce, action)).toEqual(expectedTwice);
+    expect(reducer(undefined, action)).toEqual(expected);
   });
   it('should handle SET_RULE_FILTERS', () => {
     const filters = {
