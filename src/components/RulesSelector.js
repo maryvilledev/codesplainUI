@@ -34,4 +34,9 @@ const RulesSelector = ({filters, onRuleSelected}) => {
   )
 }
 
+RulesSelector.propTypes = {
+  filters: PropTypes.object.isRequired,
+  onRuleSelected: PropTypes.func.isRequired
+}
+
 export default RulesSelector
