@@ -1,0 +1,86 @@
+RULE, COLLAPSED IN AST?, IGNORED BY UI?, PRETTY NAME, COLOR
+single_input,NO,NO,X,X
+file_input,NO,YES,X,X
+eval_input,NO,NO,X,X
+decorator,NO,NO,X,X
+decorators,YES,NO,X,X
+decorated,YES,NO,X,X
+funcdef,NO,NO,Function Definitions,#AEC6CF
+parameters,NO,NO,Parameters,#FFB347
+typedargslist,NO,NO,X,X
+tfpdef,NO,NO,X,X
+varargslist,NO,NO,X,X
+vfpdef,YES,NO,X,X
+stmt,YES,NO,X,X
+simple_stmt,NO,YES,X,X
+small_stmt,YES,NO,X,X
+expr_stmt,NO,NO,Expression Statements,#BEDA0B
+testlist_star_expr,YES,NO,X,X
+augassign,NO,NO,Augmented Assignment,#00ffff
+del_stmt,NO,NO,X,X
+pass_stmt,NO,NO,Pass Statements,#FDFD96
+flow_stmt,YES,NO,X,X
+break_stmt,NO,NO,X,X
+continue_stmt,NO,NO,X,X
+return_stmt,NO,NO,Return Statement,#966FD6
+yield_stmt,NO,NO,X,X
+raise_stmt,NO,NO,X,X
+import_stmt,YES,NO,X,X
+import_name,NO,NO,Import Statement,#FF6666
+import_from,NO,NO,X,X
+import_as_name,NO,NO,X,X
+dotted_as_name,YES,NO,X,X
+import_as_names,YES,NO,X,X
+dotted_as_names,YES,NO,X,X
+dotted_name,YES,NO,X,X
+global_stmt,NO,NO,X,X
+nonlocal_stmt,NO,NO,X,X
+assert_stmt,NO,NO,X,X
+compound_stmt,YES,NO,X,X
+if_stmt,NO,NO,If Statements,#FFFF00
+while_stmt,NO,NO,While Loops,#F0E68C
+for_stmt,NO,NO,For Loops,#F7ABAB
+try_stmt,NO,NO,Try Statements,#966FD6
+with_stmt,NO,NO,X,X
+with_item,NO,NO,X,X
+except_clause,NO,NO,Except Clauses,#779ECB
+suite,YES,YES,X,X
+test,YES,NO,X,X
+test_nocond,YES,NO,X,X
+lambdef,NO,NO,X,X
+lambdef_nocond,NO,NO,X,X
+or_test,YES,NO,X,X
+and_test,YES,NO,X,X
+not_test,YES,NO,X,X
+comparison,YES,YES,X,X
+comp_op,NO,NO,Comparison Operator,#DAA520
+star_expr,YES,NO,X,X
+expr,NO,NO,Expressions,#F0ABF7
+xor_expr,YES,NO,X,X
+and_expr,YES,NO,And,#F0E68C
+shift_expr,YES,NO,X,X
+arith_expr,YES,NO,X,X
+term,YES,NO,X,X
+factor,YES,NO,X,X
+power,YES,NO,X,X
+trailed_atom,YES,YES,X,X
+atom,NO,NO,Atoms,#ABDBF7
+testlist_comp,NO,YES,X,X
+trailer,NO,YES,X,X
+subscriptlist,YES,NO,X,X
+subscript,YES,NO,X,X
+sliceop,NO,NO,X,X
+exprlist,YES,NO,X,X
+testlist,YES,NO,X,X
+dictorsetmaker,NO,NO,Dictionary,#00FF7F
+classdef,NO,NO,Class Definitions,#03C03C
+arglist,NO,NO,Argument Lists,#F7CDAB
+argument,NO,NO,Arguments,#EAF7AB
+comp_iter,YES,NO,X,X
+comp_for,NO,NO,X,X
+comp_if,NO,NO,X,X
+yield_expr,NO,NO,X,X
+yield_arg,YES,NO,X,X
+str,NO,NO,Strings,#CAABF7
+number,YES,NO,Numbers,#DEA5A4
+integer,NO,NO,Integers,#ABF7C6

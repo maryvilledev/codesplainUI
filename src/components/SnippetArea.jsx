@@ -6,9 +6,9 @@ import TextField from 'material-ui/TextField';
 import ConfirmLockDialog from './ConfirmLockDialog';
 import LockButton from './LockButton';
 
-import { parsePython3 } from '../parsers/python3';
+import { default as parsePython3 } from '../parsers/python3.min.js';
 import { styleLine, styleAll, highlight } from '../util/codemirror-utils.js';
-import { getTokenCount, getPrettyTokenName } from '../util/tokens.js';
+import { getRuleCount, rules } from '../util/rules.js';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/python/python.js';
 import '../styles/codesplain.css';
@@ -139,23 +139,24 @@ class SnippetArea extends React.Component {
       const snippet = this.props.contents;
       if (snippet && snippet !== this.state.prevSnippet) {
         // Generate an AST for the current state of the code snippet, if ready
-        const AST = parser(snippet);
+        const onError = (err) => { console.log(err) };
+        const AST = parser(snippet, onError);
 
-        // Get an array mapping token types to their occurence count
-        const tokenCount = [];
-        getTokenCount(AST, tokenCount);
+        // Get an array mapping rule types to their occurence count
+        const ruleCount = [];
+        getRuleCount(AST, ruleCount);
 
         // Generate array of strings containing pretty token name and its count
         const filters = this.props.filters;
         let newFilters = {};
-        Object.keys(tokenCount).filter(t => getPrettyTokenName(t) !== undefined)
-          .forEach(t => {
+        Object.keys(ruleCount).filter(t => rules[t] !== undefined)
+          .forEach(r => {
             let selected = false;
-            if (filters[t]) selected = filters[t].selected;
-            newFilters[t] = { 
-              prettyTokenName: getPrettyTokenName(t),
-              count: tokenCount[t],
-              selected: selected,
+            if (filters[r]) selected = filters[r].selected;
+            newFilters[r] = { 
+              prettyTokenName: rules[r].prettyName,
+              count:           ruleCount[r],
+              selected:        selected,
             }
           });
 
