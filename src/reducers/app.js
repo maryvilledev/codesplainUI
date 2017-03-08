@@ -44,6 +44,9 @@ const app = (state = initialState, action) => {
     case actions.RESTORE_STATE: {
       return Object.assign({}, action.payload);
     }
+    case actions.SET_SNIPPET_TITLE: {
+      return {...state, snippetTitle: action.payload}
+    }
     default: {
       return state;
     }

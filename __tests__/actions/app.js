@@ -115,4 +115,14 @@ describe('Actions: Snippets', () => {
       expect(actions.restoreState(savedState)).toEqual(expected);
     });
   });
+  describe('SET_SNIPPET_TITLE', () => {
+    it('creates an action to set the snippet title', () => {
+      const snippetTitle = 'Get Schwifty'
+      const expected = {
+        type: actions.SET_SNIPPET_TITLE,
+        payload: snippetTitle
+      }
+      expect(actions.setSnippetTitle(snippetTitle)).toEqual(expected)
+    })
+  })
 });
