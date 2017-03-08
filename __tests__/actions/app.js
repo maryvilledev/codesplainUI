@@ -1,4 +1,4 @@
-import * as actions from '../../src/actions/snippets';
+import * as actions from '../../src/actions/app';
 
 describe('Actions: Snippets', () => {
   describe('SET_SNIPPET_CONTENTS', () => {
