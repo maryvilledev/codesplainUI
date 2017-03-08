@@ -60,7 +60,7 @@ describe('Actions: Snippets', () => {
       expect(actions.toggleEditState()).toEqual(expected);
     });
   });
-  describe('ADD_ANNOTATION', () => {
+  describe('SAVE_ANNOTATION', () => {
     it('creates an action that adds an annotation', () => {
       const annotationData = {
         annotation: 'You pass butter.',
@@ -68,10 +68,10 @@ describe('Actions: Snippets', () => {
         lineText: 'What is my purpose?'
       };
       const expected = {
-        type: actions.ADD_ANNOTATION,
+        type: actions.SAVE_ANNOTATION,
         payload: annotationData,
       };
-      expect(actions.addAnnotation(annotationData)).toEqual(expected);
+      expect(actions.saveAnnotation(annotationData)).toEqual(expected);
     });
   });
   describe('EDIT_ANNOTATION', () => {
