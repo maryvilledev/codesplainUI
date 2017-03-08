@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import CodeMirror from 'react-codemirror';
 import SaveButton from './SaveButton.jsx';
-import { Card, CardText } from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
 import ConfirmLockDialog from './ConfirmLockDialog';
 import LockButton from './LockButton';
@@ -152,7 +151,7 @@ class SnippetArea extends React.Component {
           .forEach(t => {
             let selected = false;
             if (filters[t]) selected = filters[t].selected;
-            newFilters[t] = { 
+            newFilters[t] = {
               prettyTokenName: getPrettyTokenName(t),
               count: tokenCount[t],
               selected: selected,
@@ -163,7 +162,7 @@ class SnippetArea extends React.Component {
         highlight(this.codeMirror.getCodeMirror(), AST, newFilters);
         this.setState({ prevSnippet: snippet });
         this.props.onParserRun(AST, newFilters);
-      } 
+      }
     }.bind(this), 1000);
   }
 
@@ -195,7 +194,7 @@ class SnippetArea extends React.Component {
     const codeMirrorOptions = {
       ...(this.props.readOnly ? annotationModeOptions : editModeOptions),
       mode: snippetEditorModes[this.props.snippetLanguage],
-    }; 
+    };
     // If the emphasizeLine prop was specified, then emphasize that line,
     // otherwise apply deEmphasis styling.
     const emphasizeLine = this.props.emphasizeLine;
