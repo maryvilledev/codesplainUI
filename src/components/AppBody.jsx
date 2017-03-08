@@ -1,10 +1,11 @@
 import React from 'react';
+import FilterArea from '../containers/FilterArea'
 
 const AppBody = () => (
   <div className='container-fluid'>
     <div className='row'>
       <div className='col-md-2'>
-        {/* Filter area */}
+        <FilterArea />
       </div>
       <div className='col-md-5'>
         {/* Snippet area */}
