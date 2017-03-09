@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
-import { setSnippetContents, setSnippetTitle, toggleEditState } from '../actions/app'
+import { setSnippetContents, setSnippetTitle, toggleEditState} from '../actions/app'
 import { openAnnotationPanel } from '../actions/annotation'
 
 import Editor from '../components/Editor'
@@ -59,7 +59,8 @@ class SnippetArea extends React.Component{
     dispatch(openAnnotationPanel({lineNumber, lineText}))
   }
   render(){
-    const { readOnly, snippetTitle } =  this.props
+    const { readOnly, snippetTitle, annotations } =  this.props
+    const markedLines = Object.keys(annotations).map((key) => Number(key))
     return (
       <div>
         <TextField
@@ -80,6 +81,7 @@ class SnippetArea extends React.Component{
           readOnly={readOnly}
           onChange={this.handleSnippetChanged}
           onGutterClick={this.handleGutterClick}
+          markedLines={markedLines}
         />
         <SaveButton
           onSaveClick={this.handleSaveState}
@@ -92,6 +94,7 @@ class SnippetArea extends React.Component{
 const mapStateToProps = (state) => ({
   readOnly: state.app.readOnly,
   snippetTitle: state.app.snippetTitle,
+  annotations: state.app.annotations,
   appState: state.app
 })
 

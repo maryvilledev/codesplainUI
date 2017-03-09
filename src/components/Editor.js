@@ -24,6 +24,14 @@ const annotationModeOptions = {
   readOnly: true,
   cursorBlinkRate: -1,
 };
+
+const makeMarker = () => {
+  const marker = document.createElement("div");
+  marker.style.color = "#822";
+  marker.innerHTML = "●";
+  return marker;
+}
+
 class Editor extends React.Component {
   constructor(props){
     super(props)
@@ -38,13 +46,18 @@ class Editor extends React.Component {
   }
   handleGutterClick(instance, line, gutter) {
     const { onGutterClick } = this.props
-    const lineNumber = line + 1
+    const lineNumber = line
     const lineText = instance.getLine(line)
     onGutterClick(lineNumber, lineText)
   }
   render() {
-    const {readOnly, onChange} = this.props
+    const {readOnly, onChange, markedLines} = this.props
     const codeMirrorOptions = (readOnly ? annotationModeOptions : editModeOptions)
+    if (this.codeMirror) {
+      const codeMirror = this.codeMirror.getCodeMirror()
+      codeMirror.clearGutter('annotations')
+      markedLines.forEach((line) => codeMirror.setGutterMarker(line, 'annotations', makeMarker()))
+    }
     return (
       <div>
         <CodeMirror
