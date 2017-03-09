@@ -152,7 +152,7 @@ class SnippetArea extends React.Component {
           .forEach(t => {
             let selected = false;
             if (filters[t]) selected = filters[t].selected;
-            newFilters[t] = { 
+            newFilters[t] = {
               prettyTokenName: getPrettyTokenName(t),
               count: tokenCount[t],
               selected: selected,
@@ -163,7 +163,7 @@ class SnippetArea extends React.Component {
         highlight(this.codeMirror.getCodeMirror(), AST, newFilters);
         this.setState({ prevSnippet: snippet });
         this.props.onParserRun(AST, newFilters);
-      } 
+      }
     }.bind(this), 1000);
   }
 
@@ -195,7 +195,7 @@ class SnippetArea extends React.Component {
     const codeMirrorOptions = {
       ...(this.props.readOnly ? annotationModeOptions : editModeOptions),
       mode: snippetEditorModes[this.props.snippetLanguage],
-    }; 
+    };
     // If the emphasizeLine prop was specified, then emphasize that line,
     // otherwise apply deEmphasis styling.
     const emphasizeLine = this.props.emphasizeLine;
@@ -209,6 +209,7 @@ class SnippetArea extends React.Component {
         <CardText>
         <TextField
           hintText="Snippet Name"
+          errorText={this.props.titleErrorText}
           value={this.props.title}
           name="snippetName"
           onChange={this.props.onTitleChanged}
@@ -251,6 +252,7 @@ SnippetArea.propTypes = {
   snippetLanguage: PropTypes.string.isRequired,
   switchReadOnlyMode: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
+  titleErrorText: PropTypes.string,
   filters: PropTypes.shape({
     prettyTokenName: PropTypes.string,
     count: PropTypes.number,
