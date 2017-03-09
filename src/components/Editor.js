@@ -99,11 +99,10 @@ class Editor extends React.Component {
             }
           });
 
-        // Highlight the code snippet and invoke prop callback
+        //Invoke prop callback
         this.setState({prevSnippet: snippet})
         this.props.onParserRun(AST, newFilters);
       }
-      highlight(this.codeMirror.getCodeMirror(), this.props.AST, this.props.filters);
     }.bind(this), 1000);
   }
   render() {
@@ -111,6 +110,7 @@ class Editor extends React.Component {
     const codeMirrorOptions = (readOnly ? annotationModeOptions : editModeOptions)
     if (this.codeMirror) {
       const codeMirror = this.codeMirror.getCodeMirror()
+      highlight(this.codeMirror.getCodeMirror(), this.props.AST, this.props.filters);
       codeMirror.clearGutter('annotations')
       markedLines.forEach((line) => codeMirror.setGutterMarker(line, 'annotations', makeMarker()))
       if (openLine !== undefined)
