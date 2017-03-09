@@ -77,7 +77,7 @@ class Editor extends React.Component {
   startParserDaemon(parser) {
     setInterval(function() {
       const snippet = this.props.value;
-      if (snippet && snippet !== this.state.prevSnippet) {
+      if (snippet !== undefined && snippet !== '' && snippet !== this.state.prevSnippet) {
         // Generate an AST for the current state of the code snippet, if ready
         const AST = parser(snippet);
 
@@ -103,7 +103,9 @@ class Editor extends React.Component {
         this.setState({prevSnippet: snippet})
         this.props.onParserRun(AST, newFilters);
       }
-      highlight(this.codeMirror.getCodeMirror(), this.props.AST, this.props.filters);
+      if(this.props.value) {
+        highlight(this.codeMirror.getCodeMirror(), this.props.AST, this.props.filters);
+      }
     }.bind(this), 1000);
   }
   render() {
