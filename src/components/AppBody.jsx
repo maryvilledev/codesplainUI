@@ -1,7 +1,9 @@
 import React from 'react';
-import { Card } from 'material-ui'
-import FilterArea from '../containers/FilterArea'
-import SnippetArea from '../containers/SnippetArea'
+import { Card } from 'material-ui';
+
+import Annotations from '../containers/Annotations';
+import FilterArea from '../containers/FilterArea';
+import SnippetArea from '../containers/SnippetArea';
 
 const AppBody = () => (
   <div className='container-fluid'>
@@ -13,7 +15,7 @@ const AppBody = () => (
         <Card><SnippetArea /></Card>
       </div>
       <div className='col-md-5'>
-        <Card>{/* Annotation Area */}</Card>
+        <Card><Annotations /></Card>
       </div>
     </div>
   </div>

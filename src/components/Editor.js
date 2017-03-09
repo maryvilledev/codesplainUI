@@ -1,6 +1,10 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import CodeMirror from 'react-codemirror'
-import { styleLine, styleAll, highlight } from '../util/codemirror-utils.js';
+import {
+  highlight,
+  styleLine,
+  styleAll,
+} from '../util/codemirror-utils.js';
 import { getTokenCount, getPrettyTokenName } from '../util/tokens.js';
 import { parsePython3 } from '../parsers/python3';
 import 'codemirror/lib/codemirror.css';
@@ -12,7 +16,7 @@ const baseCodeMirrorOptions = {
     lineNumbers: true,
     theme: 'codesplain',
     gutters: [ 'annotations', 'CodeMirror-linenumbers' ],
-    language: 'python'
+    mode: 'python',
 };
 
 // Options specific for edit mode should be set here
@@ -37,25 +41,46 @@ const makeMarker = () => {
 
 class Editor extends React.Component {
   constructor(props){
-    super(props)
+    super(props);
     this.state = {
-      codeMirror: null
+      prevSnippet: undefined,
     }
     this.handleGutterClick = this.handleGutterClick.bind(this);
     this.emphasizeLine = this.emphasizeLine.bind(this);
     this.deEmphasize = this.deEmphasize.bind(this);
+    this.startParserDaemon = this.startParserDaemon.bind(this);
   }
+
   componentDidMount() {
     const codeMirror = this.codeMirror.getCodeMirror()
     codeMirror.on('gutterClick', this.handleGutterClick)
     this.startParserDaemon(parsePython3)
   }
-  handleGutterClick(instance, line, gutter) {
+
+  componentDidUpdate() {
+    const {
+      markedLines,
+      openLine,
+    } = this.props;
+
+    const codeMirrorInst = this.codeMirror.getCodeMirror();
+    codeMirrorInst.clearGutter('annotations');
+    // eslint-disable-next-line array-callback-return
+    markedLines.forEach((lineNumber) => {
+      codeMirrorInst.setGutterMarker(Number(lineNumber), 'annotations', makeMarker())
+    });
+    this.deEmphasize();
+    if (openLine) {
+      this.emphasizeLine(openLine);
+    }
+  }
+
+  handleGutterClick(instance, lineNumber, gutter) {
     const { onGutterClick } = this.props
-    const lineNumber = line
-    const lineText = instance.getLine(line)
+    const lineText = instance.getLine(lineNumber)
     onGutterClick(lineNumber, lineText)
   }
+
   // Can be used to emphasize a line of text when annotating.
   emphasizeLine(line) {
     const codeMirror = this.codeMirror.getCodeMirror()
@@ -73,11 +98,12 @@ class Editor extends React.Component {
     const css = 'font-weight: normal; opacity: 1.0;';
     styleAll(this.codeMirror.getCodeMirror(), css);
   }
+
   // Runs the parser every second
   startParserDaemon(parser) {
     setInterval(function() {
       const snippet = this.props.value;
-      if (snippet !== undefined && snippet !== '' && snippet !== this.state.prevSnippet) {
+      if (snippet && snippet !== this.state.prevSnippet) {
         // Generate an AST for the current state of the code snippet, if ready
         const AST = parser(snippet);
 
@@ -103,33 +129,47 @@ class Editor extends React.Component {
         this.setState({prevSnippet: snippet})
         this.props.onParserRun(AST, newFilters);
       }
+      // console.log(this.props.AST);
       if(this.props.value) {
         highlight(this.codeMirror.getCodeMirror(), this.props.AST, this.props.filters);
       }
     }.bind(this), 1000);
   }
+
   render() {
-    const {readOnly, onChange, markedLines, openLine, value} = this.props
-    const codeMirrorOptions = (readOnly ? annotationModeOptions : editModeOptions)
-    if (this.codeMirror) {
-      const codeMirror = this.codeMirror.getCodeMirror()
-      codeMirror.clearGutter('annotations')
-      markedLines.forEach((line) => codeMirror.setGutterMarker(line, 'annotations', makeMarker()))
-      this.deEmphasize();
-      if (openLine !== undefined)
-        this.emphasizeLine(openLine);
-    }
+    const {
+      onChange,
+      readOnly,
+      value,
+    } = this.props;
+
+    const codeMirrorOptions = {
+      ...(readOnly ? annotationModeOptions : editModeOptions),
+    };
+
     return (
       <div>
         <CodeMirror
-          options={codeMirrorOptions}
           onChange={onChange}
+          options={codeMirrorOptions}
           ref={(cm) => this.codeMirror = cm}
           value={value}
         />
       </div>
-    )
+    );
   }
 }
 
-export default Editor
+Editor.propTypes = {
+  AST: PropTypes.object.isRequired,
+  filters: PropTypes.object.isRequired,
+  markedLines: PropTypes.arrayOf(PropTypes.number).isRequired,
+  onChange: PropTypes.func.isRequired,
+  onGutterClick: PropTypes.func.isRequired,
+  onParserRun: PropTypes.func.isRequired,
+  openLine: PropTypes.number,
+  readOnly: PropTypes.bool.isRequired,
+  value: PropTypes.string.isRequired,
+};
+
+export default Editor;

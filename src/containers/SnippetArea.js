@@ -1,8 +1,16 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import axios from 'axios'
-import { setSnippetContents, setSnippetTitle, toggleEditState, setAST, setRuleFilters } from '../actions/app'
-import { openAnnotationPanel } from '../actions/annotation'
+import axios from 'axios';
+import {
+  setAST,
+  setRuleFilters,
+  setSnippetContents,
+  setSnippetTitle,
+  toggleEditState,
+} from '../actions/app';
+import {
+  openAnnotationPanel
+} from '../actions/annotation';
 
 import Editor from '../components/Editor'
 import SaveButton from '../components/SaveButton.jsx';
@@ -20,53 +28,56 @@ const style = {
   }
 };
 
-class SnippetArea extends React.Component{
+class SnippetArea extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       lockDialogOpen: false
     }
-    this.handleTitleChanged = this.handleTitleChanged.bind(this);
-    this.handleSnippetChanged = this.handleSnippetChanged.bind(this);
-    this.handleLock = this.handleLock.bind(this);
-    this.handleToggleReadOnly = this.handleToggleReadOnly.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
-    this.handleSaveState = this.handleSaveState.bind(this);
     this.handleGutterClick = this.handleGutterClick.bind(this);
+    this.handleLock = this.handleLock.bind(this);
     this.handleParserRun = this.handleParserRun.bind(this);
+    this.handleSaveState = this.handleSaveState.bind(this);
+    this.handleSnippetChanged = this.handleSnippetChanged.bind(this);
+    this.handleTitleChanged = this.handleTitleChanged.bind(this);
+    this.handleToggleReadOnly = this.handleToggleReadOnly.bind(this);
   }
   handleSnippetChanged(snippetContents) {
-    const { dispatch } = this.props
-    dispatch(setSnippetContents(snippetContents))
+    const { dispatch } = this.props;
+    dispatch(setSnippetContents(snippetContents));
   }
   handleTitleChanged(ev) {
-    const snippetTitle = ev.target.value
-    const { dispatch } = this.props
-    dispatch(setSnippetTitle(snippetTitle))
+    const snippetTitle = ev.target.value;
+    const { dispatch } = this.props;
+    dispatch(setSnippetTitle(snippetTitle));
   }
   handleLock() {
     this.setState({
       lockDialogOpen: true
-    })
+    });
   }
   handleToggleReadOnly() {
-    const { dispatch } = this.props
-    dispatch(toggleEditState())
-    this.handleCloseModal()
+    const { dispatch } = this.props;
+    dispatch(toggleEditState());
+    this.handleCloseModal();
   }
   handleCloseModal() {
     this.setState({
       lockDialogOpen: false
-    })
+    });
   }
   handleSaveState() {
-    const obj = this.props.appState
+    const obj = this.props.appState;
     const stateString = JSON.stringify(obj);
     return axios.post('/api/snippets/', { json : stateString });
   }
   handleGutterClick(lineNumber, lineText) {
     const { readOnly, dispatch } = this.props
-    if (!readOnly) return //Gutter clicks do nothing when not locked
+    if (!readOnly) {
+      return //Gutter clicks do nothing when not locked
+    }
+
     dispatch(openAnnotationPanel({lineNumber, lineText}))
   }
   handleParserRun(AST, filters) {
@@ -75,7 +86,15 @@ class SnippetArea extends React.Component{
     dispatch(setRuleFilters(filters))
   }
   render(){
-    const { readOnly, snippet, snippetTitle, annotations, openLine, filters, AST } =  this.props
+    const {
+      annotations,
+      AST,
+      filters,
+      openLine,
+      readOnly,
+      snippet,
+      snippetTitle,
+    } = this.props;
     const markedLines = Object.keys(annotations).map((key) => Number(key))
     return (
       <CardText>
@@ -96,15 +115,15 @@ class SnippetArea extends React.Component{
           reject={this.handleCloseModal}
         />
         <Editor
-          readOnly={readOnly}
+          AST={AST}
+          filters={filters}
+          markedLines={markedLines}
           onChange={this.handleSnippetChanged}
           onGutterClick={this.handleGutterClick}
-          markedLines={markedLines}
-          openLine={openLine}
           onParserRun={this.handleParserRun}
+          openLine={openLine}
+          readOnly={readOnly}
           value={snippet}
-          filters={filters}
-          AST={AST}
         />
         <SaveButton
           onSaveClick={this.handleSaveState}
@@ -114,17 +133,27 @@ class SnippetArea extends React.Component{
   }
 }
 
+SnippetArea.propTypes = {
+  annotations: PropTypes.object.isRequired,
+  AST: PropTypes.object.isRequired,
+  filters: PropTypes.object.isRequired,
+  openLine: PropTypes.number,
+  readOnly: PropTypes.bool.isRequired,
+  snippet: PropTypes.string.isRequired,
+  snippetTitle: PropTypes.string.isRequired,
+};
+
 const mapStateToProps = (state) => ({
-  AST: state.app.AST,
-  snippet: state.app.snippet,
-  filters: state.app.filters,
-  readOnly: state.app.readOnly,
-  snippetTitle: state.app.snippetTitle,
   annotations: state.app.annotations,
+  AST: state.app.AST,
+  filters: state.app.filters,
   openLine: (state.annotation.isOpen
     ? state.annotation.snippetInformation.lineNumber
     : undefined),
+  readOnly: state.app.readOnly,
+  snippet: state.app.snippet,
+  snippetTitle: state.app.snippetTitle,
   appState: state.app
-})
+});
 
 export default connect(mapStateToProps)(SnippetArea)

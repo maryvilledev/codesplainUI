@@ -33,21 +33,37 @@ const AnnotationSection = ({ displayStatus, displayProps, prompt }) => {
   }
 }
 
-const AnnotationPanel = ({ displayStatus, displayProps, prompt, saveAnnotationCallback }) => {
-  return (
-    <Card>
-      <Tabs>
-        <Tab label="Annotation">
-          <AnnotationSection
-            displayStatus={displayStatus}
-            displayProps={displayProps}
-            prompt={prompt}
-          />
-        </Tab>
-      </Tabs>
-    </Card>
-  );
-};
+class AnnotationPanel extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isEditing: false,
+    };
+  }
+
+  renderAnnotationComponent() {
+    if (this.state.isEditing) {
+      return (
+        <AnnotationEditor
+
+        />
+      );
+    }
+    return (
+      <AnnotationDisplay
+
+      />
+    )
+  }
+
+  render() {
+    return (
+      <div>
+
+      </div>
+    );
+  }
+}
 
 AnnotationPanel.propTypes = {
   displayStatus: PropTypes.string.isRequired,

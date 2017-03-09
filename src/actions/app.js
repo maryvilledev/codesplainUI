@@ -5,7 +5,8 @@ export const TOGGLE_EDITING_STATE = 'TOGGLE_EDITING_STATE';
 export const SAVE_ANNOTATION = 'SAVE_ANNOTATION';
 export const EDIT_ANNOTATION = 'EDIT_ANNOTATION';
 export const RESTORE_STATE = 'RESTORE_STATE';
-export const SET_SNIPPET_TITLE = 'SET_SNIPPET_TITLE'
+export const SET_SNIPPET_TITLE = 'SET_SNIPPET_TITLE';
+export const SET_SNIPPET_LANGUAGE = 'SET_SNIPPET_LANGUAGE';
 
 export const setSnippetContents = (snippet) => ({
   type: SET_SNIPPET_CONTENTS,
@@ -31,11 +32,6 @@ export const saveAnnotation = (annotationData) => ({
   payload: annotationData,
 });
 
-export const editAnnotation = (annotationData) => ({
-  type: EDIT_ANNOTATION,
-  payload: annotationData,
-});
-
 export const restoreState = (savedState) => ({
   type: RESTORE_STATE,
   payload: savedState,
@@ -44,4 +40,9 @@ export const restoreState = (savedState) => ({
 export const setSnippetTitle = (snippetTitle) => ({
   type: SET_SNIPPET_TITLE,
   payload: snippetTitle
+})
+
+export const setSnippetLanguage = (snippetLanguage) => ({
+  type: SET_SNIPPET_LANGUAGE,
+  payload: snippetLanguage
 })

@@ -13,19 +13,17 @@ injectTapEventPlugin();
 class App extends Component {
   render() {
     const component = (props) => (
-      <MuiThemeProvider>
-        <div
-          className="container-fluid"
-        >
-          <CodesplainAppBar />
-          <AppBody {...props}/>
-        </div>
-      </MuiThemeProvider>
+      <div className="container-fluid">
+        <CodesplainAppBar />
+        <AppBody {...props}/>
+      </div>
     )
     return (
-      <Router history={browserHistory}>
-        <Route path="/(:id)" component={component} />
-      </Router>
+      <MuiThemeProvider>
+        <Router history={browserHistory}>
+          <Route path="/(:id)" component={component} />
+        </Router>
+      </MuiThemeProvider>
     );
   }
 }

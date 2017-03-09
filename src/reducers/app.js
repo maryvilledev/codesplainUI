@@ -45,7 +45,16 @@ const app = (state = initialState, action) => {
       return Object.assign({}, action.payload);
     }
     case actions.SET_SNIPPET_TITLE: {
-      return {...state, snippetTitle: action.payload}
+      return {
+        ...state,
+        snippetTitle: action.payload
+      };
+    }
+    case actions.SET_SNIPPET_LANGUAGE: {
+      return {
+        ...state,
+        snippetLanguage: action.payload,
+      };
     }
     default: {
       return state;

@@ -128,7 +128,19 @@ describe('Reducer: App', () => {
     const action = {
       type: actions.SET_SNIPPET_TITLE,
       payload: snippetTitle
-    }
-    expect(reducer(undefined, action)).toEqual(expect.objectContaining({snippetTitle}))
-  })
+    };
+    expect(reducer(undefined, action)).toEqual(expect.objectContaining({snippetTitle}));
+  });
+  it('should handle SET_SNIPPET_LANGUAGE', () => {
+    const snippetLanguage = 'Gromflomite';
+    const action = {
+      type: actions.SET_SNIPPET_LANGUAGE,
+      payload: snippetLanguage,
+    };
+    const expected = {
+      ...initialState,
+      snippetLanguage: action.payload,
+    };
+    expect(reducer(undefined, action)).toEqual(expected);
+  });
 });

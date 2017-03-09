@@ -4,7 +4,8 @@ import reducer, { initialState } from '../../src/reducers/annotation';
 describe('Reducer: Annotation', () => {
   it('should have initial state', () => {
     const initial = {
-      isOpen: false,
+      isDisplayingAnnotation: false,
+      snippetInformation: {},
     }
     expect(reducer(undefined, {})).toEqual(initialState);
   });
@@ -20,7 +21,7 @@ describe('Reducer: Annotation', () => {
     }
     const expected = {
       ...initialState,
-      isOpen: true,
+      isDisplayingAnnotation: true,
       snippetInformation: action.payload
     }
     expect(reducer(undefined, action)).toEqual(expected)
@@ -32,7 +33,8 @@ describe('Reducer: Annotation', () => {
     };
     const expected = {
       ...initialState,
-      isOpen: false,
+      isDisplayingAnnotation: false,
+      snippetInformation: {}
     };
     expect(reducer(undefined, action)).toEqual(expected);
   });

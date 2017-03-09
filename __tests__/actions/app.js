@@ -74,20 +74,6 @@ describe('Actions: App', () => {
       expect(actions.saveAnnotation(annotationData)).toEqual(expected);
     });
   });
-  describe('EDIT_ANNOTATION', () => {
-    it('creates an action that edit an annotation', () => {
-      const annotationData = {
-        annotation: 'You pass butter.',
-        lineNumber: 1,
-        lineText: 'What is my purpose?',
-      };
-      const expected = {
-        type: actions.EDIT_ANNOTATION,
-        payload: annotationData
-      };
-      expect(actions.editAnnotation(annotationData)).toEqual(expected);
-    });
-  });
   describe('RESTORE_STATE', () => {
     it('creates an action that restores state', () => {
       const savedState = {
@@ -117,12 +103,22 @@ describe('Actions: App', () => {
   });
   describe('SET_SNIPPET_TITLE', () => {
     it('creates an action to set the snippet title', () => {
-      const snippetTitle = 'Get Schwifty'
+      const snippetTitle = 'Get Schwifty';
       const expected = {
         type: actions.SET_SNIPPET_TITLE,
         payload: snippetTitle
-      }
-      expect(actions.setSnippetTitle(snippetTitle)).toEqual(expected)
-    })
-  })
+      };
+      expect(actions.setSnippetTitle(snippetTitle)).toEqual(expected);
+    });
+  });
+  describe('SET_SNIPPET_LANGUAGE', () => {
+    it('creates an action to set the snippet language', () => {
+      const snippetLanguage = 'Gromflomite';
+      const expected = {
+        type: actions.SET_SNIPPET_LANGUAGE,
+        payload: snippetLanguage
+      };
+      expect(actions.setSnippetLanguage(snippetLanguage)).toEqual(expected);
+    });
+  });
 });

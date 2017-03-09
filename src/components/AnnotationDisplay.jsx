@@ -2,15 +2,9 @@ import React, { PropTypes } from 'react';
 import MarkdownRenderer from 'react-markdown-renderer';
 import RaisedButton from 'material-ui/RaisedButton';
 
-import LineSnippet from './LineSnippet';
-
-const AnnotationDisplay = ({ annotation, closeAnnotation, editAnnotation, lineNumber, lineText, snippetLanugage }) => {
+const AnnotationDisplay = ({ annotation, closeAnnotation, editAnnotation }) => {
   return (
     <div>
-      <LineSnippet
-        lineNumber={lineNumber + 1}
-        value={lineText}
-      />
       <MarkdownRenderer
         markdown={annotation}
       />
@@ -24,16 +18,14 @@ const AnnotationDisplay = ({ annotation, closeAnnotation, editAnnotation, lineNu
         primary
         onTouchTap={editAnnotation}
       />
-    </div>
+  </div>
   );
 };
 
 AnnotationDisplay.propTypes = {
   annotation: PropTypes.string.isRequired,
   closeAnnotation: PropTypes.func.isRequired,
-  lineNumber: PropTypes.number.isRequired,
-  lineText: PropTypes.string.isRequired,
-  snippetLanguage: PropTypes.string.isRequired,
+  editAnnotation: PropTypes.func.isRequired,
 };
 
 export default AnnotationDisplay;
