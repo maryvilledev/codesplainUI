@@ -1,6 +1,6 @@
 import * as actions from '../../src/actions/app';
 
-describe('Actions: Snippets', () => {
+describe('Actions: App', () => {
   describe('SET_SNIPPET_CONTENTS', () => {
     it('creates an action to set the snippet contents', () => {
       const snippet = 'Show me what you got';

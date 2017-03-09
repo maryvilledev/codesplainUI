@@ -1,9 +1,9 @@
 import * as actions from '../../src/actions/app';
 import reducer, { initialState } from '../../src/reducers/app';
 
-describe('Reducer: Snippets', () => {
+describe('Reducer: App', () => {
   it('should have initial state', () => {
-    const initialState = {
+    const initial = {
       snippet: '',
       snippetTitle: '',
       annotations: {},
@@ -11,7 +11,7 @@ describe('Reducer: Snippets', () => {
       AST: {},
       readOnly: false,
     };
-    expect(reducer(undefined, {})).toEqual(initialState);
+    expect(reducer(undefined, {})).toEqual(initial);
   });
   it('should handle SET_SNIPPET_CONTENTS', () => {
     const snippet = 'Show me what you got';
