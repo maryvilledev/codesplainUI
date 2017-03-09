@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { CardText } from 'material-ui'
 import RulesSelector from '../components/RulesSelector'
 import { setRuleFilters } from '../actions/app'
 
@@ -21,10 +22,12 @@ class FilterArea extends React.Component {
   render() {
     const { filters } = this.props
     return (
-      <RulesSelector
-        filters={filters}
-        onRuleSelected={this.handleRuleSelected}
-      />
+      <CardText>
+        <RulesSelector
+          filters={filters}
+          onRuleSelected={this.handleRuleSelected}
+        />
+      </CardText>
     )
   }
 }

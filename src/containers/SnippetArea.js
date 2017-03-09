@@ -6,9 +6,19 @@ import { openAnnotationPanel } from '../actions/annotation'
 
 import Editor from '../components/Editor'
 import SaveButton from '../components/SaveButton.jsx';
-import TextField from 'material-ui/TextField';
+import { CardText, TextField } from 'material-ui';
 import ConfirmLockDialog from '../components/ConfirmLockDialog';
 import LockButton from '../components/LockButton';
+
+const style = {
+  textField: {
+    width: '400px',
+    position: 'relative',
+  },
+  lockButton: {
+    position: 'absolute',
+  }
+};
 
 class SnippetArea extends React.Component{
   constructor(props) {
@@ -68,15 +78,17 @@ class SnippetArea extends React.Component{
     const { readOnly, snippet, snippetTitle, annotations, openLine, filters, AST } =  this.props
     const markedLines = Object.keys(annotations).map((key) => Number(key))
     return (
-      <div>
+      <CardText>
         <TextField
           hintText="Snippet Name"
           value={snippetTitle}
           onChange={this.handleTitleChanged}
+          style={style.textField}
         />
         <LockButton
           onClick={this.handleLock}
           readOnly={readOnly}
+          style={style.lockButton}
         />
         <ConfirmLockDialog
           accept={this.handleToggleReadOnly}
@@ -97,7 +109,7 @@ class SnippetArea extends React.Component{
         <SaveButton
           onSaveClick={this.handleSaveState}
         />
-      </div>
+      </CardText>
     )
   }
 }
