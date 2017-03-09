@@ -115,10 +115,9 @@ class Editor extends React.Component {
       const codeMirror = this.codeMirror.getCodeMirror()
       codeMirror.clearGutter('annotations')
       markedLines.forEach((line) => codeMirror.setGutterMarker(line, 'annotations', makeMarker()))
+      this.deEmphasize();
       if (openLine !== undefined)
         this.emphasizeLine(openLine);
-      else if (this.codeMirror)
-        this.deEmphasize();
     }
     return (
       <div>
