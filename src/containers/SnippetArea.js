@@ -59,7 +59,7 @@ class SnippetArea extends React.Component{
     dispatch(openAnnotationPanel({lineNumber, lineText}))
   }
   render(){
-    const { readOnly, snippetTitle, annotations } =  this.props
+    const { readOnly, snippetTitle, annotations, openLine } =  this.props
     const markedLines = Object.keys(annotations).map((key) => Number(key))
     return (
       <div>
@@ -82,6 +82,7 @@ class SnippetArea extends React.Component{
           onChange={this.handleSnippetChanged}
           onGutterClick={this.handleGutterClick}
           markedLines={markedLines}
+          openLine={openLine}
         />
         <SaveButton
           onSaveClick={this.handleSaveState}
@@ -95,6 +96,9 @@ const mapStateToProps = (state) => ({
   readOnly: state.app.readOnly,
   snippetTitle: state.app.snippetTitle,
   annotations: state.app.annotations,
+  openLine: (state.annotation.isOpen
+    ? state.annotation.snippetInformation.lineNumber
+    : undefined),
   appState: state.app
 })
 

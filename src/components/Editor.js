@@ -1,5 +1,6 @@
 import React from 'react'
 import CodeMirror from 'react-codemirror'
+import { styleLine, styleAll, highlight } from '../util/codemirror-utils.js';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/python/python.js';
 import '../styles/codesplain.css';
@@ -39,6 +40,8 @@ class Editor extends React.Component {
       codeMirror: null
     }
     this.handleGutterClick = this.handleGutterClick.bind(this);
+    this.emphasizeLine = this.emphasizeLine.bind(this);
+    this.deEmphasize = this.deEmphasize.bind(this);
   }
   componentDidMount() {
     const codeMirror = this.codeMirror.getCodeMirror()
@@ -50,13 +53,34 @@ class Editor extends React.Component {
     const lineText = instance.getLine(line)
     onGutterClick(lineNumber, lineText)
   }
+  // Can be used to emphasize a line of text when annotating.
+  emphasizeLine(line) {
+    const codeMirror = this.codeMirror.getCodeMirror()
+    // Fade out the background
+    const backgroundCSS = 'opacity: 0.5; font-weight: normal;';
+    styleAll(codeMirror, backgroundCSS);
+
+    // Bold the passed-in line
+    const foregroundCSS = 'font-weight: bold; opacity: 1.0;';
+    styleLine(codeMirror, line, foregroundCSS);
+  }
+
+  // If a line has been previously emphasized, this will de-emphasise it.
+  deEmphasize() {
+    const css = 'font-weight: normal; opacity: 1.0;';
+    styleAll(this.codeMirror.getCodeMirror(), css);
+  }
   render() {
-    const {readOnly, onChange, markedLines} = this.props
+    const {readOnly, onChange, markedLines, openLine} = this.props
     const codeMirrorOptions = (readOnly ? annotationModeOptions : editModeOptions)
     if (this.codeMirror) {
       const codeMirror = this.codeMirror.getCodeMirror()
       codeMirror.clearGutter('annotations')
       markedLines.forEach((line) => codeMirror.setGutterMarker(line, 'annotations', makeMarker()))
+      if (openLine !== undefined)
+        this.emphasizeLine(openLine);
+      else if (this.codeMirror)
+        this.deEmphasize();
     }
     return (
       <div>
