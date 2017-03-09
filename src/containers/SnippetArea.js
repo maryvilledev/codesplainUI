@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
-import { setSnippetContents, setSnippetTitle, toggleEditState} from '../actions/app'
+import { setSnippetContents, setSnippetTitle, toggleEditState, setAST, setRuleFilters } from '../actions/app'
 import { openAnnotationPanel } from '../actions/annotation'
 
 import Editor from '../components/Editor'
@@ -23,6 +23,7 @@ class SnippetArea extends React.Component{
     this.handleCloseModal = this.handleCloseModal.bind(this);
     this.handleSaveState = this.handleSaveState.bind(this);
     this.handleGutterClick = this.handleGutterClick.bind(this);
+    this.handleParserRun = this.handleParserRun.bind(this);
   }
   handleSnippetChanged(snippetContents) {
     const { dispatch } = this.props
@@ -58,8 +59,13 @@ class SnippetArea extends React.Component{
     if (!readOnly) return //Gutter clicks do nothing when not locked
     dispatch(openAnnotationPanel({lineNumber, lineText}))
   }
+  handleParserRun(AST, filters) {
+    const { dispatch } = this.props
+    dispatch(setAST(AST))
+    dispatch(setRuleFilters(filters))
+  }
   render(){
-    const { readOnly, snippetTitle, annotations, openLine } =  this.props
+    const { readOnly, snippet, snippetTitle, annotations, openLine, filters, AST } =  this.props
     const markedLines = Object.keys(annotations).map((key) => Number(key))
     return (
       <div>
@@ -83,6 +89,10 @@ class SnippetArea extends React.Component{
           onGutterClick={this.handleGutterClick}
           markedLines={markedLines}
           openLine={openLine}
+          onParserRun={this.handleParserRun}
+          value={snippet}
+          filters={filters}
+          AST={AST}
         />
         <SaveButton
           onSaveClick={this.handleSaveState}
@@ -93,6 +103,9 @@ class SnippetArea extends React.Component{
 }
 
 const mapStateToProps = (state) => ({
+  AST: state.app.AST,
+  snippet: state.app.snippet,
+  filters: state.app.filters,
   readOnly: state.app.readOnly,
   snippetTitle: state.app.snippetTitle,
   annotations: state.app.annotations,

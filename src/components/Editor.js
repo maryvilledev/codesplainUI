@@ -1,6 +1,8 @@
 import React from 'react'
 import CodeMirror from 'react-codemirror'
 import { styleLine, styleAll, highlight } from '../util/codemirror-utils.js';
+import { getTokenCount, getPrettyTokenName } from '../util/tokens.js';
+import { parsePython3 } from '../parsers/python3';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/python/python.js';
 import '../styles/codesplain.css';
@@ -46,6 +48,7 @@ class Editor extends React.Component {
   componentDidMount() {
     const codeMirror = this.codeMirror.getCodeMirror()
     codeMirror.on('gutterClick', this.handleGutterClick)
+    this.startParserDaemon(parsePython3)
   }
   handleGutterClick(instance, line, gutter) {
     const { onGutterClick } = this.props
@@ -70,8 +73,41 @@ class Editor extends React.Component {
     const css = 'font-weight: normal; opacity: 1.0;';
     styleAll(this.codeMirror.getCodeMirror(), css);
   }
+  // Runs the parser every second
+  startParserDaemon(parser) {
+    setInterval(function() {
+      const snippet = this.props.value;
+      if (snippet && snippet !== this.state.prevSnippet) {
+        // Generate an AST for the current state of the code snippet, if ready
+        const AST = parser(snippet);
+
+        // Get an array mapping token types to their occurence count
+        const tokenCount = [];
+        getTokenCount(AST, tokenCount);
+
+        // Generate array of strings containing pretty token name and its count
+        const filters = this.props.filters;
+        let newFilters = {};
+        Object.keys(tokenCount).filter(t => getPrettyTokenName(t) !== undefined)
+          .forEach(t => {
+            let selected = false;
+            if (filters[t]) selected = filters[t].selected;
+            newFilters[t] = {
+              prettyTokenName: getPrettyTokenName(t),
+              count: tokenCount[t],
+              selected: selected,
+            }
+          });
+
+        // Highlight the code snippet and invoke prop callback
+        this.setState({prevSnippet: snippet})
+        this.props.onParserRun(AST, newFilters);
+      }
+      highlight(this.codeMirror.getCodeMirror(), this.props.AST, this.props.filters);
+    }.bind(this), 1000);
+  }
   render() {
-    const {readOnly, onChange, markedLines, openLine} = this.props
+    const {readOnly, onChange, markedLines, openLine, value} = this.props
     const codeMirrorOptions = (readOnly ? annotationModeOptions : editModeOptions)
     if (this.codeMirror) {
       const codeMirror = this.codeMirror.getCodeMirror()
@@ -88,6 +124,7 @@ class Editor extends React.Component {
           options={codeMirrorOptions}
           onChange={onChange}
           ref={(cm) => this.codeMirror = cm}
+          value={value}
         />
       </div>
     )
