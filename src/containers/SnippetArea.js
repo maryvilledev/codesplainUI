@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import { setSnippetContents, setSnippetTitle, toggleEditState } from '../actions/app'
+import { openAnnotationPanel } from '../actions/annotation'
 
 import Editor from '../components/Editor'
 import SaveButton from '../components/SaveButton.jsx';
@@ -21,6 +22,7 @@ class SnippetArea extends React.Component{
     this.handleToggleReadOnly = this.handleToggleReadOnly.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
     this.handleSaveState = this.handleSaveState.bind(this);
+    this.handleGutterClick = this.handleGutterClick.bind(this);
   }
   handleSnippetChanged(snippetContents) {
     const { dispatch } = this.props
@@ -51,6 +53,11 @@ class SnippetArea extends React.Component{
     const stateString = JSON.stringify(obj);
     return axios.post('/api/snippets/', { json : stateString });
   }
+  handleGutterClick(lineNumber, lineText) {
+    const { readOnly, dispatch } = this.props
+    if (!readOnly) return //Gutter clicks do nothing when not locked
+    dispatch(openAnnotationPanel({lineNumber, lineText}))
+  }
   render(){
     const { readOnly, snippetTitle } =  this.props
     return (
@@ -69,7 +76,11 @@ class SnippetArea extends React.Component{
           isOpen={this.state.lockDialogOpen}
           reject={this.handleCloseModal}
         />
-        <Editor readOnly={readOnly} onChange={this.handleSnippetChanged}/>
+        <Editor
+          readOnly={readOnly}
+          onChange={this.handleSnippetChanged}
+          onGutterClick={this.handleGutterClick}
+        />
         <SaveButton
           onSaveClick={this.handleSaveState}
         />

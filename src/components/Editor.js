@@ -24,17 +24,37 @@ const annotationModeOptions = {
   readOnly: true,
   cursorBlinkRate: -1,
 };
-
-const Editor = ({readOnly, onChange}) => {
-  const codeMirrorOptions = (readOnly ? annotationModeOptions : editModeOptions)
-  return (
-    <div>
-      <CodeMirror
-        options={codeMirrorOptions}
-        onChange={onChange}
-      />
-    </div>
-  )
+class Editor extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      codeMirror: null
+    }
+    this.handleGutterClick = this.handleGutterClick.bind(this);
+  }
+  componentDidMount() {
+    const codeMirror = this.codeMirror.getCodeMirror()
+    codeMirror.on('gutterClick', this.handleGutterClick)
+  }
+  handleGutterClick(instance, line, gutter) {
+    const { onGutterClick } = this.props
+    const lineNumber = line + 1
+    const lineText = instance.getLine(line)
+    onGutterClick(lineNumber, lineText)
+  }
+  render() {
+    const {readOnly, onChange} = this.props
+    const codeMirrorOptions = (readOnly ? annotationModeOptions : editModeOptions)
+    return (
+      <div>
+        <CodeMirror
+          options={codeMirrorOptions}
+          onChange={onChange}
+          ref={(cm) => this.codeMirror = cm}
+        />
+      </div>
+    )
+  }
 }
 
 export default Editor
