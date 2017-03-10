@@ -28,15 +28,6 @@ const mockDispatch = jest.fn()
 
 describe('<FilterArea />', () => {
   it('toggles a filter when clicked', () => {
-    jest.mock('material-ui', () => ({
-      CardText: ({children}) => children
-    }))
-    jest.mock('../../src/components/RulesSelector', () => {
-      return jest.fn(({onRuleSelected}) => {
-        onRuleSelected('rick');
-        return null
-      })
-    })
     const wrapper = mount(
       <FilterArea
         filters={mockFilters}
