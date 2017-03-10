@@ -3,12 +3,12 @@ import { shallow, mount, render } from 'enzyme'
 
 import { Annotations } from '../../src/containers/Annotations'
 
-const mockAnnotation = "They're just robots."
+const mockAnnotation = "They're just robots.";
 const mockSnippetInformation = {
   lineNumber: 2,
   lineText: 'Galactic Imperial'
-}
-const mockDispatch = jest.fn()
+};
+const mockDispatch = jest.fn();
 
 describe('<Annotations />', () => {
   const wrapper = shallow(
@@ -21,17 +21,17 @@ describe('<Annotations />', () => {
     />
   )
   it('saves the annotation on handleSaveAnnotation', () => {
-    const newAnnotation = "They're bureaucrats!";
+    const annotation = "They're bureaucrats!";
     const expected = {
-      annotation: newAnnotation,
+      annotation,
       ...mockSnippetInformation
-    }
-    wrapper.instance().handleSaveAnnotation(newAnnotation)
+    };
+    wrapper.instance().handleSaveAnnotation(annotation);
     const { payload } = mockDispatch.mock.calls[0][0];
-    expect(payload).toEqual(expected)
+    expect(payload).toEqual(expected);
   });
   it('closes the annotation panel on handleCloseAnnotation', () => {
-    wrapper.instance().handleCloseAnnotation()
-    expect(mockDispatch.mock.calls[1]).toBeDefined()
+    wrapper.instance().handleCloseAnnotation();
+    expect(mockDispatch.mock.calls[1]).toBeDefined();
   })
 });

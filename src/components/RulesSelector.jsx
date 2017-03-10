@@ -31,7 +31,7 @@ const makeListItems = (filters, onRuleSelected) => {
             onCheck={() => onRuleSelected(filterName)}
           />
         }
-        primaryText={filter.prettyTokenName}
+        primaryText={`${filter.prettyTokenName} (${filter.count})`}
       />
     );
   });
