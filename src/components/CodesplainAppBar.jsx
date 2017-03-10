@@ -3,7 +3,7 @@ import AppBar from 'material-ui/AppBar';
 import { browserHistory } from 'react-router';
 import cookie from 'react-cookie';
 
-import LoginButton from './LoginButton'
+import LoginButton from './buttons/LoginButton'
 import AppMenu from './AppMenu';
 
 const styles = {

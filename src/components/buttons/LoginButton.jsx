@@ -1,6 +1,6 @@
 import React from 'react';
 import { FlatButton } from 'material-ui';
-import GitHubIcon from './github-icon.png';
+import GitHubIcon from '../../../res/github-icon.png';
 
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID
 const GITHUB_URL = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}`
@@ -8,6 +8,9 @@ const GITHUB_URL = `https://github.com/login/oauth/authorize?client_id=${CLIENT_
 const styles = {
   button: {
     marginTop: '6px',
+  },
+  span: {
+    color: 'white',
   },
   img: {
     marginRight: '7px',
@@ -19,10 +22,10 @@ const LoginButton = () => (
     href={GITHUB_URL}
     style={styles.button}
     label={
-      <span>
+      <span style={styles.span}>
         <img 
           role="presentation"
-          width="20" 
+          width="23" 
           style={styles.img} 
           src={GitHubIcon} 
         />

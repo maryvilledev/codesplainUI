@@ -1,10 +1,10 @@
 import React, { PropTypes } from 'react';
 import CodeMirror from 'react-codemirror';
-import SaveButton from './SaveButton.jsx';
+import SaveButton from './buttons/SaveButton.jsx';
 import { Card, CardText } from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
 import ConfirmLockDialog from './ConfirmLockDialog';
-import LockButton from './LockButton';
+import LockButton from './buttons/LockButton';
 
 import { parsePython3 } from '../parsers/python3';
 import { styleLine, styleAll, highlight } from '../util/codemirror-utils.js';
