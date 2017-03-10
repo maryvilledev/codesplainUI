@@ -4,6 +4,15 @@ import cookie from 'react-cookie'
 import { CircularProgress, Dialog, FlatButton } from 'material-ui'
 
 const styles = {
+  centered: {
+    color: '#a6a6a6',
+    fontSize: '15pt',
+    position: 'fixed',
+    top: '50%',
+    left: '50%',
+    marginTop: '-100',
+    marginLeft: '-50px',
+  },
   errorDialogOverlay: {
     background: '#990000', // Crimson red
   }
@@ -72,7 +81,15 @@ class Auth extends React.Component {
     // Conditionally render a <CircularProgress /> or redirect user, depending
     // on whether the backend has responded yet
     if (this.state.waiting) {
-      return <CircularProgress size={100} thickness={7} />
+      return (
+        <div style={styles.centered}>
+          <p>Logging in...</p>
+          <CircularProgress 
+            size={100} 
+            thickness={7} 
+          />
+        </div>
+      );
     } else {
       // We're done waiting, now render an alert if
       // the login attempt failed
