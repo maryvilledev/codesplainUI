@@ -3,16 +3,7 @@ import { shallow, mount, render } from 'enzyme'
 
 import { FilterArea } from '../../src/containers/FilterArea'
 
-jest.mock('material-ui', () => ({
-  CardText: ({children}) => children
-}))
-jest.mock('../../src/components/RulesSelector', () => {
-  return jest.fn(({onRuleSelected}) => {
-    onRuleSelected('rick');
-    return null
-  })
-})
-
+let mockOnRuleSelected;
 const mockFilters = {
   rick: {
     selected: false,
@@ -23,19 +14,33 @@ const mockFilters = {
     prettyTokenName: 'Morty Smith'
   }
 }
-
 const mockDispatch = jest.fn()
 
+//Mock to simply render children
+jest.mock('material-ui', () => ({
+  CardText: ({children}) => children
+}))
+//Mock to allow me to arbitrarily toggle
+jest.mock('../../src/components/RulesSelector', () => {
+  return jest.fn(({onRuleSelected}) => {
+    mockOnRuleSelected = onRuleSelected
+    return null
+  })
+})
+
 describe('<FilterArea />', () => {
-  it('toggles a filter when clicked', () => {
+  const filterToToggle = 'rick';
+  const filterNotToToggle = 'morty'
+  it('toggles a filter when handleSaveAnnotation is called', () => {
     const wrapper = mount(
       <FilterArea
         filters={mockFilters}
         dispatch={mockDispatch}
       />
     )
+    mockOnRuleSelected(filterToToggle)
     const { payload } = mockDispatch.mock.calls[0][0];
-    expect(payload['rick'].selected).toBe(true);
-    expect(payload['morty'].selected).toBe(false);
+    expect(payload[filterToToggle].selected).toBe(true);
+    expect(payload[filterNotToToggle].selected).toBe(false);
   });
 });
