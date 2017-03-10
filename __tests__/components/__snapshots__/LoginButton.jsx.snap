@@ -1,7 +1,7 @@
 exports[`<LoginButton /> matches the stored snapshot 1`] = `
 <FlatButton
   disabled={false}
-  href="https://github.com/login/oauth/authorize?client_id=f86ac0940aa0de740069"
+  href="dummy-link"
   label={
     <span
       style={

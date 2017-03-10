@@ -7,7 +7,7 @@ describe('<LoginButton />', () => {
   it('matches the stored snapshot', () => {
     const renderer = ReactTestUtils.createRenderer();
     const tree = renderer.render(
-      <LoginButton />
+      <LoginButton href='dummy-link' />
     );
     expect(tree).toMatchSnapshot();
   });
