@@ -13,10 +13,10 @@ import '../styles/codesplain.css';
 
 // Options for the CodeMirror instance that are shared by edit and annotation mddes
 const baseCodeMirrorOptions = {
-    lineNumbers: true,
-    theme: 'codesplain',
-    gutters: [ 'annotations', 'CodeMirror-linenumbers' ],
-    mode: 'python',
+  lineNumbers: true,
+  theme: 'codesplain',
+  gutters: ['annotations', 'CodeMirror-linenumbers'],
+  mode: 'python',
 };
 
 // Options specific for edit mode should be set here
@@ -33,18 +33,18 @@ const annotationModeOptions = {
 };
 
 const makeMarker = () => {
-  const marker = document.createElement("div");
-  marker.style.color = "#822";
-  marker.innerHTML = "●";
+  const marker = document.createElement('div');
+  marker.style.color = '#822';
+  marker.innerHTML = '●';
   return marker;
-}
+};
 
 class Editor extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       prevSnippet: undefined,
-    }
+    };
     this.handleGutterClick = this.handleGutterClick.bind(this);
     this.emphasizeLine = this.emphasizeLine.bind(this);
     this.deEmphasize = this.deEmphasize.bind(this);
@@ -52,9 +52,9 @@ class Editor extends React.Component {
   }
 
   componentDidMount() {
-    const codeMirror = this.codeMirror.getCodeMirror()
-    codeMirror.on('gutterClick', this.handleGutterClick)
-    this.startParserDaemon(parsePython3)
+    const codeMirror = this.codeMirror.getCodeMirror();
+    codeMirror.on('gutterClick', this.handleGutterClick);
+    this.startParserDaemon(parsePython3);
   }
 
   componentDidUpdate() {
@@ -67,7 +67,7 @@ class Editor extends React.Component {
     codeMirrorInst.clearGutter('annotations');
     // eslint-disable-next-line array-callback-return
     markedLines.forEach((lineNumber) => {
-      codeMirrorInst.setGutterMarker(Number(lineNumber), 'annotations', makeMarker())
+      codeMirrorInst.setGutterMarker(Number(lineNumber), 'annotations', makeMarker());
     });
     this.deEmphasize();
     if (openLine) {
@@ -75,15 +75,15 @@ class Editor extends React.Component {
     }
   }
 
-  handleGutterClick(instance, lineNumber, gutter) {
-    const { onGutterClick } = this.props
-    const lineText = instance.getLine(lineNumber)
-    onGutterClick(lineNumber, lineText)
+  handleGutterClick(instance, lineNumber) {
+    const { onGutterClick } = this.props;
+    const lineText = instance.getLine(lineNumber);
+    onGutterClick(lineNumber, lineText);
   }
 
   // Can be used to emphasize a line of text when annotating.
   emphasizeLine(line) {
-    const codeMirror = this.codeMirror.getCodeMirror()
+    const codeMirror = this.codeMirror.getCodeMirror();
     // Fade out the background
     const backgroundCSS = 'opacity: 0.5; font-weight: normal;';
     styleAll(codeMirror, backgroundCSS);
@@ -101,7 +101,7 @@ class Editor extends React.Component {
 
   // Runs the parser every second
   startParserDaemon(parser) {
-    setInterval(function() {
+    setInterval(() => {
       const snippet = this.props.value;
       if (snippet && snippet !== this.state.prevSnippet) {
         // Generate an AST for the current state of the code snippet, if ready
@@ -113,27 +113,27 @@ class Editor extends React.Component {
 
         // Generate array of strings containing pretty token name and its count
         const filters = this.props.filters;
-        let newFilters = {};
+        const newFilters = {};
         Object.keys(tokenCount).filter(t => getPrettyTokenName(t) !== undefined)
-          .forEach(t => {
+          .forEach((t) => {
             let selected = false;
             if (filters[t]) selected = filters[t].selected;
             newFilters[t] = {
               prettyTokenName: getPrettyTokenName(t),
               count: tokenCount[t],
-              selected: selected,
-            }
+              selected,
+            };
           });
 
-        //Invoke prop callback
-        this.setState({prevSnippet: snippet})
+        // Invoke prop callback
+        this.setState({ prevSnippet: snippet });
         this.props.onParserRun(AST, newFilters);
       }
       // console.log(this.props.AST);
-      if(this.props.value) {
+      if (this.props.value) {
         highlight(this.codeMirror.getCodeMirror(), this.props.AST, this.props.filters);
       }
-    }.bind(this), 1000);
+    }, 1000);
   }
 
   render() {
@@ -152,7 +152,7 @@ class Editor extends React.Component {
         <CodeMirror
           onChange={onChange}
           options={codeMirrorOptions}
-          ref={(cm) => this.codeMirror = cm}
+          ref={cm => this.codeMirror = cm}
           value={value}
         />
       </div>

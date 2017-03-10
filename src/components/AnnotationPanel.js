@@ -14,15 +14,15 @@ class AnnotationPanel extends React.Component {
     this.toggleEditState = this.toggleEditState.bind(this);
   }
 
+  handleSaveAnnotation(annotation) {
+    this.props.saveAnnotation(annotation);
+    this.toggleEditState();
+  }
+
   toggleEditState() {
     this.setState({
       isEditing: !this.state.isEditing,
     });
-  }
-
-  handleSaveAnnotation(annotation) {
-    this.props.saveAnnotation(annotation);
-    this.toggleEditState();
   }
 
   render() {
@@ -32,7 +32,7 @@ class AnnotationPanel extends React.Component {
       snippetInformation: {
         lineNumber,
         lineText,
-      }
+      },
     } = this.props;
     const { isEditing } = this.state;
     const shouldRenderEditor = annotation.length === 0 || isEditing;
@@ -62,8 +62,8 @@ class AnnotationPanel extends React.Component {
 
 AnnotationPanel.propTypes = {
   annotation: PropTypes.string.isRequired,
-  saveAnnotation: PropTypes.func.isRequired,
   closeAnnotation: PropTypes.func.isRequired,
+  saveAnnotation: PropTypes.func.isRequired,
   snippetInformation: PropTypes.shape({
     lineNumber: PropTypes.number.isRequired,
     lineText: PropTypes.string.isRequired,

@@ -2,7 +2,13 @@ import React, { PropTypes } from 'react';
 import MarkdownRenderer from 'react-markdown-renderer';
 import RaisedButton from 'material-ui/RaisedButton';
 
-const AnnotationDisplay = ({ annotation, closeAnnotation, editAnnotation }) => {
+const AnnotationDisplay = (props) => {
+  const {
+    annotation,
+    closeAnnotation,
+    editAnnotation,
+  } = props;
+
   return (
     <div>
       <MarkdownRenderer
@@ -18,7 +24,7 @@ const AnnotationDisplay = ({ annotation, closeAnnotation, editAnnotation }) => {
         primary
         onTouchTap={editAnnotation}
       />
-  </div>
+    </div>
   );
 };
 

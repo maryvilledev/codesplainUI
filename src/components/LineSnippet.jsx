@@ -21,7 +21,7 @@ class LineSnippet extends React.Component {
     };
     return (
       <CodeMirror
-        ref={cm => { this.codeMirror = cm; }}
+        ref={(cm) => { this.codeMirror = cm; }}
         value={this.props.value}
         options={codeMirrorOptions}
       />

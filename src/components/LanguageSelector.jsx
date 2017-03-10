@@ -4,20 +4,20 @@ import SelectField from 'material-ui/SelectField';
 
 const styles = {
   tokenSelectorStyle: {
-    width: '80%'
-  }
-}
-const LanguageSelector = ({ languages, onChange, selected }) => {
+    width: '80%',
+  },
+};
 
-  const languageMenuItems = languages.map((lang, index) => {
+const LanguageSelector = ({ languages, onChange, selected }) => {
+  const languageMenuItems = languages.map((lang) => {
     return (
       <MenuItem
-        key={`${lang.value}-index`}
+        key={lang.value}
         primaryText={lang.text}
         value={lang.value}
       />
     );
-  })
+  });
   return (
     <SelectField
       disabled

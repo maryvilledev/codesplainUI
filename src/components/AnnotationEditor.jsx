@@ -36,18 +36,18 @@ class AnnotationEditor extends React.Component {
       <div>
         <Tabs>
           <Tab
-            onActive={() => { this.textField.focus() }}
+            onActive={() => { this.textField.focus(); }}
             label="Write"
           >
             <TextField
               autoFocus
               name="annotationEditor"
               floatingLabelText="Annotation"
-              fullWidth={true}
+              fullWidth
               hintText="Enter your annotation here"
-              multiLine={true}
+              multiLine
               onChange={this.onAnnotationChange}
-              ref={textField => this.textField = textField}
+              ref={(textField) => { this.textField = textField; }}
               rows={4}
               value={this.state.annotation}
             />
@@ -66,7 +66,7 @@ class AnnotationEditor extends React.Component {
         <RaisedButton
           label="Save"
           primary
-          disabled={ !Boolean(this.state.annotation) }
+          disabled={!this.state.annotation}
           onTouchTap={this.saveAnnotation}
         />
       </div>
@@ -76,7 +76,7 @@ class AnnotationEditor extends React.Component {
 
 AnnotationEditor.defaultProps = {
   annotation: '',
-}
+};
 
 AnnotationEditor.propTypes = {
   annotation: PropTypes.string,

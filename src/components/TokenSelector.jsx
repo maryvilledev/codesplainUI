@@ -13,12 +13,12 @@ const styles = {
     lineHeight: '',
     paddingLeft: '',
   },
-}
+};
 
 class TokenSelector extends React.Component {
   constructor(props) {
     super(props);
-    this.itemState = {}
+    this.itemState = {};
     this.makeListItems = this.makeListItems.bind(this);
   }
 
@@ -34,7 +34,7 @@ class TokenSelector extends React.Component {
       return (
         <ListItem
           style={styles.list}
-          key={`${tokenText}-index`}
+          key={`${tokenText}-${index}`}
           leftCheckbox={
             <Checkbox
               checked={tokens[token].selected}
@@ -54,7 +54,7 @@ class TokenSelector extends React.Component {
       <List>
         <Subheader
           style={styles.Subheader}
-          >
+        >
           Select a token type to highlight all occurences
         </Subheader>
         { this.makeListItems() }

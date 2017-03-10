@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react';
 
-import Dialog from 'material-ui/Dialog'
+import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 
-const ConfirmLockDialog = ({ accept, isOpen, reject, }) => {
+const ConfirmLockDialog = ({ accept, isOpen, reject }) => {
   const actionButtons = [
     <FlatButton
       label="No"

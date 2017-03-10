@@ -13,11 +13,11 @@ const style = {
     lineHeight: '',
     paddingLeft: '',
   },
-}
+};
 
 const makeListItems = (filters, onRuleSelected) => {
-  const listItems = Object.keys(filters).map((filterName, index) => {
-    const filter = filters[filterName]
+  const listItems = Object.keys(filters).map((filterName) => {
+    const filter = filters[filterName];
     return (
       <ListItem
         style={style.list}
@@ -30,13 +30,13 @@ const makeListItems = (filters, onRuleSelected) => {
         }
         primaryText={filter.prettyTokenName}
       />
-    )
+    );
   });
-  return listItems
-}
+  return listItems;
+};
 
-const RulesSelector = ({filters, onRuleSelected}) => {
-  const listItems = makeListItems(filters, onRuleSelected)
+const RulesSelector = ({ filters, onRuleSelected }) => {
+  const listItems = makeListItems(filters, onRuleSelected);
   return (
     <List>
       <Subheader style={style.subheader}>
@@ -44,12 +44,12 @@ const RulesSelector = ({filters, onRuleSelected}) => {
       </Subheader>
       {listItems}
     </List>
-  )
-}
+  );
+};
 
 RulesSelector.propTypes = {
   filters: PropTypes.object.isRequired,
-  onRuleSelected: PropTypes.func.isRequired
-}
+  onRuleSelected: PropTypes.func.isRequired,
+};
 
-export default RulesSelector
+export default RulesSelector;

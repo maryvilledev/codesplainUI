@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { CardText } from 'material-ui/Card';
 
@@ -7,7 +7,7 @@ import {
 } from '../actions/annotation';
 
 import {
-  saveAnnotation
+  saveAnnotation,
 } from '../actions/app';
 
 import AnnotationPanel from '../components/AnnotationPanel';
@@ -61,8 +61,17 @@ class Annotations extends React.Component {
       />
     );
   }
-
 }
+
+Annotations.propTypes = {
+  annotation: PropTypes.string.isRequired,
+  isDisplayingAnnotation: PropTypes.bool.isRequired,
+  readOnly: PropTypes.bool.isRequired,
+  snippetInformation: PropTypes.shape({
+    lineNumber: PropTypes.number.isRequired,
+    lineText: PropTypes.string.isRequired,
+  }).isRequired,
+};
 
 const mapStateToProps = (state) => {
   const {
@@ -80,7 +89,7 @@ const mapStateToProps = (state) => {
     snippetInformation: state.annotation.snippetInformation,
     annotation,
     appState: state.app,
-  }
+  };
 };
 
 export default connect(mapStateToProps)(Annotations);
