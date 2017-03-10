@@ -1,0 +1,38 @@
+exports[`<LoginButton /> matches the stored snapshot 1`] = `
+<FlatButton
+  disabled={false}
+  href="https://github.com/login/oauth/authorize?client_id=f86ac0940aa0de740069"
+  label={
+    <span
+      style={
+        Object {
+          "color": "white",
+        }
+      }>
+      <img
+        role="presentation"
+        src="github-icon.png"
+        style={
+          Object {
+            "marginRight": "7px",
+          }
+        }
+        width="23" />
+      Log In
+    </span>
+  }
+  labelPosition="after"
+  labelStyle={Object {}}
+  onClick={[Function]}
+  onKeyboardFocus={[Function]}
+  onMouseEnter={[Function]}
+  onMouseLeave={[Function]}
+  onTouchStart={[Function]}
+  primary={false}
+  secondary={false}
+  style={
+    Object {
+      "marginTop": "6px",
+    }
+  } />
+`;

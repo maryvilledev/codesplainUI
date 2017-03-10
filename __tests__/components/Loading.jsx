@@ -1,16 +1,14 @@
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
 
-import SaveButton from '../../src/components/SaveButton';
+import Loading from '../../src/components/Loading';
 
-describe('SaveButton />', () => {
-  it('matches snapshot', () => {
+describe('<Loading />', () => {
+  it('matches the stored snapshot', () => {
     const renderer = ReactTestUtils.createRenderer();
     const tree = renderer.render(
-      <SaveButton
-        onSaveClick={jest.fn()}
-      />
+      <Loading />
     );
     expect(tree).toMatchSnapshot();
-  })
-})
+  });
+});

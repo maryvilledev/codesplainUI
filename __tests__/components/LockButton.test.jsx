@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
 
-import LockButton from '../../src/components/LockButton';
+import LockButton from '../../src/components/buttons/LockButton';
 
 describe('LockButton />', () => {
   it('matches snapshot of when the app is not in read-only mode', () => {
