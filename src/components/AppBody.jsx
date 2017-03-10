@@ -5,7 +5,9 @@ import LanguageSelector from './LanguageSelector';
 import SnippetArea from './SnippetArea';
 import TokenSelector from './TokenSelector';
 import AnnotationPanel from './AnnotationPanel';
-import axios from 'axios'
+import axios from 'axios' 
+import Snackbar from 'material-ui/Snackbar';
+
 
 const languages = [
   { text: 'Python 3' , value: 'python3' },
@@ -126,9 +128,28 @@ class AppBody extends React.Component {
 
   onSaveState() {
     const {snippet, snippetTitle, annotations, AST, filters, readOnly} = this.state;
-    const obj = {snippet, snippetTitle, annotations, AST, filters, readOnly};
-    const stateString = JSON.stringify(obj);
-    return axios.post('/api/snippets/', { json : stateString });
+    if(!snippetTitle) {
+      this.setState({ titleErrorText: 'This field is required' });
+    } else {
+      this.setState({ titleErrorText: '' });
+      const obj = {snippet, snippetTitle, annotations, AST, filters, readOnly};
+      const stateString = JSON.stringify(obj);
+      axios.post('/api/snippets/', { json : stateString })
+        .then(res => {
+          const id = res.data.id;
+          browserHistory.push(`/${id}`);
+          this.setState({
+            snackOpen: true,
+            snackMessage: 'Codesplaination saved!'
+          });
+        }, err => {
+          console.error(err);
+          this.setState({
+            snackOpen: true,
+            snackMessage: 'Error saving snippet data'
+          });
+        });
+    }
   }
 
   componentDidMount() {
@@ -218,6 +239,7 @@ class AppBody extends React.Component {
               contents={this.state.snippet}
               onGutterClick={this.onGutterClick}
               onSaveClick={this.onSaveState}
+              titleErrorText={this.state.titleErrorText}
               onSnippetChanged={this.onSnippetChanged}
               onTitleChanged={this.onSnippetTitleChanged}
               onParserRun={this.onParserRun}
@@ -237,6 +259,12 @@ class AppBody extends React.Component {
             />
           </div>
         </div>
+        <Snackbar
+          open={this.state.snackOpen}
+          message={this.state.snackMessage}
+          autoHideDuration={2000}
+          onRequestClose={() => this.setState({snackOpen: false})}
+        />
       </div>
     );
   }
