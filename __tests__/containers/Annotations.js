@@ -21,12 +21,12 @@ describe('<Annotations />', () => {
     />
   )
   it('saves the annotation on handleSaveAnnotation', () => {
-    const newAnnotation = "They're bureaucrats!"
+    const annotation = "They're bureaucrats!"
     const expected = {
-      annotation: newAnnotation,
+      annotation,
       ...mockSnippetInformation
     }
-    wrapper.instance().handleSaveAnnotation(newAnnotation)
+    wrapper.instance().handleSaveAnnotation(annotation)
     const { payload } = mockDispatch.mock.calls[0][0];
     expect(payload).toEqual(expected)
   });
