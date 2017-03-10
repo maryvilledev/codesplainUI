@@ -10,7 +10,7 @@ import { Router, Route, browserHistory } from 'react-router'
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
 
-class App extends Component {
+export class App extends Component {
   render() {
     const component = (props) => (
       <div className="container-fluid">

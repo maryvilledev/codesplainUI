@@ -30,7 +30,7 @@ const style = {
   },
 };
 
-class SnippetArea extends React.Component {
+export class SnippetArea extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

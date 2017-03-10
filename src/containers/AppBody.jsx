@@ -10,7 +10,7 @@ import Annotations from './Annotations';
 import FilterArea from './FilterArea';
 import SnippetArea from './SnippetArea';
 
-class AppBody extends React.Component {
+export class AppBody extends React.Component {
   componentDidMount() {
       const { id } = this.props.params;
       const { dispatch } = this.props;

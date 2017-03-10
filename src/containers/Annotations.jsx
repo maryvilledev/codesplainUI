@@ -12,7 +12,7 @@ import {
 
 import AnnotationPanel from '../components/AnnotationPanel';
 
-class Annotations extends React.Component {
+export class Annotations extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

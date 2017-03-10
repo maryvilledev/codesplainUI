@@ -8,7 +8,7 @@ const toggleFilter = (filters, filterName) => {
   filters[filterName].selected = !filters[filterName].selected
 }
 
-class FilterArea extends React.Component {
+export class FilterArea extends React.Component {
   constructor(props) {
     super(props)
     this.handleRuleSelected = this.handleRuleSelected.bind(this);
