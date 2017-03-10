@@ -1,10 +1,15 @@
 import React from 'react';
 import { Dialog, FlatButton } from 'material-ui';
+import { red500 } from 'material-ui/styles/colors';
 
 const styles = {
-  errorDialogOverlay: {
-    background: '#990000', // Crimson red
+  bodyError: {
+    background: red500, 
+    color: '#000000',
   },
+  actionsContainerError: {
+    background: red500,
+  }
 }
 
 /*
@@ -25,7 +30,8 @@ const Alert = ({ isError, text, onClose }) => (
       modal={false}
       open={true}
       onRequestClose={onClose}
-      overlayStyle={isError? styles.errorDialogOverlay: null}
+      actionsContainerStyle={isError? styles.actionsContainerError: null}
+      bodyStyle={isError ? styles.bodyError : null}
     >
       {text}
     </Dialog>
