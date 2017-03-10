@@ -5,8 +5,8 @@ import {
   styleLine,
   styleAll,
 } from '../util/codemirror-utils.js';
-import { getTokenCount, getPrettyTokenName } from '../util/tokens.js';
-import { parsePython3 } from '../parsers/python3';
+import { getRuleCount, rules } from '../util/rules.js';
+import parsePython3 from '../parsers/python3.min.js';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/python/python.js';
 import '../styles/codesplain.css';
@@ -105,25 +105,29 @@ class Editor extends React.Component {
       const snippet = this.props.value;
       if (snippet && snippet !== this.state.prevSnippet) {
         // Generate an AST for the current state of the code snippet, if ready
-        const AST = parser(snippet);
+        const onError = (err) => { console.log(err) };
+        const AST = parser(snippet, onError);
 
         // Get an array mapping token types to their occurence count
-        const tokenCount = [];
-        getTokenCount(AST, tokenCount);
+        const ruleCount = {};
+        getRuleCount(AST, ruleCount);
+        console.log(ruleCount)
 
         // Generate array of strings containing pretty token name and its count
-        const filters = this.props.filters;
-        const newFilters = {};
-        Object.keys(tokenCount).filter(t => getPrettyTokenName(t) !== undefined)
-          .forEach((t) => {
-            let selected = false;
-            if (filters[t]) selected = filters[t].selected;
-            newFilters[t] = {
-              prettyTokenName: getPrettyTokenName(t),
-              count: tokenCount[t],
-              selected,
-            };
-          });
+       const filters = this.props.filters;
+       let newFilters = {};
+       Object.keys(ruleCount).filter(r => rules[r] !== undefined)
+         .forEach(r => {
+           let selected = false;
+           if (filters[r]) {
+             selected = filters[r].selected;
+           }
+           newFilters[r] = {
+             prettyTokenName: rules[r].prettyName,
+             count:           ruleCount[r],
+             selected:        selected,
+           }
+         });
 
         // Invoke prop callback
         this.setState({ prevSnippet: snippet });
