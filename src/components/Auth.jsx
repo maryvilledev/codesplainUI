@@ -1,14 +1,8 @@
 import React from 'react'
 import axios from 'axios'
 import cookie from 'react-cookie'
-import { CircularProgress, Dialog, FlatButton } from 'material-ui'
 import Loading from './Loading'
-
-const styles = {
-  errorDialogOverlay: {
-    background: '#990000', // Crimson red
-  },
-}
+import Alert from './Alert'
 
 /*
 <Auth /> is the component that is rendered for the '{{url}}/auth' endpoint (which
@@ -73,27 +67,17 @@ class Auth extends React.Component {
     // Conditionally render a <CircularProgress /> or redirect user, depending
     // on whether the backend has responded yet
     if (this.state.waiting) {
-      return <Loading />
+      return <Loading text="Logging in..." />
     } else {
       // We're done waiting, now render an alert if
       // the login attempt failed
       if (this.state.error) {
         return (
-          <Dialog 
-            actions={
-              <FlatButton
-                label="OK"
-                primary={true}
-                onTouchTap={this.redirectUser}
-              />
-            }
-            modal={false}
-            open={true}
-            onRequestClose={this.redirectUser}
-            overlayStyle={styles.errorDialogOverlay}
-          >
-            Failed to login with GitHub, sorry.
-          </Dialog>
+          <Alert
+            isError={true}
+            text="Failed to login with GitHub, sorry."
+            onClose={this.redirectUser}
+          />
         );
       } else {
         // Otherwise, it succeeded, so just redirect the user
