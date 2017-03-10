@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
-import AppBody from '../components/AppBody';
+import AppBody from './AppBody';
 import CodesplainAppBar from '../components/CodesplainAppBar';
 import { Router, Route, browserHistory } from 'react-router'
 
