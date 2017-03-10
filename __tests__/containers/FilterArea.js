@@ -16,18 +16,16 @@ const mockFilters = {
 const mockDispatch = jest.fn()
 
 describe('<FilterArea />', () => {
-  const filterToToggle = 'rick';
-  const filterNotToToggle = 'morty'
-  it('toggles a filter when handleRuleSelected is called', () => {
-    const wrapper = shallow(
-      <FilterArea
-        filters={mockFilters}
-        dispatch={mockDispatch}
-      />
-    )
-    wrapper.instance().handleRuleSelected(filterToToggle)
+  const wrapper = shallow(
+    <FilterArea
+      filters={mockFilters}
+      dispatch={mockDispatch}
+    />
+  )
+  it('toggles a filter on handleRuleSelected', () => {
+    const filter = 'rick';
+    wrapper.instance().handleRuleSelected(filter)
     const { payload } = mockDispatch.mock.calls[0][0];
-    expect(payload[filterToToggle].selected).toBe(true);
-    expect(payload[filterNotToToggle].selected).toBe(false);
+    expect(payload[filter]).toEqual(expect.objectContaining({selected: true}));
   });
 });
