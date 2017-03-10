@@ -75,7 +75,7 @@ app.post('/api/snippets/', function(req, res) {
   var id = uuid();
   var json = JSON.parse(req.body.json);
   if (_.isObject(json) && _.congruent(requestTemplate, json)) {
-    redis.set(id, json);
+    redis.set(id, JSON.stringify(json));
     res.json({id: id});
   } else {
     res.status(400).send('Invalid POST request body');
