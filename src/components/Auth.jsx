@@ -3,6 +3,12 @@ import axios from 'axios'
 import cookie from 'react-cookie'
 import { CircularProgress, Dialog, FlatButton } from 'material-ui'
 
+const styles = {
+  errorDialogOverlay: {
+    background: '#990000', // Crimson red
+  }
+}
+
 /*
 <Auth /> is the component that is rendered for the '{{url}}/auth' endpoint (which
 is the endpoint the user is sent to after signing in to GitHub). It initially
@@ -26,13 +32,30 @@ class Auth extends React.Component {
         // Code was accepted, so extract and save the token from the response
         const { token } = res.data;
         cookie.save('token', token, { path: '/' });
-        this.setState({ waiting: false });
-      })
-      .catch((err) => {
-        // Something went wrong ;(
+
+        // Return Promise to get the user's basic info
+        return axios.get('https://api.github.com/user', {
+          headers: {
+            Accept: 'application/json',
+            Authorization: `token ${token}`,
+          }
+        })
+      }, err => {
+        // If this fails, we need to make sure the error dialog shows
         console.error(err);
         this.setState({ waiting: false, error: true });
-      });
+      })
+      .then(res => {
+        const { avatar_url } = res.data; // Can pull lots of other stuff 
+                                         // out of res.data if needed
+        cookie.save('userAvatarURL', avatar_url, { path: '/' });
+        this.setState({ waiting: false });
+      }, err => {
+        // Failed to pull in user info, but that's fine. Log and continue.
+        console.log(err);
+        this.setState({ waiting: false });
+      })
+      .catch(err => console.log(err))
   }
 
   redirectUser() {
@@ -66,6 +89,7 @@ class Auth extends React.Component {
             modal={false}
             open={true}
             onRequestClose={this.redirectUser}
+            overlayStyle={styles.errorDialogOverlay}
           >
             Failed to login with GitHub, sorry.
           </Dialog>

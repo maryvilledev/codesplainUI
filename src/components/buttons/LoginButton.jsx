@@ -1,7 +1,7 @@
 import React from 'react';
 import { FlatButton } from 'material-ui';
-import GitHubIcon from '../../../res/github-icon.png';
 import cookie from 'react-cookie'
+import GitHubIcon from '../../../res/github-icon.png';
 
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID
 const GITHUB_URL = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}`
