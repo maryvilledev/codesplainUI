@@ -12,10 +12,12 @@ const styles = {
   },
 }
 
-/**
- * A simple example of `AppBar` with an icon on the right.
- * By default, the left icon is a navigation-menu.
- */
+/*
+<CodesplainAppBar /> renders as the banner located at the top of the screen. It 
+contains the text "Codesplain" on the far left, and either <AppMenu /> or
+<LoginButton /> components on its right, depending on whether or not the user
+has signed in with GitHub.
+*/
 class CodesplainAppBar extends React.Component {
   constructor(props) {
     super(props);
@@ -31,6 +33,9 @@ class CodesplainAppBar extends React.Component {
   }
 
   render() {
+    const rightElement = this.state.isLoggedIn ?
+                            <AppMenu onSignOut={this.handleSignOut} /> :
+                            <LoginButton />
     return (
       <AppBar
         showMenuIconButton={false}
@@ -40,11 +45,7 @@ class CodesplainAppBar extends React.Component {
           browserHistory.push('/');
           location.reload();
         }}
-        iconElementRight={ 
-          this.state.isLoggedIn ?
-          <AppMenu onSignOut={this.handleSignOut} /> :
-          <LoginButton />
-        }
+        iconElementRight={rightElement}
       />
     );
   }

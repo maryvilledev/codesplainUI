@@ -17,6 +17,11 @@ const styles = {
   },
 }
 
+/*
+<LoginButton /> renders as white clickable "LOG IN" text, with a white octocat
+icon to its left. When clicked, the button sends the user to the GitHub OAuth 
+authorization URL, where the client ID is set to the CLIENT_ID env var.
+*/
 const LoginButton = () => (
   <FlatButton 
     href={GITHUB_URL}
