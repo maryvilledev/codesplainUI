@@ -1,20 +1,21 @@
-import React from 'react'
-import ReactTestUtils from 'react-addons-test-utils';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import React from 'react';
+import { shallow } from 'enzyme';
+import { shallowToJson } from 'enzyme-to-json';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import LineSnippet from '../../src/components/LineSnippet';
 
 describe('<LanguageSelector />', () => {
+  const muiTheme = getMuiTheme();
+  const shallowWithContext = (node) => shallow(node, { context: { muiTheme } });
+
   it('matches snapshot', () => {
-    const renderer = ReactTestUtils.createRenderer();
-    const tree = renderer.render(
-      <MuiThemeProvider>
-        <LineSnippet
-          lineNumber={1}
-          value={'foo bar baz'}
-        />
-      </MuiThemeProvider>
+    const wrapper = shallowWithContext(
+      <LineSnippet
+        lineNumber={1}
+        value={'foo bar baz'}
+      />
     );
-    expect(tree).toMatchSnapshot();
-  })
+    expect(shallowToJson(wrapper)).toMatchSnapshot();
+  });
 })

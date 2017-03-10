@@ -3,16 +3,32 @@ import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
-import SaveButton from '../../src/components/SaveButton';
+import RulesSelector from '../../src/components/RulesSelector';
 
-describe('<SaveButton />', () => {
+jest.mock('material-ui/Checkbox')
+
+const mockFilters = {
+  'for_stmt': {
+    prettyTokenName: 'For Loops',
+    count: 1,
+    selected: false
+  },
+  'atom': {
+    prettyTokenName: 'Atoms',
+    count: 21,
+    selected: true
+  }
+}
+
+describe('<RulesSelector />', () => {
   const muiTheme = getMuiTheme();
   const shallowWithContext = (node) => shallow(node, { context: { muiTheme } });
 
   it('matches snapshot', () => {
     const wrapper = shallowWithContext(
-      <SaveButton
-        onSaveClick={jest.fn()}
+      <RulesSelector
+        filters={mockFilters}
+        onRuleSelected={jest.fn()}
       />
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();

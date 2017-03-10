@@ -3,18 +3,24 @@ import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
-import SaveButton from '../../src/components/SaveButton';
+import AnnotationEditor from '../../src/components/AnnotationEditor';
 
-describe('<SaveButton />', () => {
+const mockFunctionProps = {
+  closeAnnotation: jest.fn(),
+  saveAnnotation: jest.fn(),
+};
+
+describe('<AnnotationEditor />', () => {
   const muiTheme = getMuiTheme();
   const shallowWithContext = (node) => shallow(node, { context: { muiTheme } });
 
   it('matches snapshot', () => {
     const wrapper = shallowWithContext(
-      <SaveButton
-        onSaveClick={jest.fn()}
+      <AnnotationEditor
+        annotation={'some annotation'}
+        {...mockFunctionProps}
       />
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
-  })
-})
+  });
+});

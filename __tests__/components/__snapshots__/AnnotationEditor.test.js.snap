@@ -1,0 +1,47 @@
+exports[`<AnnotationEditor /> matches snapshot 1`] = `
+<div>
+  <Tabs
+    initialSelectedIndex={0}
+    onChange={[Function]}>
+    <Tab
+      label="Write"
+      onActive={[Function]}>
+      <TextField
+        autoFocus={true}
+        disabled={false}
+        floatingLabelFixed={false}
+        floatingLabelText="Annotation"
+        fullWidth={true}
+        hintText="Enter your annotation here"
+        multiLine={true}
+        name="annotationEditor"
+        onChange={[Function]}
+        rows={4}
+        type="text"
+        underlineShow={true}
+        value="some annotation" />
+    </Tab>
+    <Tab
+      label="Preview">
+      <MarkdownRenderer
+        markdown="some annotation" />
+    </Tab>
+  </Tabs>
+  <RaisedButton
+    disabled={false}
+    fullWidth={false}
+    label="Cancel"
+    labelPosition="after"
+    onTouchTap={[Function]}
+    primary={false}
+    secondary={true} />
+  <RaisedButton
+    disabled={false}
+    fullWidth={false}
+    label="Save"
+    labelPosition="after"
+    onTouchTap={[Function]}
+    primary={true}
+    secondary={false} />
+</div>
+`;

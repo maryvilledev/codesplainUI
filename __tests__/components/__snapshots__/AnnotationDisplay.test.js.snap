@@ -1,0 +1,22 @@
+exports[`<AnnotationDisplay /> matches snapshot 1`] = `
+<div>
+  <MarkdownRenderer
+    markdown="some annotation" />
+  <RaisedButton
+    disabled={false}
+    fullWidth={false}
+    label="Close"
+    labelPosition="after"
+    onTouchTap={[Function]}
+    primary={false}
+    secondary={true} />
+  <RaisedButton
+    disabled={false}
+    fullWidth={false}
+    label="Edit"
+    labelPosition="after"
+    onTouchTap={[Function]}
+    primary={true}
+    secondary={false} />
+</div>
+`;

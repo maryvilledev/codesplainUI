@@ -1,5 +1,14 @@
 exports[`<LanguageSelector /> matches snapshot 1`] = `
-<LineSnippet
-  lineNumber={1}
+<CodeMirror
+  options={
+    Object {
+      "cursorBlinkRate": -1,
+      "firstLineNumber": 1,
+      "lineNumbers": true,
+      "readOnly": true,
+      "theme": "codesplain",
+    }
+  }
+  preserveScrollPosition={false}
   value="foo bar baz" />
 `;
