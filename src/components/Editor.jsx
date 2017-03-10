@@ -129,7 +129,7 @@ class Editor extends React.Component {
         this.setState({ prevSnippet: snippet });
         this.props.onParserRun(AST, newFilters);
       }
-      // console.log(this.props.AST);
+
       if (this.props.value) {
         highlight(this.codeMirror.getCodeMirror(), this.props.AST, this.props.filters);
       }

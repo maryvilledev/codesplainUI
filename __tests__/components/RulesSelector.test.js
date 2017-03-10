@@ -32,5 +32,18 @@ describe('<RulesSelector />', () => {
       />
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
-  })
-})
+  });
+
+  describe('prop: filters', () => {
+    it('renders ListItems for each filter', () => {
+      const wrapper = shallowWithContext(
+        <RulesSelector
+          filters={mockFilters}
+          onRuleSelected={jest.fn()}
+        />
+      );
+      const listItems = wrapper.find('ListItem');
+      expect(listItems.length).toEqual(Object.keys(mockFilters).length);
+    });
+  });
+});

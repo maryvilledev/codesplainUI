@@ -19,12 +19,12 @@ exports[`<AnnotationEditor /> matches snapshot 1`] = `
         rows={4}
         type="text"
         underlineShow={true}
-        value="some annotation" />
+        value="" />
     </Tab>
     <Tab
       label="Preview">
       <MarkdownRenderer
-        markdown="some annotation" />
+        markdown="" />
     </Tab>
   </Tabs>
   <RaisedButton
@@ -36,7 +36,7 @@ exports[`<AnnotationEditor /> matches snapshot 1`] = `
     primary={false}
     secondary={true} />
   <RaisedButton
-    disabled={false}
+    disabled={true}
     fullWidth={false}
     label="Save"
     labelPosition="after"

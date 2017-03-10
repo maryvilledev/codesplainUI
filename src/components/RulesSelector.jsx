@@ -1,7 +1,10 @@
 import React, { PropTypes } from 'react';
-import { List, ListItem } from 'material-ui/List';
-import Subheader from 'material-ui/Subheader';
 import Checkbox from 'material-ui/Checkbox';
+import {
+  List,
+  ListItem
+} from 'material-ui/List';
+import Subheader from 'material-ui/Subheader';
 
 const style = {
   list: {

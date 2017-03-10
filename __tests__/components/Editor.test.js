@@ -28,4 +28,21 @@ describe('<Editor />', () => {
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
+
+  describe('prop: value', () => {
+    it('forwarded to the CodeMirror instance', () => {
+      const snippetContents = "What up, my glib globs!";
+      const wrapper = shallowWithContext(
+        <Editor
+          AST={{}}
+          filters={{}}
+          markedLines={[]}
+          readOnly={false}
+          value={snippetContents}
+          {...mockFunctionProps}
+        />
+      );
+      expect(wrapper.find('CodeMirror').prop('value')).toEqual(snippetContents);
+    });
+  });
 });

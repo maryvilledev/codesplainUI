@@ -18,4 +18,30 @@ describe('<LanguageSelector />', () => {
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
+
+  describe('prop: value', () => {
+    it('is passed to the CodeMirror instance', () => {
+      const annotation = 'Wubba lubba dub dub!';
+      const wrapper = shallowWithContext(
+        <LineSnippet
+          lineNumber={1}
+          value={annotation}
+        />
+      );
+      expect(wrapper.find('CodeMirror').prop('value')).toEqual(annotation);
+    });
+  });
+  describe('prop: lineNumber', () => {
+    it('is passed to the firstLineNumber option', () => {
+      const lineNumber = 0;
+      const annotation = 'Wubba lubba dub dub!';
+      const wrapper = shallowWithContext(
+        <LineSnippet
+          lineNumber={lineNumber}
+          value={annotation}
+        />
+      );
+      expect(wrapper.find('CodeMirror').prop('options').firstLineNumber).toEqual(lineNumber);
+    });
+  });
 })

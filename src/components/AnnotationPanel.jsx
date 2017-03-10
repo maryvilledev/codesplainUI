@@ -8,7 +8,7 @@ class AnnotationPanel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isEditing: props.annotation.length === 0,
+      isEditing: true,
     };
     this.handleSaveAnnotation = this.handleSaveAnnotation.bind(this);
     this.toggleEditState = this.toggleEditState.bind(this);
@@ -35,6 +35,9 @@ class AnnotationPanel extends React.Component {
       },
     } = this.props;
     const { isEditing } = this.state;
+    // AnnotationEditor should be rendered in two cases:
+    // 1. When the annotation is empty
+    // 2. When the state is explicitly set to edit mode
     const shouldRenderEditor = annotation.length === 0 || isEditing;
     return (
       <div>

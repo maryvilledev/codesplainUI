@@ -21,7 +21,7 @@ describe('<Annotations />', () => {
     />
   )
   it('saves the annotation on handleSaveAnnotation', () => {
-    const newAnnotation = "They're bureaucrats!"
+    const newAnnotation = "They're bureaucrats!";
     const expected = {
       annotation: newAnnotation,
       ...mockSnippetInformation

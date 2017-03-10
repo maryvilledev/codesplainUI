@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
 
 import IconButton from 'material-ui/IconButton';
-import LockOpen from 'material-ui/svg-icons/action/lock-open';
 import Lock from 'material-ui/svg-icons/action/lock';
+import LockOpen from 'material-ui/svg-icons/action/lock-open';
 
 const style = {
   zIndex: 5,

@@ -23,4 +23,17 @@ describe('<AnnotationDisplay />', () => {
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
+
+  describe('prop: annotation', () => {
+    it('is rendered into a MarkdownRenderer', () => {
+      const annotation = 'Wubba lubba dub dub!';
+      const wrapper = shallowWithContext(
+        <AnnotationDisplay
+          annotation={annotation}
+          {...mockFunctionProps}
+        />
+      );
+      expect(wrapper.find('MarkdownRenderer').prop('markdown')).toEqual(annotation);
+    });
+  });
 });
