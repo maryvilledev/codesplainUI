@@ -1,74 +1,73 @@
 import React, { PropTypes } from 'react';
 
-import { Card, CardText } from 'material-ui/Card';
-import { Tabs, Tab } from 'material-ui/Tabs';
-
 import AnnotationDisplay from './AnnotationDisplay';
 import AnnotationEditor from './AnnotationEditor';
-
-const AnnotationSection = ({ displayStatus, displayProps, prompt }) => {
-  switch (displayStatus) {
-  case 'none': {
-    return (
-      <CardText>{prompt}</CardText>
-    );
-  }
-  case 'display': {
-    return (
-      <AnnotationDisplay
-        {...displayProps}
-      />
-    );
-  }
-  case 'create': {
-    return (
-      <AnnotationEditor
-        {...displayProps}
-      />
-    );
-  }
-  default: {
-    return null;
-  }
-  }
-}
+import LineSnippet from './LineSnippet';
 
 class AnnotationPanel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isEditing: false,
+      isEditing: props.annotation.length === 0,
     };
+    this.handleSaveAnnotation = this.handleSaveAnnotation.bind(this);
+    this.toggleEditState = this.toggleEditState.bind(this);
   }
 
-  renderAnnotationComponent() {
-    if (this.state.isEditing) {
-      return (
-        <AnnotationEditor
+  handleSaveAnnotation(annotation) {
+    this.props.saveAnnotation(annotation);
+    this.toggleEditState();
+  }
 
-        />
-      );
-    }
-    return (
-      <AnnotationDisplay
-
-      />
-    )
+  toggleEditState() {
+    this.setState({
+      isEditing: !this.state.isEditing,
+    });
   }
 
   render() {
+    const {
+      annotation,
+      closeAnnotation,
+      snippetInformation: {
+        lineNumber,
+        lineText,
+      },
+    } = this.props;
+    const { isEditing } = this.state;
+    const shouldRenderEditor = annotation.length === 0 || isEditing;
     return (
       <div>
-
+        <LineSnippet
+          lineNumber={lineNumber + 1}
+          value={lineText}
+        />
+        { shouldRenderEditor ?
+          <AnnotationEditor
+            annotation={annotation}
+            closeAnnotation={closeAnnotation}
+            saveAnnotation={this.handleSaveAnnotation}
+          /> :
+          <AnnotationDisplay
+            annotation={annotation}
+            closeAnnotation={closeAnnotation}
+            editAnnotation={this.toggleEditState}
+          />
+        }
       </div>
     );
   }
+
 }
 
 AnnotationPanel.propTypes = {
-  displayStatus: PropTypes.string.isRequired,
-  displayProps: PropTypes.object.isRequired,
-  prompt: PropTypes.string.isRequired,
+  annotation: PropTypes.string.isRequired,
+  closeAnnotation: PropTypes.func.isRequired,
+  saveAnnotation: PropTypes.func.isRequired,
+  snippetInformation: PropTypes.shape({
+    lineNumber: PropTypes.number.isRequired,
+    lineText: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default AnnotationPanel;
