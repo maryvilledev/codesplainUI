@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import cookie from 'react-cookie'
-import { CircularProgress } from 'material-ui'
+import { CircularProgress, Dialog, FlatButton } from 'material-ui'
 
 /*
 <Auth /> is the component that is rendered for the '{{url}}/auth' endpoint (which
@@ -31,24 +31,51 @@ class Auth extends React.Component {
       .catch((err) => {
         // Something went wrong ;(
         console.error(err);
-        this.setState({ waiting: false });
+        this.setState({ waiting: false, error: true });
       });
+  }
 
-    // Load the URL to redirect user to
+  redirectUser() {
+    // Load the URL to redirect user to, default to the
+    // home page if non exists
     const signInRedirect = cookie.load('signInRedirect');
     if (signInRedirect)
-      this.setState({ signInRedirect });
+      window.location = signInRedirect;
     else
-      this.setState({ signInRedirect: '/' });
+      window.location = '/';
   }
 
   render() {
     // Conditionally render a <CircularProgress /> or redirect user, depending
     // on whether the backend has responded yet
-    if (this.state.waiting)
+    if (this.state.waiting) {
       return <CircularProgress size={100} thickness={7} />
-    else
-      window.location = this.state.signInRedirect;
+    } else {
+      // We're done waiting, now render an alert if
+      // the login attempt failed
+      if (this.state.error) {
+        return (
+          <Dialog 
+            actions={
+              <FlatButton
+                label="OK"
+                primary={true}
+                onTouchTap={this.redirectUser}
+              />
+            }
+            modal={false}
+            open={true}
+            onRequestClose={this.redirectUser}
+          >
+            Failed to login with GitHub, sorry.
+          </Dialog>
+        );
+      } else {
+        // Otherwise, it succeeded, so just redirect the user
+        this.redirectUser();
+        return null;
+      }
+    }
   }
 }
 
