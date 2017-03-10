@@ -74,7 +74,6 @@ class Auth extends React.Component {
       if (this.state.error) {
         return (
           <Alert
-            isError={true}
             text="Failed to login with GitHub, sorry."
             onClose={this.redirectUser}
           />

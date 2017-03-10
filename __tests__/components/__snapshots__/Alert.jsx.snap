@@ -14,10 +14,8 @@ exports[`<Alert /> matches the stored snapshot 1`] = `
       primary={true}
       secondary={false} />
   }
-  actionsContainerStyle={null}
   autoDetectWindowHeight={true}
   autoScrollBodyContent={false}
-  bodyStyle={null}
   modal={false}
   onRequestClose={undefined}
   open={true}
