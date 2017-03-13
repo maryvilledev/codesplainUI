@@ -15,14 +15,18 @@ class LineSnippet extends React.Component {
     cm.setSize('auto', 'auto');
   }
   render() {
+    const {
+      lineNumber,
+      value
+    } = this.props;
     const codeMirrorOptions = {
       ...baseOptions,
-      firstLineNumber: this.props.lineNumber,
+      firstLineNumber: lineNumber,
     };
     return (
       <CodeMirror
-        ref={cm => { this.codeMirror = cm; }}
-        value={this.props.value}
+        ref={(cm) => { this.codeMirror = cm; }}
+        value={value}
         options={codeMirrorOptions}
       />
     );
@@ -30,8 +34,8 @@ class LineSnippet extends React.Component {
 }
 
 LineSnippet.propTypes = {
-  value: PropTypes.string.isRequired,
   lineNumber: PropTypes.number.isRequired,
+  value: PropTypes.string.isRequired,
 };
 
 export default LineSnippet;
