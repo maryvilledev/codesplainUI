@@ -3,28 +3,34 @@ import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
-import LockButton from '../../src/components/LockButton';
+import ConfirmLockDialog from '../../src/components/ConfirmLockDialog';
 
-describe('LockButton />', () => {
+const mockFunctionProps = {
+  accept: jest.fn(),
+  reject: jest.fn(),
+};
+
+describe('<ConfirmLockDialog />', () => {
   const muiTheme = getMuiTheme();
   const shallowWithContext = (node) => shallow(node, { context: { muiTheme } });
 
-  it('matches snapshot of when the app is not in read-only mode', () => {
+  it('matches snapshot when it is open', () => {
     const wrapper = shallowWithContext(
-      <LockButton
-        onClick={jest.fn()}
-        readOnly={false}
+      <ConfirmLockDialog
+        isOpen={true}
+        {...mockFunctionProps}
       />
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
-  it('matches snapshot of when the app is in read-only mode', () => {
+
+  it('matches snapshot when it is closed', () => {
     const wrapper = shallowWithContext(
-      <LockButton
-        onClick={jest.fn()}
-        readOnly={true}
+      <ConfirmLockDialog
+        isOpen={false}
+        {...mockFunctionProps}
       />
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
-})
+});

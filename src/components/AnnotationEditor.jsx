@@ -1,10 +1,8 @@
 import React, { PropTypes } from 'react';
 import MarkdownRenderer from 'react-markdown-renderer';
-import RaisedButton from 'material-ui/RaisedButton';
 import { Tab, Tabs } from 'material-ui/Tabs';
 import TextField from 'material-ui/TextField';
-
-import LineSnippet from './LineSnippet';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class AnnotationEditor extends React.Component {
   constructor(props) {
@@ -12,8 +10,8 @@ class AnnotationEditor extends React.Component {
     this.state = {
       annotation: this.props.annotation,
     };
-    this.clearAnnotation = this.clearAnnotation.bind(this);
     this.onAnnotationChange = this.onAnnotationChange.bind(this);
+    this.clearAnnotation = this.clearAnnotation.bind(this);
     this.saveAnnotation = this.saveAnnotation.bind(this);
   }
 
@@ -30,42 +28,36 @@ class AnnotationEditor extends React.Component {
 
   saveAnnotation() {
     const { annotation } = this.state;
-    this.props.saveAnnotation(this.props.lineNumber, this.props.lineText, annotation);
+    this.props.saveAnnotation(annotation);
   }
 
   render() {
-
     return (
       <div>
-        <LineSnippet
-          lineNumber={this.props.lineNumber + 1}
-          value={this.props.lineText}
-        />
-      <Tabs>
-        <Tab
-          onActive={() => { this.textField.focus() }}
-          label="Write"
-        >
-          <TextField
-            autoFocus
-            name="annotationEditor"
-            floatingLabelText="Annotation"
-            fullWidth={true}
-            hintText="Enter your annotation here"
-            multiLine={true}
-            onChange={this.onAnnotationChange}
-            ref={textField => this.textField = textField}
-            rows={4}
-            value={this.state.annotation}
-          />
-        </Tab>
-        <Tab label="Preview">
-          <MarkdownRenderer
-            markdown={this.state.annotation}
-          />
-        </Tab>
-      </Tabs>
-
+        <Tabs>
+          <Tab
+            onActive={() => { this.textField.focus(); }}
+            label="Write"
+          >
+            <TextField
+              autoFocus
+              name="annotationEditor"
+              floatingLabelText="Annotation"
+              fullWidth
+              hintText="Enter your annotation here"
+              multiLine
+              onChange={this.onAnnotationChange}
+              ref={(textField) => { this.textField = textField; }}
+              rows={4}
+              value={this.state.annotation}
+            />
+          </Tab>
+          <Tab label="Preview">
+            <MarkdownRenderer
+              markdown={this.state.annotation}
+            />
+          </Tab>
+        </Tabs>
         <RaisedButton
           label="Cancel"
           secondary
@@ -74,7 +66,7 @@ class AnnotationEditor extends React.Component {
         <RaisedButton
           label="Save"
           primary
-          disabled={ !Boolean(this.state.annotation) }
+          disabled={!this.state.annotation}
           onTouchTap={this.saveAnnotation}
         />
       </div>
@@ -84,13 +76,11 @@ class AnnotationEditor extends React.Component {
 
 AnnotationEditor.defaultProps = {
   annotation: '',
-}
+};
 
 AnnotationEditor.propTypes = {
   annotation: PropTypes.string,
   closeAnnotation: PropTypes.func.isRequired,
-  lineNumber: PropTypes.number.isRequired,
-  lineText: PropTypes.string.isRequired,
   saveAnnotation: PropTypes.func.isRequired,
 };
 

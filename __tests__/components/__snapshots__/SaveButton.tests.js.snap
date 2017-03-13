@@ -1,4 +1,4 @@
-exports[`SaveButton /> matches snapshot 1`] = `
+exports[`<SaveButton /> matches snapshot 1`] = `
 <div>
   <IconButton
     disableTouchRipple={false}
