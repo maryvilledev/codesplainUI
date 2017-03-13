@@ -1,29 +1,29 @@
 /* Object mapping token types to pretty names and colors for display */
 export const rules = {
-  'for_stmt': { prettyName: 'For Loops',     color: '#F7ABAB' },      
-  'if_stmt':  { prettyName: 'If Statements', color: '#FFFF00' },
-  'number':   { prettyName: 'Numbers',       color: '#DEA5A4' },
-  'expr':     { prettyName: 'Expressions',   color: '#F0ABF7' },
-  'str':      { prettyName: 'Strings',       color: '#CAABF7' },
-  'atom':     { prettyName: 'Atoms',         color: '#ABDBF7' },
-  'argument': { prettyName: 'Arguments',     color: '#EAF7AB' },
-  'integer':  { prettyName: 'Integers',      color: '#ABF7C6' },
+  'arith_expr':   { prettyName: 'Arithmetic Expression', color: '#FFA500' },
   'and_expr': { prettyName: 'And',           color: '#F0E68C' },
-  'try_stmt': { prettyName: 'Try Statements',       color: '#966FD6' },
   'arglist':  { prettyName: 'Argument Lists',       color: '#F7CDAB' },
-  'funcdef':  { prettyName: 'Function Definitions', color: '#AEC6CF' },
+  'argument': { prettyName: 'Arguments',     color: '#EAF7AB' },
+  'atom':     { prettyName: 'Atoms',         color: '#ABDBF7' },
+  'augassign':   { prettyName: 'Augmented Assignment',  color: '#00ffff' },
   'classdef': { prettyName: 'Class Definitions',    color: '#03C03C' },
   'comp_op':  { prettyName: 'Comparison Operator',  color: '#DAA520' },
-  'augassign':   { prettyName: 'Augmented Assignment',  color: '#00ffff' },
-  'import_name': { prettyName: 'Import Statement',      color: '#FF6666' },
-  'return_stmt': { prettyName: 'Return Statement',      color: '#966FD6' },
-  'while_stmt':  { prettyName: 'While Loops',           color: '#F0E68C' },
-  'pass_stmt':   { prettyName: 'Pass Statements',       color: '#FDFD96' },
-  'expr_stmt':   { prettyName: 'Expression Statements', color: '#BEDA0B' },
-  'aith_expr':   { prettyName: 'Arithmetic Expression', color: '#FFA500' },
-  'parameters':  { prettyName: 'Parameters',            color: '#FFB347' },
   'dictorsetmaker': { prettyName: 'Dictionary',     color: '#00FF7F' },
   'except_clause':  { prettyName: 'Except Clauses', color: '#779ECB' },
+  'expr_stmt':   { prettyName: 'Expression Statements', color: '#BEDA0B' },
+  'expr':     { prettyName: 'Expressions',   color: '#F0ABF7' },
+  'for_stmt': { prettyName: 'For Loops',     color: '#F7ABAB' },
+  'funcdef':  { prettyName: 'Function Definitions', color: '#AEC6CF' },
+  'if_stmt':  { prettyName: 'If Statements', color: '#FFFF00' },
+  'import_name': { prettyName: 'Import Statement',      color: '#FF6666' },
+  'integer':  { prettyName: 'Integers',      color: '#ABF7C6' },
+  'number':   { prettyName: 'Numbers',       color: '#DEA5A4' },
+  'parameters':  { prettyName: 'Parameters',            color: '#FFB347' },
+  'pass_stmt':   { prettyName: 'Pass Statements',       color: '#FDFD96' },
+  'return_stmt': { prettyName: 'Return Statement',      color: '#966FD6' },
+  'str':      { prettyName: 'Strings',       color: '#CAABF7' },
+  'try_stmt': { prettyName: 'Try Statements',       color: '#966FD6' },
+  'while_stmt':  { prettyName: 'While Loops',           color: '#F0E68C' },
 }
 
 /* Array of rules produced by parser, but ignored by the UI layer */
@@ -37,8 +37,8 @@ export const ignoredRules = [
   'testlist_comp',
 ]
 
-/* 
-Given an AST getRuleCount() recursively populates the specified map with 
+/*
+Given an AST getRuleCount() recursively populates the specified map with
 each token type's occurence count in the AST.
 */
 export function getRuleCount(node, map) {
