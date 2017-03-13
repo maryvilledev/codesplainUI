@@ -26,7 +26,6 @@ export default class SaveButton extends React.Component {
         browserHistory.push(`/${id}`);
         this.setState({ message: 'Codesplaination saved!' });
       }, (err) => {
-        console.error(err);
         this.setState({ message: 'Error saving snippet data' });
       });
   }

@@ -1,4 +1,4 @@
-exports[`LockButton /> matches snapshot of when the app is in read-only mode 1`] = `
+exports[`<LockButton /> matches snapshot of when the app is in read-only mode 1`] = `
 <IconButton
   disableTouchRipple={false}
   disabled={true}
@@ -17,7 +17,7 @@ exports[`LockButton /> matches snapshot of when the app is in read-only mode 1`]
 </IconButton>
 `;
 
-exports[`LockButton /> matches snapshot of when the app is not in read-only mode 1`] = `
+exports[`<LockButton /> matches snapshot of when the app is not in read-only mode 1`] = `
 <IconButton
   disableTouchRipple={false}
   disabled={false}

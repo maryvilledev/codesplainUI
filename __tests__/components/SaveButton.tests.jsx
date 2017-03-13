@@ -16,5 +16,5 @@ describe('<SaveButton />', () => {
       />
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
-  })
-})
+  });
+});

@@ -1,6 +1,7 @@
-exports[`<LoginButton /> matches the stored snapshot 1`] = `
+exports[`<LoginButton /> matches snapshot 1`] = `
 <FlatButton
   disabled={false}
+  fullWidth={false}
   href="dummy-link"
   label={
     <span
