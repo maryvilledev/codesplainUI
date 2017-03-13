@@ -1,11 +1,10 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { CardText, TextField } from 'material-ui';
+import { CardText, TextField, Snackbar } from 'material-ui';
 import { browserHistory } from 'react-router'
 
 import {
-  setID,
   setAST,
   setRuleFilters,
   setSnippetContents,
@@ -37,8 +36,11 @@ export class SnippetArea extends React.Component {
     super(props);
     this.state = {
       lockDialogOpen: false,
+      showSnackbar: false,
+      snackbarMessage: '',
     };
 
+    this.showSnackbar = this.showSnackbar.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
     this.handleGutterClick = this.handleGutterClick.bind(this);
     this.handleLock = this.handleLock.bind(this);
@@ -48,6 +50,13 @@ export class SnippetArea extends React.Component {
     this.handleSnippetChanged = this.handleSnippetChanged.bind(this);
     this.handleTitleChanged = this.handleTitleChanged.bind(this);
     this.handleToggleReadOnly = this.handleToggleReadOnly.bind(this);
+  }
+
+  showSnackbar( message ) {
+    this.setState({ 
+      showSnackbar: true, 
+      snackbarMessage: message
+    })
   }
 
   handleSnippetChanged(snippetContents) {
@@ -86,20 +95,20 @@ export class SnippetArea extends React.Component {
     if (id) {
       axios.post(`/api/snippets/${id}`, { json: stateString })
         .then(res => {
-          this.setState({ message: 'Codesplaination saved!' });
+          this.showSnackbar('Codesplaination Saved!');
         }, err => {
           console.error(err);
-          this.setState({ message: 'error saving snippet data' });
+          this.showSnackbar('Failed to save - an error occurred');
         })
     }
     else {
       axios.post(`/api/snippets`, { json: stateString })
         .then((res) => {
           browserHistory.push(`/${res.data.id}`);
-          this.setState({ message: 'Codesplaination saved!' });
+          this.showSnackbar('Codesplaination Saved!');
         }, (err) => {
           console.error(err);
-          this.setState({ message: 'Error saving snippet data' });
+          this.showSnackbar('Failed to save - an error occurred');
         });
     }
   }
@@ -110,10 +119,10 @@ export class SnippetArea extends React.Component {
     axios.post(`/api/snippets`, { json: stateString })
       .then((res) => {
         browserHistory.push(`/${res.data.id}`);
-        this.setState({ message: 'Codesplaination saved!' });
+        this.showSnackbar('Codesplaination saved under new ID!');
       }, (err) => {
         console.error(err);
-        this.setState({ message: 'Error saving snippet data' });
+        this.showSnackbar('Failed to save - an error occurred');
       });
   }
 
@@ -175,6 +184,12 @@ export class SnippetArea extends React.Component {
         <SaveOptions
           onSaveClick={this.handleSave}
           onSaveAsClick={this.handleSaveAs}
+        />
+        <Snackbar
+          open={this.state.showSnackbar}
+          message={this.state.snackbarMessage}
+          autoHideDuration={3000}
+          onRequestClose={() => this.setState({ showSnackbar: false })}
         />
       </CardText>
     );
