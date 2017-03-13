@@ -111,7 +111,6 @@ class Editor extends React.Component {
         // Get an array mapping token types to their occurence count
         const ruleCount = {};
         getRuleCount(AST, ruleCount);
-        console.log(ruleCount)
 
         // Generate array of strings containing pretty token name and its count
        const filters = this.props.filters;

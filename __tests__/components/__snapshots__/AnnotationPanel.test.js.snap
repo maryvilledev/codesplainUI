@@ -3,10 +3,10 @@ exports[`<AnnotationPanel /> snapshot tests matches snapshot when an annotation 
   <LineSnippet
     lineNumber={1}
     value="True" />
-  <AnnotationEditor
+  <AnnotationDisplay
     annotation="Wubba lubba dub dub!"
     closeAnnotation={[Function]}
-    saveAnnotation={[Function]} />
+    editAnnotation={[Function]} />
 </div>
 `;
 

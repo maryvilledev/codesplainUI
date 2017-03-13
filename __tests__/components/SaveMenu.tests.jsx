@@ -17,5 +17,5 @@ describe('<SaveMenu />', () => {
       />
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
-  })
-})
+  });
+});

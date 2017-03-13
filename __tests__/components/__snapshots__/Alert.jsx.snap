@@ -1,4 +1,4 @@
-exports[`<Alert /> matches the stored snapshot 1`] = `
+exports[`<Alert /> matches snapshot 1`] = `
 <Dialog
   actions={
     <FlatButton
@@ -11,14 +11,12 @@ exports[`<Alert /> matches the stored snapshot 1`] = `
       onMouseEnter={[Function]}
       onMouseLeave={[Function]}
       onTouchStart={[Function]}
-      onTouchTap={undefined}
       primary={true}
       secondary={false} />
   }
   autoDetectWindowHeight={true}
   autoScrollBodyContent={false}
   modal={false}
-  onRequestClose={undefined}
   open={true}
   repositionOnUpdate={true} />
 `;

@@ -1,4 +1,4 @@
-exports[`<Auth /> matches the stored snapshot 1`] = `
+exports[`<Auth /> matches snapshot 1`] = `
 <Loading
   text="Logging in..." />
 `;
