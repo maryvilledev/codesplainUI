@@ -1,5 +1,6 @@
 exports[`<CodesplainAppBar /> matches snapshot 1`] = `
 <AppBar
+  iconElementRight={<LoginButton />}
   onTitleTouchTap={[Function]}
   showMenuIconButton={false}
   style={

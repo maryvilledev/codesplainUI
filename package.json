@@ -20,6 +20,7 @@
     "react": "^15.4.2",
     "react-addons-test-utils": "^15.4.2",
     "react-codemirror": "^0.3.0",
+    "react-cookie": "^1.0.4",
     "react-dom": "^15.4.2",
     "react-markdown-renderer": "^1.2.0",
     "react-redux": "^5.0.3",

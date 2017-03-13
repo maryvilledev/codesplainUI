@@ -1,0 +1,23 @@
+exports[`<Alert /> matches the stored snapshot 1`] = `
+<Dialog
+  actions={
+    <FlatButton
+      disabled={false}
+      label="OK"
+      labelPosition="after"
+      labelStyle={Object {}}
+      onKeyboardFocus={[Function]}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      onTouchStart={[Function]}
+      onTouchTap={undefined}
+      primary={true}
+      secondary={false} />
+  }
+  autoDetectWindowHeight={true}
+  autoScrollBodyContent={false}
+  modal={false}
+  onRequestClose={undefined}
+  open={true}
+  repositionOnUpdate={true} />
+`;
