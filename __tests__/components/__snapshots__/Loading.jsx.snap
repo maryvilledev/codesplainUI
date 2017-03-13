@@ -1,4 +1,4 @@
-exports[`<Loading /> matches the stored snapshot 1`] = `
+exports[`<Loading /> matches snapshot 1`] = `
 <div
   style={
     Object {

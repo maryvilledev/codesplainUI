@@ -5,7 +5,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import LockButton from '../../src/components/buttons/LockButton';
 
-describe('LockButton />', () => {
+describe('<LockButton />', () => {
   const muiTheme = getMuiTheme();
   const shallowWithContext = (node) => shallow(node, { context: { muiTheme } });
 

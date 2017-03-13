@@ -1,14 +1,18 @@
 import React from 'react';
-import ReactTestUtils from 'react-addons-test-utils';
+import { shallow } from 'enzyme';
+import { shallowToJson } from 'enzyme-to-json';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import Alert from '../../src/components/Alert';
 
 describe('<Alert />', () => {
-  it('matches the stored snapshot', () => {
-    const renderer = ReactTestUtils.createRenderer();
-    const tree = renderer.render(
+  const muiTheme = getMuiTheme();
+  const shallowWithContext = (node) => shallow(node, { context: { muiTheme } });
+
+  it('matches snapshot', () => {
+    const wrapper = shallowWithContext(
       <Alert />
     );
-    expect(tree).toMatchSnapshot();
+    expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 });
