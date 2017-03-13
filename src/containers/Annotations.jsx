@@ -68,8 +68,8 @@ Annotations.propTypes = {
   isDisplayingAnnotation: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
   snippetInformation: PropTypes.shape({
-    lineNumber: PropTypes.number.isRequired,
-    lineText: PropTypes.string.isRequired,
+    lineNumber: PropTypes.number,
+    lineText: PropTypes.string,
   }).isRequired,
 };
 

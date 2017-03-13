@@ -8,10 +8,23 @@ class AnnotationPanel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isEditing: true,
+      isEditing: props.annotation.length === 0,
     };
     this.handleSaveAnnotation = this.handleSaveAnnotation.bind(this);
     this.toggleEditState = this.toggleEditState.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const {
+      snippetInformation: {
+        lineNumber
+      },
+    } = this.props
+    if (lineNumber !== nextProps.snippetInformation.lineNumber) {
+      this.setState({
+        isEditing: nextProps.annotation.length === 0,
+      });
+    }
   }
 
   handleSaveAnnotation(annotation) {
@@ -35,17 +48,13 @@ class AnnotationPanel extends React.Component {
       },
     } = this.props;
     const { isEditing } = this.state;
-    // AnnotationEditor should be rendered in two cases:
-    // 1. When the annotation is empty
-    // 2. When the state is explicitly set to edit mode
-    const shouldRenderEditor = annotation.length === 0 || isEditing;
     return (
       <div>
         <LineSnippet
           lineNumber={lineNumber + 1}
           value={lineText}
         />
-        { shouldRenderEditor ?
+      { isEditing ?
           <AnnotationEditor
             annotation={annotation}
             closeAnnotation={closeAnnotation}
@@ -68,8 +77,8 @@ AnnotationPanel.propTypes = {
   closeAnnotation: PropTypes.func.isRequired,
   saveAnnotation: PropTypes.func.isRequired,
   snippetInformation: PropTypes.shape({
-    lineNumber: PropTypes.number.isRequired,
-    lineText: PropTypes.string.isRequired,
+    lineNumber: PropTypes.number,
+    lineText: PropTypes.string,
   }).isRequired,
 };
 
