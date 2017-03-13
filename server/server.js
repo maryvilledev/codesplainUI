@@ -4,9 +4,23 @@ var Redis = require('ioredis')
 var path = require('path')
 var uuid = require('uuid/v4')
 var bodyParser = require('body-parser')
+var axios = require('axios')
 
 var _ = require('lodash');
 _.mixin(require('congruence'));
+
+function getGithubRequestConfig(code) {
+  var url = 'https://github.com/login/oauth/access_token';
+  var data = {
+    client_id: process.env.CLIENT_ID,
+    client_secret: process.env.CLIENT_SECRET,
+    code
+  };
+  var config = {
+    headers: {'Accept': 'application/json'}
+  }
+  return [url, data, config]
+}
 
 var app = express()
 var redis = Redis(process.env.REDIS_URL || "redis://localhost:6379")
@@ -39,6 +53,23 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(express.static(path.resolve(__dirname, "..", 'build')));
+
+app.post('/api/auth/', function(req, res) {
+  //Get the code from a ui
+  var code = req.body.code;
+  axios.post(...getGithubRequestConfig(code))
+    .then(function(response) {
+      var data = response.data
+      if(data.error) {
+        res.status(400).send("The authentication code is invalid")
+      } else {
+        res.json({token: data.access_token})
+      }
+    })
+    .catch(function(error) {
+      res.status(500).send(error)
+    })
+})
 
 app.post('/api/snippets/', function(req, res) {
   var id = uuid();

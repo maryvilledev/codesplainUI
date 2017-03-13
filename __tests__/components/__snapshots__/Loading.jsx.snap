@@ -1,0 +1,23 @@
+exports[`<Loading /> matches the stored snapshot 1`] = `
+<div
+  style={
+    Object {
+      "color": "#a6a6a6",
+      "fontSize": "15pt",
+      "left": "50%",
+      "marginLeft": "-50px",
+      "marginTop": "-100px",
+      "position": "fixed",
+      "top": "50%",
+    }
+  }>
+  <p />
+  <CircularProgress
+    max={100}
+    min={0}
+    mode="indeterminate"
+    size={100}
+    thickness={7}
+    value={0} />
+</div>
+`;

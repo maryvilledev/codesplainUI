@@ -15,10 +15,10 @@ import {
 } from '../actions/annotation';
 
 import Editor from '../components/Editor';
-import SaveButton from '../components/SaveButton';
+import SaveButton from '../components/buttons/SaveButton';
 
 import ConfirmLockDialog from '../components/ConfirmLockDialog';
-import LockButton from '../components/LockButton';
+import LockButton from '../components/buttons/LockButton';
 
 const style = {
   textField: {

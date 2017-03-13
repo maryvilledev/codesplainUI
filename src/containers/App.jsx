@@ -3,6 +3,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import AppBody from './AppBody';
+import Auth from '../components/Auth'
 import CodesplainAppBar from '../components/CodesplainAppBar';
 import { Router, Route, browserHistory } from 'react-router'
 
@@ -18,9 +19,13 @@ export class App extends Component {
         <AppBody {...props}/>
       </div>
     )
+    const auth = (props) => (
+        <Auth {...props}/>
+    )
     return (
       <MuiThemeProvider>
         <Router history={browserHistory}>
+          <Route path="/auth"  component={auth} />
           <Route path="/(:id)" component={component} />
         </Router>
       </MuiThemeProvider>

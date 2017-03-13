@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
-import LockButton from '../../src/components/LockButton';
+import LockButton from '../../src/components/buttons/LockButton';
 
 describe('LockButton />', () => {
   const muiTheme = getMuiTheme();
