@@ -8,7 +8,7 @@ const style = {
     padding: 0,
   },
   label: {
-    fontSize: '10pt',
+    fontSize: '8pt',
     lineHeight: 1,
     margin: 0,
   },

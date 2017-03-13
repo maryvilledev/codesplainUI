@@ -27,7 +27,7 @@ exports[`<RulesSelector /> matches snapshot 1`] = `
       labelPosition="right"
       labelStyle={
         Object {
-          "fontSize": "10pt",
+          "fontSize": "8pt",
           "lineHeight": 1,
           "margin": 0,
         }
@@ -49,7 +49,7 @@ exports[`<RulesSelector /> matches snapshot 1`] = `
       labelPosition="right"
       labelStyle={
         Object {
-          "fontSize": "10pt",
+          "fontSize": "8pt",
           "lineHeight": 1,
           "margin": 0,
         }
