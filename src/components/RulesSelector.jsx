@@ -7,32 +7,30 @@ import {
 import Subheader from 'material-ui/Subheader';
 
 const style = {
-  list: {
-    height: '20px',
-    fontSize: '13px',
-    paddingLeft: '30%',
-  },
   subheader: {
-    lineHeight: '',
-    paddingLeft: '',
+    lineHeight: 1,
+    padding: 0,
   },
-};
+  label: {
+    fontSize: '10pt',
+    lineHeight: 1,
+    margin: 0,
+  },
+  innerLabel: {
+    marginTop: '7px', //To match margin on checkbox
+  }
+}
 
 const makeListItems = (filters, onRuleSelected) => {
   const listItems = Object.keys(filters).map((filterName) => {
     const filter = filters[filterName];
     return (
-      <ListItem
-        style={style.list}
-        key={filterName}
-        leftCheckbox={
           <Checkbox
             checked={filter.selected}
             onCheck={() => onRuleSelected(filterName)}
+            labelStyle={style.label}
+            label={<div style={style.innerLabel}>{`${filter.prettyTokenName} (${filter.count})`}</div>}
           />
-        }
-        primaryText={`${filter.prettyTokenName} (${filter.count})`}
-      />
     );
   });
   return listItems;
@@ -41,12 +39,14 @@ const makeListItems = (filters, onRuleSelected) => {
 const RulesSelector = ({ filters, onRuleSelected }) => {
   const listItems = makeListItems(filters, onRuleSelected);
   return (
-    <List>
-      <Subheader style={style.subheader}>
-        Select a token type to highlight all occurences
-      </Subheader>
-      {listItems}
-    </List>
+  <div>
+    <Subheader style={style.subheader}>
+      Select a token type to highlight all occurences
+    </Subheader>
+      <div>
+        {listItems}
+      </div>
+  </div>
   );
 };
 
