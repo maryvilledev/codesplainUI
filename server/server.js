@@ -54,6 +54,16 @@ app.use(bodyParser.urlencoded({
 
 app.use(express.static(path.resolve(__dirname, "..", 'build')));
 
+function saveToRedis(id, req, res) {
+  var json = JSON.parse(req.body.json);
+  if (_.isObject(json) && _.congruent(requestTemplate, json)) {
+    redis.set(id, JSON.stringify(json));
+    res.json({id: id});
+  } else {
+    res.status(400).send('Invalid POST request body');
+  }
+}
+
 app.post('/api/auth/', function(req, res) {
   //Get the code from a ui
   var code = req.body.code;
@@ -73,13 +83,21 @@ app.post('/api/auth/', function(req, res) {
 
 app.post('/api/snippets/', function(req, res) {
   var id = uuid();
-  var json = JSON.parse(req.body.json);
-  if (_.isObject(json) && _.congruent(requestTemplate, json)) {
-    redis.set(id, JSON.stringify(json));
-    res.json({id: id});
-  } else {
-    res.status(400).send('Invalid POST request body');
-  }
+  saveToRedis(id, req, res);
+})
+
+app.post('/api/snippets/:id', function(req, res) {
+  var id = req.params.id;
+  // Make sure the ID exists before we save to it
+  redis.get(id)
+    .then(function(json) {
+      if (!json) {
+        res.status(404).send(`No snippet exists with the id: "${id}"`);
+      } else {
+        // The ID exists, go ahead and save
+        saveToRedis(id, req, res);
+      }
+    });
 })
 
 app.get('/api/snippets/:id', function(req, res) {

@@ -26,7 +26,9 @@ export class AppBody extends React.Component {
           browserHistory.push('/');
         });
   }
+
   render() {
+    const { id } = this.props.params;
     return (
       <div className='container-fluid'>
         <div className='row'>
@@ -34,7 +36,11 @@ export class AppBody extends React.Component {
             <Card><FilterArea /></Card>
           </div>
           <div className='col-md-5'>
-            <Card><SnippetArea /></Card>
+            <Card>
+              <SnippetArea
+                id={id} 
+              />
+            </Card>
           </div>
           <div className='col-md-5'>
             <Card><Annotations /></Card>
