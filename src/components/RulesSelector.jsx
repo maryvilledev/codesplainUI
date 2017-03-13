@@ -30,6 +30,7 @@ const makeListItems = (filters, onRuleSelected) => {
             onCheck={() => onRuleSelected(filterName)}
             labelStyle={style.label}
             label={<div style={style.innerLabel}>{`${filter.prettyTokenName} (${filter.count})`}</div>}
+            key={filterName}
           />
     );
   });
