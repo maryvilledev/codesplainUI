@@ -9,7 +9,7 @@ const saveIconButton = (
   />
 );
 
-const SaveOptions = ({ onSaveClick, onSaveAsClick }) => (
+const SaveMenu = ({ onSaveClick, onSaveAsClick }) => (
   <IconMenu
     iconButtonElement={saveIconButton}
   >
@@ -24,9 +24,9 @@ const SaveOptions = ({ onSaveClick, onSaveAsClick }) => (
   </IconMenu>
 );
 
-SaveOptions.propTypes = {
+SaveMenu.propTypes = {
   onSaveClick: PropTypes.func.isRequired,
   onSaveAsClick: PropTypes.func.isRequired,
 };
 
-export default SaveOptions
+export default SaveMenu

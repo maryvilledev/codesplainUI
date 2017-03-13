@@ -4,7 +4,7 @@ import { browserHistory } from 'react-router';
 import cookie from 'react-cookie';
 
 import LoginButton from './buttons/LoginButton'
-import AppMenu from './AppMenu';
+import AppMenu from './menus/AppMenu';
 
 const styles = {
   title: {

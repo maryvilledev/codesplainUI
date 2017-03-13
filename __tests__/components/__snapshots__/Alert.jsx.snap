@@ -3,6 +3,7 @@ exports[`<Alert /> matches the stored snapshot 1`] = `
   actions={
     <FlatButton
       disabled={false}
+      fullWidth={false}
       label="OK"
       labelPosition="after"
       labelStyle={Object {}}

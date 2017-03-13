@@ -16,7 +16,7 @@ import {
 } from '../actions/annotation';
 
 import Editor from '../components/Editor';
-import SaveOptions from '../components/buttons/SaveOptions';
+import SaveMenu from '../components/menus/SaveMenu';
 
 import ConfirmLockDialog from '../components/ConfirmLockDialog';
 import LockButton from '../components/buttons/LockButton';
@@ -181,7 +181,7 @@ export class SnippetArea extends React.Component {
           readOnly={readOnly}
           value={snippet}
         />
-        <SaveOptions
+        <SaveMenu
           onSaveClick={this.handleSave}
           onSaveAsClick={this.handleSaveAs}
         />

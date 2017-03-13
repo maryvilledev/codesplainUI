@@ -12,6 +12,7 @@ exports[`<RulesSelector /> matches snapshot 1`] = `
   </Subheader>
   <ListItem
     autoGenerateNestedIndicator={true}
+    containerElement="span"
     disableKeyboardFocus={false}
     disabled={false}
     initiallyOpen={false}
@@ -44,6 +45,7 @@ exports[`<RulesSelector /> matches snapshot 1`] = `
     } />
   <ListItem
     autoGenerateNestedIndicator={true}
+    containerElement="span"
     disableKeyboardFocus={false}
     disabled={false}
     initiallyOpen={false}
