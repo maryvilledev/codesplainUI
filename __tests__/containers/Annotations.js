@@ -11,6 +11,9 @@ const mockSnippetInformation = {
 const mockDispatch = jest.fn();
 
 describe('<Annotations />', () => {
+  beforeEach(() => {
+    mockDispatch.mockReset();
+  });
   const wrapper = shallow(
     <Annotations
       annotation={mockAnnotation}
@@ -32,6 +35,6 @@ describe('<Annotations />', () => {
   });
   it('closes the annotation panel on handleCloseAnnotation', () => {
     wrapper.instance().handleCloseAnnotation();
-    expect(mockDispatch.mock.calls[1]).toBeDefined();
+    expect(mockDispatch.mock.calls[0]).toBeDefined();
   })
 });

@@ -1,21 +1,28 @@
-import React from 'react'
-import { shallow, mount, render } from 'enzyme'
+import React from 'react';
+import {
+  mount,
+  render,
+  shallow,
+} from 'enzyme';
 
-import { FilterArea } from '../../src/containers/FilterArea'
+import { FilterArea } from '../../src/containers/FilterArea';
 
 const mockFilters = {
   rick: {
     selected: false,
-    prettyTokenName: 'Rick Sanchez'
+    prettyTokenName: 'Rick Sanchez',
   },
   morty: {
     selected: false,
-    prettyTokenName: 'Morty Smith'
-  }
-}
-const mockDispatch = jest.fn()
+    prettyTokenName: 'Morty Smith',
+  },
+};
+const mockDispatch = jest.fn();
 
 describe('<FilterArea />', () => {
+  beforeEach(() => {
+    mockDispatch.mockReset();
+  });
   const wrapper = shallow(
     <FilterArea
       filters={mockFilters}
