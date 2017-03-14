@@ -35,10 +35,10 @@ export class AppBody extends React.Component {
           <div className='col-lg-2'>
             <Card><FilterArea /></Card>
           </div>
-          <div className='col-lg-4 col-md-7'>
+          <div className='col-lg-5 col-md-7'>
             <Card>
               <SnippetArea
-                id={id} 
+                id={id}
               />
             </Card>
           </div>

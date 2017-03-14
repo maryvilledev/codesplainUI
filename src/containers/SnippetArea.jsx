@@ -5,20 +5,19 @@ import { CardText, TextField, Snackbar } from 'material-ui';
 import { browserHistory } from 'react-router'
 
 import {
-  setAST,
-  setRuleFilters,
+  parseSnippet,
   setSnippetContents,
   setSnippetTitle,
   toggleEditState,
 } from '../actions/app';
+
 import {
   openAnnotationPanel,
 } from '../actions/annotation';
 
-import Editor from '../components/Editor';
 import SaveMenu from '../components/menus/SaveMenu';
-
 import ConfirmLockDialog from '../components/ConfirmLockDialog';
+import Editor from '../components/Editor';
 import LockButton from '../components/buttons/LockButton';
 
 const style = {
@@ -44,7 +43,7 @@ export class SnippetArea extends React.Component {
     this.handleCloseModal = this.handleCloseModal.bind(this);
     this.handleGutterClick = this.handleGutterClick.bind(this);
     this.handleLock = this.handleLock.bind(this);
-    this.handleParserRun = this.handleParserRun.bind(this);
+
     this.handleSave = this.handleSave.bind(this);
     this.handleSaveAs = this.handleSaveAs.bind(this);
     this.handleSnippetChanged = this.handleSnippetChanged.bind(this);
@@ -53,8 +52,8 @@ export class SnippetArea extends React.Component {
   }
 
   showSnackbar( message ) {
-    this.setState({ 
-      showSnackbar: true, 
+    this.setState({
+      showSnackbar: true,
       snackbarMessage: message
     })
   }
@@ -62,6 +61,7 @@ export class SnippetArea extends React.Component {
   handleSnippetChanged(snippetContents) {
     const { dispatch } = this.props;
     dispatch(setSnippetContents(snippetContents));
+    dispatch(parseSnippet(snippetContents));
   }
 
   handleTitleChanged(ev) {
@@ -127,18 +127,8 @@ export class SnippetArea extends React.Component {
   }
 
   handleGutterClick(lineNumber, lineText) {
-    const { readOnly, dispatch } = this.props
-    if (!readOnly) {
-      return //Gutter clicks do nothing when not locked
-    }
-
-    dispatch(openAnnotationPanel({lineNumber, lineText}))
-  }
-
-  handleParserRun(AST, filters) {
     const { dispatch } = this.props
-    dispatch(setAST(AST))
-    dispatch(setRuleFilters(filters))
+    dispatch(openAnnotationPanel({lineNumber, lineText}))
   }
 
   render() {
@@ -176,7 +166,6 @@ export class SnippetArea extends React.Component {
           markedLines={markedLines}
           onChange={this.handleSnippetChanged}
           onGutterClick={this.handleGutterClick}
-          onParserRun={this.handleParserRun}
           openLine={openLine}
           readOnly={readOnly}
           value={snippet}

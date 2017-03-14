@@ -121,4 +121,19 @@ describe('Actions: App', () => {
       expect(actions.setSnippetLanguage(snippetLanguage)).toEqual(expected);
     });
   });
+  describe('PARSE_SNIPPET', () => {
+    it('creates an action to parse the snippet with a web worker', () => {
+      const snippet = 'Grasssss tastes bad';
+      const expected = {
+        type: actions.PARSE_SNIPPET,
+        meta: {
+          WebWorker: true,
+        },
+        payload: {
+          snippet,
+        },
+      };
+      expect(actions.parseSnippet(snippet)).toEqual(expected);
+    });
+  });
 });
