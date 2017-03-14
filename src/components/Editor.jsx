@@ -72,7 +72,7 @@ class Editor extends React.Component {
     this.deEmphasize();
     if (openLine) {
       this.emphasizeLine(openLine);
-    }
+    } 
   }
 
   handleGutterClick(instance, lineNumber) {
@@ -131,10 +131,13 @@ class Editor extends React.Component {
         // Invoke prop callback
         this.setState({ prevSnippet: snippet });
         this.props.onParserRun(AST, newFilters);
-      }
 
-      if (this.props.value) {
-        highlight(this.codeMirror.getCodeMirror(), this.props.AST, this.props.filters);
+        // Highlight the code in the editor
+        highlight(
+          this.codeMirror.getCodeMirror(), 
+          this.props.AST, 
+          this.props.filters
+        );
       }
     }, 1000);
   }
