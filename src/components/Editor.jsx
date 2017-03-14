@@ -1,14 +1,14 @@
-import React, { PropTypes } from 'react'
-import CodeMirror from 'react-codemirror'
+import React, { PropTypes } from 'react';
+import CodeMirror from 'react-codemirror';
+
+import 'codemirror/lib/codemirror.css';
+import 'codemirror/mode/python/python.js';
+
 import {
   highlight,
   styleLine,
   styleAll,
 } from '../util/codemirror-utils.js';
-import { getRuleCount, rules } from '../util/rules.js';
-import parsePython3 from '../parsers/python3.min.js';
-import 'codemirror/lib/codemirror.css';
-import 'codemirror/mode/python/python.js';
 import '../styles/codesplain.css';
 
 // Options for the CodeMirror instance that are shared by edit and annotation mddes
@@ -42,9 +42,6 @@ const makeMarker = () => {
 class Editor extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      prevSnippet: undefined,
-    };
     this.handleGutterClick = this.handleGutterClick.bind(this);
     this.emphasizeLine = this.emphasizeLine.bind(this);
     this.deEmphasize = this.deEmphasize.bind(this);
@@ -54,7 +51,7 @@ class Editor extends React.Component {
   componentDidMount() {
     const codeMirror = this.codeMirror.getCodeMirror();
     codeMirror.on('gutterClick', this.handleGutterClick);
-    this.startParserDaemon(parsePython3);
+    this.startParserDaemon();
   }
 
   componentDidUpdate() {
@@ -76,7 +73,10 @@ class Editor extends React.Component {
   }
 
   handleGutterClick(instance, lineNumber) {
-    const { onGutterClick } = this.props;
+    const { onGutterClick, readOnly } = this.props;
+    if (readOnly) {
+      return;
+    }
     const lineText = instance.getLine(lineNumber);
     onGutterClick(lineNumber, lineText);
   }
@@ -100,41 +100,16 @@ class Editor extends React.Component {
   }
 
   // Runs the parser every second
-  startParserDaemon(parser) {
+  startParserDaemon() {
     setInterval(() => {
-      const snippet = this.props.value;
-      if (snippet && snippet !== this.state.prevSnippet) {
-        // Generate an AST for the current state of the code snippet, if ready
-        const onError = (err) => { console.log(err) };
-        const AST = parser(snippet, onError);
+      const {
+        AST,
+        filters,
+        value: snippet,
+      } = this.props;
 
-        // Get an array mapping token types to their occurence count
-        const ruleCount = {};
-        getRuleCount(AST, ruleCount);
-
-        // Generate array of strings containing pretty token name and its count
-       const filters = this.props.filters;
-       let newFilters = {};
-       Object.keys(ruleCount).filter(r => rules[r] !== undefined)
-         .forEach(r => {
-           let selected = false;
-           if (filters[r]) {
-             selected = filters[r].selected;
-           }
-           newFilters[r] = {
-             prettyTokenName: rules[r].prettyName,
-             count:           ruleCount[r],
-             selected:        selected,
-           }
-         });
-
-        // Invoke prop callback
-        this.setState({ prevSnippet: snippet });
-        this.props.onParserRun(AST, newFilters);
-      }
-
-      if (this.props.value) {
-        highlight(this.codeMirror.getCodeMirror(), this.props.AST, this.props.filters);
+      if (snippet) {
+        highlight(this.codeMirror.getCodeMirror(), AST, filters);
       }
     }, 1000);
   }
@@ -169,7 +144,6 @@ Editor.propTypes = {
   markedLines: PropTypes.arrayOf(PropTypes.number).isRequired,
   onChange: PropTypes.func.isRequired,
   onGutterClick: PropTypes.func.isRequired,
-  onParserRun: PropTypes.func.isRequired,
   openLine: PropTypes.number,
   readOnly: PropTypes.bool.isRequired,
   value: PropTypes.string.isRequired,

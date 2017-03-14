@@ -49,3 +49,21 @@ export function getRuleCount(node, map) {
     map[node.type] += 1;
   node.children.forEach(child => getRuleCount(child, map));
 }
+
+export const generateFilters = (prevFilters, ruleCounts) => {
+  const newFilters = {};
+  if (!ruleCounts || Object.keys(ruleCounts) === 0) {
+    return {};
+  }
+  Object.keys(ruleCounts)
+    .filter(r => rules[r] !== undefined)
+    .forEach(r => {
+      const selected = prevFilters[r] ? prevFilters[r].selected : false;
+      newFilters[r] = {
+        prettyTokenName: rules[r].prettyName,
+        count:           ruleCounts[r],
+        selected:        selected,
+      }
+    });
+  return newFilters;
+}

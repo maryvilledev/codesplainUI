@@ -4,21 +4,20 @@ import axios from 'axios';
 import { CardText, TextField } from 'material-ui';
 
 import {
-  setAST,
-  setRuleFilters,
+  parseSnippet,
   setSnippetContents,
   setSnippetTitle,
   toggleEditState,
 } from '../actions/app';
+
 import {
   openAnnotationPanel,
 } from '../actions/annotation';
 
-import Editor from '../components/Editor';
-import SaveButton from '../components/buttons/SaveButton';
-
 import ConfirmLockDialog from '../components/ConfirmLockDialog';
+import Editor from '../components/Editor';
 import LockButton from '../components/buttons/LockButton';
+import SaveButton from '../components/buttons/SaveButton';
 
 const style = {
   textField: {
@@ -40,7 +39,6 @@ export class SnippetArea extends React.Component {
     this.handleCloseModal = this.handleCloseModal.bind(this);
     this.handleGutterClick = this.handleGutterClick.bind(this);
     this.handleLock = this.handleLock.bind(this);
-    this.handleParserRun = this.handleParserRun.bind(this);
     this.handleSaveState = this.handleSaveState.bind(this);
     this.handleSnippetChanged = this.handleSnippetChanged.bind(this);
     this.handleTitleChanged = this.handleTitleChanged.bind(this);
@@ -50,6 +48,7 @@ export class SnippetArea extends React.Component {
   handleSnippetChanged(snippetContents) {
     const { dispatch } = this.props;
     dispatch(setSnippetContents(snippetContents));
+    dispatch(parseSnippet(snippetContents));
   }
 
   handleTitleChanged(ev) {
@@ -83,18 +82,8 @@ export class SnippetArea extends React.Component {
   }
 
   handleGutterClick(lineNumber, lineText) {
-    const { readOnly, dispatch } = this.props
-    if (!readOnly) {
-      return //Gutter clicks do nothing when not locked
-    }
-
-    dispatch(openAnnotationPanel({lineNumber, lineText}))
-  }
-
-  handleParserRun(AST, filters) {
     const { dispatch } = this.props
-    dispatch(setAST(AST))
-    dispatch(setRuleFilters(filters))
+    dispatch(openAnnotationPanel({lineNumber, lineText}))
   }
 
   render(){
@@ -132,7 +121,6 @@ export class SnippetArea extends React.Component {
           markedLines={markedLines}
           onChange={this.handleSnippetChanged}
           onGutterClick={this.handleGutterClick}
-          onParserRun={this.handleParserRun}
           openLine={openLine}
           readOnly={readOnly}
           value={snippet}

@@ -1,4 +1,5 @@
 import * as actions from '../actions/app';
+import { generateFilters } from '../util/rules';
 
 export const initialState = {
   snippet: '',
@@ -54,6 +55,21 @@ const app = (state = initialState, action) => {
       return {
         ...state,
         snippetLanguage: action.payload,
+      };
+    }
+    case actions.PARSE_SNIPPET: {
+      if (action.meta) {
+        return state;
+      }
+      const {
+        AST,
+        ruleCounts,
+      } = action.payload;
+      const filters = generateFilters(state.filters, ruleCounts);
+      return {
+        ...state,
+        AST,
+        filters,
       };
     }
     default: {

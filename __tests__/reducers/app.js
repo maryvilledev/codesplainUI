@@ -143,4 +143,49 @@ describe('Reducer: App', () => {
     };
     expect(reducer(undefined, action)).toEqual(expected);
   });
+  describe('PARSE_SNIPPET', () => {
+    it('should return the state if the snippet has not been processed by the web worker', () => {
+      const snippet = 'Grasssss tastes bad';
+      const action = {
+        type: actions.PARSE_SNIPPET,
+        meta: {
+          WebWorker: true,
+        },
+        payload: {
+          snippet,
+        },
+      };
+      const expected = initialState;
+      expect(reducer(undefined, action)).toEqual(initialState);
+    });
+    it('should set the AST and filters after parsing the snippet', () => {
+      const AST = {
+        "type": "file_input",
+        "begin": 0,
+        "end": 1,
+        "children": [
+          "NEWLINE",
+          "INDENT",
+          "NEWLINE",
+          "DEDENT"
+        ]
+      };
+      const ruleCounts = {
+        file_input: 1
+      }
+      const action = {
+        type: actions.PARSE_SNIPPET,
+        payload: {
+          AST,
+          ruleCounts,
+        },
+      };
+      const expected = {
+        ...initialState,
+        AST,
+        filters: {},
+      };
+      expect(reducer(undefined, action)).toEqual(expected);
+    });
+  });
 });
