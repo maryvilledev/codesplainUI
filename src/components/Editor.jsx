@@ -45,19 +45,20 @@ class Editor extends React.Component {
     this.handleGutterClick = this.handleGutterClick.bind(this);
     this.emphasizeLine = this.emphasizeLine.bind(this);
     this.deEmphasize = this.deEmphasize.bind(this);
-    this.startParserDaemon = this.startParserDaemon.bind(this);
   }
 
   componentDidMount() {
     const codeMirror = this.codeMirror.getCodeMirror();
     codeMirror.on('gutterClick', this.handleGutterClick);
-    this.startParserDaemon();
   }
 
   componentDidUpdate() {
     const {
       markedLines,
       openLine,
+      value,
+      AST,
+      filters
     } = this.props;
 
     const codeMirrorInst = this.codeMirror.getCodeMirror();
@@ -67,14 +68,23 @@ class Editor extends React.Component {
       codeMirrorInst.setGutterMarker(Number(lineNumber), 'annotations', makeMarker());
     });
     this.deEmphasize();
-    if (openLine) {
+    if (openLine !== undefined) {
+      // Must be left as such, as line 0
+      // would evaluate to false
       this.emphasizeLine(openLine);
+    }
+    if (value && AST.children && filters) {
+      try {
+        highlight(codeMirrorInst, AST, filters)
+      } catch (err) {
+        console.error(err)
+      }
     }
   }
 
   handleGutterClick(instance, lineNumber) {
     const { onGutterClick, readOnly } = this.props;
-    if (readOnly) {
+    if (!readOnly) {
       return;
     }
     const lineText = instance.getLine(lineNumber);
@@ -97,21 +107,6 @@ class Editor extends React.Component {
   deEmphasize() {
     const css = 'font-weight: normal; opacity: 1.0;';
     styleAll(this.codeMirror.getCodeMirror(), css);
-  }
-
-  // Runs the parser every second
-  startParserDaemon() {
-    setInterval(() => {
-      const {
-        AST,
-        filters,
-        value: snippet,
-      } = this.props;
-
-      if (snippet) {
-        highlight(this.codeMirror.getCodeMirror(), AST, filters);
-      }
-    }, 1000);
   }
 
   render() {

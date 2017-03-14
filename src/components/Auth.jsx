@@ -15,6 +15,7 @@ class Auth extends React.Component {
   constructor(props) {
     super(props);
     this.state = { waiting: true };
+    this.redirectUser = this.redirectUser.bind(this);
   }
 
   componentDidMount() {
@@ -41,7 +42,7 @@ class Auth extends React.Component {
         this.setState({ waiting: false, error: true });
       })
       .then(res => {
-        const { avatar_url } = res.data; // Can pull lots of other stuff 
+        const { avatar_url } = res.data; // Can pull lots of other stuff
                                          // out of res.data if needed
         cookie.save('userAvatarURL', avatar_url, { path: '/' });
         this.setState({ waiting: false });
@@ -57,10 +58,11 @@ class Auth extends React.Component {
     // Load the URL to redirect user to, default to the
     // home page if non exists
     const signInRedirect = cookie.load('signInRedirect');
-    if (signInRedirect)
+    if (signInRedirect) {
       window.location = signInRedirect;
-    else
+    } else {
       window.location = '/';
+    }
   }
 
   render() {

@@ -147,7 +147,7 @@ const mapStateToProps = state => ({
   annotations: state.app.annotations,
   AST: state.app.AST,
   filters: state.app.filters,
-  openLine: (state.annotation.isOpen
+  openLine: (state.annotation.isDisplayingAnnotation
     ? state.annotation.snippetInformation.lineNumber
     : undefined),
   readOnly: state.app.readOnly,
