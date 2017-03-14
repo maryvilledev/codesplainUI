@@ -14,14 +14,15 @@ export class AppBody extends React.Component {
   componentDidMount() {
       const { id } = this.props.params;
       const { dispatch } = this.props;
-      if (!id) return;
+      if (!id) {
+        return;
+      }
       axios.get(`/api/snippets/${id}`)
         .then(res => {
           const stateString = res.data.json;
           const obj = JSON.parse(stateString);
           dispatch(restoreState(obj));
-        })
-        .catch(err => {
+        }, err => {
           // Bad URL, redirect
           browserHistory.push('/');
         });
@@ -35,7 +36,7 @@ export class AppBody extends React.Component {
           <div className='col-lg-2'>
             <Card><FilterArea /></Card>
           </div>
-          <div className='col-lg-5 col-md-7'>
+          <div className='col-lg-4 col-md-7'>
             <Card>
               <SnippetArea
                 id={id}
@@ -43,7 +44,7 @@ export class AppBody extends React.Component {
             </Card>
           </div>
           <div className='col-lg-5 col-md-5'>
-            <Card><Annotations /></Card>
+            <Card><Annotations id={id} /></Card>
           </div>
         </div>
       </div>

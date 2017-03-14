@@ -14,41 +14,55 @@ const style = {
   },
   innerLabel: {
     marginTop: '7px', //To match margin on checkbox
-  }
+    paddingLeft: '5px',
+  },
 }
 
+const makeLabelStyle = (color) => ({ backgroundColor: color });
+
 const makeListItems = (filters, onRuleSelected) => {
-  const listItems = Object.keys(filters).map((filterName) => {
-    const filter = filters[filterName];
-    return (
-          <Checkbox
-            checked={filter.selected}
-            onCheck={() => onRuleSelected(filterName)}
-            labelStyle={style.label}
-            label={<div style={style.innerLabel}>{`${filter.prettyTokenName} (${filter.count})`}</div>}
-            key={filterName}
-          />
-    );
-  });
-  return listItems;
+  return Object.keys(filters)
+    .map((filterName) => {
+      // Extract the filter information
+      const {
+        color,
+        count,
+        prettyTokenName,
+        selected,
+      } = filters[filterName];
+      return (
+        <Checkbox
+          checked={selected}
+          onCheck={() => onRuleSelected(filterName)}
+          labelStyle={{ ...style.label, backgroundColor: color, }}
+          label={<div style={style.innerLabel}>{`${prettyTokenName} (${count})`}</div>}
+          key={filterName}
+        />
+      );
+    });
 };
 
 const RulesSelector = ({ filters, onRuleSelected }) => {
   const listItems = makeListItems(filters, onRuleSelected);
   return (
-  <div>
-    <Subheader style={style.subheader}>
-      Select a token type to highlight all occurences
-    </Subheader>
+    <div>
+      <Subheader style={style.subheader}>
+        Select a token type to highlight all occurences
+      </Subheader>
       <div>
         {listItems}
       </div>
-  </div>
+    </div>
   );
 };
 
 RulesSelector.propTypes = {
-  filters: PropTypes.object.isRequired,
+  filters: PropTypes.shape({
+    color: PropTypes.string,
+    count: PropTypes.number,
+    prettyTokenName: PropTypes.string,
+    selected: PropTypes.bool,
+  }).isRequired,
   onRuleSelected: PropTypes.func.isRequired,
 };
 

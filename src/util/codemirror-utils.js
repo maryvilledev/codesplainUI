@@ -16,10 +16,10 @@ function highlightNode(codeMirror, node, filters, parentColor) {
   let color = parentColor;
 
   // If we aren't ignoring this token...
-  if (ignoredRules.indexOf(node.type) === -1) {
+  if (ignoredRules.indexOf(node.type) === -1 && rules[node.type]) {
     color = rules[node.type].color; // Get the color for this token's type
 
-    // If this token has no color 
+    // If this token has no color
     if (!color) {
       color = 'inherit';
       console.warn(`token "${node.type}" has no color specified!`);
@@ -41,7 +41,7 @@ function highlightNode(codeMirror, node, filters, parentColor) {
 
   // Highlight all children of this token
   node.children.forEach(child => {
-    if (child === Object(child)) 
+    if (child === Object(child))
       highlightNode(codeMirror, child, filters, color);
   });
 }
