@@ -61,6 +61,9 @@ class Editor extends React.Component {
     const {
       markedLines,
       openLine,
+      value,
+      AST,
+      filters
     } = this.props;
 
     const codeMirrorInst = this.codeMirror.getCodeMirror();
@@ -70,8 +73,16 @@ class Editor extends React.Component {
       codeMirrorInst.setGutterMarker(Number(lineNumber), 'annotations', makeMarker());
     });
     this.deEmphasize();
-    if (openLine) {
+    if (openLine !== undefined) { //Must be left as such, as line 0
+                                  //would evaluate to false
       this.emphasizeLine(openLine);
+    }
+    if (value && AST.children && filters) {
+      try {
+        highlight(codeMirrorInst, AST, filters)
+      } catch (err) {
+        console.error(err)
+      }
     }
   }
 
@@ -131,10 +142,6 @@ class Editor extends React.Component {
         // Invoke prop callback
         this.setState({ prevSnippet: snippet });
         this.props.onParserRun(AST, newFilters);
-      }
-
-      if (this.props.value) {
-        highlight(this.codeMirror.getCodeMirror(), this.props.AST, this.props.filters);
       }
     }, 1000);
   }
