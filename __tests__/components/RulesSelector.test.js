@@ -42,7 +42,7 @@ describe('<RulesSelector />', () => {
           onRuleSelected={jest.fn()}
         />
       );
-      const listItems = wrapper.find('ListItem');
+      const listItems = wrapper.find('Checkbox');
       expect(listItems.length).toEqual(Object.keys(mockFilters).length);
     });
   });
