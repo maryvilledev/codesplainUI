@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { CardText, TextField } from 'material-ui';
+import { CardText, TextField, Snackbar } from 'material-ui';
+import { browserHistory } from 'react-router'
 
 import {
   setAST,
@@ -15,7 +16,7 @@ import {
 } from '../actions/annotation';
 
 import Editor from '../components/Editor';
-import SaveButton from '../components/buttons/SaveButton';
+import SaveMenu from '../components/menus/SaveMenu';
 
 import ConfirmLockDialog from '../components/ConfirmLockDialog';
 import LockButton from '../components/buttons/LockButton';
@@ -35,16 +36,27 @@ export class SnippetArea extends React.Component {
     super(props);
     this.state = {
       lockDialogOpen: false,
+      showSnackbar: false,
+      snackbarMessage: '',
     };
 
+    this.showSnackbar = this.showSnackbar.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
     this.handleGutterClick = this.handleGutterClick.bind(this);
     this.handleLock = this.handleLock.bind(this);
     this.handleParserRun = this.handleParserRun.bind(this);
-    this.handleSaveState = this.handleSaveState.bind(this);
+    this.handleSave = this.handleSave.bind(this);
+    this.handleSaveAs = this.handleSaveAs.bind(this);
     this.handleSnippetChanged = this.handleSnippetChanged.bind(this);
     this.handleTitleChanged = this.handleTitleChanged.bind(this);
     this.handleToggleReadOnly = this.handleToggleReadOnly.bind(this);
+  }
+
+  showSnackbar( message ) {
+    this.setState({ 
+      showSnackbar: true, 
+      snackbarMessage: message
+    })
   }
 
   handleSnippetChanged(snippetContents) {
@@ -76,10 +88,42 @@ export class SnippetArea extends React.Component {
     });
   }
 
-  handleSaveState() {
-    const obj = this.props.appState;
-    const stateString = JSON.stringify(obj);
-    return axios.post('/api/snippets/', { json : stateString });
+  handleSave() {
+    const { appState } = this.props;
+    const stateString = JSON.stringify(appState);
+    const id = this.props.id;
+    if (id) {
+      axios.post(`/api/snippets/${id}`, { json: stateString })
+        .then(res => {
+          this.showSnackbar('Codesplaination Saved!');
+        }, err => {
+          console.error(err);
+          this.showSnackbar('Failed to save - an error occurred');
+        })
+    }
+    else {
+      axios.post(`/api/snippets`, { json: stateString })
+        .then((res) => {
+          browserHistory.push(`/${res.data.id}`);
+          this.showSnackbar('Codesplaination Saved!');
+        }, (err) => {
+          console.error(err);
+          this.showSnackbar('Failed to save - an error occurred');
+        });
+    }
+  }
+
+  handleSaveAs() {
+    const { appState } = this.props;
+    const stateString = JSON.stringify(appState);
+    axios.post(`/api/snippets`, { json: stateString })
+      .then((res) => {
+        browserHistory.push(`/${res.data.id}`);
+        this.showSnackbar('Codesplaination saved under new ID!');
+      }, (err) => {
+        console.error(err);
+        this.showSnackbar('Failed to save - an error occurred');
+      });
   }
 
   handleGutterClick(lineNumber, lineText) {
@@ -97,7 +141,7 @@ export class SnippetArea extends React.Component {
     dispatch(setRuleFilters(filters))
   }
 
-  render(){
+  render() {
     const {
       annotations,
       AST,
@@ -137,8 +181,15 @@ export class SnippetArea extends React.Component {
           readOnly={readOnly}
           value={snippet}
         />
-        <SaveButton
-          onSaveClick={this.handleSaveState}
+        <SaveMenu
+          onSaveClick={this.handleSave}
+          onSaveAsClick={this.handleSaveAs}
+        />
+        <Snackbar
+          open={this.state.showSnackbar}
+          message={this.state.snackbarMessage}
+          autoHideDuration={3000}
+          onRequestClose={() => this.setState({ showSnackbar: false })}
         />
       </CardText>
     );
