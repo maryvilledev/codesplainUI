@@ -73,7 +73,8 @@ class Editor extends React.Component {
       codeMirrorInst.setGutterMarker(Number(lineNumber), 'annotations', makeMarker());
     });
     this.deEmphasize();
-    if (openLine) {
+    if (openLine !== undefined) { //Must be left as such, as line 0
+                                  //would evaluate to false
       this.emphasizeLine(openLine);
     }
     if (value && AST.children && filters) {
