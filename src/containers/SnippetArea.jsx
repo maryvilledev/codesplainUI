@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { CardText, TextField, Snackbar } from 'material-ui';
+import { CardText, Snackbar } from 'material-ui';
 import { browserHistory } from 'react-router'
 
 import {
@@ -15,10 +15,9 @@ import {
   openAnnotationPanel,
 } from '../actions/annotation';
 
-import SaveMenu from '../components/menus/SaveMenu';
 import ConfirmLockDialog from '../components/ConfirmLockDialog';
 import Editor from '../components/Editor';
-import LockButton from '../components/buttons/LockButton';
+import SnippetAreaToolbar from '../components/SnippetAreaToolbar';
 
 const style = {
   textField: {
@@ -144,16 +143,13 @@ export class SnippetArea extends React.Component {
     const markedLines = Object.keys(annotations).map((key) => Number(key))
     return (
       <CardText>
-        <TextField
-          hintText="Snippet Name"
-          value={snippetTitle}
-          onChange={this.handleTitleChanged}
-          style={style.textField}
-        />
-        <LockButton
-          onClick={this.handleLock}
+        <SnippetAreaToolbar 
+          title={snippetTitle}  
+          onTitleChange={this.handleTitleChanged}
           readOnly={readOnly}
-          style={style.lockButton}
+          onLockClick={this.handleLock}
+          onSaveClick={this.handleSave}
+          onSaveAsClick={this.handleSaveAs}
         />
         <ConfirmLockDialog
           accept={this.handleToggleReadOnly}
@@ -169,10 +165,6 @@ export class SnippetArea extends React.Component {
           openLine={openLine}
           readOnly={readOnly}
           value={snippet}
-        />
-        <SaveMenu
-          onSaveClick={this.handleSave}
-          onSaveAsClick={this.handleSaveAs}
         />
         <Snackbar
           open={this.state.showSnackbar}
