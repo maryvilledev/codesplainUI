@@ -26,15 +26,21 @@ export class AppBody extends React.Component {
           browserHistory.push('/');
         });
   }
+
   render() {
+    const { id } = this.props.params;
     return (
       <div className='container-fluid'>
         <div className='row'>
           <div className='col-lg-2'>
             <Card><FilterArea /></Card>
           </div>
-          <div className='col-lg-5 col-md-7'>
-            <Card><SnippetArea /></Card>
+          <div className='col-lg-4 col-md-7'>
+            <Card>
+              <SnippetArea
+                id={id} 
+              />
+            </Card>
           </div>
           <div className='col-lg-5 col-md-5'>
             <Card><Annotations /></Card>
