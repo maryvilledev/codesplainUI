@@ -32,17 +32,17 @@ export class AppBody extends React.Component {
     return (
       <div className='container-fluid'>
         <div className='row'>
-          <div className='col-md-2'>
+          <div className='col-lg-2'>
             <Card><FilterArea /></Card>
           </div>
-          <div className='col-md-5'>
+          <div className='col-lg-4 col-md-7'>
             <Card>
               <SnippetArea
                 id={id} 
               />
             </Card>
           </div>
-          <div className='col-md-5'>
+          <div className='col-lg-5 col-md-5'>
             <Card><Annotations /></Card>
           </div>
         </div>

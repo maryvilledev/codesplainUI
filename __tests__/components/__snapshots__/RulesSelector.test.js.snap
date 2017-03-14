@@ -1,80 +1,60 @@
 exports[`<RulesSelector /> matches snapshot 1`] = `
-<List>
+<div>
   <Subheader
     inset={false}
     style={
       Object {
-        "lineHeight": "",
-        "paddingLeft": "",
+        "lineHeight": 1,
+        "padding": 0,
       }
     }>
     Select a token type to highlight all occurences
   </Subheader>
-  <ListItem
-    autoGenerateNestedIndicator={true}
-    containerElement="span"
-    disableKeyboardFocus={false}
-    disabled={false}
-    initiallyOpen={false}
-    insetChildren={false}
-    leftCheckbox={
-      <Checkbox
-        checked={false}
-        disabled={false}
-        labelPosition="right"
-        onCheck={[Function]} />
-    }
-    nestedItems={Array []}
-    nestedLevel={0}
-    onKeyboardFocus={[Function]}
-    onMouseEnter={[Function]}
-    onMouseLeave={[Function]}
-    onNestedListToggle={[Function]}
-    onTouchEnd={[Function]}
-    onTouchStart={[Function]}
-    open={null}
-    primaryText="For Loops (1)"
-    primaryTogglesNestedList={false}
-    secondaryTextLines={1}
-    style={
-      Object {
-        "fontSize": "13px",
-        "height": "20px",
-        "paddingLeft": "30%",
+  <div>
+    <Checkbox
+      checked={false}
+      disabled={false}
+      label={
+        <div
+          style={
+            Object {
+              "marginTop": "7px",
+            }
+          }>
+          For Loops (1)
+        </div>
       }
-    } />
-  <ListItem
-    autoGenerateNestedIndicator={true}
-    containerElement="span"
-    disableKeyboardFocus={false}
-    disabled={false}
-    initiallyOpen={false}
-    insetChildren={false}
-    leftCheckbox={
-      <Checkbox
-        checked={true}
-        disabled={false}
-        labelPosition="right"
-        onCheck={[Function]} />
-    }
-    nestedItems={Array []}
-    nestedLevel={0}
-    onKeyboardFocus={[Function]}
-    onMouseEnter={[Function]}
-    onMouseLeave={[Function]}
-    onNestedListToggle={[Function]}
-    onTouchEnd={[Function]}
-    onTouchStart={[Function]}
-    open={null}
-    primaryText="Atoms (21)"
-    primaryTogglesNestedList={false}
-    secondaryTextLines={1}
-    style={
-      Object {
-        "fontSize": "13px",
-        "height": "20px",
-        "paddingLeft": "30%",
+      labelPosition="right"
+      labelStyle={
+        Object {
+          "fontSize": "8pt",
+          "lineHeight": 1,
+          "margin": 0,
+        }
       }
-    } />
-</List>
+      onCheck={[Function]} />
+    <Checkbox
+      checked={true}
+      disabled={false}
+      label={
+        <div
+          style={
+            Object {
+              "marginTop": "7px",
+            }
+          }>
+          Atoms (21)
+        </div>
+      }
+      labelPosition="right"
+      labelStyle={
+        Object {
+          "fontSize": "8pt",
+          "lineHeight": 1,
+          "margin": 0,
+        }
+      }
+      onCheck={[Function]} />
+  </div>
+</div>
 `;
