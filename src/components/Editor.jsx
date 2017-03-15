@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import CodeMirror from 'react-codemirror';
+import _ from 'lodash'
 
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/python/python.js';
@@ -47,6 +48,10 @@ class Editor extends React.Component {
     this.deEmphasize = this.deEmphasize.bind(this);
   }
 
+  shouldComponentUpdate(nextProps) {
+    return _.isEqual(nextProps, this.props)
+  }
+
   componentDidMount() {
     const codeMirror = this.codeMirror.getCodeMirror();
     codeMirror.on('gutterClick', this.handleGutterClick);
@@ -81,7 +86,6 @@ class Editor extends React.Component {
       }
     }
   }
-
   handleGutterClick(instance, lineNumber) {
     const { onGutterClick, readOnly } = this.props;
     if (!readOnly) {
@@ -111,9 +115,9 @@ class Editor extends React.Component {
 
   render() {
     const {
-      onChange,
       readOnly,
       value,
+      onChange
     } = this.props;
 
     const codeMirrorOptions = {
