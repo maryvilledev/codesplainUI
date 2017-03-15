@@ -49,7 +49,7 @@ class Editor extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    return _.isEqual(nextProps, this.props)
+    return !_.isEqual(nextProps, this.props)
   }
 
   componentDidMount() {
