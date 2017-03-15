@@ -2,7 +2,6 @@
 export const rules = {
   'arith_expr':   { prettyName: 'Arithmetic Expression', color: '#FFA500' },
   'and_expr': { prettyName: 'And',           color: '#F0E68C' },
-  'arglist':  { prettyName: 'Argument Lists',       color: '#F7CDAB' },
   'argument': { prettyName: 'Arguments',     color: '#EAF7AB' },
   'atom':     { prettyName: 'Atoms',         color: '#ABDBF7' },
   'augassign':   { prettyName: 'Augmented Assignment',  color: '#00ffff' },
@@ -10,7 +9,6 @@ export const rules = {
   'comp_op':  { prettyName: 'Comparison Operator',  color: '#DAA520' },
   'dictorsetmaker': { prettyName: 'Dictionary',     color: '#00FF7F' },
   'except_clause':  { prettyName: 'Except Clauses', color: '#779ECB' },
-  'expr_stmt':   { prettyName: 'Expression Statements', color: '#BEDA0B' },
   'expr':     { prettyName: 'Expressions',   color: '#F0ABF7' },
   'for_stmt': { prettyName: 'For Loops',     color: '#F7ABAB' },
   'funcdef':  { prettyName: 'Function Definitions', color: '#AEC6CF' },
@@ -35,6 +33,8 @@ export const ignoredRules = [
   'trailer',
   'comparison', // Don't ignore after outlines are added to highlighting
   'testlist_comp',
+  'arglist',
+  'expr_stmt',
 ]
 
 /*
