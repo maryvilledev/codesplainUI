@@ -2,15 +2,19 @@ import React, { PropTypes } from 'react';
 import Checkbox from 'material-ui/Checkbox';
 import Subheader from 'material-ui/Subheader';
 
-const style = {
+const styles = {
   subheader: {
     lineHeight: 1,
     padding: 0,
   },
   label: {
-    fontSize: '8pt',
+    padding: '5px',
+    fontSize: '10pt',
     lineHeight: 1,
-    margin: 0,
+    marginTop: '5px',
+    width: '100%',
+    maxWidth: '200px',
+    borderRadius: '5px',
   },
   innerLabel: {
     marginTop: '7px', //To match margin on checkbox
@@ -31,12 +35,11 @@ const makeListItems = (filters, onRuleSelected) => {
         selected,
       } = filters[filterName];
       return (
-        <Checkbox
-          checked={selected}
-          onCheck={() => onRuleSelected(filterName)}
-          labelStyle={{ ...style.label, backgroundColor: color, }}
-          label={<div style={style.innerLabel}>{`${prettyTokenName} (${count})`}</div>}
-          key={filterName}
+        <RuleLabel
+          color={color}
+          prettyTokenName={prettyTokenName}
+          count={count}
+          onClick={() => { onRuleSelected(filterName) }}
         />
       );
     });
@@ -46,7 +49,7 @@ const RulesSelector = ({ filters, onRuleSelected }) => {
   const listItems = makeListItems(filters, onRuleSelected);
   return (
     <div>
-      <Subheader style={style.subheader}>
+      <Subheader style={styles.subheader}>
         Select a token type to highlight all occurences
       </Subheader>
       <div>
@@ -67,3 +70,28 @@ RulesSelector.propTypes = {
 };
 
 export default RulesSelector;
+
+class RuleLabel extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isActive: false,
+    }
+  }
+
+  render() {
+    const backgroundColor = this.state.isActive ? this.props.color : 'transparent';
+    const border = this.state.isActive ? '1px solid transparent' : '1px solid #e6e6e6' // Light grey
+    return (
+      <div
+        style={{...styles.label, backgroundColor, border }}
+        onClick={() => { 
+          this.setState({ isActive: !this.state.isActive });
+          this.props.onClick();
+        }}
+      >
+        {`${this.props.prettyTokenName} (${this.props.count})`}
+      </div>
+    );
+  }
+}
