@@ -9,21 +9,20 @@ import SaveMenu from '../components/menus/SaveMenu';
 
 const styles = {
   toolbar: {
+    listStyleType: 'none',
+    margin: '0',
+    padding: '0',
+    overflow: 'hidden',
+    backgroundColor: 'transparent',
+  },
+  toolbarItem: {
+    float: 'left',
     display: 'block',
-    background: 'rgb(232, 232, 232)', // light grey
-    paddingLeft: '10px',
-    paddingRight: '10px',
-  },
-  selectDiv: {
-    display: 'inline-block',
-  },
-  buttonDiv: {
-    display: 'inline-block',
-    marginTop: '5px',
+    padding: '5px 10px',
   },
   titleField: {
     verticalAlign: 'middle',
-    width: '275px',
+    width: '225px',
   },
   selectField: {
     verticalAlign: 'middle',
@@ -31,44 +30,49 @@ const styles = {
   },
   buttons: {
     verticalAlign: 'middle',
-    float: 'right',
-  }
+  },
 }
 
+/* 
+https://www.w3schools.com/Css/css_navbar.asp
+Note that the Materual UI <Toolbar /> component does not work
+here, because it does not reflow correctly when the screen is 
+resized.
+*/
 const SnippetAreaToolbar = ({ 
   title, onTitleChange, readOnly, onLockClick, onSaveClick, onSaveAsClick
-}) => {
-return (
-  <div style={styles.toolbar}>
-    <TextField
+}) => (
+  <ul style={styles.toolbar}>
+    <li style={styles.toolbarItem}>
+      <TextField
         hintText="Snippet Name"
         value={title}
         onChange={onTitleChange}
         style={styles.titleField}
       />
-      <div style={styles.selectDiv}>
-        <SelectField
-          disabled={true}
-          value={1}
-          style={styles.selectField}
-        >
-          <MenuItem value={1} primaryText="Python 3" />
-        </SelectField>
-      </div>
-      <div style={styles.buttonDiv}>
-        <LockButton
-          onClick={onLockClick} 
-          readOnly={readOnly}
-          style={styles.buttons}
-        />
-        <SaveMenu 
-          onSaveClick={onSaveClick}
-          onSaveAsClick={onSaveAsClick}
-          style={styles.buttons}
-        />
-      </div>
-    </div>
-  );
-}
+    </li>
+    <li style={styles.toolbarItem}>
+      <SelectField
+        disabled={true}
+        value={1}
+        style={styles.selectField}
+      >
+        <MenuItem value={1} primaryText="Python 3" />
+      </SelectField>
+    </li>
+    <li style={styles.toolbarItem}>
+      <LockButton
+        onClick={onLockClick} 
+        readOnly={readOnly}
+        style={styles.buttons}
+      />
+      <SaveMenu 
+        onSaveClick={onSaveClick}
+        onSaveAsClick={onSaveAsClick}
+        style={styles.buttons}
+      />
+    </li>
+  </ul>
+);
 
 export default SnippetAreaToolbar;
