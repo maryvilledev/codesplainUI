@@ -1,12 +1,5 @@
 import { rules, ignoredRules } from './rules.js';
-
-/*
-Given a CodeMirror instance, highlight() will use the specified AST and filters
-objects to apply highlighting to the code in the CodeMirror editor.
-*/
-export function highlight(codeMirror, AST, filters) {
-  highlightNode(codeMirror, AST, filters, 'transparent');
-}
+import _ from 'lodash'
 
 /*
 Recursive function for highlighting code in a CodeMirror. highlight() is an
@@ -19,7 +12,7 @@ function highlightNode(codeMirror, node, filters, parentColor) {
   if (ignoredRules.indexOf(node.type) === -1) {
     color = rules[node.type].color; // Get the color for this token's type
 
-    // If this token has no color 
+    // If this token has no color
     if (!color) {
       color = 'inherit';
       console.warn(`token "${node.type}" has no color specified!`);
@@ -41,10 +34,12 @@ function highlightNode(codeMirror, node, filters, parentColor) {
 
   // Highlight all children of this token
   node.children.forEach(child => {
-    if (child === Object(child)) 
+    if (child === Object(child))
       highlightNode(codeMirror, child, filters, color);
   });
 }
+
+const throttledHighlightNode = _.throttle(highlightNode, 300)
 
 /*
 Given a CodeMirror instance, styleRegion() will apply the specified css style to
@@ -97,4 +92,13 @@ export function getIndexToRowColConverter(snippet) {
     col = index - lenPrevRows;
     return { line: row, ch: col }
   }
+}
+
+/*
+Given a CodeMirror instance, highlight() will use the specified AST and filters
+objects to apply highlighting to the code in the CodeMirror editor.
+*/
+export async function highlight(codeMirror, AST, filters) {
+  throttledHighlightNode.cancel() //No need to run the old highlights
+  throttledHighlightNode(codeMirror, AST, filters, 'transparent');
 }
