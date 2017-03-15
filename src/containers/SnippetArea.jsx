@@ -26,6 +26,7 @@ export class SnippetArea extends React.Component {
       lockDialogOpen: false,
       showSnackbar: false,
       snackbarMessage: '',
+      titleErrorText: '',
     };
 
     this.showSnackbar = this.showSnackbar.bind(this);
@@ -78,7 +79,13 @@ export class SnippetArea extends React.Component {
   }
 
   handleSave() {
-    const { appState } = this.props;
+    const { snippetTitle, appState } = this.props;
+    if (!snippetTitle) {
+      this.setState({ titleErrorText: 'This field is required' });
+      this.showSnackbar('Please the title field before saving.');
+      return;
+    }
+    this.setState({ titleErrorText: '' });
     const stateString = JSON.stringify(appState);
     const id = this.props.id;
     if (id) {
@@ -103,7 +110,13 @@ export class SnippetArea extends React.Component {
   }
 
   handleSaveAs() {
-    const { appState } = this.props;
+    const { snippetTitle, appState } = this.props;
+    if (!snippetTitle) {
+      this.setState({ titleErrorText: 'This field is required' });
+      this.showSnackbar('Please the title field before saving.');
+      return;
+    }
+    this.setState({ titleErrorText: '' });
     const stateString = JSON.stringify(appState);
     axios.post(`/api/snippets`, { json: stateString })
       .then((res) => {
@@ -135,7 +148,7 @@ export class SnippetArea extends React.Component {
       <CardText>
         <SnippetAreaToolbar 
           title={snippetTitle}  
-          onTitleChange={this.handleTitleChanged}
+          onTitleChange={this.handleTitleChanged}d
           readOnly={readOnly}
           onLockClick={this.handleLock}
           onSaveClick={this.handleSave}
