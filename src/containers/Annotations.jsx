@@ -28,12 +28,12 @@ export class Annotations extends React.Component {
   }
 
   handleSaveAnnotation(annotation) {
-    const { dispatch, snippetInformation } = this.props;
+    const { dispatch, id, snippetInformation } = this.props;
     const annotationData = {
       annotation,
       ...snippetInformation,
     };
-    dispatch(saveAnnotation(annotationData));
+    dispatch(saveAnnotation(annotationData, id));
   }
 
   render() {
