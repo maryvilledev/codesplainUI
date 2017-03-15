@@ -39,7 +39,7 @@ function highlightNode(codeMirror, node, filters, parentColor) {
   });
 }
 
-const throttledHighlightNode = _.throttle(highlightNode, 300)
+const throttledHighlightNode = _.throttle(highlightNode, 500)
 
 /*
 Given a CodeMirror instance, styleRegion() will apply the specified css style to
@@ -53,7 +53,6 @@ export function styleRegion(codeMirror, start, end, css) {
   const convert = getIndexToRowColConverter(snippet);
   codeMirror.markText(convert(start), convert(end), {css: css});
 }
-
 /*
 Given a CodeMirror instance styleLine() will apply the specified css style to the
 specified line of code in the editor. The first line is considered line 0, not 1.
@@ -99,6 +98,5 @@ Given a CodeMirror instance, highlight() will use the specified AST and filters
 objects to apply highlighting to the code in the CodeMirror editor.
 */
 export async function highlight(codeMirror, AST, filters) {
-  throttledHighlightNode.cancel() //No need to run the old highlights
   throttledHighlightNode(codeMirror, AST, filters, 'transparent');
 }
