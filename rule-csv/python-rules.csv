@@ -59,7 +59,7 @@ expr,NO,NO,Expressions,#F0ABF7
 xor_expr,YES,NO,X,X
 and_expr,YES,NO,And,#F0E68C
 shift_expr,YES,NO,X,X
-arith_expr,YES,NO,X,X
+arith_expr,YES,NO,Arithmetic Expression,#FFA500
 term,YES,NO,X,X
 factor,YES,NO,X,X
 power,YES,NO,X,X
