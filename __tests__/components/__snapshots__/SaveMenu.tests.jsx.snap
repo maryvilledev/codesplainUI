@@ -12,7 +12,7 @@ exports[`<SaveMenu /> matches snapshot 1`] = `
       disableTouchRipple={false}
       disabled={false}
       iconStyle={Object {}}
-      tooltip="Save Options"
+      title="Save Options"
       tooltipPosition="bottom-center"
       touch={false}>
       <ContentSave />

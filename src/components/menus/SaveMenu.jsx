@@ -4,7 +4,7 @@ import SaveIcon from 'material-ui/svg-icons/content/save';
 
 const saveIconButton = (
   <IconButton
-    tooltip="Save Options"
+    title="Save Options"
     children={<SaveIcon />}
   />
 );
