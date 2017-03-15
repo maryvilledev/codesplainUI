@@ -9,8 +9,9 @@ const saveIconButton = (
   />
 );
 
-const SaveMenu = ({ onSaveClick, onSaveAsClick }) => (
+const SaveMenu = ({ id, onSaveClick, onSaveAsClick }) => (
   <IconMenu
+    id={id}
     iconButtonElement={saveIconButton}
   >
     <MenuItem 

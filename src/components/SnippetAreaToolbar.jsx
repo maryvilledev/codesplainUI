@@ -45,6 +45,7 @@ const SnippetAreaToolbar = ({
   <ul style={styles.toolbar}>
     <li style={styles.toolbarItem}>
       <TextField
+        id="titleField"
         hintText="Snippet Name"
         value={title}
         onChange={onTitleChange}
@@ -53,6 +54,7 @@ const SnippetAreaToolbar = ({
     </li>
     <li style={styles.toolbarItem}>
       <SelectField
+        id="languageSelector"
         disabled={true}
         value={1}
         style={styles.selectField}
@@ -62,11 +64,13 @@ const SnippetAreaToolbar = ({
     </li>
     <li style={styles.toolbarItem}>
       <LockButton
+        id="lockButton"
         onClick={onLockClick} 
         readOnly={readOnly}
         style={styles.buttons}
       />
       <SaveMenu 
+        id="saveMenu"
         onSaveClick={onSaveClick}
         onSaveAsClick={onSaveAsClick}
         style={styles.buttons}

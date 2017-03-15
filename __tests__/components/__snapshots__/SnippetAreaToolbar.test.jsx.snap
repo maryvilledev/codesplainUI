@@ -1,4 +1,4 @@
-exports[`<SnippetAreaToolbar /> matches snapshot 1`] = `
+exports[`<SnippetAreaToolbar /> matches the stored snapshot 1`] = `
 <ul
   style={
     Object {
@@ -22,6 +22,7 @@ exports[`<SnippetAreaToolbar /> matches snapshot 1`] = `
       floatingLabelFixed={false}
       fullWidth={false}
       hintText="Snippet Name"
+      id="titleField"
       multiLine={false}
       onChange={[Function]}
       rows={1}
@@ -47,6 +48,7 @@ exports[`<SnippetAreaToolbar /> matches snapshot 1`] = `
       autoWidth={false}
       disabled={true}
       fullWidth={false}
+      id="languageSelector"
       multiple={false}
       style={
         Object {
@@ -80,6 +82,7 @@ exports[`<SnippetAreaToolbar /> matches snapshot 1`] = `
       }
     }>
     <LockButton
+      id="lockButton"
       onClick={[Function]}
       readOnly={false}
       style={
@@ -88,6 +91,7 @@ exports[`<SnippetAreaToolbar /> matches snapshot 1`] = `
         }
       } />
     <SaveMenu
+      id="saveMenu"
       onSaveAsClick={[Function]}
       onSaveClick={[Function]}
       style={
