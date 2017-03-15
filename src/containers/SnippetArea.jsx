@@ -19,16 +19,6 @@ import ConfirmLockDialog from '../components/ConfirmLockDialog';
 import Editor from '../components/Editor';
 import SnippetAreaToolbar from '../components/SnippetAreaToolbar';
 
-const style = {
-  textField: {
-    width: '400px',
-    position: 'relative',
-  },
-  lockButton: {
-    position: 'absolute',
-  },
-};
-
 export class SnippetArea extends React.Component {
   constructor(props) {
     super(props);
