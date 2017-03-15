@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import {
   TextField, 
   SelectField, 
@@ -74,5 +74,14 @@ const SnippetAreaToolbar = ({
     </li>
   </ul>
 );
+
+SnippetAreaToolbar.propTypes = {
+  title: PropTypes.string.isRequired,
+  onTitleChange: PropTypes.func.isRequired,
+  readOnly: PropTypes.bool.isRequired,
+  onLockClick: PropTypes.func.isRequired,
+  onSaveClick: PropTypes.func.isRequired,
+  onSaveAsClick: PropTypes.func.isRequired,
+}
 
 export default SnippetAreaToolbar;
