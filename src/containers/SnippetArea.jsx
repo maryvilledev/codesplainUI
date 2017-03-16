@@ -12,10 +12,12 @@ import {
   toggleEditState,
 } from '../actions/app';
 
+//Create an async function to fire the parseSnippet action
 async function dispatchParseSnippet(snippet, dispatch) {
   dispatch(parseSnippet(snippet))
 }
-const throttledParseSnippetDispatch = _.debounce(dispatchParseSnippet, 400)
+//Only fire the parse snippet action 400 millis after the last keydown
+const debouncedParseSnippetDispatch = _.debounce(dispatchParseSnippet, 400)
 
 import {
   openAnnotationPanel,
@@ -67,7 +69,7 @@ export class SnippetArea extends React.Component {
   handleSnippetChanged(snippetContents) {
     const { dispatch } = this.props;
     dispatch(setSnippetContents(snippetContents));
-    throttledParseSnippetDispatch(snippetContents, dispatch)
+    debouncedParseSnippetDispatch(snippetContents, dispatch)
   }
 
   handleTitleChanged(ev) {
