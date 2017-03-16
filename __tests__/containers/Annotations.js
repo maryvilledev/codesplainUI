@@ -1,7 +1,7 @@
-import React from 'react';
-import { shallow } from 'enzyme';
+import React from 'react'
+import { shallow, mount, render } from 'enzyme'
 
-import { Annotations } from '../../src/containers/Annotations';
+import { Annotations } from '../../src/containers/Annotations'
 
 const mockAnnotation = "They're just robots.";
 const mockSnippetInformation = {
@@ -14,17 +14,26 @@ describe('<Annotations />', () => {
   beforeEach(() => {
     mockDispatch.mockReset();
   });
-
+  const wrapper = shallow(
+    <Annotations
+      annotation={mockAnnotation}
+      isDisplayingAnnotation={true}
+      readOnly={true}
+      snippetInformation={mockSnippetInformation}
+      dispatch={mockDispatch}
+    />
+  )
+  it('saves the annotation on handleSaveAnnotation', () => {
+    const annotation = "They're bureaucrats!";
+    const expected = {
+      annotation,
+      ...mockSnippetInformation
+    };
+    wrapper.instance().handleSaveAnnotation(annotation);
+    const { payload } = mockDispatch.mock.calls[0][0];
+    expect(payload).toEqual(expected);
+  });
   it('closes the annotation panel on handleCloseAnnotation', () => {
-    const wrapper = shallow(
-      <Annotations
-        annotation={mockAnnotation}
-        isDisplayingAnnotation={true}
-        readOnly={true}
-        snippetInformation={mockSnippetInformation}
-        dispatch={mockDispatch}
-      />
-    );
     wrapper.instance().handleCloseAnnotation();
     expect(mockDispatch.mock.calls[0]).toBeDefined();
   })

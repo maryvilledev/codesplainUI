@@ -43,11 +43,7 @@ export class AppBody extends React.Component {
             </Card>
           </div>
           <div className='col-lg-5 col-md-5'>
-            <Card>
-              <Annotations
-                id={id}
-              />
-              </Card>
+            <Card><Annotations /></Card>
           </div>
         </div>
       </div>
