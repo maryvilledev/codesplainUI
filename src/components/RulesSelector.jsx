@@ -1,28 +1,13 @@
 import React, { PropTypes } from 'react';
-import Checkbox from 'material-ui/Checkbox';
-import Subheader from 'material-ui/Subheader';
+import RuleLabel from './RuleLabel';
+import { Subheader } from 'material-ui';
 
 const styles = {
   subheader: {
     lineHeight: 1,
     padding: 0,
   },
-  label: {
-    padding: '5px',
-    fontSize: '10pt',
-    lineHeight: 1,
-    marginTop: '5px',
-    width: '100%',
-    maxWidth: '200px',
-    borderRadius: '5px',
-  },
-  innerLabel: {
-    marginTop: '7px', //To match margin on checkbox
-    paddingLeft: '5px',
-  },
 }
-
-const makeLabelStyle = (color) => ({ backgroundColor: color });
 
 const makeListItems = (filters, onRuleSelected) => {
   return Object.keys(filters)
@@ -32,13 +17,13 @@ const makeListItems = (filters, onRuleSelected) => {
         color,
         count,
         prettyTokenName,
-        selected,
       } = filters[filterName];
+
       return (
         <RuleLabel
+          key={filterName}
+          text={`${prettyTokenName} (${count})`}
           color={color}
-          prettyTokenName={prettyTokenName}
-          count={count}
           onClick={() => { onRuleSelected(filterName) }}
         />
       );
@@ -70,28 +55,3 @@ RulesSelector.propTypes = {
 };
 
 export default RulesSelector;
-
-class RuleLabel extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isActive: false,
-    }
-  }
-
-  render() {
-    const backgroundColor = this.state.isActive ? this.props.color : 'transparent';
-    const border = this.state.isActive ? '1px solid transparent' : '1px solid #e6e6e6' // Light grey
-    return (
-      <div
-        style={{...styles.label, backgroundColor, border }}
-        onClick={() => { 
-          this.setState({ isActive: !this.state.isActive });
-          this.props.onClick();
-        }}
-      >
-        {`${this.props.prettyTokenName} (${this.props.count})`}
-      </div>
-    );
-  }
-}
