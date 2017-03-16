@@ -1,0 +1,22 @@
+exports[`<RulesSelector /> matches snapshot 1`] = `
+<div>
+  <Subheader
+    inset={false}
+    style={
+      Object {
+        "lineHeight": 1,
+        "padding": 0,
+      }
+    }>
+    Select a token type to highlight all occurences
+  </Subheader>
+  <div>
+    <RuleLabel
+      onClick={[Function]}
+      text="For Loops (1)" />
+    <RuleLabel
+      onClick={[Function]}
+      text="Atoms (21)" />
+  </div>
+</div>
+`;

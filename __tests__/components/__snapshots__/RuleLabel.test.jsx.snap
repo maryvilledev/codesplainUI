@@ -1,0 +1,19 @@
+exports[`<RuleLabel /> matches snapshot 1`] = `
+<div
+  onClick={[Function]}
+  style={
+    Object {
+      "backgroundColor": "transparent",
+      "borderColor": "#e6e6e6",
+      "borderRadius": "5px",
+      "borderStyle": "solid",
+      "borderWidth": "1px",
+      "fontSize": "10pt",
+      "lineHeight": 1,
+      "marginTop": "5px",
+      "maxWidth": "200px",
+      "padding": "5px",
+      "width": "100%",
+    }
+  } />
+`;
