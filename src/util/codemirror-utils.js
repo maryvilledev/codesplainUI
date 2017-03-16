@@ -96,6 +96,6 @@ export function getIndexToRowColConverter(snippet) {
 Given a CodeMirror instance, highlight() will use the specified AST and filters
 objects to apply highlighting to the code in the CodeMirror editor.
 */
-export function highlight(codeMirror, AST, filters) {
+export async function highlight(codeMirror, AST, filters) {
   highlightNode(codeMirror, AST, filters, 'transparent');
 }
