@@ -1,11 +1,12 @@
 exports[`<LockButton /> matches snapshot of when the app is in read-only mode 1`] = `
-<div
+<span
   title="Switching back to edit mode not supported yet">
   <IconButton
     disableTouchRipple={false}
     disabled={true}
     iconStyle={Object {}}
     label="Switch to edit mode"
+    onTouchTap={[Function]}
     style={
       Object {
         "zIndex": 5,
@@ -15,17 +16,18 @@ exports[`<LockButton /> matches snapshot of when the app is in read-only mode 1`
     touch={false}>
     <ActionLock />
   </IconButton>
-</div>
+</span>
 `;
 
 exports[`<LockButton /> matches snapshot of when the app is not in read-only mode 1`] = `
-<div
+<span
   title="Click to lock the snippet (this will prevent further changes.)">
   <IconButton
     disableTouchRipple={false}
     disabled={false}
     iconStyle={Object {}}
     label="Switch to read-only mode"
+    onTouchTap={[Function]}
     style={
       Object {
         "zIndex": 5,
@@ -35,5 +37,5 @@ exports[`<LockButton /> matches snapshot of when the app is not in read-only mod
     touch={false}>
     <ActionLockOpen />
   </IconButton>
-</div>
+</span>
 `;

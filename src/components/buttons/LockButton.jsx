@@ -8,21 +8,21 @@ const style = {
   zIndex: 5,
 };
 
-const LockButton = ({ onClick, readOnly }) => {
+const LockButton = ({ id, onClick, readOnly }) => {
   const lockIcon = readOnly ? <Lock /> : <LockOpen />;
   const toolTipText = readOnly ? 'Switching back to edit mode not supported yet' : 'Click to lock the snippet (this will prevent further changes.)';
   return (
-    <div 
-      title={toolTipText}
-    >
+    <span title={toolTipText} >
       <IconButton
+        id={id}
         disabled={readOnly}
         label={`Switch to ${readOnly ? 'edit' : 'read-only'} mode`}
+        onTouchTap={onClick}
         style={style}
       >
         {lockIcon}
       </IconButton>
-    </div>
+    </span>
   );
 };
 

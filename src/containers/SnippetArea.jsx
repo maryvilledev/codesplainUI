@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import _ from 'lodash'
-import { CardText, TextField, Snackbar } from 'material-ui';
+import { CardText, Snackbar } from 'material-ui';
 import { browserHistory } from 'react-router'
 
 import {
@@ -23,20 +23,9 @@ import {
   openAnnotationPanel,
 } from '../actions/annotation';
 
-import SaveMenu from '../components/menus/SaveMenu';
 import ConfirmLockDialog from '../components/ConfirmLockDialog';
 import Editor from '../components/Editor';
-import LockButton from '../components/buttons/LockButton';
-
-const style = {
-  textField: {
-    width: '400px',
-    position: 'relative',
-  },
-  lockButton: {
-    position: 'absolute',
-  },
-};
+import SnippetAreaToolbar from '../components/SnippetAreaToolbar';
 
 export class SnippetArea extends React.Component {
   constructor(props) {
@@ -100,7 +89,7 @@ export class SnippetArea extends React.Component {
     const { snippetTitle, appState } = this.props;
     if (!snippetTitle) {
       this.setState({ titleErrorText: 'This field is required' });
-      this.showSnackbar('Please populate all required fields before saving.');
+      this.showSnackbar('Please the title field before saving.');
       return;
     }
     this.setState({ titleErrorText: '' });
@@ -164,17 +153,13 @@ export class SnippetArea extends React.Component {
     const markedLines = Object.keys(annotations).map((key) => Number(key))
     return (
       <CardText>
-        <TextField
-          hintText="Snippet Name"
-          errorText={this.state.titleErrorText}
-          value={snippetTitle}
-          onChange={this.handleTitleChanged}
-          style={style.textField}
-        />
-        <LockButton
-          onClick={this.handleLock}
+        <SnippetAreaToolbar
+          title={snippetTitle}
+          onTitleChange={this.handleTitleChanged}d
           readOnly={readOnly}
-          style={style.lockButton}
+          onLockClick={this.handleLock}
+          onSaveClick={this.handleSave}
+          onSaveAsClick={this.handleSaveAs}
         />
         <ConfirmLockDialog
           accept={this.handleToggleReadOnly}
@@ -190,10 +175,6 @@ export class SnippetArea extends React.Component {
           openLine={openLine}
           readOnly={readOnly}
           value={snippet}
-        />
-        <SaveMenu
-          onSaveClick={this.handleSave}
-          onSaveAsClick={this.handleSaveAs}
         />
         <Snackbar
           open={this.state.showSnackbar}
