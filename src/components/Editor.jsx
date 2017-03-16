@@ -43,6 +43,7 @@ const makeMarker = () => {
 class Editor extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {}
     this.handleGutterClick = this.handleGutterClick.bind(this);
     this.emphasizeLine = this.emphasizeLine.bind(this);
     this.deEmphasize = this.deEmphasize.bind(this);
@@ -63,8 +64,12 @@ class Editor extends React.Component {
       openLine,
       value,
       AST,
-      filters
+      filters,
     } = this.props;
+    const {
+      newAST,
+      newFilters,
+    } = this.state
 
     const codeMirrorInst = this.codeMirror.getCodeMirror();
     codeMirrorInst.clearGutter('annotations');
@@ -78,13 +83,18 @@ class Editor extends React.Component {
       // would evaluate to false
       this.emphasizeLine(openLine);
     }
-    if (value && AST.children && filters) {
+    if (newAST || newFilters) {
       try {
         highlight(codeMirrorInst, AST, filters)
       } catch (err) {
         console.error(err)
       }
     }
+  }
+  componentWillReceiveProps(nextProps) {
+    const newAST = !_.isEqual(nextProps.AST, this.props.AST)
+    const newFilters = !_.isEqual(nextProps.filters, this.props.filters)
+    this.setState({newAST, newFilters})
   }
   handleGutterClick(instance, lineNumber) {
     const { onGutterClick, readOnly } = this.props;

@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import _ from 'lodash'
 import { CardText, TextField, Snackbar } from 'material-ui';
 import { browserHistory } from 'react-router'
 
@@ -10,6 +11,11 @@ import {
   setSnippetTitle,
   toggleEditState,
 } from '../actions/app';
+
+async function dispatchParseSnippet(snippet, dispatch) {
+  dispatch(parseSnippet(snippet))
+}
+const throttledParseSnippetDispatch = _.debounce(dispatchParseSnippet, 400)
 
 import {
   openAnnotationPanel,
@@ -44,7 +50,6 @@ export class SnippetArea extends React.Component {
     this.handleCloseModal = this.handleCloseModal.bind(this);
     this.handleGutterClick = this.handleGutterClick.bind(this);
     this.handleLock = this.handleLock.bind(this);
-
     this.handleSave = this.handleSave.bind(this);
     this.handleSaveAs = this.handleSaveAs.bind(this);
     this.handleSnippetChanged = this.handleSnippetChanged.bind(this);
@@ -62,7 +67,7 @@ export class SnippetArea extends React.Component {
   handleSnippetChanged(snippetContents) {
     const { dispatch } = this.props;
     dispatch(setSnippetContents(snippetContents));
-    dispatch(parseSnippet(snippetContents));
+    throttledParseSnippetDispatch(snippetContents, dispatch)
   }
 
   handleTitleChanged(ev) {

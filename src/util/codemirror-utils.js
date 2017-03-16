@@ -39,8 +39,6 @@ function highlightNode(codeMirror, node, filters, parentColor) {
   });
 }
 
-const throttledHighlightNode = _.throttle(highlightNode, 500)
-
 /*
 Given a CodeMirror instance, styleRegion() will apply the specified css style to
 the given region of code. The code is treated as a single string, and characters
@@ -98,6 +96,6 @@ export function getIndexToRowColConverter(snippet) {
 Given a CodeMirror instance, highlight() will use the specified AST and filters
 objects to apply highlighting to the code in the CodeMirror editor.
 */
-export async function highlight(codeMirror, AST, filters) {
-  throttledHighlightNode(codeMirror, AST, filters, 'transparent');
+export function highlight(codeMirror, AST, filters) {
+  highlightNode(codeMirror, AST, filters, 'transparent');
 }
