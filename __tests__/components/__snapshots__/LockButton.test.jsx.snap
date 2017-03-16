@@ -1,37 +1,39 @@
 exports[`<LockButton /> matches snapshot of when the app is in read-only mode 1`] = `
-<IconButton
-  disableTouchRipple={false}
-  disabled={true}
-  iconStyle={Object {}}
-  label="Switch to edit mode"
-  onTouchTap={[Function]}
-  style={
-    Object {
-      "zIndex": 5,
+<div
+  title="Switching back to edit mode not supported yet">
+  <IconButton
+    disableTouchRipple={false}
+    disabled={true}
+    iconStyle={Object {}}
+    label="Switch to edit mode"
+    style={
+      Object {
+        "zIndex": 5,
+      }
     }
-  }
-  tooltip="Switching back to edit mode not supported yet"
-  tooltipPosition="bottom-center"
-  touch={false}>
-  <ActionLock />
-</IconButton>
+    tooltipPosition="bottom-center"
+    touch={false}>
+    <ActionLock />
+  </IconButton>
+</div>
 `;
 
 exports[`<LockButton /> matches snapshot of when the app is not in read-only mode 1`] = `
-<IconButton
-  disableTouchRipple={false}
-  disabled={false}
-  iconStyle={Object {}}
-  label="Switch to read-only mode"
-  onTouchTap={[Function]}
-  style={
-    Object {
-      "zIndex": 5,
+<div
+  title="Click to lock the snippet (this will prevent further changes.)">
+  <IconButton
+    disableTouchRipple={false}
+    disabled={false}
+    iconStyle={Object {}}
+    label="Switch to read-only mode"
+    style={
+      Object {
+        "zIndex": 5,
+      }
     }
-  }
-  tooltip="Click to lock the snippet (this will prevent further changes.)"
-  tooltipPosition="bottom-center"
-  touch={false}>
-  <ActionLockOpen />
-</IconButton>
+    tooltipPosition="bottom-center"
+    touch={false}>
+    <ActionLockOpen />
+  </IconButton>
+</div>
 `;

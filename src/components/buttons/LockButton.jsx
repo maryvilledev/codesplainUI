@@ -12,15 +12,17 @@ const LockButton = ({ onClick, readOnly }) => {
   const lockIcon = readOnly ? <Lock /> : <LockOpen />;
   const toolTipText = readOnly ? 'Switching back to edit mode not supported yet' : 'Click to lock the snippet (this will prevent further changes.)';
   return (
-    <IconButton
-      disabled={readOnly}
-      label={`Switch to ${readOnly ? 'edit' : 'read-only'} mode`}
-      onTouchTap={onClick}
-      tooltip={toolTipText}
-      style={style}
+    <div 
+      title={toolTipText}
     >
-      {lockIcon}
-    </IconButton>
+      <IconButton
+        disabled={readOnly}
+        label={`Switch to ${readOnly ? 'edit' : 'read-only'} mode`}
+        style={style}
+      >
+        {lockIcon}
+      </IconButton>
+    </div>
   );
 };
 
