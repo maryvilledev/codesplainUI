@@ -8,9 +8,7 @@ const s3 = new aws.S3({ apiVersion: '2006-03-01' });
 
 
 exports.handler = (event, context, callback) => {
-    let userId = event.pathParameters.user_id;
-    let snippetKey = event.pathParameters.snippet_id;
-
+    const key = event.pathParameters.user_id + "/" + event.pathParameters.snippet_id;
     let bucket;
 
     // TODO: Add Other environments to process.env and if statement
@@ -22,7 +20,7 @@ exports.handler = (event, context, callback) => {
 
     const params = {
         Bucket: bucket,
-        Key: userId + "/" + snippetKey,
+        Key: key,
     };
     s3.deleteObject(params, (err, data) => {
         if (err) {

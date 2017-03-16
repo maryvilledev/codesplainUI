@@ -8,11 +8,7 @@ const s3 = new aws.S3({ apiVersion: '2006-03-01' });
 
 
 exports.handler = (event, context, callback) => {
-    console.log(JSON.stringify(event));
-    let user_id = event.pathParameters.user_id;
-    let body = JSON.parse(event.body);
-    let snippetKey = event.pathParameters.snippet_id;
-
+    const key = event.pathParameters.user_id + "/" + event.pathParameters.snippet_id;
     let bucket;
 
     // TODO: Add Other environments to process.env and if statement
@@ -24,12 +20,12 @@ exports.handler = (event, context, callback) => {
 
     const params = {
         Bucket: bucket,
-        Key: user_id + "/" + snippetKey,
-        Body: JSON.stringify(body)
+        Key: key,
+        Body: event.body
     };
     s3.putObject(params, (err, data) => {
         if (err) {
-            const message = `Error putting object ${params.Key} into bucket ${bucket}. Make sure they exist and your bucket is in the same region as this function.`;
+            const message = `Error putting object ${params.Key} into bucket ${bucket}`;
             callback(message);
             context.fail({ statusCode: 400});
 
