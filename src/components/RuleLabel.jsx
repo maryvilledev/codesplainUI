@@ -11,6 +11,7 @@ const styles = {
     borderRadius: '5px',
     borderStyle: 'solid',
     borderWidth: '1px',
+    cursor: 'pointer',
   },
 }
 

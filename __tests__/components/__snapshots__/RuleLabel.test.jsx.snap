@@ -8,6 +8,7 @@ exports[`<RuleLabel /> matches snapshot 1`] = `
       "borderRadius": "5px",
       "borderStyle": "solid",
       "borderWidth": "1px",
+      "cursor": "pointer",
       "fontSize": "10pt",
       "lineHeight": 1,
       "marginTop": "5px",
