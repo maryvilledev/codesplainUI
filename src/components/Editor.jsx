@@ -62,7 +62,6 @@ class Editor extends React.Component {
     const {
       markedLines,
       openLine,
-      value,
       AST,
       filters,
     } = this.props;
