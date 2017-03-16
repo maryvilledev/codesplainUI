@@ -8,15 +8,11 @@ const s3 = new aws.S3({ apiVersion: '2006-03-01' });
 
 
 exports.handler = (event, context, callback) => {
-    console.log(JSON.stringify(event));
-    var user_id = event.pathParameters.user_id;
-    var body = JSON.parse(event.body);
-    var snippetKey = body.snippetTitle;
-    console.log(snippetKey);
+    let userId = event.pathParameters.user_id;
+    let snippetKey = event.pathParameters.snippet_id;
 
-    snippetKey = snippetKey.replace(/\s+/g, '_').toLowerCase();
-    var bucket;
-    
+    let bucket;
+
     // TODO: Add Other environments to process.env and if statement
     if (event.requestContext.apiId === process.env.devID) {
         bucket = process.env.devBucket;
@@ -26,19 +22,17 @@ exports.handler = (event, context, callback) => {
 
     const params = {
         Bucket: bucket,
-        Key: user_id + "/" + snippetKey,
-        Body: JSON.stringify(body)
+        Key: userId + "/" + snippetKey
     };
-    s3.putObject(params, (err, data) => {
+    s3.getObject(params, (err, data) => {
         if (err) {
-            console.log(err);
-            const message = `Error putting object ${params.Key} into bucket ${bucket}. Make sure they exist and your bucket is in the same region as this function.`;
-            console.log(message);
+            const message = `Error getting object ${params.Key} from bucket ${bucket}`;
             callback(message);
-            context.Error({ statusCode: 200});
+            context.fail({ statusCode: 400});
 
         } else {
-            context.succeed({ statusCode: 200});
+            const object = data.Body.toString();
+            context.succeed({ statusCode: 200, body: object});
         }
     });
 };

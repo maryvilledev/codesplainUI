@@ -8,11 +8,10 @@ const s3 = new aws.S3({ apiVersion: '2006-03-01' });
 
 
 exports.handler = (event, context, callback) => {
-    console.log(JSON.stringify(event));
-    var user_id = event.pathParameters.user_id;
-    var snippetKey = event.pathParameters.snippet_id;
+    let userId = event.pathParameters.user_id;
+    let snippetKey = event.pathParameters.snippet_id;
 
-    var bucket;
+    let bucket;
 
     // TODO: Add Other environments to process.env and if statement
     if (event.requestContext.apiId === process.env.devID) {
@@ -23,15 +22,14 @@ exports.handler = (event, context, callback) => {
 
     const params = {
         Bucket: bucket,
-        Key: user_id + "/" + snippetKey,
+        Key: userId + "/" + snippetKey,
     };
     s3.deleteObject(params, (err, data) => {
         if (err) {
             console.log(err);
             const message = `Error deleteing object ${params.Key} from bucket ${bucket}.`;
-            console.log(message);
             callback(message);
-            context.Error({ statusCode: 200});
+            context.fail({ statusCode: 400});
 
         } else {
             context.succeed({ statusCode: 200});
