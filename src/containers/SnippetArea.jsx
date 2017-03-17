@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { CardText, TextField, Snackbar } from 'material-ui';
+import _ from 'lodash'
+import { CardText, Snackbar } from 'material-ui';
 import { browserHistory } from 'react-router'
 
 import {
@@ -11,24 +12,20 @@ import {
   toggleEditState,
 } from '../actions/app';
 
+//Create an async function to fire the parseSnippet action
+async function dispatchParseSnippet(snippet, dispatch) {
+  dispatch(parseSnippet(snippet))
+}
+//Only fire the parse snippet action 400 millis after the last keydown
+const debouncedParseSnippetDispatch = _.debounce(dispatchParseSnippet, 400)
+
 import {
   openAnnotationPanel,
 } from '../actions/annotation';
 
-import SaveMenu from '../components/menus/SaveMenu';
 import ConfirmLockDialog from '../components/ConfirmLockDialog';
 import Editor from '../components/Editor';
-import LockButton from '../components/buttons/LockButton';
-
-const style = {
-  textField: {
-    width: '400px',
-    position: 'relative',
-  },
-  lockButton: {
-    position: 'absolute',
-  },
-};
+import SnippetAreaToolbar from '../components/SnippetAreaToolbar';
 
 export class SnippetArea extends React.Component {
   constructor(props) {
@@ -37,13 +34,13 @@ export class SnippetArea extends React.Component {
       lockDialogOpen: false,
       showSnackbar: false,
       snackbarMessage: '',
+      titleErrorText: '',
     };
 
     this.showSnackbar = this.showSnackbar.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
     this.handleGutterClick = this.handleGutterClick.bind(this);
     this.handleLock = this.handleLock.bind(this);
-
     this.handleSave = this.handleSave.bind(this);
     this.handleSaveAs = this.handleSaveAs.bind(this);
     this.handleSnippetChanged = this.handleSnippetChanged.bind(this);
@@ -61,7 +58,7 @@ export class SnippetArea extends React.Component {
   handleSnippetChanged(snippetContents) {
     const { dispatch } = this.props;
     dispatch(setSnippetContents(snippetContents));
-    dispatch(parseSnippet(snippetContents));
+    debouncedParseSnippetDispatch(snippetContents, dispatch)
   }
 
   handleTitleChanged(ev) {
@@ -89,7 +86,13 @@ export class SnippetArea extends React.Component {
   }
 
   handleSave() {
-    const { appState } = this.props;
+    const { snippetTitle, appState } = this.props;
+    if (!snippetTitle) {
+      this.setState({ titleErrorText: 'This field is required' });
+      this.showSnackbar('Please the title field before saving.');
+      return;
+    }
+    this.setState({ titleErrorText: '' });
     const stateString = JSON.stringify(appState);
     const id = this.props.id;
     if (id) {
@@ -114,7 +117,13 @@ export class SnippetArea extends React.Component {
   }
 
   handleSaveAs() {
-    const { appState } = this.props;
+    const { snippetTitle, appState } = this.props;
+    if (!snippetTitle) {
+      this.setState({ titleErrorText: 'This field is required' });
+      this.showSnackbar('Please the title field before saving.');
+      return;
+    }
+    this.setState({ titleErrorText: '' });
     const stateString = JSON.stringify(appState);
     axios.post(`/api/snippets`, { json: stateString })
       .then((res) => {
@@ -144,16 +153,13 @@ export class SnippetArea extends React.Component {
     const markedLines = Object.keys(annotations).map((key) => Number(key))
     return (
       <CardText>
-        <TextField
-          hintText="Snippet Name"
-          value={snippetTitle}
-          onChange={this.handleTitleChanged}
-          style={style.textField}
-        />
-        <LockButton
-          onClick={this.handleLock}
+        <SnippetAreaToolbar
+          title={snippetTitle}
+          onTitleChange={this.handleTitleChanged}d
           readOnly={readOnly}
-          style={style.lockButton}
+          onLockClick={this.handleLock}
+          onSaveClick={this.handleSave}
+          onSaveAsClick={this.handleSaveAs}
         />
         <ConfirmLockDialog
           accept={this.handleToggleReadOnly}
@@ -169,10 +175,6 @@ export class SnippetArea extends React.Component {
           openLine={openLine}
           readOnly={readOnly}
           value={snippet}
-        />
-        <SaveMenu
-          onSaveClick={this.handleSave}
-          onSaveAsClick={this.handleSaveAs}
         />
         <Snackbar
           open={this.state.showSnackbar}

@@ -5,7 +5,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import RulesSelector from '../../src/components/RulesSelector';
 
-jest.mock('material-ui/Checkbox')
+jest.mock('../../src/components/RuleLabel')
 
 const mockFilters = {
   'for_stmt': {
@@ -42,7 +42,7 @@ describe('<RulesSelector />', () => {
           onRuleSelected={jest.fn()}
         />
       );
-      const listItems = wrapper.find('Checkbox');
+      const listItems = wrapper.find('RuleLabel');
       expect(listItems.length).toEqual(Object.keys(mockFilters).length);
     });
   });
