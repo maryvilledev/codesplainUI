@@ -20,7 +20,9 @@ function highlightNode(codeMirror, node, filters, parentColor) {
     const rule = rules[node.type]; // Get the rule obj for this rule
     if (!rule) {
       console.log(`rule "${node.type}" is missing from rules object!`);
-    } else { // Use this node's color if it has one, otherwise log a warning
+      return; // Remove this return and the highlighting will sometimes fail
+    } 
+    else { // Use this node's color if it has one, otherwise log a warning
       if (rule.color) {
         color = rule.color; // Get the color for this rule
       } else {

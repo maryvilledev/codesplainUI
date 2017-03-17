@@ -37,6 +37,20 @@ export const ignoredRules = [
   'testlist_comp',
   'arglist',
   'expr_stmt',
+  '.IF',
+  '.COLON',
+  '.NEWLINE',
+  '.INDENT',
+  '.NAME',
+  '.OPEN_PAREN',
+  '.STRING_LITERAL',
+  '.CLOSE_PAREN',
+  '.DEDENT',
+  '._EOF',
+  '.FOR',
+  '.IN',
+  '.DECIMAL_INTEGER',
+  '.COMMA',
 ]
 
 /*
