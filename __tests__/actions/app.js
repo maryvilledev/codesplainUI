@@ -176,6 +176,13 @@ describe('Actions: App', () => {
       moxios.uninstall();
     });
     describe('SAVE_STATE', () => {
+      it('dispatches no additional actions if an id is not supplied', () => {
+        const store = mockStore({});
+        return store.dispatch(actions.saveState())
+          .then(() => { // return of async actions
+          expect(store.getActions()).toEqual([])
+        });
+      });
       it('creates SAVE_STATE_SUCCEEDED if saved', () => {
         moxios.wait(() => {
           const request = moxios.requests.mostRecent();
