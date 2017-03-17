@@ -9,7 +9,7 @@ function highlightNode(codeMirror, node, filters, parentColor) {
   let color = parentColor;
 
   // If we aren't ignoring this token...
-  if (ignoredRules.indexOf(node.type) === -1  && rules[node.type]) {
+  if (ignoredRules.indexOf(node.type) === -1 && rules[node.type]) {
     color = rules[node.type].color; // Get the color for this token's type
 
     // If this token has no color
