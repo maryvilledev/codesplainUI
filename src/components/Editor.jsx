@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import CodeMirror from 'react-codemirror';
+import _ from 'lodash'
 
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/python/python.js';
@@ -42,9 +43,14 @@ const makeMarker = () => {
 class Editor extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {}
     this.handleGutterClick = this.handleGutterClick.bind(this);
     this.emphasizeLine = this.emphasizeLine.bind(this);
     this.deEmphasize = this.deEmphasize.bind(this);
+  }
+
+  shouldComponentUpdate(nextProps) {
+    return !_.isEqual(nextProps, this.props)
   }
 
   componentDidMount() {
@@ -56,10 +62,14 @@ class Editor extends React.Component {
     const {
       markedLines,
       openLine,
-      value,
       AST,
-      filters
+      filters,
+      value
     } = this.props;
+    const {
+      newAST,
+      newFilters,
+    } = this.state
 
     const codeMirrorInst = this.codeMirror.getCodeMirror();
     codeMirrorInst.clearGutter('annotations');
@@ -73,15 +83,15 @@ class Editor extends React.Component {
       // would evaluate to false
       this.emphasizeLine(openLine);
     }
-    if (value && AST.children && filters) {
-      try {
-        highlight(codeMirrorInst, AST, filters)
-      } catch (err) {
-        console.error(err)
-      }
+    if ((newAST || newFilters) && value) {
+      highlight(codeMirrorInst, AST, filters)
     }
   }
-
+  componentWillReceiveProps(nextProps) {
+    const newAST = !_.isEqual(nextProps.AST, this.props.AST)
+    const newFilters = !_.isEqual(nextProps.filters, this.props.filters)
+    this.setState({newAST, newFilters})
+  }
   handleGutterClick(instance, lineNumber) {
     const { onGutterClick, readOnly } = this.props;
     if (!readOnly) {
@@ -111,9 +121,9 @@ class Editor extends React.Component {
 
   render() {
     const {
-      onChange,
       readOnly,
       value,
+      onChange
     } = this.props;
 
     const codeMirrorOptions = {

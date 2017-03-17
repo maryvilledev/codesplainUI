@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import _ from 'lodash'
 import { CardText, Snackbar } from 'material-ui';
 import { browserHistory } from 'react-router'
 
@@ -10,6 +11,13 @@ import {
   setSnippetTitle,
   toggleEditState,
 } from '../actions/app';
+
+//Create an async function to fire the parseSnippet action
+async function dispatchParseSnippet(snippet, dispatch) {
+  dispatch(parseSnippet(snippet))
+}
+//Only fire the parse snippet action 400 millis after the last keydown
+const debouncedParseSnippetDispatch = _.debounce(dispatchParseSnippet, 400)
 
 import {
   openAnnotationPanel,
@@ -33,7 +41,6 @@ export class SnippetArea extends React.Component {
     this.handleCloseModal = this.handleCloseModal.bind(this);
     this.handleGutterClick = this.handleGutterClick.bind(this);
     this.handleLock = this.handleLock.bind(this);
-
     this.handleSave = this.handleSave.bind(this);
     this.handleSaveAs = this.handleSaveAs.bind(this);
     this.handleSnippetChanged = this.handleSnippetChanged.bind(this);
@@ -51,7 +58,7 @@ export class SnippetArea extends React.Component {
   handleSnippetChanged(snippetContents) {
     const { dispatch } = this.props;
     dispatch(setSnippetContents(snippetContents));
-    dispatch(parseSnippet(snippetContents));
+    debouncedParseSnippetDispatch(snippetContents, dispatch)
   }
 
   handleTitleChanged(ev) {
@@ -146,8 +153,8 @@ export class SnippetArea extends React.Component {
     const markedLines = Object.keys(annotations).map((key) => Number(key))
     return (
       <CardText>
-        <SnippetAreaToolbar 
-          title={snippetTitle}  
+        <SnippetAreaToolbar
+          title={snippetTitle}
           onTitleChange={this.handleTitleChanged}d
           readOnly={readOnly}
           onLockClick={this.handleLock}
