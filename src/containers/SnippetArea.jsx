@@ -89,7 +89,7 @@ export class SnippetArea extends React.Component {
     const { snippetTitle, appState } = this.props;
     if (!snippetTitle) {
       this.setState({ titleErrorText: 'This field is required' });
-      this.showSnackbar('Please the title field before saving.');
+      this.showSnackbar('Please populate the title field before saving.');
       return;
     }
     this.setState({ titleErrorText: '' });
@@ -120,7 +120,7 @@ export class SnippetArea extends React.Component {
     const { snippetTitle, appState } = this.props;
     if (!snippetTitle) {
       this.setState({ titleErrorText: 'This field is required' });
-      this.showSnackbar('Please the title field before saving.');
+      this.showSnackbar('Please populate the title field before saving.');
       return;
     }
     this.setState({ titleErrorText: '' });
