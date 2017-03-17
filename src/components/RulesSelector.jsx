@@ -26,7 +26,7 @@ const makeListItems = (filters, onRuleSelected) => {
           count={count}
           color={color}
           isActive={selected}
-          onClick={() => { onRuleSelected(filterName) }}
+          onClick={() => onRuleSelected(filterName)}
         />
       );
     });

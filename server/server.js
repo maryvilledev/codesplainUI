@@ -29,6 +29,7 @@ const ASTTemplate = {
   type: _.isString,
   begin: _.isNumber,
   end: _.isNumber,
+  tags: _.isArray,
   children: _.isArray
 };
 

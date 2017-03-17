@@ -15,6 +15,7 @@ describe('<RuleLabel />', () => {
         color=""
         rule=""
         count=""
+        isActive={false}
         onClick={jest.fn()}
       />
     );
@@ -28,6 +29,7 @@ describe('<RuleLabel />', () => {
         color=""
         rule={rule}
         count={count}
+        isActive={false}
         onClick={jest.fn()}
       />
     );
@@ -35,20 +37,21 @@ describe('<RuleLabel />', () => {
     expect(wrapper.childAt(0).node).toBe(rule);
     expect(wrapper.childAt(1).childAt(0).node).toBe(`(${count})`);
   });
-  it('toggles color when clicked', () => {
+  it('toggles color when isActive prop changes', () => {
     const color = '#000000';
     const wrapper = shallowWithContext(
       <RuleLabel 
         color={color}
         rule={''}
         count={''}
+        isActive={false}
         onClick={jest.fn()}
       />
     );
     expect(wrapper.props().style.backgroundColor).toBe('transparent');
-    wrapper.simulate('click');
+    wrapper.setProps({ isActive: true });
     expect(wrapper.props().style.backgroundColor).toBe(color);
-    wrapper.simulate('click');
+    wrapper.setProps({ isActive: false });
     expect(wrapper.props().style.backgroundColor).toBe('transparent');
   });
   it('invokes the onClick callback prop', () => {
@@ -58,6 +61,7 @@ describe('<RuleLabel />', () => {
         color={''}
         rule={''}
         count={''}
+        isActive={false}
         onClick={onClick}
       />
     );
