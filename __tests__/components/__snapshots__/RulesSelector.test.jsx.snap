@@ -12,11 +12,13 @@ exports[`<RulesSelector /> matches snapshot 1`] = `
   </Subheader>
   <div>
     <RuleLabel
+      count={1}
       onClick={[Function]}
-      text="For Loops (1)" />
+      rule="For Loops" />
     <RuleLabel
+      count={21}
       onClick={[Function]}
-      text="Atoms (21)" />
+      rule="Atoms" />
   </div>
 </div>
 `;

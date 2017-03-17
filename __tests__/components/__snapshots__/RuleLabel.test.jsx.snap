@@ -16,5 +16,15 @@ exports[`<RuleLabel /> matches snapshot 1`] = `
       "padding": "5px",
       "width": "100%",
     }
-  } />
+  }>
+  <span
+    style={
+      Object {
+        "color": "#666666",
+        "float": "right",
+      }
+    }>
+    ()
+  </span>
+</div>
 `;

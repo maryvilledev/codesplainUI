@@ -13,30 +13,35 @@ describe('<RuleLabel />', () => {
     const wrapper = shallowWithContext(
       <RuleLabel 
         color=""
-        text=""
+        rule=""
+        count=""
         onClick={jest.fn()}
       />
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
-  it('displays the text prop', () => {
-    const text = 'Test Text';
+  it('displays the rule and count props', () => {
+    const rule = 'Test Rule';
+    const count = '1';
     const wrapper = shallowWithContext(
       <RuleLabel 
         color=""
-        text={text}
+        rule={rule}
+        count={count}
         onClick={jest.fn()}
       />
     );
-    expect(wrapper.children()).toHaveLength(1);
-    expect(wrapper.children().node).toBe(text);
+    expect(wrapper.children()).toHaveLength(2);
+    expect(wrapper.childAt(0).node).toBe(rule);
+    expect(wrapper.childAt(1).childAt(0).node).toBe(`(${count})`);
   });
   it('toggles color when clicked', () => {
     const color = '#000000';
     const wrapper = shallowWithContext(
       <RuleLabel 
         color={color}
-        text={''}
+        rule={''}
+        count={''}
         onClick={jest.fn()}
       />
     );
@@ -51,7 +56,8 @@ describe('<RuleLabel />', () => {
     const wrapper = shallowWithContext(
       <RuleLabel 
         color={''}
-        text={''}
+        rule={''}
+        count={''}
         onClick={onClick}
       />
     );
