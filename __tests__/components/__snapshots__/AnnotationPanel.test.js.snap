@@ -1,5 +1,10 @@
 exports[`<AnnotationPanel /> snapshot tests matches snapshot when an annotation is saved for a line 1`] = `
-<div>
+<div
+  style={
+    Object {
+      "padding": "3%",
+    }
+  }>
   <LineSnippet
     lineNumber={1}
     value="True" />
@@ -11,7 +16,12 @@ exports[`<AnnotationPanel /> snapshot tests matches snapshot when an annotation 
 `;
 
 exports[`<AnnotationPanel /> snapshot tests matches snapshot when no annotation is saved for a line 1`] = `
-<div>
+<div
+  style={
+    Object {
+      "padding": "3%",
+    }
+  }>
   <LineSnippet
     lineNumber={1}
     value="True" />

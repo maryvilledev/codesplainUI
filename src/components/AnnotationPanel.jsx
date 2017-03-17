@@ -4,6 +4,12 @@ import AnnotationDisplay from './AnnotationDisplay';
 import AnnotationEditor from './AnnotationEditor';
 import LineSnippet from './LineSnippet';
 
+const style = {
+  container: {
+    padding: '3%'
+  }
+}
+
 class AnnotationPanel extends React.Component {
   constructor(props) {
     super(props);
@@ -49,7 +55,7 @@ class AnnotationPanel extends React.Component {
     } = this.props;
     const { isEditing } = this.state;
     return (
-      <div>
+      <div style={style.container}>
         <LineSnippet
           lineNumber={lineNumber + 1}
           value={lineText}
