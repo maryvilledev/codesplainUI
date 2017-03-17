@@ -81,11 +81,11 @@ export const saveState = (id) => {
   return (dispatch, getState) => {
     // If the snippet has not been saved, then saving an annotation shouldn't
     // trigger a POST request to save the snippet (and its annotations)
-    if (id === null) {
+    if (id === undefined) {
       // Return a Promise object to make this action "thenable"
       return Promise.resolve();
     }
-    dispatch(saveStateStarted())
+    dispatch(saveStateStarted());
     // Get the app state and stringify it
     const stateString = JSON.stringify(getState().app);
 
@@ -97,5 +97,5 @@ export const saveState = (id) => {
       }, (err) => {
         dispatch(saveStateFailed());
       });
-  }
-}
+  };
+};
