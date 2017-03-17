@@ -13,6 +13,10 @@ const styles = {
     borderWidth: '1px',
     cursor: 'pointer',
   },
+  countSpan: {
+    float: 'right',
+    color: '#666666',
+  },
 }
 
 class RuleLabel extends React.Component {
@@ -24,7 +28,7 @@ class RuleLabel extends React.Component {
   }
 
   render() {
-    const { color, text, onClick } = this.props;
+    const { color, rule, count, onClick } = this.props;
     const { isActive } = this.state;
     const backgroundColor = isActive ? color : 'transparent';
     const borderColor = isActive ? 'transparent' : '#e6e6e6' // light grey
@@ -35,8 +39,10 @@ class RuleLabel extends React.Component {
           this.setState({ isActive: !isActive });
           onClick();
         }}
-        children={text}
-      />
+      >
+        {rule}
+        <span style={styles.countSpan}>{`(${count})`}</span>
+      </div>
     );
   }
 }
