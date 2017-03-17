@@ -4,13 +4,14 @@ import SaveIcon from 'material-ui/svg-icons/content/save';
 
 const saveIconButton = (
   <IconButton
-    tooltip="Save Options"
+    title="Save Options"
     children={<SaveIcon />}
   />
 );
 
-const SaveMenu = ({ onSaveClick, onSaveAsClick }) => (
+const SaveMenu = ({ id, onSaveClick, onSaveAsClick }) => (
   <IconMenu
+    id={id}
     iconButtonElement={saveIconButton}
   >
     <MenuItem 
