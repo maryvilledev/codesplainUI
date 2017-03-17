@@ -69,7 +69,7 @@ export function getRuleCount(node, map) {
 export const generateFilters = (prevFilters, ruleCounts) => {
   const newFilters = {};
   if (!ruleCounts || Object.keys(ruleCounts) === 0) {
-    return {};
+    return newFilters;
   }
   Object.keys(ruleCounts)
     .filter(r => rules[r] !== undefined)
@@ -79,6 +79,7 @@ export const generateFilters = (prevFilters, ruleCounts) => {
         prettyTokenName: rules[r].prettyName,
         count:           ruleCounts[r],
         selected:        selected,
+        color:           rules[r].color,
       }
     });
   return newFilters;

@@ -1,54 +1,57 @@
 import React, { PropTypes } from 'react';
-import Checkbox from 'material-ui/Checkbox';
-import Subheader from 'material-ui/Subheader';
+import RuleLabel from './RuleLabel';
+import { Subheader } from 'material-ui';
 
-const style = {
+const styles = {
   subheader: {
     lineHeight: 1,
     padding: 0,
   },
-  label: {
-    fontSize: '8pt',
-    lineHeight: 1,
-    margin: 0,
-  },
-  innerLabel: {
-    marginTop: '7px', //To match margin on checkbox
-  }
 }
 
 const makeListItems = (filters, onRuleSelected) => {
-  const listItems = Object.keys(filters).map((filterName) => {
-    const filter = filters[filterName];
-    return (
-          <Checkbox
-            checked={filter.selected}
-            onCheck={() => onRuleSelected(filterName)}
-            labelStyle={style.label}
-            label={<div style={style.innerLabel}>{`${filter.prettyTokenName} (${filter.count})`}</div>}
-            key={filterName}
-          />
-    );
-  });
-  return listItems;
+  return Object.keys(filters)
+    .map((filterName) => {
+      // Extract the filter information
+      const {
+        color,
+        count,
+        prettyTokenName,
+      } = filters[filterName];
+      return (
+        <RuleLabel
+          key={filterName}
+          // text={`${prettyTokenName (${count})`}
+          rule={prettyTokenName}
+          count={count}
+          color={color}
+          onClick={() => { onRuleSelected(filterName) }}
+        />
+      );
+    });
 };
 
 const RulesSelector = ({ filters, onRuleSelected }) => {
   const listItems = makeListItems(filters, onRuleSelected);
   return (
-  <div>
-    <Subheader style={style.subheader}>
-      Select a token type to highlight all occurences
-    </Subheader>
+    <div>
+      <Subheader style={styles.subheader}>
+        Select a token type to highlight all occurences
+      </Subheader>
       <div>
         {listItems}
       </div>
-  </div>
+    </div>
   );
 };
 
 RulesSelector.propTypes = {
-  filters: PropTypes.object.isRequired,
+  filters: PropTypes.shape({
+    color: PropTypes.string,
+    count: PropTypes.number,
+    prettyTokenName: PropTypes.string,
+    selected: PropTypes.bool,
+  }).isRequired,
   onRuleSelected: PropTypes.func.isRequired,
 };
 
