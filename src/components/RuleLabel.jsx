@@ -19,27 +19,22 @@ const styles = {
   },
 }
 
-class RuleLabel extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+const RuleLabel = () => {
+  const { color, rule, count, onClick, isActive } = this.props;
+  const backgroundColor = isActive ? color : 'transparent';
+  const borderColor = isActive ? 'transparent' : '#e6e6e6' // light grey
 
-  render() {
-    const { color, rule, count, onClick, isActive } = this.props;
-    const backgroundColor = isActive ? color : 'transparent';
-    const borderColor = isActive ? 'transparent' : '#e6e6e6' // light grey
-    return (
-      <div
-        style={{...styles.label, backgroundColor, borderColor }}
-        onClick={() => { 
-          onClick();
-        }}
-      >
-        {rule}
-        <span style={styles.countSpan}>{`(${count})`}</span>
-      </div>
-    );
-  }
+  return (
+    <div
+      style={{...styles.label, backgroundColor, borderColor }}
+      onClick={() => { 
+        onClick();
+      }}
+    >
+      {rule}
+      <span style={styles.countSpan}>{`(${count})`}</span>
+    </div>
+  );
 }
 
 export default RuleLabel
