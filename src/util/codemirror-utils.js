@@ -1,12 +1,5 @@
 import { rules, ignoredRules } from './rules.js';
-
-/*
-Given a CodeMirror instance, highlight() will use the specified AST and filters
-objects to apply highlighting to the code in the CodeMirror editor.
-*/
-export function highlight(codeMirror, AST, filters) {
-  highlightNode(codeMirror, AST, filters, 'transparent');
-}
+import _ from 'lodash'
 
 /*
 Recursive function for highlighting code in a CodeMirror. highlight() is an
@@ -16,6 +9,7 @@ function highlightNode(codeMirror, node, filters, parentColor) {
   let color = parentColor;
 
   // If we aren't ignoring this token...
+// <<<<<<< HEAD
   if (ignoredRules.indexOf(node.type) === -1) {
     const rule = rules[node.type]; // Get the rule obj for this rule
     if (!rule) {
@@ -28,6 +22,15 @@ function highlightNode(codeMirror, node, filters, parentColor) {
       } else {
         console.warn(`rule "${node.type}" has no color specified!`);
       }
+// =======
+//   if (ignoredRules.indexOf(node.type) === -1  && rules[node.type]) {
+//     color = rules[node.type].color; // Get the color for this token's type
+
+//     // If this token has no color
+//     if (!color) {
+//       color = 'inherit';
+//       console.warn(`token "${node.type}" has no color specified!`);
+// >>>>>>> master
     }
 
     // If this token's filter is not selected
@@ -46,7 +49,7 @@ function highlightNode(codeMirror, node, filters, parentColor) {
 
   // Highlight all children of this token
   node.children.forEach(child => {
-    if (child === Object(child)) 
+    if (child === Object(child))
       highlightNode(codeMirror, child, filters, color);
   });
 }
@@ -63,7 +66,6 @@ export function styleRegion(codeMirror, start, end, css) {
   const convert = getIndexToRowColConverter(snippet);
   codeMirror.markText(convert(start), convert(end), {css: css});
 }
-
 /*
 Given a CodeMirror instance styleLine() will apply the specified css style to the
 specified line of code in the editor. The first line is considered line 0, not 1.
@@ -94,7 +96,7 @@ row as column 0.
 export function getIndexToRowColConverter(snippet) {
   // Make array containing the length of each lines of code in snippet
   const lines = snippet.split('\n').map(l => l.length + 1); // +1 to accomodate '\n' that was lost when we split the snippet
-  return (index) => {
+  const converter = (index) => {
     let row, col, lenPrevRows;
     row = lenPrevRows = 0;
     while (index > lines[row] + lenPrevRows)
@@ -102,4 +104,13 @@ export function getIndexToRowColConverter(snippet) {
     col = index - lenPrevRows;
     return { line: row, ch: col }
   }
+  return _.memoize(converter)
+}
+
+/*
+Given a CodeMirror instance, highlight() will use the specified AST and filters
+objects to apply highlighting to the code in the CodeMirror editor.
+*/
+export async function highlight(codeMirror, AST, filters) {
+  highlightNode(codeMirror, AST, filters, 'transparent');
 }
