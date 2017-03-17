@@ -4,7 +4,10 @@ import { rules as parserRules, finalizers } from './src/parsers/python3.min.js';
 
 // Determines if rules is collapsed in parser
 const isCollapsed = (rule) => {
-  return parserRules[rule].finalizers[0] === finalizers.collapse;
+  if (!parserRules[rule].finalizers) 
+    return false;
+  else
+    return parserRules[rule].finalizers[0] === finalizers.collapse;
 }
 
 // Determines if rule is ignored by UI
