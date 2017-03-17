@@ -17,15 +17,16 @@ const makeListItems = (filters, onRuleSelected) => {
         color,
         count,
         prettyTokenName,
+        selected,
       } = filters[filterName];
       return (
         <RuleLabel
           key={filterName}
-          // text={`${prettyTokenName (${count})`}
           rule={prettyTokenName}
           count={count}
           color={color}
-          onClick={() => { onRuleSelected(filterName) }}
+          isActive={selected}
+          onClick={() => onRuleSelected(filterName)}
         />
       );
     });

@@ -29,12 +29,13 @@ const ASTTemplate = {
   type: _.isString,
   begin: _.isNumber,
   end: _.isNumber,
+  tags: _.isArray,
   children: _.isArray
 };
 
 const validateAST = function(AST) {
   if (_.isString(AST)) { return true; }
-  return _.congruent(ASTTemplate, AST) && (AST.children && AST.children.every(validateAST))
+  return _.similar(ASTTemplate, AST) && (AST.children && AST.children.every(validateAST))
 }
 
 const requestTemplate = {
@@ -56,7 +57,7 @@ app.use(express.static(path.resolve(__dirname, "..", 'build')));
 
 function saveToRedis(id, req, res) {
   var json = JSON.parse(req.body.json);
-  if (_.isObject(json) && _.congruent(requestTemplate, json)) {
+  if (_.isObject(json) && _.similar(requestTemplate, json)) {
     redis.set(id, JSON.stringify(json));
     res.json({id: id});
   } else {
