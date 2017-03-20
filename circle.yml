@@ -11,6 +11,6 @@ deployment:
     commands:
         - ./publish codesplain-ui
   master:
-    branch: [addS3deploy, master]
+    branch: master
     commands:
       - ./publish codesplain-ui-dev
