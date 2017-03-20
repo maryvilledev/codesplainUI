@@ -18,4 +18,28 @@ describe('<SaveMenu />', () => {
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
+
+  describe('prop: onSaveAsClick', () => {
+    it('forwarded to the "Save" MenuItem', () => {
+      const onSaveClick = jest.fn();
+      const wrapper = shallowWithContext(
+        <SaveMenu
+          onSaveClick={onSaveClick}
+          onSaveAsClick={jest.fn()}
+        />
+      );
+      expect(wrapper.find('[primaryText="Save"]').prop('onTouchTap')).toEqual(onSaveClick);
+    });
+  });
+
+  describe('prop: onSaveAsClick', () => {
+    const onSaveAsClick = jest.fn();
+    const wrapper = shallowWithContext(
+      <SaveMenu
+        onSaveClick={jest.fn()}
+        onSaveAsClick={onSaveAsClick}
+      />
+    );
+    expect(wrapper.find('[primaryText="Save As"]').prop('onTouchTap')).toEqual(onSaveAsClick);
+  });
 });
