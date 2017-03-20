@@ -34,7 +34,8 @@ exports.handler = (event, context, callback) => {
             context.fail({ statusCode: 400});
 
         } else {
-            context.succeed({ statusCode: 200});
+            const object = JSON.stringify({key});
+            context.succeed({statusCode: 200, body: object})
         }
     });
 };
