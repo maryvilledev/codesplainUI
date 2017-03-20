@@ -52,7 +52,7 @@ start and end are inclusive.
 */
 export function styleRegion(codeMirror, start, end, css) {
   if (end < start) throw new Error('end must be greater than start');
-  codeMirror.markText(codeMirror.posFromIndex(start), codeMirror.posFromIndex(end), {css: css});
+  codeMirror.markText(codeMirror.posFromIndex(start), codeMirror.posFromIndex(end), {css});
 }
 /*
 Given a CodeMirror instance styleLine() will apply the specified css style to the
