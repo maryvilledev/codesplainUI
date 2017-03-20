@@ -9,63 +9,91 @@ describe('<RuleLabel />', () => {
   const muiTheme = getMuiTheme();
   const shallowWithContext = (node) => shallow(node, { context: { muiTheme } });
 
-  it('matches snapshot', () => {
+  describe('snapshot tests', () => {
+    it('matches snapshot of when it is active', () => {
+      const wrapper = shallowWithContext(
+        <RuleLabel
+          color="#FF0000"
+          rule="Example Rule"
+          count="1"
+          isActive={true}
+          onClick={jest.fn()}
+        />
+      );
+      expect(shallowToJson(wrapper)).toMatchSnapshot();
+    });
+    it('matches snapshot of when it is not active', () => {
+      const wrapper = shallowWithContext(
+        <RuleLabel
+          color="#FF0000"
+          rule="Example Rule"
+          count="1"
+          isActive={false}
+          onClick={jest.fn()}
+        />
+      );
+      expect(shallowToJson(wrapper)).toMatchSnapshot();
+    });
+  });
+
+  describe('prop: rule', () => {
+    it('is rendered as a child', () => {
+      const rule = 'Those are my eyeholes, man!';
+      const wrapper = shallowWithContext(
+        <RuleLabel
+          color=""
+          rule={rule}
+          count="0"
+          isActive={false}
+          onClick={jest.fn()}
+        />
+      );
+      expect(wrapper.childAt(0).text()).toEqual(rule);
+    });
+  });
+
+  describe('prop: count', () => {
+    const count = "3";
     const wrapper = shallowWithContext(
-      <RuleLabel 
+      <RuleLabel
         color=""
         rule=""
-        count=""
-        isActive={false}
-        onClick={jest.fn()}
-      />
-    );
-    expect(shallowToJson(wrapper)).toMatchSnapshot();
-  });
-  it('displays the rule and count props', () => {
-    const rule = 'Test Rule';
-    const count = '1';
-    const wrapper = shallowWithContext(
-      <RuleLabel 
-        color=""
-        rule={rule}
         count={count}
         isActive={false}
         onClick={jest.fn()}
       />
     );
-    expect(wrapper.children()).toHaveLength(2);
-    expect(wrapper.childAt(0).node).toBe(rule);
-    expect(wrapper.childAt(1).childAt(0).node).toBe(`(${count})`);
+    expect(wrapper.find('span').text()).toBe(`(${count})`);
   });
-  it('toggles color when isActive prop changes', () => {
-    const color = '#000000';
-    const wrapper = shallowWithContext(
-      <RuleLabel 
-        color={color}
-        rule={''}
-        count={''}
-        isActive={false}
-        onClick={jest.fn()}
-      />
-    );
-    expect(wrapper.props().style.backgroundColor).toBe('transparent');
-    wrapper.setProps({ isActive: true });
-    expect(wrapper.props().style.backgroundColor).toBe(color);
-    wrapper.setProps({ isActive: false });
-    expect(wrapper.props().style.backgroundColor).toBe('transparent');
-  });
-  it('invokes the onClick callback prop', () => {
-    const onClick = jest.fn();
-    const wrapper = shallowWithContext(
-      <RuleLabel 
-        color={''}
-        rule={''}
-        count={''}
-        isActive={false}
-        onClick={onClick}
-      />
-    );
-    wrapper.simulate('click');
-    expect(onClick.mock.calls.length).toBe(1);
+
+  describe('prop: onClick', () => {
+    it('should forward it', () => {
+      const onClick = jest.fn();
+      const wrapper = shallowWithContext(
+        <RuleLabel
+          color={''}
+          rule={''}
+          count={''}
+          isActive={false}
+          onClick={onClick}
+        />
+      );
+      expect(wrapper.find('div').prop('onClick')).toEqual(onClick);
+    });
+
+    it('is called when the component is clicked', () => {
+      const onClick = jest.fn();
+      const wrapper = shallowWithContext(
+        <RuleLabel
+          color={''}
+          rule={''}
+          count={''}
+          isActive={false}
+          onClick={onClick}
+        />
+      );
+      wrapper.simulate('click');
+      expect(onClick).toHaveBeenCalled();
+    });
   });
 });

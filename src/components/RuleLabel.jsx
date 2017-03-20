@@ -1,23 +1,23 @@
 import React, { PropTypes } from 'react';
 
 const styles = {
+  countSpan: {
+    color: '#666666',
+    float: 'right',
+  },
   label: {
-    padding: '5px',
-    fontSize: '10pt',
-    lineHeight: 1,
-    marginTop: '5px',
-    width: '100%',
-    maxWidth: '200px',
     borderRadius: '5px',
     borderStyle: 'solid',
     borderWidth: '1px',
     cursor: 'pointer',
+    fontSize: '10pt',
+    lineHeight: 1,
+    marginTop: '5px',
+    maxWidth: '200px',
+    padding: '5px',
+    width: '100%',
   },
-  countSpan: {
-    float: 'right',
-    color: '#666666',
-  },
-}
+};
 
 const RuleLabel = ({ color, rule, count, onClick, isActive }) => {
   const backgroundColor = isActive ? color : 'transparent';
@@ -32,14 +32,14 @@ const RuleLabel = ({ color, rule, count, onClick, isActive }) => {
       <span style={styles.countSpan}>{`(${count})`}</span>
     </div>
   );
-}
-
-export default RuleLabel
+};
 
 RuleLabel.propTypes = {
   color: PropTypes.string.isRequired,
-  rule: PropTypes.string.isRequired,
   count: PropTypes.string.isRequired,
   isActive: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
-}
+  rule: PropTypes.string.isRequired,
+};
+
+export default RuleLabel;
