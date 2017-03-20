@@ -11,6 +11,6 @@ deployment:
     commands:
         - /bin/bash publishTag codesplain-ui
   master:
-    branch: [master, addS3deploy]
+    branch: master
     commands:
       - /bin/bash publish codesplain-ui-dev
