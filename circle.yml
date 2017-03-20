@@ -9,5 +9,4 @@ deployment:
     master:
       branch: [addS3deploy, master]
       commands:
-        - yarn
-        - /bin/bash publish.sh
+        - /bin/bash publish
