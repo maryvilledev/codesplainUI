@@ -12,10 +12,12 @@ const styles = {
     borderStyle: 'solid',
     borderWidth: '1px',
     cursor: 'pointer',
+    display: 'inline-block',
   },
   countSpan: {
     float: 'right',
     color: '#666666',
+    display: 'block',
   },
 }
 

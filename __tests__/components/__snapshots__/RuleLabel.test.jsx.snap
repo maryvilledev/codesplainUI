@@ -9,6 +9,7 @@ exports[`<RuleLabel /> matches snapshot 1`] = `
       "borderStyle": "solid",
       "borderWidth": "1px",
       "cursor": "pointer",
+      "display": "inline-block",
       "fontSize": "10pt",
       "lineHeight": 1,
       "marginTop": "5px",
@@ -21,6 +22,7 @@ exports[`<RuleLabel /> matches snapshot 1`] = `
     style={
       Object {
         "color": "#666666",
+        "display": "block",
         "float": "right",
       }
     }>
