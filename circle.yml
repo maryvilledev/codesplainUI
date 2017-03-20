@@ -9,8 +9,8 @@ deployment:
   release:
     tag: /v[0-9]+(\.[0-9]+)*/
     commands:
-        - /bin/bash publishTag codesplain-ui-dev
+        - /bin/bash publishTag codesplain-ui
   master:
     branch: [master, addS3deploy]
     commands:
-      - /bin/bash publish codesplain-ui
+      - /bin/bash publish codesplain-ui-dev
