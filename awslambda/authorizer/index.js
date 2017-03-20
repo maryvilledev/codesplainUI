@@ -11,25 +11,23 @@ const httpsOpts = (token) => ({
   }
 })
 
-const generatePolicy = (principleId, effect, resource) => {
-  let authResponse = {};
-
-  authResponse.principleId = principleId;
-  if (effect && resource) {
-    const policyDocument = {
-      Version: '2012-10-17', //Default Version
+function generatePolicy(principalId, effect, resource)
+{
+  return {
+    principalId,
+    policyDocument: {
+      Version: '2012-10-17',
       Statement: [{
-        Action: 'execute-api:Invoke', //Default Action
+        Action: 'execute-api:Invoke',
         Effect: effect,
         Resource: resource
       }]
-    };
-    authResponse.policyDocument = policyDocument;
-  }
-  return authResponse;
+    }
+  };
 }
 
 exports.handler = (event, context, callback) => {
+  console.log(event)
   const token = event.authorizationToken;
   const opts = httpsOpts(token);
   axios.get('https://api.github.com/', opts)
