@@ -2,7 +2,6 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import { IconButton } from 'material-ui';
 
 import LockButton from '../../src/components/buttons/LockButton';
 
