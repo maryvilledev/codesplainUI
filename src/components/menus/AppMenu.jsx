@@ -1,7 +1,13 @@
 import React, { PropTypes } from 'react';
+import cookie from 'react-cookie';
+
+import {
+  Avatar,
+  IconButton,
+  IconMenu,
+  MenuItem,
+} from 'material-ui';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import { IconMenu, IconButton, MenuItem, Avatar } from 'material-ui';
-import cookie from 'react-cookie'
 
 const styles = {
   avatar: {
@@ -10,7 +16,7 @@ const styles = {
   }
 }
 
-// Returns an <Avatar /> of the user's GitHub icon if the requisite cookie is 
+// Returns an <Avatar /> of the user's GitHub icon if the requisite cookie is
 // present, otherwise returns null.
 const getUserAvatar = () => {
   const avatarURL = cookie.load('userAvatarURL');
@@ -37,7 +43,7 @@ const AppMenu = ({ onSignOut }) => (
       targetOrigin={{horizontal: 'right', vertical: 'top'}}
       anchorOrigin={{horizontal: 'right', vertical: 'top'}}
     >
-      <MenuItem 
+      <MenuItem
         primaryText="Sign out"
         onClick={onSignOut}
       />
@@ -48,6 +54,6 @@ const AppMenu = ({ onSignOut }) => (
 
 AppMenu.proptypes = {
   onSignOut: PropTypes.func.isRequired,
-}
+};
 
-export default AppMenu
+export default AppMenu;

@@ -5,12 +5,6 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import Editor from '../../src/components/Editor';
 
-const mockFunctionProps = {
-  onChange: jest.fn(),
-  onGutterClick: jest.fn(),
-  onParserRun: jest.fn(),
-};
-
 describe('<Editor />', () => {
   const muiTheme = getMuiTheme();
   const shallowWithContext = (node) => shallow(node, { context: { muiTheme } });
@@ -23,10 +17,29 @@ describe('<Editor />', () => {
         markedLines={[]}
         readOnly={false}
         value=""
-        {...mockFunctionProps}
+        onChange={jest.fn()}
+        onGutterClick={jest.fn()}
       />
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
+  });
+
+  describe('prop: onChange', () => {
+    it('forwarded to the CodeMirror instance', () => {
+      const onChange = jest.fn();
+      const wrapper = shallowWithContext(
+        <Editor
+          AST={{}}
+          filters={{}}
+          markedLines={[]}
+          readOnly={false}
+          value=""
+          onChange={onChange}
+          onGutterClick={jest.fn()}
+        />
+      );
+      expect(wrapper.find('CodeMirror').prop('onChange')).toEqual(onChange);
+    });
   });
 
   describe('prop: value', () => {
@@ -39,7 +52,8 @@ describe('<Editor />', () => {
           markedLines={[]}
           readOnly={false}
           value={snippetContents}
-          {...mockFunctionProps}
+          onChange={jest.fn()}
+          onGutterClick={jest.fn()}
         />
       );
       expect(wrapper.find('CodeMirror').prop('value')).toEqual(snippetContents);
