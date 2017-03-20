@@ -11,12 +11,16 @@ exports[`<Alert /> matches snapshot 1`] = `
       onMouseEnter={[Function]}
       onMouseLeave={[Function]}
       onTouchStart={[Function]}
+      onTouchTap={[Function]}
       primary={true}
       secondary={false} />
   }
   autoDetectWindowHeight={true}
   autoScrollBodyContent={false}
   modal={false}
+  onRequestClose={[Function]}
   open={true}
-  repositionOnUpdate={true} />
+  repositionOnUpdate={true}>
+  Wubba lubba dub dub!
+</Dialog>
 `;
