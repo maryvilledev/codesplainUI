@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+BUCKET=codesplain-ui-dev
+DIR=build/
+aws  s3  sync $DIR s3://$BUCKET/ --exclude "*DS_Store"

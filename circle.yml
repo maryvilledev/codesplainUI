@@ -4,3 +4,10 @@ dependencies:
 test:
   override:
     - yarn test
+
+deployment:
+    aws:
+    branch: [addS3deploy, master]
+    commands:
+      - yarn
+      - /bin/bash publish.sh
