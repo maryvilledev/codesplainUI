@@ -27,7 +27,6 @@ function generatePolicy(principalId, effect, resource)
 }
 
 exports.handler = (event, context, callback) => {
-  console.log(event)
   const token = event.authorizationToken;
   const opts = httpsOpts(token);
   axios.get('https://api.github.com/', opts)
