@@ -79,6 +79,6 @@ objects to apply highlighting to the code in the CodeMirror editor.
 export async function highlight(codeMirror, AST, filters) {
   //Make this a first-class function
   const func = () => highlightNode(codeMirror, AST, filters, 'transparent');
-  //Codemirror buffers it's calls ahead of time, then performs them atomically
+  //Codemirror buffers its calls ahead of time, then performs them atomically
   codeMirror.operation(func)
 }
