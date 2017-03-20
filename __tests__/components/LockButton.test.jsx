@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import { IconButton } from 'material-ui';
 
 import LockButton from '../../src/components/buttons/LockButton';
 
@@ -18,6 +19,7 @@ describe('<LockButton />', () => {
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
+
   it('matches snapshot of when the app is in read-only mode', () => {
     const wrapper = shallowWithContext(
       <LockButton
@@ -26,5 +28,20 @@ describe('<LockButton />', () => {
       />
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
+  });
+
+  describe('prop: onClick', () => {
+    it('is triggered when clicked', () => {
+      const onClick = jest.fn();
+      const wrapper = shallowWithContext(
+        <LockButton
+          onClick={onClick}
+          readOnly={true}
+        />
+      );
+      const button = wrapper.find('IconButton');
+      button.simulate('touchTap');
+      expect(onClick).toHaveBeenCalled();
+    });
   });
 })
