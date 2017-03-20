@@ -111,32 +111,36 @@ describe('<SnippetAreaToolbar />', () => {
   });
 
   describe('prop: onSaveClick', () => {
-    const onSaveClick = jest.fn();
-    const wrapper = shallowWithContext(
-      <SnippetAreaToolbar
-        title={''}
-        onTitleChange={jest.fn()}
-        readOnly={false}
-        onLockClick={jest.fn()}
-        onSaveClick={onSaveClick}
-        onSaveAsClick={jest.fn()}
-      />
-    );
-    expect(wrapper.find('SaveMenu').prop('onSaveClick')).toBe(onSaveClick);
+    it('forwarded to the SaveMenu', () => {
+      const onSaveClick = jest.fn();
+      const wrapper = shallowWithContext(
+        <SnippetAreaToolbar
+          title={''}
+          onTitleChange={jest.fn()}
+          readOnly={false}
+          onLockClick={jest.fn()}
+          onSaveClick={onSaveClick}
+          onSaveAsClick={jest.fn()}
+        />
+      );
+      expect(wrapper.find('SaveMenu').prop('onSaveClick')).toBe(onSaveClick);
+    });
   });
 
   describe('prop: onSaveAsClick', () => {
-    const onSaveAsClick = jest.fn();
-    const wrapper = shallowWithContext(
-      <SnippetAreaToolbar
-        title={''}
-        onTitleChange={jest.fn()}
-        readOnly={false}
-        onLockClick={jest.fn()}
-        onSaveClick={jest.fn()}
-        onSaveAsClick={onSaveAsClick}
-      />
-    );
-    expect(wrapper.find('SaveMenu').prop('onSaveAsClick')).toBe(onSaveAsClick);
+    it('forwarded to the SaveMenu', () => {
+      const onSaveAsClick = jest.fn();
+      const wrapper = shallowWithContext(
+        <SnippetAreaToolbar
+          title={''}
+          onTitleChange={jest.fn()}
+          readOnly={false}
+          onLockClick={jest.fn()}
+          onSaveClick={jest.fn()}
+          onSaveAsClick={onSaveAsClick}
+        />
+      );
+      expect(wrapper.find('SaveMenu').prop('onSaveAsClick')).toBe(onSaveAsClick);
+    });
   });
 });
