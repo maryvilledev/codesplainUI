@@ -14,7 +14,7 @@ function highlightNode(codeMirror, node, filters, parentColor) {
     if (!rule) {
       console.log(`rule "${node.type}" is missing from rules object!`);
       return; // Remove this return and the highlighting will sometimes fail
-    } 
+    }
     else { // Use this node's color if it has one, otherwise log a warning
       if (rule.color) {
         color = rule.color; // Get the color for this rule
@@ -102,5 +102,8 @@ Given a CodeMirror instance, highlight() will use the specified AST and filters
 objects to apply highlighting to the code in the CodeMirror editor.
 */
 export async function highlight(codeMirror, AST, filters) {
-  highlightNode(codeMirror, AST, filters, 'transparent');
+  //Make this a first-class function
+  const func = () => highlightNode(codeMirror, AST, filters, 'transparent');
+  //Codemirror buffers it's calls ahead of time, then performs them atomically
+  codeMirror.operation(func)
 }
