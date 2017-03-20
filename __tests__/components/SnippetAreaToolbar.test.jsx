@@ -89,7 +89,7 @@ describe('<SnippetAreaToolbar />', () => {
         />
       );
       const languageSelector = wrapper.find('[id="languageSelector"]');
-      expect(languageSelector.props().disabled).toBe(true);
+      expect(languageSelector.prop('disabled')).toBe(true);
     });
   });
 
