@@ -13,4 +13,4 @@ deployment:
   master:
     branch: master
     commands:
-      - ./publish codesplain-ui-dev
+      - ./publish dev.codesplain.io
