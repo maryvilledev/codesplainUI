@@ -3,6 +3,7 @@ import React, { PropTypes } from 'react';
 const styles = {
   countSpan: {
     color: '#666666',
+    display: 'block',
     float: 'right',
   },
   label: {
@@ -10,6 +11,7 @@ const styles = {
     borderStyle: 'solid',
     borderWidth: '1px',
     cursor: 'pointer',
+    display: 'inline-block',
     fontSize: '10pt',
     lineHeight: 1,
     marginTop: '5px',

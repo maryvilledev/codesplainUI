@@ -1,3 +1,7 @@
+import moxios from 'moxios';
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+
 import * as actions from '../../src/actions/app';
 
 describe('Actions: App', () => {
@@ -134,6 +138,88 @@ describe('Actions: App', () => {
         },
       };
       expect(actions.parseSnippet(snippet)).toEqual(expected);
+    });
+  });
+  describe('SAVE_STATE_STARTED', () => {
+    it('creates an action to notify state save has started', () => {
+      const expected = {
+        type: actions.SAVE_STATE_STARTED,
+      };
+      expect(actions.saveStateStarted()).toEqual(expected);
+    });
+  });
+  describe('SAVE_STATE_SUCCEEDED', () => {
+    it('creates an action to notify state save has succeeded', () => {
+      const expected = {
+        type: actions.SAVE_STATE_SUCCEEDED,
+      };
+      expect(actions.saveStateSucceeded()).toEqual(expected);
+    });
+  });
+  describe('SAVE_STATE_FAILED', () => {
+    it('creates an action to notify state save has failed', () => {
+      const expected = {
+        type: actions.SAVE_STATE_FAILED,
+      };
+      expect(actions.saveStateFailed()).toEqual(expected);
+    });
+  });
+  describe('async actions', () => {
+    const middlewares = [ thunk ];
+    const mockStore = configureMockStore(middlewares);
+    const mockId = 0;
+
+    beforeEach(() => {
+      moxios.install();
+    });
+    afterEach(() => {
+      moxios.uninstall();
+    });
+    describe('SAVE_STATE', () => {
+      it('dispatches no additional actions if an id is not supplied', () => {
+        const store = mockStore({});
+        return store.dispatch(actions.saveState())
+          .then(() => { // return of async actions
+          expect(store.getActions()).toEqual([])
+        });
+      });
+      it('creates SAVE_STATE_SUCCEEDED if saved', () => {
+        moxios.wait(() => {
+          const request = moxios.requests.mostRecent();
+          request.respondWith({
+            status: 200,
+            response: { id: mockId, status: '200' },
+          });
+        });
+
+        const expectedActions = [
+          { type: actions.SAVE_STATE_STARTED, },
+          { type: actions.SAVE_STATE_SUCCEEDED, },
+        ];
+        const store = mockStore({});
+        return store.dispatch(actions.saveState(mockId))
+          .then(() => { // return of async actions
+          expect(store.getActions()).toEqual(expectedActions)
+        });
+      });
+      it('creates SAVE_STATE_FAILED if save failed', () => {
+        moxios.wait(() => {
+          const request = moxios.requests.mostRecent();
+          request.respondWith({
+            status: 400,
+          });
+        });
+
+        const expectedActions = [
+          { type: actions.SAVE_STATE_STARTED, },
+          { type: actions.SAVE_STATE_FAILED, },
+        ];
+        const store = mockStore({});
+        return store.dispatch(actions.saveState(mockId))
+          .then(() => { // return of async actions
+          expect(store.getActions()).toEqual(expectedActions)
+        });
+      });
     });
   });
 });
