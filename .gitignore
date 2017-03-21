@@ -18,3 +18,6 @@ yarn-error.log*
 
 # redis
 /data/redis
+
+# AWS Lambda
+/awslambda/github-access-code-getter/node_modules
