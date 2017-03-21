@@ -4,6 +4,8 @@ import cookie from 'react-cookie'
 import Loading from './Loading'
 import Alert from './Alert'
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 /*
 <Auth /> is the component that is rendered for the '{{url}}/auth' endpoint (which
 is the endpoint the user is sent to after signing in to GitHub). It initially
@@ -23,7 +25,7 @@ class Auth extends React.Component {
     const { code } = this.props.location.query
 
     // Post it to the API to be verified by GitHub as authentic
-    axios.post('https://jw0kmwwee5.execute-api.us-west-2.amazonaws.com/dev/auth', { code })
+    axios.post(`${API_URL}/auth`, { code })
       .then(res => {
         // Code was accepted, so extract and save the token from the response
         const { token } = res.data;
