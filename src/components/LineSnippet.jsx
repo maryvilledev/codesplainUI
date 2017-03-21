@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import CodeMirror from 'react-codemirror';
 
-// Base options for CodeMirror instances for an AnnotationDisplay
+// Base options for CodeMirror instances for a LineSnippet
 const baseOptions = {
   lineNumbers: true,
   theme: 'codesplain',

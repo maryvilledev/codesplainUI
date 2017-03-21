@@ -1,4 +1,38 @@
-exports[`<RuleLabel /> matches snapshot 1`] = `
+exports[`<RuleLabel /> snapshot tests matches snapshot of when it is active 1`] = `
+<div
+  onClick={[Function]}
+  style={
+    Object {
+      "backgroundColor": "#FF0000",
+      "borderColor": "transparent",
+      "borderRadius": "5px",
+      "borderStyle": "solid",
+      "borderWidth": "1px",
+      "cursor": "pointer",
+      "display": "inline-block",
+      "fontSize": "10pt",
+      "lineHeight": 1,
+      "marginTop": "5px",
+      "maxWidth": "200px",
+      "padding": "5px",
+      "width": "100%",
+    }
+  }>
+  Example Rule
+  <span
+    style={
+      Object {
+        "color": "#666666",
+        "display": "block",
+        "float": "right",
+      }
+    }>
+    (1)
+  </span>
+</div>
+`;
+
+exports[`<RuleLabel /> snapshot tests matches snapshot of when it is not active 1`] = `
 <div
   onClick={[Function]}
   style={
@@ -18,6 +52,7 @@ exports[`<RuleLabel /> matches snapshot 1`] = `
       "width": "100%",
     }
   }>
+  Example Rule
   <span
     style={
       Object {
@@ -26,7 +61,7 @@ exports[`<RuleLabel /> matches snapshot 1`] = `
         "float": "right",
       }
     }>
-    ()
+    (1)
   </span>
 </div>
 `;
