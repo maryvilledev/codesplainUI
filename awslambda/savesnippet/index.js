@@ -3,11 +3,35 @@
 console.log('Loading function');
 
 const aws = require('aws-sdk');
+const axios = require('axios');
 
 const s3 = new aws.S3({ apiVersion: '2006-03-01' });
 
+/*
+Given a GitHub access token, verifyToken gets the basic profile info for the 
+user and returns true if username contained therein matches the given username.
+*/
+const verifyToken = (accessToken, username) => {
+    console.log(`accessToken: ${accessToken}, username: ${username}`);
+    const headers = {
+            Accept: 'application/json',
+            Authorization: `token ${accessToken}`,
+        };
+    axios.get(`https://api.github.com/user`, { headers })
+      .then(res => {
+          console.log(res);
+          const user = res.data.user;
+      }, err => {
+          console.log(err);
+      });
+}
+
 
 exports.handler = (event, context, callback) => {
+    const token = event.authorizationToken;
+    verifyToken(token, event.pathParameters.user_id);
+
+    
     let body = JSON.parse(event.body);
     let snippetKey = body.snippetTitle;
 
