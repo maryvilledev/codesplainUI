@@ -22,8 +22,8 @@ class Auth extends React.Component {
     // Extract the code provided by GitHub from the redirect query string
     const { code } = this.props.location.query
 
-    // Post it to the express backend to be verified by GitHub as authentic
-    axios.post('/api/auth', { code })
+    // Post it to the API to be verified by GitHub as authentic
+    axios.post('https://jw0kmwwee5.execute-api.us-west-2.amazonaws.com/dev/auth', { code })
       .then(res => {
         // Code was accepted, so extract and save the token from the response
         const { token } = res.data;
