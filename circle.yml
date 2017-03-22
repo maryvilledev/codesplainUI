@@ -9,8 +9,14 @@ deployment:
   release:
     tag: /v[0-9]+(\.[0-9]+)*/
     commands:
+        - yarn build:
+            environment:
+              REACT_APP_API_URL: api.codesplain.io/prod
         - ./publish codesplain-ui
   master:
     branch: master
-    commands:
+      commands:
+          - yarn build:
+            environment:
+              REACT_APP_API_URL: api.codesplain.io/dev
       - ./publish dev.codesplain.io
