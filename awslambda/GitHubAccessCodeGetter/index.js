@@ -1,6 +1,6 @@
 'use strict'
 
-console.log('Loading github-access-code-getter lambda function');
+console.log('Loading GitHubAccessCodeGetter lambda function');
 
 const axios = require('axios');
 

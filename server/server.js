@@ -4,7 +4,6 @@ var Redis = require('ioredis')
 var path = require('path')
 var uuid = require('uuid/v4')
 var bodyParser = require('body-parser')
-var axios = require('axios')
 
 var _ = require('lodash');
 _.mixin(require('congruence'));
