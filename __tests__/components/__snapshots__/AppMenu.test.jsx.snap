@@ -1,0 +1,122 @@
+exports[`<AppMenu /> snapshot tests matches snapshot of when user is logged in 1`] = `
+<div>
+  <IconMenu
+    anchorOrigin={
+      Object {
+        "horizontal": "right",
+        "vertical": "top",
+      }
+    }
+    animated={true}
+    iconButtonElement={
+      <IconButton
+        disableTouchRipple={false}
+        disabled={false}
+        iconStyle={Object {}}
+        tooltipPosition="bottom-center"
+        touch={false}>
+        <NavigationMoreVert
+          color="white" />
+      </IconButton>
+    }
+    multiple={false}
+    onItemTouchTap={[Function]}
+    onKeyboardFocus={[Function]}
+    onMouseDown={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onMouseUp={[Function]}
+    onRequestChange={[Function]}
+    onTouchTap={[Function]}
+    open={null}
+    targetOrigin={
+      Object {
+        "horizontal": "right",
+        "vertical": "top",
+      }
+    }
+    touchTapCloseDelay={200}
+    useLayerForClickAway={false}>
+    <MenuItem
+      anchorOrigin={
+        Object {
+          "horizontal": "right",
+          "vertical": "top",
+        }
+      }
+      checked={false}
+      desktop={false}
+      disabled={false}
+      focusState="none"
+      insetChildren={false}
+      onClick={[Function]}
+      primaryText="Sign out" />
+  </IconMenu>
+  <Avatar
+    size={30}
+    src="https://github.com/octocat.png"
+    style={
+      Object {
+        "marginBottom": "13px",
+        "marginRight": "8px",
+      }
+    } />
+</div>
+`;
+
+exports[`<AppMenu /> snapshot tests matches snapshot of when user is not logged in 1`] = `
+<div>
+  <IconMenu
+    anchorOrigin={
+      Object {
+        "horizontal": "right",
+        "vertical": "top",
+      }
+    }
+    animated={true}
+    iconButtonElement={
+      <IconButton
+        disableTouchRipple={false}
+        disabled={false}
+        iconStyle={Object {}}
+        tooltipPosition="bottom-center"
+        touch={false}>
+        <NavigationMoreVert
+          color="white" />
+      </IconButton>
+    }
+    multiple={false}
+    onItemTouchTap={[Function]}
+    onKeyboardFocus={[Function]}
+    onMouseDown={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onMouseUp={[Function]}
+    onRequestChange={[Function]}
+    onTouchTap={[Function]}
+    open={null}
+    targetOrigin={
+      Object {
+        "horizontal": "right",
+        "vertical": "top",
+      }
+    }
+    touchTapCloseDelay={200}
+    useLayerForClickAway={false}>
+    <MenuItem
+      anchorOrigin={
+        Object {
+          "horizontal": "right",
+          "vertical": "top",
+        }
+      }
+      checked={false}
+      desktop={false}
+      disabled={false}
+      focusState="none"
+      insetChildren={false}
+      onClick={[Function]}
+      primaryText="Sign out" />
+  </IconMenu>
+</div>
+`;

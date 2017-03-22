@@ -4,3 +4,13 @@ dependencies:
 test:
   override:
     - yarn test
+
+deployment:
+  release:
+    tag: /v[0-9]+(\.[0-9]+)*/
+    commands:
+        - ./publish codesplain-ui
+  master:
+    branch: master
+    commands:
+      - ./publish dev.codesplain.io

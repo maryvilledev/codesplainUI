@@ -4,6 +4,8 @@ import { Tab, Tabs } from 'material-ui/Tabs';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
+import markdownRendererOptions from '../util/markdown-renderer-options';
+
 class AnnotationEditor extends React.Component {
   constructor(props) {
     super(props);
@@ -55,6 +57,7 @@ class AnnotationEditor extends React.Component {
           <Tab label="Preview">
             <MarkdownRenderer
               markdown={this.state.annotation}
+              options={markdownRendererOptions}
             />
           </Tab>
         </Tabs>

@@ -24,7 +24,13 @@ exports[`<AnnotationEditor /> matches snapshot 1`] = `
     <Tab
       label="Preview">
       <MarkdownRenderer
-        markdown="" />
+        markdown=""
+        options={
+          Object {
+            "highlight": [Function],
+            "langPrefix": "hljs language-",
+          }
+        } />
     </Tab>
   </Tabs>
   <RaisedButton

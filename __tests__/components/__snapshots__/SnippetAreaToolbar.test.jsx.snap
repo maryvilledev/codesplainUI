@@ -1,4 +1,4 @@
-exports[`<SnippetAreaToolbar /> matches the stored snapshot 1`] = `
+exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is not read-only 1`] = `
 <ul
   style={
     Object {
@@ -85,6 +85,111 @@ exports[`<SnippetAreaToolbar /> matches the stored snapshot 1`] = `
       id="lockButton"
       onClick={[Function]}
       readOnly={false}
+      style={
+        Object {
+          "verticalAlign": "middle",
+        }
+      } />
+    <SaveMenu
+      id="saveMenu"
+      onSaveAsClick={[Function]}
+      onSaveClick={[Function]}
+      style={
+        Object {
+          "verticalAlign": "middle",
+        }
+      } />
+  </li>
+</ul>
+`;
+
+exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is read-only 1`] = `
+<ul
+  style={
+    Object {
+      "backgroundColor": "transparent",
+      "listStyleType": "none",
+      "margin": "0",
+      "overflow": "hidden",
+      "padding": "0",
+    }
+  }>
+  <li
+    style={
+      Object {
+        "display": "block",
+        "float": "left",
+        "padding": "5px 10px",
+      }
+    }>
+    <TextField
+      disabled={false}
+      floatingLabelFixed={false}
+      fullWidth={false}
+      hintText="Snippet Name"
+      id="titleField"
+      multiLine={false}
+      onChange={[Function]}
+      rows={1}
+      style={
+        Object {
+          "verticalAlign": "middle",
+          "width": "225px",
+        }
+      }
+      type="text"
+      underlineShow={true}
+      value="" />
+  </li>
+  <li
+    style={
+      Object {
+        "display": "block",
+        "float": "left",
+        "padding": "5px 10px",
+      }
+    }>
+    <SelectField
+      autoWidth={false}
+      disabled={true}
+      fullWidth={false}
+      id="languageSelector"
+      multiple={false}
+      style={
+        Object {
+          "verticalAlign": "middle",
+          "width": "120px",
+        }
+      }
+      value={1}>
+      <MenuItem
+        anchorOrigin={
+          Object {
+            "horizontal": "right",
+            "vertical": "top",
+          }
+        }
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        primaryText="Python 3"
+        value={1} />
+    </SelectField>
+  </li>
+  <li
+    style={
+      Object {
+        "display": "block",
+        "float": "left",
+        "padding": "5px 10px",
+      }
+    }>
+    <LockButton
+      id="lockButton"
+      onClick={[Function]}
+      readOnly={true}
       style={
         Object {
           "verticalAlign": "middle",

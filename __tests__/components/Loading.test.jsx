@@ -15,4 +15,14 @@ describe('<Loading />', () => {
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
+
+  describe('prop: text', () => {
+    it('renders the text', () => {
+      const text = "Wubba lubba dub dub!";
+      const wrapper = shallowWithContext(
+        <Loading text={text} />
+      );
+      expect(wrapper.find('p').text()).toEqual(text);
+    });
+  });
 });

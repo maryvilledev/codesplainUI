@@ -1,8 +1,9 @@
-import React from 'react'
-import axios from 'axios'
-import cookie from 'react-cookie'
-import Loading from './Loading'
-import Alert from './Alert'
+import React from 'react';
+import cookie from 'react-cookie';
+import axios from 'axios';
+
+import Loading from './Loading';
+import Alert from './Alert';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -40,17 +41,15 @@ class Auth extends React.Component {
         })
       }, err => {
         // If this fails, we need to make sure the error dialog shows
-        console.error(err);
         this.setState({ waiting: false, error: true });
       })
       .then(res => {
-        const { avatar_url } = res.data; // Can pull lots of other stuff
-                                         // out of res.data if needed
+        // Can pull lots of other stuff out of res.data if needed
+        const { avatar_url } = res.data;
         cookie.save('userAvatarURL', avatar_url, { path: '/' });
         this.setState({ waiting: false });
       }, err => {
         // Failed to pull in user info, but that's fine. Log and continue.
-        console.log(err);
         this.setState({ waiting: false });
       })
       .catch(err => console.log(err))
