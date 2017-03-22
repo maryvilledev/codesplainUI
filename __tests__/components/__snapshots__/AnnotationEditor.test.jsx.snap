@@ -53,7 +53,7 @@ exports[`<AnnotationEditor /> matches snapshot 1`] = `
     href="http://commonmark.org/help"
     style={
       Object {
-        "padding-left": "1rem",
+        "paddingLeft": "1rem",
       }
     }
     target="_blank">
