@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 DIR=build/
 
-s3Path=dev.codesplain.io
+s3Path="dev.codesplain.io"
 if [ $1 == "release" ]; then
   s3Path="codeplain-ui/$2"
 fi
