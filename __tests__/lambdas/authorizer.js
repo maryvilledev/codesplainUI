@@ -14,6 +14,7 @@ jest.mock('axios', () => {
   return {
     errored: true,
     get: function (url, opts) {
+      console.log(url)
       const valid = (url ===
         `https://api.github.com/applications/${mockClientId}/tokens/${mockValidToken}`)
       if (valid) {
