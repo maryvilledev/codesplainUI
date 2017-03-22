@@ -8,13 +8,13 @@ import markdownRendererOptions from '../util/markdown-renderer-options';
 import markdownLogo from '../../res/markdown-logo.svg';
 
 const styles = {
-  'markdown-hint-text': {
+  'markdownHintText': {
     'color': '#d3d3d3',
   },
-  'markdown-indicator': {
+  'markdownIndicator': {
     'padding-left': '1rem',
   },
-  'markdown-logo': {
+  'markdownLogo': {
     width: '2rem',
     height: '1rem',
   },
@@ -88,16 +88,16 @@ class AnnotationEditor extends React.Component {
         />
         <a
           href="http://commonmark.org/help"
-          style={styles['markdown-indicator']}
+          style={styles.markdownIndicator}
           target="_blank"
         >
           <img
             alt="Markdown Logo"
             src={markdownLogo}
-            style={styles['markdown-logo']}
+            style={styles.markdownLogo}
           />
           <span
-            style={styles['markdown-hint-text']}
+            style={styles.markdownHintText}
           >
             Styling with Markdown is supported
           </span>
