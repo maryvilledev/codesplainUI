@@ -2,14 +2,15 @@ import * as codemirrorUtils from '../../src/util/codemirror-utils';
 
 const lineText = "Wubba lubba dub dub!";
 
-const mockPosFromIndex = [
+const mockPosFromIndexReturnVals = [
   { line: 0, ch: 0, },
   { line: 0, ch: 20, },
 ];
 
+// Mock posFromIndex to be used by codemirrorUtils.styleRegion()
 const posFromIndex = jest.fn()
-  .mockImplementationOnce(() => mockPosFromIndex[0])
-  .mockImplementationOnce(() => mockPosFromIndex[1]);
+  .mockImplementationOnce(() => mockPosFromIndexReturnVals[0])
+  .mockImplementationOnce(() => mockPosFromIndexReturnVals[1]);
 
 const codeMirror = {
   markText: jest.fn(),
@@ -53,8 +54,8 @@ describe('util: codemirror-utils', () => {
       const line = 0;
       const css = 'background-color: blue';
       const expectedArgs = [
-        mockPosFromIndex[0],
-        mockPosFromIndex[1],
+        mockPosFromIndexReturnVals[0],
+        mockPosFromIndexReturnVals[1],
         { css },
       ];
       codemirrorUtils.styleAll(codeMirror, css);
