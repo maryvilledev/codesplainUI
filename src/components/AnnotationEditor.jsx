@@ -12,7 +12,7 @@ const styles = {
     'color': '#d3d3d3',
   },
   'markdownIndicator': {
-    'padding-left': '1rem',
+    'paddingLeft': '1rem',
   },
   'markdownLogo': {
     width: '2rem',
