@@ -3,6 +3,7 @@ DIR=build/
 
 s3Path="dev.codesplain.io"
 if [ $1 == "release" ]; then
-  s3Path="codeplain-ui/$2"
+  s3Path="codesplain-ui/$2"
 fi
+echo $s3Path
 aws  s3  sync $DIR s3://$s3Path --exclude "*DS_Store"
