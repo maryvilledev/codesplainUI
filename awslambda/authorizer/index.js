@@ -10,12 +10,12 @@ const clientSecret = process.env.CLIENT_SECRET;
 
 const httpsUrl = (token) =>
   `https://api.github.com/applications/${clientId}/tokens/${token}`
-const httpsOpts = (token) => ({
+const httpsOpts = {
   auth: {
     username: clientId,
     password: clientSecret
   }
-})
+}
 
 function generatePolicy(principalId, effect, resource)
 {
@@ -35,7 +35,7 @@ function generatePolicy(principalId, effect, resource)
 exports.handler = (event, context, callback) => {
   const token = event.authorizationToken;
   const url = httpsUrl(token);
-  const opts = httpsOpts(token);
+  const opts = httpsOpts;
   axios.get(url, opts)
     .then(() => {
       callback(null, generatePolicy('user', 'Allow', event.methodArn))
