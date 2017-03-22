@@ -1,7 +1,13 @@
 exports[`<AnnotationDisplay /> matches snapshot 1`] = `
 <div>
   <MarkdownRenderer
-    markdown="some annotation" />
+    markdown="some annotation"
+    options={
+      Object {
+        "highlight": [Function],
+        "langPrefix": "hljs language-",
+      }
+    } />
   <RaisedButton
     disabled={false}
     fullWidth={false}
