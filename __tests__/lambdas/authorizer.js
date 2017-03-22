@@ -2,6 +2,7 @@ const mockClientId = 'birdperson';
 const mockClientSecret = 'molting'
 process.env.CLIENT_ID = mockClientId;
 process.env.CLIENT_SECRET = mockClientSecret;
+console.log(process.env.CLIENT_ID)
 
 import { handler } from '../../awslambda/authorizer'
 
