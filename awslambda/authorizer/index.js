@@ -1,7 +1,6 @@
 'use strict'
 
 console.log('Loading function')
-console.log(process.env.CLIENT_ID)
 
 const aws = require('aws-sdk')
 const axios = require('axios')

@@ -3,7 +3,11 @@ dependencies:
     - yarn
 test:
   override:
-    - yarn test
+    - yarn test:
+        environment: #Don't expose our secrets while testing
+          CLIENT_ID: birdperson
+          CLIENT_SECRET: molting
+
 
 deployment:
   release:

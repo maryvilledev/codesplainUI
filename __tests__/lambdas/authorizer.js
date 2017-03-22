@@ -1,8 +1,4 @@
-const mockClientId = 'birdperson';
-const mockClientSecret = 'molting'
-process.env.CLIENT_ID = mockClientId;
-process.env.CLIENT_SECRET = mockClientSecret;
-console.log(process.env.CLIENT_ID)
+const mockClientId = process.env.CLIENT_ID
 
 import { handler } from '../../awslambda/authorizer'
 
@@ -15,7 +11,6 @@ jest.mock('axios', () => {
   return {
     errored: true,
     get: function (url, opts) {
-      console.log(url)
       const valid = (url ===
         `https://api.github.com/applications/${mockClientId}/tokens/${mockValidToken}`)
       if (valid) {
