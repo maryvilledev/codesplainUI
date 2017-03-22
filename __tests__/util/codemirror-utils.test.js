@@ -1,10 +1,12 @@
 import * as codemirrorUtils from '../../src/util/codemirror-utils';
 
 const lineText = "Wubba lubba dub dub!";
+
 const mockPosFromIndex = [
   { line: 0, ch: 0, },
   { line: 0, ch: 20, },
-]
+];
+
 const posFromIndex = jest.fn()
   .mockImplementationOnce(() => mockPosFromIndex[0])
   .mockImplementationOnce(() => mockPosFromIndex[1]);
@@ -16,7 +18,6 @@ const codeMirror = {
   posFromIndex,
 };
 
-
 describe('util: codemirror-utils', () => {
   afterEach(() => {
     codeMirror.markText.mockClear();
@@ -24,6 +25,7 @@ describe('util: codemirror-utils', () => {
     codeMirror.getValue.mockClear();
     codeMirror.posFromIndex.mockClear();
   });
+
   describe('styleRegion()', () => {
     it('throws an error if end < start', () => {
       const start = 1;
@@ -31,6 +33,7 @@ describe('util: codemirror-utils', () => {
       expect(() => codemirrorUtils.styleRegion(codeMirror, start, end)).toThrow();
     });
   });
+
   describe('styleLine()', () => {
     it('should call codeMirror\'s markText method with the correct args', () => {
       const line = 0;
@@ -44,6 +47,7 @@ describe('util: codemirror-utils', () => {
       expect(codeMirror.markText).toBeCalledWith(...expectedArgs);
     });
   });
+
   describe('styleAll()', () => {
     it('should call styleRegion with the correct args', () => {
       const line = 0;
@@ -55,6 +59,24 @@ describe('util: codemirror-utils', () => {
       ];
       codemirrorUtils.styleAll(codeMirror, css);
       expect(codeMirror.markText).toBeCalledWith(...expectedArgs);
+    });
+  });
+
+  describe('highlightNode()', () => {
+    it('should not call styleRegion if a rule is not ignored or valid', () => {
+      const node = {
+        type: 'Blips and Chitz',
+      };
+      codemirrorUtils.highlightNode(codeMirror, node, {}, '');
+      expect(codeMirror.markText).not.toBeCalled();
+    });
+    it('should not call styleRegion for a node if its type is ignored', () => {
+      const node = {
+        type: 'suite',
+        children: [],
+      };
+      codemirrorUtils.highlightNode(codeMirror, node, {}, 'blue');
+      expect(codeMirror.markText).not.toBeCalled();
     });
   });
 });
