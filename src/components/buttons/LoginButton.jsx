@@ -3,9 +3,6 @@ import { FlatButton } from 'material-ui';
 import cookie from 'react-cookie'
 import GitHubIcon from '../../../res/github-icon.png';
 
-const CLIENT_ID = process.env.REACT_APP_CLIENT_ID
-const GITHUB_URL = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}`
-
 const styles = {
   button: {
     marginTop: '6px',
@@ -18,25 +15,13 @@ const styles = {
   },
 }
 
-// Saves a cookie containing the current URL path, so we can retrieve it
-// later when GitHub sends the user back to the app, and send the user back
-// to the page they were on when they clicked this button.
-const saveSignInRedirect = () => {
-  cookie.save('signInRedirect', location.pathname, { path: '/' });
-}
-
 /*
 <LoginButton /> renders as white clickable "LOG IN" text, with a white octocat
-icon to its left. When clicked, the button sends the user to the GitHub OAuth 
-authorization URL, where the client ID is set to the CLIENT_ID env var.
-
-If the 'href' prop is specified, then the button will redirect to that URL 
-instead of the GitHub OAuth one.
+icon to its left.
 */
-const LoginButton = ({ href }) => (
+const LoginButton = ({ onClick }) => (
   <FlatButton 
-    href={href ? href : GITHUB_URL}
-    onClick={saveSignInRedirect}
+    onClick={onClick}
     style={styles.button}
     label={
       <span style={styles.span}>

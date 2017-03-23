@@ -1,9 +1,11 @@
 import React from 'react';
 import cookie from 'react-cookie';
 import axios from 'axios';
+import { Redirect } from 'react-router';
 
-import Loading from './Loading';
-import Alert from './Alert';
+import Loading from '../components/Loading';
+import Alert from '../components/Alert';
+import AppBody from '../containers/AppBody'
 
 const API_URL = process.env.REACT_APP_API_URL;
 

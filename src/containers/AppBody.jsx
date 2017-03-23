@@ -18,8 +18,14 @@ export class AppBody extends React.Component {
       const { username } = this.props.params;
       const { id } = this.props.params;
       const { dispatch } = this.props;
-      if (!username || !id) {
-        return;
+      if (!username && !id) {
+        const signInState = cookie.load('signInState');
+        if (signInState) {
+          cookie.remove('signInState', { path: '/' });
+          cookie.remove('signInRedirect', { path: '/' });
+          dispatch(restoreState(signInState));
+        }
+        return null;
       }
       const token = cookie.load('token');
       const config = {

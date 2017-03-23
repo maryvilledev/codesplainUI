@@ -4,7 +4,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import AppBody from './AppBody';
 import Auth from '../components/Auth'
-import CodesplainAppBar from '../components/CodesplainAppBar';
+import CodesplainAppBar from './CodesplainAppBar';
 import { Router, Route, browserHistory } from 'react-router'
 
 // Needed for onTouchTap

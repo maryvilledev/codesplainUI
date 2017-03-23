@@ -1,10 +1,14 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import AppBar from 'material-ui/AppBar';
 import { browserHistory } from 'react-router';
 import cookie from 'react-cookie';
 
-import LoginButton from './buttons/LoginButton'
-import AppMenu from './menus/AppMenu';
+import LoginButton from '../components/buttons/LoginButton'
+import AppMenu from '../components/menus/AppMenu';
+
+const CLIENT_ID = process.env.REACT_APP_CLIENT_ID
+const GITHUB_URL = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}`
 
 const styles = {
   title: {
@@ -25,6 +29,7 @@ class CodesplainAppBar extends React.Component {
       isLoggedIn: cookie.load('token') !== undefined,
     }
     this.handleSignOut = this.handleSignOut.bind(this);
+    this.onLoginClick = this.onLoginClick.bind(this);
   }
 
   handleSignOut() {
@@ -34,10 +39,21 @@ class CodesplainAppBar extends React.Component {
     this.setState({ isLoggedIn: false });
   }
 
+// Saves a cookie containing the current URL path, so we can retrieve it
+// later when GitHub sends the user back to the app, and send the user back
+// to the page they were on when they clicked this button. When clicked, the button sends the user to the GitHub OAuth 
+//authorization URL, where the client ID is set to the CLIENT_ID env var.
+  onLoginClick() {
+    const appState = JSON.stringify(this.props.appState);
+    cookie.save('signInState', appState, { path: '/' });
+    cookie.save('signInRedirect', location.pathname, { path: '/' });
+    window.location = GITHUB_URL;
+  }
+
   render() {
     const rightElement = this.state.isLoggedIn ?
       <AppMenu onSignOut={this.handleSignOut} /> :
-      <LoginButton />
+      <LoginButton onClick={this.onLoginClick}/>
     return (
       <AppBar
         showMenuIconButton={false}
@@ -51,7 +67,10 @@ class CodesplainAppBar extends React.Component {
       />
     );
   }
-
 }
 
-export default CodesplainAppBar;
+const mapStateToProps = state => ({
+  appState: state.app,
+})
+
+export default connect(mapStateToProps)(CodesplainAppBar);
