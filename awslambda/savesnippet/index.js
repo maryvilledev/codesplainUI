@@ -6,7 +6,6 @@ const aws = require('aws-sdk');
 
 const s3 = new aws.S3({ apiVersion: '2006-03-01' });
 
-
 exports.handler = (event, context, callback) => {
     let body = JSON.parse(event.body);
     let snippetKey = body.snippetTitle;

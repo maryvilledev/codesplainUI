@@ -26,7 +26,8 @@ export class App extends Component {
       <MuiThemeProvider>
         <Router history={browserHistory}>
           <Route path="/auth"  component={auth} />
-          <Route path="/(:id)" component={component} />
+          <Router path="/" component={component} />
+          <Route path="/(:username)/snippets/(:id)" component={component} />
         </Router>
       </MuiThemeProvider>
     );

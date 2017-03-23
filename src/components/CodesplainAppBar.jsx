@@ -28,14 +28,16 @@ class CodesplainAppBar extends React.Component {
   }
 
   handleSignOut() {
-    cookie.remove('token');
+    cookie.remove('token', { path: '/' });
+    cookie.remove('username', { path: '/' });
+    cookie.remove('userAvatarURL', { path: '/' });
     this.setState({ isLoggedIn: false });
   }
 
   render() {
     const rightElement = this.state.isLoggedIn ?
-                            <AppMenu onSignOut={this.handleSignOut} /> :
-                            <LoginButton />
+      <AppMenu onSignOut={this.handleSignOut} /> :
+      <LoginButton />
     return (
       <AppBar
         showMenuIconButton={false}

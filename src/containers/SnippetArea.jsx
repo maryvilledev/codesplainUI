@@ -4,6 +4,7 @@ import axios from 'axios';
 import _ from 'lodash'
 import { CardText, Snackbar } from 'material-ui';
 import { browserHistory } from 'react-router'
+import cookie from 'react-cookie';
 
 import {
   parseSnippet,
@@ -11,6 +12,8 @@ import {
   setSnippetTitle,
   toggleEditState,
 } from '../actions/app';
+
+const API_URL = process.env.REACT_APP_API_URL;
 
 //Create an async function to fire the parseSnippet action
 async function dispatchParseSnippet(snippet, dispatch) {
@@ -86,6 +89,7 @@ export class SnippetArea extends React.Component {
   }
 
   handleSave() {
+    // Make sure title is populated
     const { snippetTitle, appState } = this.props;
     if (!snippetTitle) {
       this.setState({ titleErrorText: 'This field is required' });
@@ -93,10 +97,25 @@ export class SnippetArea extends React.Component {
       return;
     }
     this.setState({ titleErrorText: '' });
+    
+    // Make sure user is signed in
+    const username = cookie.load('username');
+    if (!username) {
+      this.showSnackbar('Please login to save snippets.');
+      return;
+    }
+
+    // Save the snippet
     const stateString = JSON.stringify(appState);
     const id = this.props.id;
+    const token = cookie.load('token');
+    const config = {
+      headers: {
+        'Authorization': token,
+      }
+    }
     if (id) {
-      axios.post(`/api/snippets/${id}`, { json: stateString })
+      axios.put(`${API_URL}/users/${username}/snippets/${id}`, stateString, config)
         .then(res => {
           this.showSnackbar('Codesplaination Saved!');
         }, err => {
@@ -105,9 +124,9 @@ export class SnippetArea extends React.Component {
         })
     }
     else {
-      axios.post(`/api/snippets`, { json: stateString })
+      axios.post(`${API_URL}/users/${username}/snippets`, stateString, config)
         .then((res) => {
-          browserHistory.push(`/${res.data.id}`);
+          browserHistory.push(`/${username}/snippets/${res.data.key}`);
           this.showSnackbar('Codesplaination Saved!');
         }, (err) => {
           console.error(err);
@@ -117,6 +136,7 @@ export class SnippetArea extends React.Component {
   }
 
   handleSaveAs() {
+    // Make sure title field is populated
     const { snippetTitle, appState } = this.props;
     if (!snippetTitle) {
       this.setState({ titleErrorText: 'This field is required' });
@@ -124,8 +144,24 @@ export class SnippetArea extends React.Component {
       return;
     }
     this.setState({ titleErrorText: '' });
+    
+    // Make sure user is signed in
+    const username = cookie.load('username');
+    if (!username) {
+      this.showSnackbar('Please login to save snippets.');
+      return;
+    }
+    
+    // Save the snippet
     const stateString = JSON.stringify(appState);
-    axios.post(`/api/snippets`, { json: stateString })
+    const id = this.props.id;
+    const token = cookie.load('token');
+    const config = {
+      headers: {
+        'Authorization': token,
+      }
+    }
+    axios.post(`/api/snippets`, stateString)
       .then((res) => {
         browserHistory.push(`/${res.data.id}`);
         this.showSnackbar('Codesplaination saved under new ID!');

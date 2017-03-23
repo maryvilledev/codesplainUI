@@ -45,8 +45,9 @@ class Auth extends React.Component {
       })
       .then(res => {
         // Can pull lots of other stuff out of res.data if needed
-        const { avatar_url } = res.data;
+        const { login, avatar_url } = res.data;
         cookie.save('userAvatarURL', avatar_url, { path: '/' });
+        cookie.save('username', login, { path: '/' });
         this.setState({ waiting: false });
       }, err => {
         // Failed to pull in user info, but that's fine. Log and continue.

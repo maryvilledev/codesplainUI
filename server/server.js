@@ -41,19 +41,19 @@ app.use(bodyParser.urlencoded({
 
 app.use(express.static(path.resolve(__dirname, "..", 'build')));
 
-function saveToRedis(id, req, res) {
-  var json = JSON.parse(req.body.json);
-  if (_.isObject(json) && _.similar(requestTemplate, json)) {
-    redis.set(id, JSON.stringify(json));
-    res.json({id: id});
-  } else {
-    res.status(400).send('Invalid POST request body');
-  }
-}
+// function saveToRedis(id, req, res) {
+//   var json = JSON.parse(req.body.json);
+//   if (_.isObject(json) && _.similar(requestTemplate, json)) {
+//     redis.set(id, JSON.stringify(json));
+//     res.json({id: id});
+//   } else {
+//     res.status(400).send('Invalid POST request body');
+//   }
+// }
 
-app.post('/api/snippets/', function(req, res) {
-  var id = uuid();
-  saveToRedis(id, req, res);
+// app.post('/api/snippets/', function(req, res) {
+//   var id = uuid();
+//   saveToRedis(id, req, res);
 })
 
 app.post('/api/snippets/:id', function(req, res) {
