@@ -39,14 +39,16 @@ class CodesplainAppBar extends React.Component {
     this.setState({ isLoggedIn: false });
   }
 
-// Saves a cookie containing the current URL path, so we can retrieve it
-// later when GitHub sends the user back to the app, and send the user back
-// to the page they were on when they clicked this button. When clicked, the button sends the user to the GitHub OAuth 
-//authorization URL, where the client ID is set to the CLIENT_ID env var.
   onLoginClick() {
+    // Saves a cookie containing the current URL path, so we can retrieve it
+    // later when GitHub sends the user back to the app, and send the user back
+    // to the page they were on when they clicked the login button.
     const appState = JSON.stringify(this.props.appState);
     cookie.save('signInState', appState, { path: '/' });
     cookie.save('signInRedirect', location.pathname, { path: '/' });
+
+    // Send the user to the GitHub OAuth authorization URL, where the client ID
+    // is set to the CLIENT_ID env var.
     window.location = GITHUB_URL;
   }
 

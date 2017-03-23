@@ -114,7 +114,7 @@ export class SnippetArea extends React.Component {
         'Authorization': token,
       }
     }
-    if (id) {
+    if (id) { // if we're updating an existing snippet...
       axios.put(`${API_URL}/users/${username}/snippets/${id}`, stateString, config)
         .then(res => {
           this.showSnackbar('Codesplaination Saved!');
@@ -123,7 +123,7 @@ export class SnippetArea extends React.Component {
           this.showSnackbar('Failed to save - an error occurred');
         })
     }
-    else {
+    else { // if we're saving a new snippet...
       axios.post(`${API_URL}/users/${username}/snippets`, stateString, config)
         .then((res) => {
           browserHistory.push(`/${username}/snippets/${res.data.key}`);
@@ -135,15 +135,11 @@ export class SnippetArea extends React.Component {
     }
   }
 
-  handleSaveAs() {
-    // Make sure title field is populated
-    const { snippetTitle, appState } = this.props;
-    if (!snippetTitle) {
-      this.setState({ titleErrorText: 'This field is required' });
-      this.showSnackbar('Please populate the title field before saving.');
+  handleSaveAs(title) {
+    // Make sure a title was specified
+    if (!title) {
       return;
     }
-    this.setState({ titleErrorText: '' });
     
     // Make sure user is signed in
     const username = cookie.load('username');
@@ -151,8 +147,14 @@ export class SnippetArea extends React.Component {
       this.showSnackbar('Please login to save snippets.');
       return;
     }
+
+    // Render the new title
+    const { dispatch } = this.props;
+    dispatch(setSnippetTitle(title));
     
     // Save the snippet
+    const { appState } = this.props;
+    appState.snippetTitle = title;
     const stateString = JSON.stringify(appState);
     const id = this.props.id;
     const token = cookie.load('token');
@@ -161,10 +163,10 @@ export class SnippetArea extends React.Component {
         'Authorization': token,
       }
     }
-    axios.post(`/api/snippets`, stateString)
+    axios.post(`${API_URL}/users/${username}/snippets`, stateString, config)
       .then((res) => {
-        browserHistory.push(`/${res.data.id}`);
-        this.showSnackbar('Codesplaination saved under new ID!');
+        browserHistory.push(`/${username}/snippets/${res.data.key}`);
+        this.showSnackbar('Codesplaination Saved!');
       }, (err) => {
         console.error(err);
         this.showSnackbar('Failed to save - an error occurred');
