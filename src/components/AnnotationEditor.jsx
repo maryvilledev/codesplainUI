@@ -5,6 +5,20 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import markdownRendererOptions from '../util/markdown-renderer-options';
+import markdownLogo from '../../res/markdown-logo.svg';
+
+const styles = {
+  'markdownHintText': {
+    'color': '#d3d3d3',
+  },
+  'markdownIndicator': {
+    'paddingLeft': '1rem',
+  },
+  'markdownLogo': {
+    width: '2rem',
+    height: '1rem',
+  },
+}
 
 class AnnotationEditor extends React.Component {
   constructor(props) {
@@ -43,11 +57,11 @@ class AnnotationEditor extends React.Component {
           >
             <TextField
               autoFocus
-              name="annotationEditor"
               floatingLabelText="Annotation"
               fullWidth
               hintText="Enter your annotation here"
               multiLine
+              name="annotationEditor"
               onChange={this.onAnnotationChange}
               ref={(textField) => { this.textField = textField; }}
               rows={4}
@@ -63,15 +77,31 @@ class AnnotationEditor extends React.Component {
         </Tabs>
         <RaisedButton
           label="Cancel"
-          secondary
           onTouchTap={this.clearAnnotation}
+          secondary
         />
         <RaisedButton
-          label="Save"
-          primary
           disabled={!this.state.annotation}
+          label="Save"
           onTouchTap={this.saveAnnotation}
+          primary
         />
+        <a
+          href="http://commonmark.org/help"
+          style={styles.markdownIndicator}
+          target="_blank"
+        >
+          <img
+            alt="Markdown Logo"
+            src={markdownLogo}
+            style={styles.markdownLogo}
+          />
+          <span
+            style={styles.markdownHintText}
+          >
+            Styling with Markdown is supported
+          </span>
+        </a>
       </div>
     );
   }
