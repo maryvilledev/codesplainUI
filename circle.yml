@@ -19,4 +19,4 @@ deployment:
           - yarn build:
             environment:
               REACT_APP_API_URL: api.codesplain.io/dev
-      - ./publish dev.codesplain.io
+          - ./publish dev
