@@ -13,6 +13,14 @@ import {
   toggleEditState,
 } from '../actions/app';
 
+import {
+  openAnnotationPanel,
+} from '../actions/annotation';
+
+import ConfirmLockDialog from '../components/ConfirmLockDialog';
+import Editor from '../components/Editor';
+import SnippetAreaToolbar from '../components/SnippetAreaToolbar';
+  
 const API_URL = process.env.REACT_APP_API_URL;
 
 //Create an async function to fire the parseSnippet action
@@ -21,14 +29,6 @@ async function dispatchParseSnippet(snippet, dispatch) {
 }
 //Only fire the parse snippet action 400 millis after the last keydown
 const debouncedParseSnippetDispatch = _.debounce(dispatchParseSnippet, 400)
-
-import {
-  openAnnotationPanel,
-} from '../actions/annotation';
-
-import ConfirmLockDialog from '../components/ConfirmLockDialog';
-import Editor from '../components/Editor';
-import SnippetAreaToolbar from '../components/SnippetAreaToolbar';
 
 export class SnippetArea extends React.Component {
   constructor(props) {

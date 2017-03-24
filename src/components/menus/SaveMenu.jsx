@@ -30,7 +30,7 @@ class SaveMenu extends React.Component {
   getMenu() {
     return (
       <IconMenu
-        id={this.props.id}
+        id="menu"
         iconButtonElement={saveIconButton}
       >
         <MenuItem 
