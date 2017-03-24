@@ -1,6 +1,5 @@
 import React from 'react';
 import { FlatButton } from 'material-ui';
-import cookie from 'react-cookie'
 import GitHubIcon from '../../../res/github-icon.png';
 
 const styles = {

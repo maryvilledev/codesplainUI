@@ -156,7 +156,6 @@ export class SnippetArea extends React.Component {
     const { appState } = this.props;
     appState.snippetTitle = title;
     const stateString = JSON.stringify(appState);
-    const id = this.props.id;
     const token = cookie.load('token');
     const config = {
       headers: {
