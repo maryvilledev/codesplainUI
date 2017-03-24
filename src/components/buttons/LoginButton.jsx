@@ -27,24 +27,24 @@ const saveSignInRedirect = () => {
 
 /*
 <LoginButton /> renders as white clickable "LOG IN" text, with a white octocat
-icon to its left. When clicked, the button sends the user to the GitHub OAuth 
+icon to its left. When clicked, the button sends the user to the GitHub OAuth
 authorization URL, where the client ID is set to the CLIENT_ID env var.
 
-If the 'href' prop is specified, then the button will redirect to that URL 
+If the 'href' prop is specified, then the button will redirect to that URL
 instead of the GitHub OAuth one.
 */
 const LoginButton = ({ href }) => (
-  <FlatButton 
+  <FlatButton
     href={href ? href : GITHUB_URL}
     onClick={saveSignInRedirect}
     style={styles.button}
     label={
       <span style={styles.span}>
-        <img 
+        <img
           role="presentation"
-          width="23" 
-          style={styles.img} 
-          src={GitHubIcon} 
+          width="23"
+          style={styles.img}
+          src={GitHubIcon}
         />
         Log In
       </span>

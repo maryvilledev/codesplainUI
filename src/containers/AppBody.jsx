@@ -1,7 +1,7 @@
-import React from 'react';
-import { Card } from 'material-ui';
-import { connect } from 'react-redux';
 import axios from 'axios';
+import { Card } from 'material-ui';
+import React from 'react';
+import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 
 import { restoreState } from '../actions/app';
@@ -12,20 +12,26 @@ import SnippetArea from './SnippetArea';
 
 export class AppBody extends React.Component {
   componentDidMount() {
-      const { id } = this.props.params;
-      const { dispatch } = this.props;
-      if (!id) {
-        return;
-      }
-      axios.get(`/api/snippets/${id}`)
-        .then(res => {
-          const stateString = res.data.json;
-          const obj = JSON.parse(stateString);
-          dispatch(restoreState(obj));
-        }, err => {
-          // Bad URL, redirect
-          browserHistory.push('/');
-        });
+    const {
+      dispatch,
+      params: {
+        id,
+      },
+    } = this.props;
+
+    if (!id) {
+      return;
+    }
+
+    axios.get(`/api/snippets/${id}`)
+      .then(res => {
+        const stateString = res.data.json;
+        const obj = JSON.parse(stateString);
+        dispatch(restoreState(obj));
+      }, err => {
+        // Bad URL, redirect
+        browserHistory.push('/');
+      });
   }
 
   render() {
@@ -52,8 +58,8 @@ export class AppBody extends React.Component {
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 
-export default connect()(AppBody)
+export default connect()(AppBody);
