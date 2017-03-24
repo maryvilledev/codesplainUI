@@ -35,7 +35,8 @@ ReactDOM.render(
     <Provider store={store}>
       <Router history={history}>
         <Route path="/auth"  component={Auth} />
-        <Route path="/(:id)" component={App} />
+        <Route path="/" component={App} />
+        <Route path="/(:username)/snippets/(:id)" component={App} />
       </Router>
     </Provider>
   </MuiThemeProvider>,

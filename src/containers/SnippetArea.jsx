@@ -4,6 +4,7 @@ import axios from 'axios';
 import _ from 'lodash'
 import { CardText, Snackbar } from 'material-ui';
 import { browserHistory } from 'react-router'
+import cookie from 'react-cookie';
 
 import {
   parseSnippet,
@@ -12,13 +13,6 @@ import {
   toggleEditState,
 } from '../actions/app';
 
-//Create an async function to fire the parseSnippet action
-async function dispatchParseSnippet(snippet, dispatch) {
-  dispatch(parseSnippet(snippet))
-}
-//Only fire the parse snippet action 400 millis after the last keydown
-const debouncedParseSnippetDispatch = _.debounce(dispatchParseSnippet, 400)
-
 import {
   openAnnotationPanel,
 } from '../actions/annotation';
@@ -26,6 +20,15 @@ import {
 import ConfirmLockDialog from '../components/ConfirmLockDialog';
 import Editor from '../components/Editor';
 import SnippetAreaToolbar from '../components/SnippetAreaToolbar';
+  
+const API_URL = process.env.REACT_APP_API_URL;
+
+//Create an async function to fire the parseSnippet action
+async function dispatchParseSnippet(snippet, dispatch) {
+  dispatch(parseSnippet(snippet))
+}
+//Only fire the parse snippet action 400 millis after the last keydown
+const debouncedParseSnippetDispatch = _.debounce(dispatchParseSnippet, 400)
 
 export class SnippetArea extends React.Component {
   constructor(props) {
@@ -86,6 +89,7 @@ export class SnippetArea extends React.Component {
   }
 
   handleSave() {
+    // Make sure title is populated
     const { snippetTitle, appState } = this.props;
     if (!snippetTitle) {
       this.setState({ titleErrorText: 'This field is required' });
@@ -93,10 +97,25 @@ export class SnippetArea extends React.Component {
       return;
     }
     this.setState({ titleErrorText: '' });
+    
+    // Make sure user is signed in
+    const username = cookie.load('username');
+    if (!username) {
+      this.showSnackbar('Please login to save snippets.');
+      return;
+    }
+
+    // Save the snippet
     const stateString = JSON.stringify(appState);
     const id = this.props.id;
-    if (id) {
-      axios.post(`/api/snippets/${id}`, { json: stateString })
+    const token = cookie.load('token');
+    const config = {
+      headers: {
+        'Authorization': token,
+      }
+    }
+    if (id) { // if we're updating an existing snippet...
+      axios.put(`${API_URL}/users/${username}/snippets/${id}`, stateString, config)
         .then(res => {
           this.showSnackbar('Codesplaination Saved!');
         }, err => {
@@ -104,10 +123,10 @@ export class SnippetArea extends React.Component {
           this.showSnackbar('Failed to save - an error occurred');
         })
     }
-    else {
-      axios.post(`/api/snippets`, { json: stateString })
+    else { // if we're saving a new snippet...
+      axios.post(`${API_URL}/users/${username}/snippets`, stateString, config)
         .then((res) => {
-          browserHistory.push(`/${res.data.id}`);
+          browserHistory.push(`/${username}/snippets/${res.data.key}`);
           this.showSnackbar('Codesplaination Saved!');
         }, (err) => {
           console.error(err);
@@ -116,19 +135,37 @@ export class SnippetArea extends React.Component {
     }
   }
 
-  handleSaveAs() {
-    const { snippetTitle, appState } = this.props;
-    if (!snippetTitle) {
-      this.setState({ titleErrorText: 'This field is required' });
-      this.showSnackbar('Please populate the title field before saving.');
+  handleSaveAs(title) {
+    // Make sure a title was specified
+    if (!title) {
       return;
     }
-    this.setState({ titleErrorText: '' });
+    
+    // Make sure user is signed in
+    const username = cookie.load('username');
+    if (!username) {
+      this.showSnackbar('Please login to save snippets.');
+      return;
+    }
+
+    // Render the new title
+    const { dispatch } = this.props;
+    dispatch(setSnippetTitle(title));
+    
+    // Save the snippet
+    const { appState } = this.props;
+    appState.snippetTitle = title;
     const stateString = JSON.stringify(appState);
-    axios.post(`/api/snippets`, { json: stateString })
+    const token = cookie.load('token');
+    const config = {
+      headers: {
+        'Authorization': token,
+      }
+    }
+    axios.post(`${API_URL}/users/${username}/snippets`, stateString, config)
       .then((res) => {
-        browserHistory.push(`/${res.data.id}`);
-        this.showSnackbar('Codesplaination saved under new ID!');
+        browserHistory.push(`/${username}/snippets/${res.data.key}`);
+        this.showSnackbar('Codesplaination Saved!');
       }, (err) => {
         console.error(err);
         this.showSnackbar('Failed to save - an error occurred');

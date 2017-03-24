@@ -1,68 +1,119 @@
 exports[`<SaveMenu /> matches snapshot 1`] = `
-<IconMenu
-  anchorOrigin={
-    Object {
-      "horizontal": "left",
-      "vertical": "top",
+<span>
+  <IconMenu
+    anchorOrigin={
+      Object {
+        "horizontal": "left",
+        "vertical": "top",
+      }
     }
-  }
-  animated={true}
-  iconButtonElement={
-    <IconButton
-      disableTouchRipple={false}
+    animated={true}
+    iconButtonElement={
+      <IconButton
+        disableTouchRipple={false}
+        disabled={false}
+        iconStyle={Object {}}
+        title="Save Options"
+        tooltipPosition="bottom-center"
+        touch={false}>
+        <ContentSave />
+      </IconButton>
+    }
+    id="menu"
+    multiple={false}
+    onItemTouchTap={[Function]}
+    onKeyboardFocus={[Function]}
+    onMouseDown={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onMouseUp={[Function]}
+    onRequestChange={[Function]}
+    onTouchTap={[Function]}
+    open={null}
+    targetOrigin={
+      Object {
+        "horizontal": "left",
+        "vertical": "top",
+      }
+    }
+    touchTapCloseDelay={200}
+    useLayerForClickAway={false}>
+    <MenuItem
+      anchorOrigin={
+        Object {
+          "horizontal": "right",
+          "vertical": "top",
+        }
+      }
+      checked={false}
+      desktop={false}
       disabled={false}
-      iconStyle={Object {}}
-      title="Save Options"
-      tooltipPosition="bottom-center"
-      touch={false}>
-      <ContentSave />
-    </IconButton>
-  }
-  multiple={false}
-  onItemTouchTap={[Function]}
-  onKeyboardFocus={[Function]}
-  onMouseDown={[Function]}
-  onMouseEnter={[Function]}
-  onMouseLeave={[Function]}
-  onMouseUp={[Function]}
-  onRequestChange={[Function]}
-  onTouchTap={[Function]}
-  open={null}
-  targetOrigin={
-    Object {
-      "horizontal": "left",
-      "vertical": "top",
-    }
-  }
-  touchTapCloseDelay={200}
-  useLayerForClickAway={false}>
-  <MenuItem
-    anchorOrigin={
-      Object {
-        "horizontal": "right",
-        "vertical": "top",
+      focusState="none"
+      insetChildren={false}
+      onTouchTap={[Function]}
+      primaryText="Save" />
+    <MenuItem
+      anchorOrigin={
+        Object {
+          "horizontal": "right",
+          "vertical": "top",
+        }
       }
+      checked={false}
+      desktop={false}
+      disabled={false}
+      focusState="none"
+      insetChildren={false}
+      onTouchTap={[Function]}
+      primaryText="Save As" />
+  </IconMenu>
+  <Dialog
+    actions={
+      <span>
+        <FlatButton
+          disabled={false}
+          fullWidth={false}
+          label="Cancel"
+          labelPosition="after"
+          labelStyle={Object {}}
+          onKeyboardFocus={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onTouchStart={[Function]}
+          onTouchTap={[Function]}
+          primary={false}
+          secondary={false} />
+        <FlatButton
+          disabled={false}
+          fullWidth={false}
+          label="Save"
+          labelPosition="after"
+          labelStyle={Object {}}
+          onKeyboardFocus={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onTouchStart={[Function]}
+          onTouchTap={[Function]}
+          primary={true}
+          secondary={false} />
+      </span>
     }
-    checked={false}
-    desktop={false}
-    disabled={false}
-    focusState="none"
-    insetChildren={false}
-    onTouchTap={[Function]}
-    primaryText="Save" />
-  <MenuItem
-    anchorOrigin={
-      Object {
-        "horizontal": "right",
-        "vertical": "top",
-      }
-    }
-    checked={false}
-    desktop={false}
-    disabled={false}
-    focusState="none"
-    insetChildren={false}
-    onTouchTap={[Function]}
-    primaryText="Save As" />
-</IconMenu>
+    autoDetectWindowHeight={true}
+    autoScrollBodyContent={false}
+    modal={false}
+    onRequestClose={[Function]}
+    open={false}
+    repositionOnUpdate={true}>
+    <TextField
+      disabled={false}
+      floatingLabelFixed={false}
+      fullWidth={false}
+      hintText="Enter new title"
+      multiLine={false}
+      onChange={[Function]}
+      rows={1}
+      type="text"
+      underlineShow={true} />
+  </Dialog>
+</span>
 `;

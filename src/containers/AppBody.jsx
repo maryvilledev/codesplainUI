@@ -3,6 +3,7 @@ import { Card } from 'material-ui';
 import React from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
+import cookie from 'react-cookie';
 
 import { restoreState } from '../actions/app';
 
@@ -10,26 +11,40 @@ import Annotations from './Annotations';
 import FilterArea from './FilterArea';
 import SnippetArea from './SnippetArea';
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 export class AppBody extends React.Component {
   componentDidMount() {
     const {
       dispatch,
       params: {
         id,
+        username,
       },
     } = this.props;
 
-    if (!id) {
-      return;
+    if (!username && !id) {
+      const signInState = cookie.load('signInState');
+      if (signInState) {
+        cookie.remove('signInState', { path: '/' });
+        cookie.remove('signInRedirect', { path: '/' });
+        dispatch(restoreState(signInState));
+      }
+      return null;
     }
 
-    axios.get(`/api/snippets/${id}`)
+    const token = cookie.load('token');
+    const config = {
+      headers: {
+        'Authorization': token,
+      }
+    }
+
+    axios.get(`${API_URL}/users/${username}/snippets/${id}`, config)
       .then(res => {
-        const stateString = res.data.json;
-        const obj = JSON.parse(stateString);
-        dispatch(restoreState(obj));
+        dispatch(restoreState(res.data));
       }, err => {
-        // Bad URL, redirect
+        // Failed to get the snippet, either bad URL or unauthorized
         browserHistory.push('/');
       });
   }

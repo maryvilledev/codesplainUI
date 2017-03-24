@@ -44,7 +44,6 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "serve": "node server",
-    "postinstall": "react-scripts build",
     "make-rules-csv": "babel-node --presets es2015 make-rules-csv.js"
   },
   "babel": {
