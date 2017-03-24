@@ -7,26 +7,6 @@ const axios = require('axios');
 
 const s3 = new aws.S3({ apiVersion: '2006-03-01' });
 
-/*
-Given a GitHub access token, authorizeToken gets the basic profile info for the 
-user and returns true if username contained therein matches the given username.
-(Return value is in form of a Promise)
-*/
-const authorizeToken = (accessToken, username) => {
-  const headers = {
-    Accept: 'application/json',
-    Authorization: `token ${accessToken}`,
-  };
-  return new Promise((resolve, reject) => {
-    axios.get(`https://api.github.com/user`, { headers })
-    .then(res => {
-      const doesMatch = res.data.login === username;
-      resolve(doesMatch);
-    }, err => {
-      reject(err);
-    });
-  });
-}
 
 /*
 Saves the given Body to the given Bucket under the given Key. Returns a Promise.
@@ -46,6 +26,8 @@ const saveToS3 = (Bucket, Key, Body) => {
     });
   });
 }
+
+exports.handler
 
 exports.handler = (event, context, callback) => {
   const token = event.headers.Authorization;
