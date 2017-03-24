@@ -12,7 +12,7 @@ describe('Reducer: Parser', () => {
 
   it('should handle SET_PARSER_STATE', () => {
     const nextState = actions.LOADED;
-    action = {
+    const action = {
       type: actions.SET_PARSER_STATE,
       payload: nextState
     };
@@ -24,7 +24,7 @@ describe('Reducer: Parser', () => {
 
   it('should handle LOAD_PARSER', () => {
     const parser = jest.fn()
-    action = {
+    const action = {
       type: actions.LOAD_PARSER,
       payload: parser
     };
