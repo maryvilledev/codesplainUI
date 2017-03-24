@@ -1,3 +1,7 @@
+machine:
+  environment:
+    REACT_APP_CLIENT_ID: f86ac0940aa0de740069
+
 dependencies:
   override:
     - yarn
