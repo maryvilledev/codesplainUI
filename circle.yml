@@ -8,15 +8,16 @@ test:
 deployment:
   release:
     tag: /v[0-9]+(\.[0-9]+)*/
+    environment:
+      REACT_APP_API_URL: api.codesplain.io/prod
     commands:
-        - yarn build:
-            environment:
-              REACT_APP_API_URL: api.codesplain.io/prod
-        - ./publish codesplain-ui
+        - yarn build
+        - ./publish release $CIRCLE_TAG
   master:
     branch: master
+    environment:
+      REACT_APP_API_URL: api.codesplain.io/dev
     commands:
-        - yarn build:
-          environment:
-            REACT_APP_API_URL: api.codesplain.io/dev
+        - REACT_APP_API_URL=$DEV_API
+        - yarn build
         - ./publish dev
