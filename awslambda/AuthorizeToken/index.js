@@ -8,7 +8,7 @@ const axios = require('axios');
 const sendResponse = (callback, statusCode, response) => {
   callback(null, {
     statusCode,
-    body: `{ "response": "${response}" }`,
+    body: response,
   })
 }
 
@@ -43,8 +43,6 @@ event object should be of the following form:
 exports.handler = (event, context, callback) => {
   console.log('event:')
   console.log(event)
-  // console.log('parsed event:')
-  // console.log(JSON.parse(event))
   authorizeToken(event.accessToken, event.userID)
     .then(isAuthorized => {
       // Reject if not authorized
