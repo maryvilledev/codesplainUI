@@ -4,7 +4,7 @@ console.log('Loading AuthorizeToken lambda function');
 
 const axios = require('axios');
 
-// Helpter for invoking the callback in handler func
+// Helper for invoking the callback in handler func
 const sendResponse = (callback, statusCode, response) => {
   callback(null, {
     statusCode,
@@ -41,6 +41,10 @@ event object should be of the following form:
 }
 */
 exports.handler = (event, context, callback) => {
+  console.log('event:')
+  console.log(event)
+  // console.log('parsed event:')
+  // console.log(JSON.parse(event))
   authorizeToken(event.accessToken, event.userID)
     .then(isAuthorized => {
       // Reject if not authorized
