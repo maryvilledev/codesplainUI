@@ -154,6 +154,16 @@ describe('Reducer: App', () => {
     };
     expect(reducer(undefined, action)).toEqual(expected);
   });
+  it('should handle CLEAR_UNSAVED_CHANGES', () => {
+    const action = {
+      type: actions.CLEAR_UNSAVED_CHANGES,
+    };
+    const expected = {
+      ...initialState,
+      hasUnsavedChanges: false,
+    };
+    expect(reducer(undefined, action)).toEqual(expected);
+  });
   describe('PARSE_SNIPPET', () => {
     it('should return the state if the snippet has not been processed by the web worker', () => {
       const snippet = 'Grasssss tastes bad';

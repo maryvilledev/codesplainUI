@@ -1,12 +1,13 @@
-import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
 import axios from 'axios';
-import _ from 'lodash'
+import _ from 'lodash';
 import { CardText, Snackbar } from 'material-ui';
-import { browserHistory } from 'react-router'
+import React, { PropTypes } from 'react';
 import cookie from 'react-cookie';
+import { connect } from 'react-redux';
+import { browserHistory } from 'react-router'
 
 import {
+  clearUnsavedChanges,
   parseSnippet,
   setSnippetContents,
   setSnippetTitle,
@@ -20,7 +21,7 @@ import {
 import ConfirmLockDialog from '../components/ConfirmLockDialog';
 import Editor from '../components/Editor';
 import SnippetAreaToolbar from '../components/SnippetAreaToolbar';
-  
+
 const API_URL = process.env.REACT_APP_API_URL;
 
 //Create an async function to fire the parseSnippet action
@@ -90,14 +91,20 @@ export class SnippetArea extends React.Component {
 
   handleSave() {
     // Make sure title is populated
-    const { snippetTitle, appState } = this.props;
+    const {
+      appState,
+      dispatch,
+      id,
+      snippetTitle,
+    } = this.props;
+
     if (!snippetTitle) {
       this.setState({ titleErrorText: 'This field is required' });
       this.showSnackbar('Please populate the title field before saving.');
       return;
     }
     this.setState({ titleErrorText: '' });
-    
+
     // Make sure user is signed in
     const username = cookie.load('username');
     if (!username) {
@@ -107,7 +114,6 @@ export class SnippetArea extends React.Component {
 
     // Save the snippet
     const stateString = JSON.stringify(appState);
-    const id = this.props.id;
     const token = cookie.load('token');
     const config = {
       headers: {
@@ -118,8 +124,8 @@ export class SnippetArea extends React.Component {
       axios.put(`${API_URL}/users/${username}/snippets/${id}`, stateString, config)
         .then(res => {
           this.showSnackbar('Codesplaination Saved!');
+          dispatch(clearUnsavedChanges());
         }, err => {
-          console.error(err);
           this.showSnackbar('Failed to save - an error occurred');
         })
     }
@@ -128,8 +134,8 @@ export class SnippetArea extends React.Component {
         .then((res) => {
           browserHistory.push(`/${username}/snippets/${res.data.key}`);
           this.showSnackbar('Codesplaination Saved!');
+          dispatch(clearUnsavedChanges());
         }, (err) => {
-          console.error(err);
           this.showSnackbar('Failed to save - an error occurred');
         });
     }
@@ -140,7 +146,7 @@ export class SnippetArea extends React.Component {
     if (!title) {
       return;
     }
-    
+
     // Make sure user is signed in
     const username = cookie.load('username');
     if (!username) {
@@ -149,11 +155,13 @@ export class SnippetArea extends React.Component {
     }
 
     // Render the new title
-    const { dispatch } = this.props;
+    const {
+      appState,
+      dispatch,
+    } = this.props;
     dispatch(setSnippetTitle(title));
-    
+
     // Save the snippet
-    const { appState } = this.props;
     appState.snippetTitle = title;
     const stateString = JSON.stringify(appState);
     const token = cookie.load('token');
@@ -166,8 +174,8 @@ export class SnippetArea extends React.Component {
       .then((res) => {
         browserHistory.push(`/${username}/snippets/${res.data.key}`);
         this.showSnackbar('Codesplaination Saved!');
+        dispatch(clearUnsavedChanges());
       }, (err) => {
-        console.error(err);
         this.showSnackbar('Failed to save - an error occurred');
       });
   }
@@ -187,7 +195,9 @@ export class SnippetArea extends React.Component {
       snippet,
       snippetTitle,
     } = this.props;
+
     const markedLines = Object.keys(annotations).map((key) => Number(key))
+
     return (
       <CardText>
         <SnippetAreaToolbar
