@@ -4,12 +4,13 @@ import reducer, { initialState } from '../../src/reducers/app';
 describe('Reducer: App', () => {
   it('should have initial state', () => {
     const initial = {
+      annotations: {},
+      AST: {},
+      filters: {},
+      hasUnsavedChanges: false,
+      readOnly: false,
       snippet: '',
       snippetTitle: '',
-      annotations: {},
-      filters: {},
-      AST: {},
-      readOnly: false,
     };
     expect(reducer(undefined, {})).toEqual(initial);
   });
@@ -21,6 +22,7 @@ describe('Reducer: App', () => {
     };
     const expected = {
       ...initialState,
+      hasUnsavedChanges: true,
       snippet: action.payload,
     }
     expect(reducer(undefined, action)).toEqual(expected);
@@ -31,6 +33,7 @@ describe('Reducer: App', () => {
     };
     const expected = {
       ...initialState,
+      hasUnsavedChanges: true,
       readOnly: true,
     };
     expect(reducer(undefined, action)).toEqual(expected);
@@ -54,7 +57,8 @@ describe('Reducer: App', () => {
     };
     const expected = {
       ...initialState,
-      filters: action.payload
+      filters: action.payload,
+      hasUnsavedChanges: true,
     };
     expect(reducer(undefined, action)).toEqual(expected);
   });
@@ -95,6 +99,7 @@ describe('Reducer: App', () => {
       annotations: {
         [annotationData.lineNumber]: annotationData,
       },
+      hasUnsavedChanges: true,
     };
     expect(reducer(undefined, action)).toEqual(expected);
   });
@@ -129,7 +134,12 @@ describe('Reducer: App', () => {
       type: actions.SET_SNIPPET_TITLE,
       payload: snippetTitle
     };
-    expect(reducer(undefined, action)).toEqual(expect.objectContaining({snippetTitle}));
+    const expected = {
+      ...initialState,
+      hasUnsavedChanges: true,
+      snippetTitle,
+    }
+    expect(reducer(undefined, action)).toEqual(expected);
   });
   it('should handle SET_SNIPPET_LANGUAGE', () => {
     const snippetLanguage = 'Gromflomite';
@@ -139,6 +149,7 @@ describe('Reducer: App', () => {
     };
     const expected = {
       ...initialState,
+      hasUnsavedChanges: true,
       snippetLanguage: action.payload,
     };
     expect(reducer(undefined, action)).toEqual(expected);
@@ -187,5 +198,17 @@ describe('Reducer: App', () => {
       };
       expect(reducer(undefined, action)).toEqual(expected);
     });
+  });
+  it('should handle SAVE_STATE_SUCCEEDED', () => {
+    const state = {
+      hasUnsavedChanges: true,
+    };
+    const action = {
+      type: actions.SAVE_STATE_SUCCEEDED,
+    };
+    const expected = {
+      hasUnsavedChanges: false,
+    };
+    expect(reducer(state, action)).toEqual(expected);
   });
 });
