@@ -1,9 +1,13 @@
 import React from 'react';
 import cookie from 'react-cookie';
 import axios from 'axios';
+import { Redirect } from 'react-router';
 
-import Loading from './Loading';
-import Alert from './Alert';
+import Loading from '../components/Loading';
+import Alert from '../components/Alert';
+import AppBody from '../containers/AppBody'
+
+const API_URL = process.env.REACT_APP_API_URL;
 
 /*
 <Auth /> is the component that is rendered for the '{{url}}/auth' endpoint (which
@@ -23,8 +27,8 @@ class Auth extends React.Component {
     // Extract the code provided by GitHub from the redirect query string
     const { code } = this.props.location.query
 
-    // Post it to the express backend to be verified by GitHub as authentic
-    axios.post('/api/auth', { code })
+    // Post it to the API to be verified by GitHub as authentic
+    axios.post(`${API_URL}/auth`, { code })
       .then(res => {
         // Code was accepted, so extract and save the token from the response
         const { token } = res.data;
@@ -43,8 +47,9 @@ class Auth extends React.Component {
       })
       .then(res => {
         // Can pull lots of other stuff out of res.data if needed
-        const { avatar_url } = res.data;
+        const { login, avatar_url } = res.data;
         cookie.save('userAvatarURL', avatar_url, { path: '/' });
+        cookie.save('username', login, { path: '/' });
         this.setState({ waiting: false });
       }, err => {
         // Failed to pull in user info, but that's fine. Log and continue.

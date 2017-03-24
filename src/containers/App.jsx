@@ -4,7 +4,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import AppBody from './AppBody';
 import Auth from '../components/Auth'
-import CodesplainAppBar from '../components/CodesplainAppBar';
+import CodesplainAppBar from './CodesplainAppBar';
 import { Router, Route, browserHistory } from 'react-router'
 
 // Needed for onTouchTap
@@ -26,7 +26,8 @@ export class App extends Component {
       <MuiThemeProvider>
         <Router history={browserHistory}>
           <Route path="/auth"  component={auth} />
-          <Route path="/(:id)" component={component} />
+          <Router path="/" component={component} />
+          <Route path="/(:username)/snippets/(:id)" component={component} />
         </Router>
       </MuiThemeProvider>
     );

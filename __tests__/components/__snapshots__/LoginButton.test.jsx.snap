@@ -2,7 +2,6 @@ exports[`<LoginButton /> matches snapshot 1`] = `
 <FlatButton
   disabled={false}
   fullWidth={false}
-  href="dummy-link"
   label={
     <span
       style={
@@ -24,7 +23,6 @@ exports[`<LoginButton /> matches snapshot 1`] = `
   }
   labelPosition="after"
   labelStyle={Object {}}
-  onClick={[Function]}
   onKeyboardFocus={[Function]}
   onMouseEnter={[Function]}
   onMouseLeave={[Function]}
