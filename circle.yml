@@ -15,8 +15,8 @@ deployment:
         - ./publish codesplain-ui
   master:
     branch: master
-      commands:
-          - yarn build:
-            environment:
-              REACT_APP_API_URL: api.codesplain.io/dev
-          - ./publish dev
+    commands:
+        - yarn build:
+          environment:
+            REACT_APP_API_URL: api.codesplain.io/dev
+        - ./publish dev
