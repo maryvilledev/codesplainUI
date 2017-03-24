@@ -1,11 +1,9 @@
-import configureMockStore from 'redux-mock-store'
-
 import * as actions from '../../src/actions/parser'
 
 describe('Actions: parser', () => {
   describe('SET_PARSER_STATE', () => {
     it('creates an action to set the parser state', () => {
-      const parserState = 'LOADED'
+      const parserState = actions.LOADED
       const expected = {
         type: actions.SET_PARSER_STATE,
         payload: parserState
