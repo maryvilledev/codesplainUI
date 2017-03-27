@@ -24,7 +24,6 @@ self.onmessage = ({ data : action }) => {
     }
     case LOAD_PARSER: {
       const parserURL  = action.payload;
-      console.log(parserURL)
       importScripts(parserURL);
       parser = Codesplain_parse_python3
       self.postMessage({

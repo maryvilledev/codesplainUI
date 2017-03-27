@@ -145,9 +145,7 @@ export class SnippetArea extends React.Component {
 
   componentDidMount() {
     const { dispatch } = this.props;
-    const action = loadParser(`${process.env.PUBLIC_URL}/python3.js`)
-    console.log(action)
-    dispatch(action)
+    dispatch(loadParser(`${process.env.REACT_APP_API_URL}/parsers/python3`))
   }
 
   render() {
