@@ -11,6 +11,9 @@ import {
   setSnippetTitle,
   toggleEditState,
 } from '../actions/app';
+import {
+  loadParser
+} from '../actions/parser';
 
 //Create an async function to fire the parseSnippet action
 async function dispatchParseSnippet(snippet, dispatch) {
@@ -138,6 +141,13 @@ export class SnippetArea extends React.Component {
   handleGutterClick(lineNumber, lineText) {
     const { dispatch } = this.props
     dispatch(openAnnotationPanel({lineNumber, lineText}))
+  }
+
+  componentDidMount() {
+    const { dispatch } = this.props;
+    const action = loadParser(`${process.env.PUBLIC_URL}/python3.js`)
+    console.log(action)
+    dispatch(action)
   }
 
   render() {
