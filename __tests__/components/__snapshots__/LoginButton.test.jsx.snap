@@ -10,7 +10,7 @@ exports[`<LoginButton /> matches snapshot 1`] = `
         }
       }>
       <img
-        role="presentation"
+        alt="GitHub Icon"
         src="github-icon.png"
         style={
           Object {
