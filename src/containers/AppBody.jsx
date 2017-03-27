@@ -13,6 +13,18 @@ import SnippetArea from './SnippetArea';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
+const styles = {
+  snippetAreaSection: {
+    height: '90vh',
+  },
+  snippetAreaSectionCard: {
+    height: '100%',
+  },
+  snippetAreaSectionCardContainer: {
+    height: 'inherit',
+  },
+};
+
 export class AppBody extends React.Component {
   componentDidMount() {
     const {
@@ -57,8 +69,14 @@ export class AppBody extends React.Component {
           <div className='col-lg-2'>
             <Card><FilterArea /></Card>
           </div>
-          <div className='col-lg-5 col-md-7'>
-            <Card>
+          <div
+            className='col-lg-5 col-md-7'
+            style={styles.snippetAreaSection}
+          >
+            <Card
+              containerStyle={styles.snippetAreaSectionCardContainer}
+              style={styles.snippetAreaSectionCard}
+            >
               <SnippetArea
                 id={id}
               />

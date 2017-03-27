@@ -131,14 +131,12 @@ class Editor extends React.Component {
     };
 
     return (
-      <div>
-        <CodeMirror
-          onChange={onChange}
-          options={codeMirrorOptions}
-          ref={cm => this.codeMirror = cm}
-          value={value}
-        />
-      </div>
+      <CodeMirror
+        onChange={onChange}
+        options={codeMirrorOptions}
+        ref={cm => this.codeMirror = cm}
+        value={value}
+      />
     );
   }
 }
