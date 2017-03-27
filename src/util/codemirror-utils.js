@@ -5,22 +5,18 @@ import _ from 'lodash'
 Recursive function for highlighting code in a CodeMirror. highlight() is an
 exported wrapper func for this, and starts the recursion.
 */
-function highlightNode(codeMirror, node, filters, parentColor) {
+export function highlightNode(codeMirror, node, filters, parentColor) {
   let color = parentColor;
 
   // If we aren't ignoring this token...
   if (ignoredRules.indexOf(node.type) === -1) {
     const rule = rules[node.type]; // Get the rule obj for this rule
     if (!rule) {
-      console.log(`rule "${node.type}" is missing from rules object!`);
       return; // Remove this return and the highlighting will sometimes fail
     }
-    else { // Use this node's color if it has one, otherwise log a warning
-      if (rule.color) {
-        color = rule.color; // Get the color for this rule
-      } else {
-        console.warn(`rule "${node.type}" has no color specified!`);
-      }
+    // Use this node's color if it has one
+    if (rule.color) {
+      color = rule.color;
     }
 
     // If this token's filter is not selected

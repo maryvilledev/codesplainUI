@@ -1,4 +1,5 @@
 import moxios from 'moxios';
+import cookie from 'react-cookie';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
@@ -140,6 +141,14 @@ describe('Actions: App', () => {
       expect(actions.parseSnippet(snippet)).toEqual(expected);
     });
   });
+  describe('CLEAR_UNSAVED_CHANGES', () => {
+    it('creates an action to clear the flag that denotes unsaved changes', () => {
+      const expected = {
+        type: actions.CLEAR_UNSAVED_CHANGES,
+      };
+      expect(actions.clearUnsavedChanges()).toEqual(expected)
+    });
+  });
   describe('SAVE_STATE_STARTED', () => {
     it('creates an action to notify state save has started', () => {
       const expected = {
@@ -173,12 +182,20 @@ describe('Actions: App', () => {
       moxios.install();
     });
     afterEach(() => {
+      cookie.remove('username');
       moxios.uninstall();
     });
     describe('SAVE_STATE', () => {
       it('dispatches no additional actions if an id is not supplied', () => {
         const store = mockStore({});
         return store.dispatch(actions.saveState())
+          .then(() => { // return of async actions
+          expect(store.getActions()).toEqual([])
+        });
+      });
+      it('dispatches no additional actions if not logged in', () => {
+        const store = mockStore({});
+        return store.dispatch(actions.saveState(mockId))
           .then(() => { // return of async actions
           expect(store.getActions()).toEqual([])
         });
@@ -191,7 +208,7 @@ describe('Actions: App', () => {
             response: { id: mockId, status: '200' },
           });
         });
-
+        cookie.save('username', 'foo');
         const expectedActions = [
           { type: actions.SAVE_STATE_STARTED, },
           { type: actions.SAVE_STATE_SUCCEEDED, },
@@ -209,7 +226,7 @@ describe('Actions: App', () => {
             status: 400,
           });
         });
-
+        cookie.save('username', 'foo');
         const expectedActions = [
           { type: actions.SAVE_STATE_STARTED, },
           { type: actions.SAVE_STATE_FAILED, },

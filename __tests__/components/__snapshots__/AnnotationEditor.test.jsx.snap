@@ -24,7 +24,13 @@ exports[`<AnnotationEditor /> matches snapshot 1`] = `
     <Tab
       label="Preview">
       <MarkdownRenderer
-        markdown="" />
+        markdown=""
+        options={
+          Object {
+            "highlight": [Function],
+            "langPrefix": "hljs language-",
+          }
+        } />
     </Tab>
   </Tabs>
   <RaisedButton
@@ -43,5 +49,31 @@ exports[`<AnnotationEditor /> matches snapshot 1`] = `
     onTouchTap={[Function]}
     primary={true}
     secondary={false} />
+  <a
+    href="http://commonmark.org/help"
+    style={
+      Object {
+        "paddingLeft": "1rem",
+      }
+    }
+    target="_blank">
+    <img
+      alt="Markdown Logo"
+      src="markdown-logo.svg"
+      style={
+        Object {
+          "height": "1rem",
+          "width": "2rem",
+        }
+      } />
+    <span
+      style={
+        Object {
+          "color": "#d3d3d3",
+        }
+      }>
+      Styling with Markdown is supported
+    </span>
+  </a>
 </div>
 `;
