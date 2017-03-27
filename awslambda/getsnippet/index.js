@@ -26,11 +26,22 @@ exports.handler = (event, context, callback) => {
         if (err) {
             const message = `Error getting object ${params.Key} from bucket ${bucket}`;
             callback(message);
-            context.fail({ statusCode: 400});
+            context.fail({ 
+                statusCode: 400,
+                headers: {
+                    'Access-Control-Allow-Origin': '*',
+                },
+            });
 
         } else {
             const object = data.Body.toString();
-            context.succeed({ statusCode: 200, body: object});
+            context.succeed({ 
+                statusCode: 200,
+                headers: {
+                    'Access-Control-Allow-Origin': '*',
+                },
+                body: object,
+            });
         }
     });
 };

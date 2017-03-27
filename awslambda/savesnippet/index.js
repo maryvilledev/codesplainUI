@@ -11,7 +11,9 @@ exports.handler = (event, context, callback) => {
     let body = JSON.parse(event.body);
     let snippetKey = body.snippetTitle;
 
+    // Replace spaces with underscore and convert to lowercase
     snippetKey = snippetKey.replace(/\s+/g, '_').toLowerCase();
+    
     const key = event.pathParameters.user_id + "/" + snippetKey;
     let bucket;
 
@@ -31,11 +33,22 @@ exports.handler = (event, context, callback) => {
         if (err) {
             const message = `Error putting object ${params.Key} into bucket ${bucket}. Make sure they exist and your bucket is in the same region as this function.`;
             console.log(message);
-            context.fail({ statusCode: 400});
+            context.fail({ 
+                statusCode: 400,
+                headers: {
+                    'Access-Control-Allow-Origin': '*',
+                },
+            });
 
         } else {
             const object = JSON.stringify({key});
-            context.succeed({statusCode: 200, body: object})
+            context.succeed({ 
+                statusCode: 200, 
+                headers: {
+                    'Access-Control-Allow-Origin': '*',
+                },
+                body: JSON.stringify({ key: snippetKey }),
+            });
         }
     });
 };
