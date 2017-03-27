@@ -1,39 +1,43 @@
 import React from 'react';
 import { FlatButton } from 'material-ui';
+
 import GitHubIcon from '../../../res/github-icon.png';
 
 const styles = {
   button: {
     marginTop: '6px',
   },
-  span: {
-    color: 'white',
-  },
   img: {
     marginRight: '7px',
   },
-}
+  span: {
+    color: 'white',
+  },
+};
+
+const LoginButtonLabel = (
+  <span style={styles.span}>
+    <img
+      role="presentation"
+      src={GitHubIcon}
+      style={styles.img}
+      width="23"
+    />
+    Log In
+  </span>
+);
 
 /*
 <LoginButton /> renders as white clickable "LOG IN" text, with a white octocat
 icon to its left.
 */
+
 const LoginButton = ({ onClick }) => (
-  <FlatButton 
+  <FlatButton
+    label={LoginButtonLabel}
     onClick={onClick}
     style={styles.button}
-    label={
-      <span style={styles.span}>
-        <img 
-          role="presentation"
-          width="23" 
-          style={styles.img} 
-          src={GitHubIcon} 
-        />
-        Log In
-      </span>
-    }
   />
 );
 
-export default LoginButton
+export default LoginButton;

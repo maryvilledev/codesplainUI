@@ -1,7 +1,7 @@
-import React from 'react';
-import { Card } from 'material-ui';
-import { connect } from 'react-redux';
 import axios from 'axios';
+import { Card } from 'material-ui';
+import React from 'react';
+import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import cookie from 'react-cookie';
 
@@ -15,31 +15,38 @@ const API_URL = process.env.REACT_APP_API_URL;
 
 export class AppBody extends React.Component {
   componentDidMount() {
-      const { username } = this.props.params;
-      const { id } = this.props.params;
-      const { dispatch } = this.props;
-      if (!username && !id) {
-        const signInState = cookie.load('signInState');
-        if (signInState) {
-          cookie.remove('signInState', { path: '/' });
-          cookie.remove('signInRedirect', { path: '/' });
-          dispatch(restoreState(signInState));
-        }
-        return null;
+    const {
+      dispatch,
+      params: {
+        id,
+        username,
+      },
+    } = this.props;
+
+    if (!username && !id) {
+      const signInState = cookie.load('signInState');
+      if (signInState) {
+        cookie.remove('signInState', { path: '/' });
+        cookie.remove('signInRedirect', { path: '/' });
+        dispatch(restoreState(signInState));
       }
-      const token = cookie.load('token');
-      const config = {
-        headers: {
-          'Authorization': token,
-        }
+      return null;
+    }
+
+    const token = cookie.load('token');
+    const config = {
+      headers: {
+        'Authorization': token,
       }
-      axios.get(`${API_URL}/users/${username}/snippets/${id}`, config)
-        .then(res => {
-          dispatch(restoreState(res.data));
-        }, err => {
-          // Failed to get the snippet, either bad URL or unauthorized
-          browserHistory.push('/');
-        });
+    }
+
+    axios.get(`${API_URL}/users/${username}/snippets/${id}`, config)
+      .then(res => {
+        dispatch(restoreState(res.data));
+      }, err => {
+        // Failed to get the snippet, either bad URL or unauthorized
+        browserHistory.push('/');
+      });
   }
 
   render() {
@@ -66,8 +73,8 @@ export class AppBody extends React.Component {
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 
-export default connect()(AppBody)
+export default connect()(AppBody);

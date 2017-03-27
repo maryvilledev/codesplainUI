@@ -2,59 +2,84 @@ import * as actions from '../actions/app';
 import { generateFilters } from '../util/rules';
 
 export const initialState = {
+  annotations: {},
+  AST: {},
+  filters: {},
+  hasUnsavedChanges: false,
+  readOnly: false,
   snippet: '',
   snippetTitle: '',
-  annotations: {},
-  filters: {},
-  AST: {},
-  readOnly: false,
 };
 
 const app = (state = initialState, action) => {
   switch (action.type) {
     case actions.SET_SNIPPET_CONTENTS: {
-      return Object.assign({}, state, {
+      return {
+        ...state,
+        hasUnsavedChanges: true,
         snippet: action.payload,
-      });
+      };
     }
     case actions.SET_RULE_FILTERS: {
-      return Object.assign({}, state, {
+      return {
+        ...state,
         filters: action.payload,
-      });
+        hasUnsavedChanges: true,
+      };
     }
     case actions.TOGGLE_EDITING_STATE: {
       if (state.readOnly) {
         return state;
       }
-      return Object.assign({}, state, {
+      return {
+        ...state,
+        hasUnsavedChanges: true,
         readOnly: !state.readOnly,
-      });
+      };
     }
     case actions.SET_AST: {
-      return Object.assign({}, state, {
+      return {
+        ...state,
         AST: action.payload,
-      });
+      };
     }
     case actions.SAVE_ANNOTATION: {
-      return Object.assign({}, state, {
-        annotations: Object.assign({}, state.annotations, {
+      return {
+        ...state,
+        annotations: {
+          ...state.annotations,
           [action.payload.lineNumber]: action.payload,
-        }),
-      });
+        },
+        hasUnsavedChanges: true,
+      };
     }
     case actions.RESTORE_STATE: {
-      return Object.assign({}, action.payload);
+      return action.payload
     }
     case actions.SET_SNIPPET_TITLE: {
       return {
         ...state,
+        hasUnsavedChanges: true,
         snippetTitle: action.payload
       };
+    }
+    case actions.SAVE_STATE_SUCCEEDED: {
+      return {
+        ...state,
+        hasUnsavedChanges: false,
+      }
     }
     case actions.SET_SNIPPET_LANGUAGE: {
       return {
         ...state,
+        hasUnsavedChanges: true,
         snippetLanguage: action.payload,
+      };
+    }
+    case actions.CLEAR_UNSAVED_CHANGES: {
+      return {
+        ...state,
+        hasUnsavedChanges: false,
       };
     }
     case actions.PARSE_SNIPPET: {
