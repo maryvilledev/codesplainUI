@@ -1,3 +1,7 @@
+machine:
+  environment:
+    REACT_APP_CLIENT_ID: 5b8ef62086ba2e6acfc9
+
 dependencies:
   override:
     - yarn
@@ -9,8 +13,15 @@ deployment:
   release:
     tag: /v[0-9]+(\.[0-9]+)*/
     commands:
+        - yarn build:
+            environment:
+              REACT_APP_API_URL: api.codesplain.io/prod
         - ./publish release $CIRCLE_TAG
   master:
     branch: master
+    
     commands:
-      - ./publish dev
+        - yarn build:
+            environment:
+              REACT_APP_API_URL: api.codesplain.io/dev
+        - ./publish dev
