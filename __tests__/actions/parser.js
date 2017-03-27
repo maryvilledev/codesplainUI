@@ -8,7 +8,7 @@ describe('Actions: parser', () => {
         type: actions.LOAD_PARSER,
         payload: parserURL
       };
-      expect(actions.loadParser(parserURL)).toEqual(expected)
+      expect(actions.loadParser(parserURL)).toEqual(expect.objectContaining(expected))
     })
   })
 })

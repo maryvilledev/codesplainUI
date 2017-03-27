@@ -7,6 +7,10 @@ const initialState = {
 const parser = (state = initialState, action) => {
   switch (action.type) {
     case actions.LOAD_PARSER: {
+      if (action.meta) {
+        //Missed the middleware somehow
+        return state
+      }
       const parserURL = action.payload;
       return {...state, parserURL}
     }
