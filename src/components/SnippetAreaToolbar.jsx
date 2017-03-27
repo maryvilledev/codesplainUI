@@ -13,7 +13,7 @@ const styles = {
     height: '7.5%',
     listStyleType: 'none',
     margin: '0',
-    overflow: 'hidden',
+    overflow: 'auto',
     padding: '0',
   },
   toolbarItem: {
