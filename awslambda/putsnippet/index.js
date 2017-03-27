@@ -87,7 +87,7 @@ exports.handler = (event, context, callback) => {
       .then(key => {
         callback(null, {
           statusCode: '200',
-          body: JSON.stringify(key),
+          body: `{ "key": "${snippetID}" }`,
         });
       })
       .catch(err => {

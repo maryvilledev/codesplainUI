@@ -70,6 +70,7 @@ exports.handler = (event, context, callback) => {
     }
 
     /* ----- Otherwise, save to S3 ----- */
+    const body       = JSON.parse(event.body);
     const snippetKey = body.snippetTitle.replace(/\s+/g, '_').toLowerCase();
     const key        = `${userID}/${snippetKey}`;
     const apiID      = event.requestContext.apiId;
@@ -87,7 +88,8 @@ exports.handler = (event, context, callback) => {
       .then(key => {
         callback(null, {
           statusCode: '200',
-          body: JSON.stringify(key),
+          // body: JSON.stringify(snippetKey),
+          body: `{ "key": "${snippetKey}" }`,
         })
       })
       .catch(err => {
