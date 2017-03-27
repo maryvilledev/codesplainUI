@@ -11,6 +11,6 @@ deployment:
     commands:
         - ./publish release $CIRCLE_TAG
   master:
-    branch: master
+    branch: [devBucket, master]
     commands:
       - ./publish dev
