@@ -4,32 +4,19 @@ import reducer from '../../src/reducers/parser';
 describe('Reducer: Parser', () => {
   it('should have initial state', () => {
     const initial = {
-      state: actions.LOADING,
-      parser: null
+      parserURL: ''
     }
     expect(reducer(undefined, {})).toEqual(initial)
   })
 
-  it('should handle SET_PARSER_STATE', () => {
-    const nextState = actions.LOADED;
-    const action = {
-      type: actions.SET_PARSER_STATE,
-      payload: nextState
-    };
-    const expected = {
-      state: actions.LOADED
-    };
-    expect(reducer(undefined, action)).toEqual(expect.objectContaining(expected))
-  })
-
   it('should handle LOAD_PARSER', () => {
-    const parser = jest.fn()
+    const parserURL = 'https://www.rickandmorty100years.com'
     const action = {
       type: actions.LOAD_PARSER,
-      payload: parser
+      payload: parserURL
     };
     const expected = {
-      parser: parser
+      parserURL
     };
     expect(reducer(undefined, action)).toEqual(expect.objectContaining(expected))
   })
