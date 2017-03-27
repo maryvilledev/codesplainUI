@@ -3,12 +3,10 @@
 console.log('Loading function');
 
 const aws = require('aws-sdk');
-
 const s3 = new aws.S3({ apiVersion: '2006-03-01' });
-
 const lambda = new aws.Lambda({
   region: 'us-west-2',
-})
+});
 
 // Helper for invoking the callback in handler func
 const sendResponse = (callback, statusCode, response) => {
@@ -18,9 +16,16 @@ const sendResponse = (callback, statusCode, response) => {
   })
 }
 
-/*
-Saves the given Body to the given Bucket under the given Key. Returns a Promise.
-*/
+// Given an apiID, returns the corresponding S3 bucket; or null if none exists
+const mapApiIdToBucket = (apiID) => {
+  // TODO: Add Other environments to process.env and if statement
+  switch(apiID) {
+    case process.env.devID: return process.env.devBucket;
+    default: return null;
+  }
+}
+
+// Saves the given Body to the given Bucket under the given Key. Returns a Promise.
 const saveToS3 = (Bucket, Key, Body) => {
   const params = {
       Bucket,
@@ -29,48 +34,55 @@ const saveToS3 = (Bucket, Key, Body) => {
   };
   return new Promise((resolve, reject) => {
     s3.putObject(params, (err, data) => {
-      if (err) {
-        reject(err);
-      }
+      if (err) reject(err);
       resolve({ Key });
     });
   });
 }
 
 exports.handler = (event, context, callback) => {
+  // Extract some stuff that we need from the request object.
   const accessToken = event.headers.Authorization;
-  const userID = event.pathParameters.user_id;
+  const userID      = event.pathParameters.user_id;
+
+  // Invoke the authorization lambda to ensure the accessToken
+  // included in the request matches the userID for the requested
+  // resource.
   lambda.invoke({
     FunctionName: 'AuthorizeToken',
     Payload: JSON.stringify({
       accessToken,
       userID,
-    })
+    }),
   }, (err, data) => {
-    if (err) console.log(err)
-    console.log('data:')
-    console.log(data)
-    const payload = JSON.parse(data.Payload)
-    // If authorization failed, respond with a 400
-    if (payload.statusCode === '400') {
-      console.log(err)
-      sendResponse(callback, '400', payload.body)
-    }
-    // Otherwise, save to S3
-    let body = JSON.parse(event.body);
-    let snippetKey = body.snippetTitle;
-    
-    snippetKey = snippetKey.replace(/\s+/g, '_').toLowerCase();
-    const key = event.pathParameters.user_id + "/" + snippetKey;
-    let bucket;
-    
-    // TODO: Add Other environments to process.env and if statement
-    if (event.requestContext.apiId === process.env.devID) {
-        bucket = process.env.devBucket;
-    } else {
-        console.err("Invalid apiId" + event.requestContext.apiId);
+    // Handle the error if the AuthorizeToken lambda failed
+    // to finish properly.
+    if (err) {
+      console.log(err);
+      sendResponse(callback, '500', 'Failed to save snippet.');
     }
 
+    const payload = JSON.parse(data.Payload);
+    // If authorization failed, respond with a 400
+    if (payload.statusCode === '400') {
+      console.log(payload.body);
+      sendResponse(callback, '400', payload.body);
+    }
+
+    /* ----- Otherwise, save to S3 ----- */
+    const snippetKey = body.snippetTitle.replace(/\s+/g, '_').toLowerCase();
+    const key        = `${userID}/${snippetKey}`;
+    const apiID      = event.requestContext.apiId;
+    const bucket     = mapApiIdToBucket(apiID);
+
+    // Respond with a 400 if the apiID wasn't mapped to an S3 bucket
+    if (bucket === null) {
+      const msg = `Unrecognized apiId: ${apiID}`;
+      console.err(msg);
+      sendResponse(callback, '400', msg);
+    }
+
+    // apiID mapped to an S3 bucket, so save to that
     saveToS3(bucket, key, event.body)
       .then(key => {
         callback(null, {
@@ -79,7 +91,7 @@ exports.handler = (event, context, callback) => {
         })
       })
       .catch(err => {
-        const message = `Error putting object ${params.Key} into bucket ${bucket}.` +
+        const message = `Error putting object ${key} into bucket ${bucket}.` +
                         `Make sure they exist and your bucket is in the same ` +
                         `region as this function.`;
         console.log(message);
