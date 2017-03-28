@@ -24,7 +24,7 @@ self.onmessage = ({ data : action }) => {
     }
     case LOAD_PARSER: {
       const parserURL  = action.payload;
-      //Load and execute script from the URL
+      // Load and execute script from the URL
       self.importScripts(parserURL);
       // Script exports the parser as a global var, set the local ref to point
       // at it
