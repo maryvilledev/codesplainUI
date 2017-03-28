@@ -13,6 +13,9 @@ import {
   setSnippetTitle,
   toggleEditState,
 } from '../actions/app';
+import {
+  loadParser
+} from '../actions/parser';
 
 import {
   openAnnotationPanel,
@@ -183,6 +186,11 @@ export class SnippetArea extends React.Component {
   handleGutterClick(lineNumber, lineText) {
     const { dispatch } = this.props
     dispatch(openAnnotationPanel({lineNumber, lineText}))
+  }
+
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch(loadParser(`${process.env.REACT_APP_API_URL}/parsers/python3`))
   }
 
   render() {
