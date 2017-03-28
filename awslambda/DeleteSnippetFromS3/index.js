@@ -12,6 +12,9 @@ const lambda = new aws.Lambda({
 const sendResponse = (callback, statusCode, response) => {
   callback(null, {
     statusCode,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
     body: `{ "response": "${response}" }`,
   })
 }

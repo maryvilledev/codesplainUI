@@ -12,6 +12,9 @@ const lambda = new aws.Lambda({
 const sendResponse = (callback, statusCode, response) => {
   callback(null, {
     statusCode,
+    headers: {
+        'Access-Control-Allow-Origin': '*',
+    },
     body: `{ "response": "${response}" }`,
   })
 }
@@ -88,7 +91,9 @@ exports.handler = (event, context, callback) => {
       .then(key => {
         callback(null, {
           statusCode: '200',
-          // body: JSON.stringify(snippetKey),
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+          },
           body: `{ "key": "${snippetKey}" }`,
         })
       })
