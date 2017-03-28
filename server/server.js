@@ -54,7 +54,7 @@ app.use(express.static(path.resolve(__dirname, "..", 'build')));
 // app.post('/api/snippets/', function(req, res) {
 //   var id = uuid();
 //   saveToRedis(id, req, res);
-})
+// })
 
 app.post('/api/snippets/:id', function(req, res) {
   var id = req.params.id;
