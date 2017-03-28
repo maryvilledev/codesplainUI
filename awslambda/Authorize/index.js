@@ -4,31 +4,18 @@ console.log('Loading function')
 
 const aws = require('aws-sdk')
 const axios = require('axios')
-const _ = require('lodash')
 
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 
-const authUrl = (token) =>
+const httpsUrl = (token) =>
   `https://api.github.com/applications/${clientId}/tokens/${token}`
-const authOpts = {
+const httpsOpts = {
   auth: {
     username: clientId,
     password: clientSecret
   }
 }
-const orgUrl = `https://api.github.com/user/orgs`
-const orgOpts = (token) => ({
-  headers: {
-    'Authorization': `token ${token}`
-  }
-})
-
-const orgWhitelist = ['maryvilledev', 'LaunchCodeEducation'];
-
-const isMemberOfWhitelistedOrg = (orgs, whitelist) => (
-  _.intersection(orgs, whitelist).length > 0
-)
 
 function generatePolicy(principalId, effect, resource)
 {
@@ -47,25 +34,11 @@ function generatePolicy(principalId, effect, resource)
 
 exports.handler = (event, context, callback) => {
   const token = event.authorizationToken;
-  const url = authUrl(token);
-  const opts = authOpts;
+  const url = httpsUrl(token);
+  const opts = httpsOpts;
   axios.get(url, opts)
     .then(() => {
-      const url = orgUrl;
-      const opts = orgOpts(token);
-      axios.get(url, opts)
-        .then((res) => {
-          //Get a list of orgs they are a part of
-          const orgs = res.data.map((org) => org.login)
-          if (isMemberOfWhitelistedOrg(orgs, orgWhitelist)) {
-            callback(null, generatePolicy('user', 'Allow', event.methodArn))
-          } else {
-            callback('Unauthorized')
-          }
-        })
-        .catch(() => {
-          callback('Unauthorized')
-        })
+      callback(null, generatePolicy('user', 'Allow', event.methodArn))
     })
     .catch(() => {
       callback('Unauthorized')
