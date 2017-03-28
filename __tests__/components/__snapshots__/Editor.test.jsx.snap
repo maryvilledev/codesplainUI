@@ -1,20 +1,18 @@
 exports[`<Editor /> matches snapshot 1`] = `
-<div>
-  <CodeMirror
-    onChange={[Function]}
-    options={
-      Object {
-        "gutters": Array [
-          "annotations",
-          "CodeMirror-linenumbers",
-        ],
-        "lineNumbers": true,
-        "mode": "python",
-        "readOnly": false,
-        "theme": "codesplain",
-      }
+<CodeMirror
+  onChange={[Function]}
+  options={
+    Object {
+      "gutters": Array [
+        "annotations",
+        "CodeMirror-linenumbers",
+      ],
+      "lineNumbers": true,
+      "mode": "python",
+      "readOnly": false,
+      "theme": "codesplain",
     }
-    preserveScrollPosition={false}
-    value="" />
-</div>
+  }
+  preserveScrollPosition={false}
+  value="" />
 `;

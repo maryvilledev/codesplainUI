@@ -1,6 +1,14 @@
+.cm-s-codesplain {
+  height: 100%;
+}
+
 .cm-s-codesplain span {
   font-size: 108%;
   line-height: 100%;
   padding-top: 2px;
   padding-bottom: 2px;
+}
+
+.ReactCodeMirror {
+  height: 92.5%;
 }

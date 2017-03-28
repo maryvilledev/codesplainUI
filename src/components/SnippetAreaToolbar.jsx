@@ -1,23 +1,24 @@
 import React, {PropTypes} from 'react';
 import {
-  TextField, 
-  SelectField, 
-  MenuItem 
+  MenuItem,
+  SelectField,
+  TextField,
 } from 'material-ui';
 import LockButton from '../components/buttons/LockButton';
 import SaveMenu from '../components/menus/SaveMenu';
 
 const styles = {
   toolbar: {
+    backgroundColor: 'transparent',
+    height: '7.5%',
     listStyleType: 'none',
     margin: '0',
+    overflow: 'auto',
     padding: '0',
-    overflow: 'hidden',
-    backgroundColor: 'transparent',
   },
   toolbarItem: {
-    float: 'left',
     display: 'block',
+    float: 'left',
     padding: '5px 10px',
   },
   titleField: {
@@ -33,13 +34,12 @@ const styles = {
   },
 }
 
-/* 
+/*
 https://www.w3schools.com/Css/css_navbar.asp
 Note that the Materual UI <Toolbar /> component does not work
-here, because it does not reflow correctly when the screen is 
-resized.
+here, because it does not reflow correctly when the screen is resized.
 */
-const SnippetAreaToolbar = ({ 
+const SnippetAreaToolbar = ({
   title, onTitleChange, readOnly, onLockClick, onSaveClick, onSaveAsClick
 }) => (
   <ul style={styles.toolbar}>
@@ -65,11 +65,11 @@ const SnippetAreaToolbar = ({
     <li style={styles.toolbarItem}>
       <LockButton
         id="lockButton"
-        onClick={onLockClick} 
+        onClick={onLockClick}
         readOnly={readOnly}
         style={styles.buttons}
       />
-      <SaveMenu 
+      <SaveMenu
         id="saveMenu"
         onSaveClick={onSaveClick}
         onSaveAsClick={onSaveAsClick}

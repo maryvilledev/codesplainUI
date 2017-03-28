@@ -27,6 +27,12 @@ import SnippetAreaToolbar from '../components/SnippetAreaToolbar';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
+const styles = {
+  snippetAreaCardText: {
+    height: 'inherit',
+  },
+};
+
 //Create an async function to fire the parseSnippet action
 async function dispatchParseSnippet(snippet, dispatch) {
   dispatch(parseSnippet(snippet))
@@ -207,7 +213,7 @@ export class SnippetArea extends React.Component {
     const markedLines = Object.keys(annotations).map((key) => Number(key))
 
     return (
-      <CardText>
+      <CardText style={styles.snippetAreaCardText}>
         <SnippetAreaToolbar
           title={snippetTitle}
           onTitleChange={this.handleTitleChanged}d
