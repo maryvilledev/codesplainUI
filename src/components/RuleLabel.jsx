@@ -38,7 +38,7 @@ const RuleLabel = ({ color, rule, count, onClick, isActive }) => {
 
 RuleLabel.propTypes = {
   color: PropTypes.string.isRequired,
-  count: PropTypes.string.isRequired,
+  count: PropTypes.number.isRequired,
   isActive: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
   rule: PropTypes.string.isRequired,

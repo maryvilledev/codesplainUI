@@ -15,7 +15,7 @@ describe('<RuleLabel />', () => {
         <RuleLabel
           color="#FF0000"
           rule="Example Rule"
-          count="1"
+          count={1}
           isActive={true}
           onClick={jest.fn()}
         />
@@ -27,7 +27,7 @@ describe('<RuleLabel />', () => {
         <RuleLabel
           color="#FF0000"
           rule="Example Rule"
-          count="1"
+          count={1}
           isActive={false}
           onClick={jest.fn()}
         />
@@ -43,7 +43,7 @@ describe('<RuleLabel />', () => {
         <RuleLabel
           color=""
           rule={rule}
-          count="0"
+          count={1}
           isActive={false}
           onClick={jest.fn()}
         />
@@ -53,7 +53,7 @@ describe('<RuleLabel />', () => {
   });
 
   describe('prop: count', () => {
-    const count = "3";
+    const count = 3;
     const wrapper = shallowWithContext(
       <RuleLabel
         color=""
@@ -71,9 +71,9 @@ describe('<RuleLabel />', () => {
       const onClick = jest.fn();
       const wrapper = shallowWithContext(
         <RuleLabel
-          color={''}
-          rule={''}
-          count={''}
+          color=""
+          rule=""
+          count={3}
           isActive={false}
           onClick={onClick}
         />
@@ -85,9 +85,9 @@ describe('<RuleLabel />', () => {
       const onClick = jest.fn();
       const wrapper = shallowWithContext(
         <RuleLabel
-          color={''}
-          rule={''}
-          count={''}
+          color=""
+          rule=""
+          count={1}
           isActive={false}
           onClick={onClick}
         />
