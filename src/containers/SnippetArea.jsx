@@ -13,6 +13,9 @@ import {
   setSnippetTitle,
   toggleEditState,
 } from '../actions/app';
+import {
+  loadParser
+} from '../actions/parser';
 
 import {
   openAnnotationPanel,
@@ -23,6 +26,12 @@ import Editor from '../components/Editor';
 import SnippetAreaToolbar from '../components/SnippetAreaToolbar';
 
 const API_URL = process.env.REACT_APP_API_URL;
+
+const styles = {
+  snippetAreaCardText: {
+    height: 'inherit',
+  },
+};
 
 //Create an async function to fire the parseSnippet action
 async function dispatchParseSnippet(snippet, dispatch) {
@@ -185,6 +194,11 @@ export class SnippetArea extends React.Component {
     dispatch(openAnnotationPanel({lineNumber, lineText}))
   }
 
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch(loadParser(`${process.env.REACT_APP_API_URL}/parsers/python3`))
+  }
+
   render() {
     const {
       annotations,
@@ -199,7 +213,7 @@ export class SnippetArea extends React.Component {
     const markedLines = Object.keys(annotations).map((key) => Number(key))
 
     return (
-      <CardText>
+      <CardText style={styles.snippetAreaCardText}>
         <SnippetAreaToolbar
           title={snippetTitle}
           onTitleChange={this.handleTitleChanged}d

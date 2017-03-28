@@ -3,9 +3,10 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is no
   style={
     Object {
       "backgroundColor": "transparent",
+      "height": "7.5%",
       "listStyleType": "none",
       "margin": "0",
-      "overflow": "hidden",
+      "overflow": "auto",
       "padding": "0",
     }
   }>
@@ -108,9 +109,10 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is re
   style={
     Object {
       "backgroundColor": "transparent",
+      "height": "7.5%",
       "listStyleType": "none",
       "margin": "0",
-      "overflow": "hidden",
+      "overflow": "auto",
       "padding": "0",
     }
   }>
