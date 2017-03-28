@@ -22,8 +22,8 @@ export const rules = {
   'str':      { prettyName: 'Strings', color: '#CAABF7' },
   'try_stmt': { prettyName: 'Try Statements', color: '#CCCCFF' },
   'while_stmt':  { prettyName: 'While Loops', color: '#F0E68C' },
-  '.TRUE': { prettyName: 'Boolean (True)', color: '#ff9933' },
-  '.FALSE': { prettyName: 'Boolean (False)', color: '#e67300' },
+  '.TRUE': { prettyName: 'Boolean (True)', color: '#FF9933' },
+  '.FALSE': { prettyName: 'Boolean (False)', color: '#E67300' },
 }
 
 /* Array of rules produced by parser, but ignored by the UI layer */
