@@ -19,13 +19,13 @@ deployment:
     commands:
         - yarn build:
             environment:
-              REACT_APP_API_URL: api.codesplain.io/prod
+              REACT_APP_API_URL: https://api.codesplain.io/prod
         - ./publish release $CIRCLE_TAG
   master:
     branch: master
-    
+
     commands:
         - yarn build:
             environment:
-              REACT_APP_API_URL: api.codesplain.io/dev
+              REACT_APP_API_URL: https://api.codesplain.io/dev
         - ./publish dev
