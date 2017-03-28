@@ -18,7 +18,7 @@ const styles = {
 const LoginButtonLabel = (
   <span style={styles.span}>
     <img
-      role="presentation"
+      alt='GitHub Icon'
       src={GitHubIcon}
       style={styles.img}
       width="23"
