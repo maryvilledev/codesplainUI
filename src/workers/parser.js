@@ -4,10 +4,7 @@ import { PARSE_SNIPPET } from '../actions/app'
 
 let parser = null;
 
-let onError = (err) => {console.error(err);}
-if (process.env.NODE_ENV === "production") {
-  onError = () => {};
-}
+const onError = (err) => {console.error(err);}
 
 self.onmessage = ({ data : action }) => {
   switch (action.type) {
