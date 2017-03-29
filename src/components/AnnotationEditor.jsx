@@ -8,11 +8,23 @@ import markdownRendererOptions from '../util/markdown-renderer-options';
 import markdownLogo from '../../res/markdown-logo.svg';
 
 const styles = {
+  'bottomContainer': {
+    display: 'flex',
+    'flexFlow': 'row wrap',
+  },
+  'button': {
+    flexFlow: 1,
+    flexShrink: 1,
+    flexBasis: 'auto',
+  },
   'markdownHintText': {
     'color': '#d3d3d3',
   },
   'markdownIndicator': {
     'paddingLeft': '1rem',
+    flexFlow: 1,
+    flexShrink: 1,
+    flexBasis: 'auto',
   },
   'markdownLogo': {
     width: '2rem',
@@ -26,8 +38,8 @@ class AnnotationEditor extends React.Component {
     this.state = {
       annotation: this.props.annotation,
     };
-    this.onAnnotationChange = this.onAnnotationChange.bind(this);
     this.clearAnnotation = this.clearAnnotation.bind(this);
+    this.onAnnotationChange = this.onAnnotationChange.bind(this);
     this.saveAnnotation = this.saveAnnotation.bind(this);
   }
 
@@ -52,8 +64,8 @@ class AnnotationEditor extends React.Component {
       <div>
         <Tabs>
           <Tab
-            onActive={() => { this.textField.focus(); }}
             label="Write"
+            onActive={() => { this.textField.focus(); }}
           >
             <TextField
               autoFocus
@@ -75,33 +87,35 @@ class AnnotationEditor extends React.Component {
             />
           </Tab>
         </Tabs>
-        <RaisedButton
-          label="Cancel"
-          onTouchTap={this.clearAnnotation}
-          secondary
-        />
-        <RaisedButton
-          disabled={!this.state.annotation}
-          label="Save"
-          onTouchTap={this.saveAnnotation}
-          primary
-        />
-        <a
-          href="http://commonmark.org/help"
-          style={styles.markdownIndicator}
-          target="_blank"
-        >
-          <img
-            alt="Markdown Logo"
-            src={markdownLogo}
-            style={styles.markdownLogo}
+        <div style={styles.bottomContainer}>
+          <RaisedButton
+            label="Cancel"
+            onTouchTap={this.clearAnnotation}
+            secondary
+            style={styles.button}
           />
-          <span
-            style={styles.markdownHintText}
+          <RaisedButton
+            disabled={!this.state.annotation}
+            label="Save"
+            onTouchTap={this.saveAnnotation}
+            primary
+            style={styles.button}
+          />
+          <a
+            href="http://commonmark.org/help"
+            style={styles.markdownIndicator}
+            target="_blank"
           >
-            Styling with Markdown is supported
-          </span>
-        </a>
+            <img
+              alt="Markdown Logo"
+              src={markdownLogo}
+              style={styles.markdownLogo}
+            />
+            <span style={styles.markdownHintText}>
+              Styling with Markdown is supported
+            </span>
+          </a>
+        </div>
       </div>
     );
   }
