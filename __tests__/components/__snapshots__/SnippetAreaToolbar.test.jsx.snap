@@ -3,14 +3,7 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is no
   style={
     Object {
       "backgroundColor": "transparent",
-      "display": "flex",
-      "flexBasis": "auto",
-      "flexDirection": "row",
-      "flexGrow": "1",
-      "flexShrink": "1",
-      "flexWrap": "wrap",
       "margin": "0",
-      "minHeight": "100px",
       "padding": "0",
     }
   }>
@@ -25,10 +18,7 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is no
     rows={1}
     style={
       Object {
-        "flexBasis": "auto",
-        "flexGrow": "1",
-        "flexShrink": "1",
-        "verticalAlign": "middle",
+        "width": "100%",
       }
     }
     type="text"
@@ -42,10 +32,7 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is no
     multiple={false}
     style={
       Object {
-        "flexBasis": "auto",
-        "flexGrow": "1",
-        "flexShrink": "1",
-        "verticalAlign": "middle",
+        "width": "100%",
       }
     }
     value={1}>
@@ -68,26 +55,12 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is no
     id="lockButton"
     onClick={[Function]}
     readOnly={false}
-    style={
-      Object {
-        "flexBasis": "auto",
-        "flexGrow": "1",
-        "flexShrink": "1",
-        "verticalAlign": "middle",
-      }
-    } />
+    style={Object {}} />
   <SaveMenu
     id="saveMenu"
     onSaveAsClick={[Function]}
     onSaveClick={[Function]}
-    style={
-      Object {
-        "flexBasis": "auto",
-        "flexGrow": "1",
-        "flexShrink": "1",
-        "verticalAlign": "middle",
-      }
-    } />
+    style={Object {}} />
 </div>
 `;
 
@@ -96,14 +69,7 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is re
   style={
     Object {
       "backgroundColor": "transparent",
-      "display": "flex",
-      "flexBasis": "auto",
-      "flexDirection": "row",
-      "flexGrow": "1",
-      "flexShrink": "1",
-      "flexWrap": "wrap",
       "margin": "0",
-      "minHeight": "100px",
       "padding": "0",
     }
   }>
@@ -118,10 +84,7 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is re
     rows={1}
     style={
       Object {
-        "flexBasis": "auto",
-        "flexGrow": "1",
-        "flexShrink": "1",
-        "verticalAlign": "middle",
+        "width": "100%",
       }
     }
     type="text"
@@ -135,10 +98,7 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is re
     multiple={false}
     style={
       Object {
-        "flexBasis": "auto",
-        "flexGrow": "1",
-        "flexShrink": "1",
-        "verticalAlign": "middle",
+        "width": "100%",
       }
     }
     value={1}>
@@ -161,25 +121,11 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is re
     id="lockButton"
     onClick={[Function]}
     readOnly={true}
-    style={
-      Object {
-        "flexBasis": "auto",
-        "flexGrow": "1",
-        "flexShrink": "1",
-        "verticalAlign": "middle",
-      }
-    } />
+    style={Object {}} />
   <SaveMenu
     id="saveMenu"
     onSaveAsClick={[Function]}
     onSaveClick={[Function]}
-    style={
-      Object {
-        "flexBasis": "auto",
-        "flexGrow": "1",
-        "flexShrink": "1",
-        "verticalAlign": "middle",
-      }
-    } />
+    style={Object {}} />
 </div>
 `;
