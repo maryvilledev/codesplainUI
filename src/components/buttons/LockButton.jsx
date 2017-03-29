@@ -4,21 +4,26 @@ import IconButton from 'material-ui/IconButton';
 import Lock from 'material-ui/svg-icons/action/lock';
 import LockOpen from 'material-ui/svg-icons/action/lock-open';
 
-const style = {
-  zIndex: 5,
+const styles = {
+  button: {
+    zIndex: 5,
+  },
+  buttonContainer: {
+    height: '48px',
+  },
 };
 
 const LockButton = ({ id, onClick, readOnly }) => {
   const lockIcon = readOnly ? <Lock /> : <LockOpen />;
   const toolTipText = readOnly ? 'Switching back to edit mode not supported yet' : 'Click to lock the snippet (this will prevent further changes.)';
   return (
-    <span title={toolTipText} >
+    <span style={styles.buttonContainer} title={toolTipText}>
       <IconButton
         id={id}
         disabled={readOnly}
         label={`Switch to ${readOnly ? 'edit' : 'read-only'} mode`}
         onTouchTap={onClick}
-        style={style}
+        style={styles.button}
       >
         {lockIcon}
       </IconButton>

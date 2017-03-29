@@ -1,4 +1,5 @@
 .cm-s-codesplain {
+  flex: 1 1 auto;
   height: 100%;
 }
 
@@ -10,5 +11,6 @@
 }
 
 .ReactCodeMirror {
-  height: 92.5%;
+  flex: 3 1 auto;
+  height: 100%;
 }

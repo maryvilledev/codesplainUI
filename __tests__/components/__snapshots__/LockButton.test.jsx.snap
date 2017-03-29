@@ -1,5 +1,10 @@
 exports[`<LockButton /> matches snapshot of when the app is in read-only mode 1`] = `
 <span
+  style={
+    Object {
+      "height": "48px",
+    }
+  }
   title="Switching back to edit mode not supported yet">
   <IconButton
     disableTouchRipple={false}
@@ -21,6 +26,11 @@ exports[`<LockButton /> matches snapshot of when the app is in read-only mode 1`
 
 exports[`<LockButton /> matches snapshot of when the app is not in read-only mode 1`] = `
 <span
+  style={
+    Object {
+      "height": "48px",
+    }
+  }
   title="Click to lock the snippet (this will prevent further changes.)">
   <IconButton
     disableTouchRipple={false}
