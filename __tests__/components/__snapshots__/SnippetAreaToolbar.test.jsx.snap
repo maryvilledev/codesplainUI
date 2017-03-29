@@ -10,6 +10,7 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is no
       "flexShrink": "1",
       "flexWrap": "wrap",
       "margin": "0",
+      "minHeight": "100px",
       "padding": "0",
     }
   }>
@@ -102,6 +103,7 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is re
       "flexShrink": "1",
       "flexWrap": "wrap",
       "margin": "0",
+      "minHeight": "100px",
       "padding": "0",
     }
   }>

@@ -18,6 +18,7 @@ const styles = {
     flexShrink: '1',
     margin: '0',
     padding: '0',
+    minHeight: '100px'
   },
   buttons: {
     flexBasis: 'auto',
