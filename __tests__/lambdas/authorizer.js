@@ -1,43 +1,25 @@
+import moxios from 'moxios'
 const mockClientId = process.env.CLIENT_ID
 
 import { handler } from '../../awslambda/Authorize'
 
 const mockMethodArn = 'Teleport'
 
-const mockValidToken = 'ricksanchez'
-const mockInvalidToken = 'mortysmith'
+const mockToken = 'ricksanchez'
 
-jest.mock('axios', () => {
-  return {
-    errored: true,
-    get: function (url, opts) {
-      const valid = (url ===
-        `https://api.github.com/applications/${mockClientId}/tokens/${mockValidToken}`)
-      if (valid) {
-        this.errored = false
-      }
-      return this
-    },
-    then: function(callback) {
-      if(!this.errored) {
-        callback()
-      }
-      return this;
-    },
-    catch: function(callback) {
-      if(this.errored) {
-        callback()
-      }
-    }
-  }
-})
 jest.mock('aws-sdk')
 
 describe('handler', () => {
-  it('should create a policy if a valid token is passed', () => {
+  beforeEach(() => {
+    moxios.install();
+  });
+  afterEach(() => {
+    moxios.uninstall();
+  });
+  it('should create a policy if a valid token is passed', async () => {
     const mockEvent = {
       methodArn: mockMethodArn,
-      authorizationToken: mockValidToken
+      authorizationToken: mockToken
     }
     const expected = {
       principalId: 'user',
@@ -49,20 +31,38 @@ describe('handler', () => {
         }]
       })
     }
-    const mockCallback = (error, policy) => {
+    moxios.wait(() => {
+      let request = moxios.requests.mostRecent();
+      request.respondWith({
+        status: 200,
+        response: {'status': '200'}
+      })
+    })
+    const mockCallback = jest.fn((error, policy) => {
       expect(error).toBe(null);
       expect(policy).toEqual(expected);
-    }
-    handler(mockEvent, null, mockCallback)
+    })
+    await handler(mockEvent, null, mockCallback)
+    expect(mockCallback).toHaveBeenCalled()
   })
-  it('should return "Unauthorized" if token is not valid', () => {
+  it('should return "Unauthorized" if token is not valid', async () => {
     const mockEvent = {
       methodArn: mockMethodArn,
-      authorizationToken: mockInvalidToken
+      authorizationToken: mockToken
     }
     const expected = "Unauthorized"
-    const mockCallback = (error, policy) => {
+    moxios.wait(() => {
+      let request = moxios.requests.mostRecent();
+      request.respondWith({
+        status: 403,
+        response: {'status': '403'}
+      })
+    })
+    const mockCallback = jest.fn((error, policy) => {
+      expect(policy).toBe(undefined)
       expect(error).toEqual(expected);
-    }
+    })
+    await handler(mockEvent, null, mockCallback)
+    expect(mockCallback).toHaveBeenCalled()
   })
 })

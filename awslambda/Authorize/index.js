@@ -36,7 +36,7 @@ exports.handler = (event, context, callback) => {
   const token = event.authorizationToken;
   const url = httpsUrl(token);
   const opts = httpsOpts;
-  axios.get(url, opts)
+  return axios.get(url, opts)
     .then(() => {
       callback(null, generatePolicy('user', 'Allow', event.methodArn))
     })
