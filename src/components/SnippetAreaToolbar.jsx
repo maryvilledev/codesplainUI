@@ -14,16 +14,9 @@ const styles = {
     padding: '0',
   },
   buttons: {
-    flexBasis: 'auto',
-    flexGrow: '1',
-    flexShrink: '1',
-    verticalAlign: 'middle',
   },
   toolbarField: {
-    flexBasis: 'auto',
-    flexGrow: '1',
-    flexShrink: '1',
-    verticalAlign: 'middle',
+    width: '100%'
   },
 }
 
