@@ -3,6 +3,12 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is no
   style={
     Object {
       "backgroundColor": "transparent",
+      "display": "flex",
+      "flexBasis": "auto",
+      "flexDirection": "row",
+      "flexGrow": "1",
+      "flexShrink": "1",
+      "flexWrap": "wrap",
       "margin": "0",
       "padding": "0",
     }
@@ -89,6 +95,12 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is re
   style={
     Object {
       "backgroundColor": "transparent",
+      "display": "flex",
+      "flexBasis": "auto",
+      "flexDirection": "row",
+      "flexGrow": "1",
+      "flexShrink": "1",
+      "flexWrap": "wrap",
       "margin": "0",
       "padding": "0",
     }

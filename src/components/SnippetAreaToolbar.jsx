@@ -10,6 +10,12 @@ import SaveMenu from '../components/menus/SaveMenu';
 const styles = {
   toolbar: {
     backgroundColor: 'transparent',
+    display: 'flex',
+    flexBasis: 'auto',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    flexGrow: '1',
+    flexShrink: '1',
     margin: '0',
     padding: '0',
   },
