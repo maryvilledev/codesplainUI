@@ -5,11 +5,17 @@ console.log('Loading function')
 const aws = require('aws-sdk')
 const axios = require('axios')
 
-const httpsOpts = (token) => ({
-  headers: {
-    'Authorization': `token ${token}`,
+const clientId = process.env.CLIENT_ID;
+const clientSecret = process.env.CLIENT_SECRET;
+
+const httpsUrl = (token) =>
+  `https://api.github.com/applications/${clientId}/tokens/${token}`
+const httpsOpts = {
+  auth: {
+    username: clientId,
+    password: clientSecret
   }
-})
+}
 
 function generatePolicy(principalId, effect, resource)
 {
@@ -28,8 +34,9 @@ function generatePolicy(principalId, effect, resource)
 
 exports.handler = (event, context, callback) => {
   const token = event.authorizationToken;
-  const opts = httpsOpts(token);
-  axios.get('https://api.github.com/', opts)
+  const url = httpsUrl(token);
+  const opts = httpsOpts;
+  return axios.get(url, opts)
     .then(() => {
       callback(null, generatePolicy('user', 'Allow', event.methodArn))
     })
