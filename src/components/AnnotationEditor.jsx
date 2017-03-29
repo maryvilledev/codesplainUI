@@ -13,14 +13,18 @@ const styles = {
     'flexFlow': 'row wrap',
   },
   'button': {
-    flex: '1 1 auto',
+    flexFlow: 1,
+    flexShrink: 1,
+    flexBasis: 'auto',
   },
   'markdownHintText': {
     'color': '#d3d3d3',
   },
   'markdownIndicator': {
     'paddingLeft': '1rem',
-    flex: '1 1 auto',
+    flexFlow: 1,
+    flexShrink: 1,
+    flexBasis: 'auto',
   },
   'markdownLogo': {
     width: '2rem',

@@ -50,7 +50,9 @@ exports[`<AnnotationEditor /> matches snapshot 1`] = `
       secondary={true}
       style={
         Object {
-          "flex": "1 1 auto",
+          "flexBasis": "auto",
+          "flexFlow": 1,
+          "flexShrink": 1,
         }
       } />
     <RaisedButton
@@ -63,14 +65,18 @@ exports[`<AnnotationEditor /> matches snapshot 1`] = `
       secondary={false}
       style={
         Object {
-          "flex": "1 1 auto",
+          "flexBasis": "auto",
+          "flexFlow": 1,
+          "flexShrink": 1,
         }
       } />
     <a
       href="http://commonmark.org/help"
       style={
         Object {
-          "flex": "1 1 auto",
+          "flexBasis": "auto",
+          "flexFlow": 1,
+          "flexShrink": 1,
           "paddingLeft": "1rem",
         }
       }
