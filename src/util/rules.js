@@ -18,12 +18,12 @@ export const rules = {
   'number':   { prettyName: 'Numbers', color: '#DEA5A4' },
   'parameters':  { prettyName: 'Parameters', color: '#FFB347' },
   'pass_stmt':   { prettyName: 'Pass Statements', color: '#FDFD96' },
-  'return_stmt': { prettyName: 'Return Statement', color: '#EECCFF' },
+  'return_stmt': { prettyName: 'Return Statement', color: '#966FD6' },
   'str':      { prettyName: 'Strings', color: '#CAABF7' },
-  'try_stmt': { prettyName: 'Try Statements', color: '#CCCCFF' },
+  'try_stmt': { prettyName: 'Try Statements', color: '#966FD6' },
   'while_stmt':  { prettyName: 'While Loops', color: '#F0E68C' },
-  '.TRUE': { prettyName: 'Boolean (True)', color: '#FF9933' },
-  '.FALSE': { prettyName: 'Boolean (False)', color: '#E67300' },
+  '.TRUE': { prettyName: 'Boolean (True)', color: '#ff9933' },
+  '.FALSE': { prettyName: 'Boolean (False)', color: '#e67300' },
 }
 
 /* Array of rules produced by parser, but ignored by the UI layer */
