@@ -18,7 +18,10 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is no
     rows={1}
     style={
       Object {
-        "width": "100%",
+        "flexBasis": "auto",
+        "flexGrow": "1",
+        "flexShrink": "1",
+        "verticalAlign": "middle",
       }
     }
     type="text"
@@ -32,7 +35,10 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is no
     multiple={false}
     style={
       Object {
-        "width": "100%",
+        "flexBasis": "auto",
+        "flexGrow": "1",
+        "flexShrink": "1",
+        "verticalAlign": "middle",
       }
     }
     value={1}>
@@ -55,12 +61,26 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is no
     id="lockButton"
     onClick={[Function]}
     readOnly={false}
-    style={Object {}} />
+    style={
+      Object {
+        "flexBasis": "auto",
+        "flexGrow": "1",
+        "flexShrink": "1",
+        "verticalAlign": "middle",
+      }
+    } />
   <SaveMenu
     id="saveMenu"
     onSaveAsClick={[Function]}
     onSaveClick={[Function]}
-    style={Object {}} />
+    style={
+      Object {
+        "flexBasis": "auto",
+        "flexGrow": "1",
+        "flexShrink": "1",
+        "verticalAlign": "middle",
+      }
+    } />
 </div>
 `;
 
@@ -84,7 +104,10 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is re
     rows={1}
     style={
       Object {
-        "width": "100%",
+        "flexBasis": "auto",
+        "flexGrow": "1",
+        "flexShrink": "1",
+        "verticalAlign": "middle",
       }
     }
     type="text"
@@ -98,7 +121,10 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is re
     multiple={false}
     style={
       Object {
-        "width": "100%",
+        "flexBasis": "auto",
+        "flexGrow": "1",
+        "flexShrink": "1",
+        "verticalAlign": "middle",
       }
     }
     value={1}>
@@ -121,11 +147,25 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is re
     id="lockButton"
     onClick={[Function]}
     readOnly={true}
-    style={Object {}} />
+    style={
+      Object {
+        "flexBasis": "auto",
+        "flexGrow": "1",
+        "flexShrink": "1",
+        "verticalAlign": "middle",
+      }
+    } />
   <SaveMenu
     id="saveMenu"
     onSaveAsClick={[Function]}
     onSaveClick={[Function]}
-    style={Object {}} />
+    style={
+      Object {
+        "flexBasis": "auto",
+        "flexGrow": "1",
+        "flexShrink": "1",
+        "verticalAlign": "middle",
+      }
+    } />
 </div>
 `;
