@@ -4,8 +4,11 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is no
     Object {
       "backgroundColor": "transparent",
       "display": "flex",
-      "flex": "1 1 auto",
-      "flexFlow": "row wrap",
+      "flexBasis": "auto",
+      "flexDirection": "row",
+      "flexGrow": "1",
+      "flexShrink": "1",
+      "flexWrap": "wrap",
       "margin": "0",
       "padding": "0",
     }
@@ -21,7 +24,9 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is no
     rows={1}
     style={
       Object {
-        "flex": "1 2 auto",
+        "flexBasis": "auto",
+        "flexGrow": "1",
+        "flexShrink": "1",
         "verticalAlign": "middle",
       }
     }
@@ -36,7 +41,9 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is no
     multiple={false}
     style={
       Object {
-        "flex": "1 2 auto",
+        "flexBasis": "auto",
+        "flexGrow": "1",
+        "flexShrink": "1",
         "verticalAlign": "middle",
       }
     }
@@ -62,7 +69,9 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is no
     readOnly={false}
     style={
       Object {
-        "flex": "1 1 auto",
+        "flexBasis": "auto",
+        "flexGrow": "1",
+        "flexShrink": "1",
         "verticalAlign": "middle",
       }
     } />
@@ -72,7 +81,9 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is no
     onSaveClick={[Function]}
     style={
       Object {
-        "flex": "1 1 auto",
+        "flexBasis": "auto",
+        "flexGrow": "1",
+        "flexShrink": "1",
         "verticalAlign": "middle",
       }
     } />
@@ -85,8 +96,11 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is re
     Object {
       "backgroundColor": "transparent",
       "display": "flex",
-      "flex": "1 1 auto",
-      "flexFlow": "row wrap",
+      "flexBasis": "auto",
+      "flexDirection": "row",
+      "flexGrow": "1",
+      "flexShrink": "1",
+      "flexWrap": "wrap",
       "margin": "0",
       "padding": "0",
     }
@@ -102,7 +116,9 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is re
     rows={1}
     style={
       Object {
-        "flex": "1 2 auto",
+        "flexBasis": "auto",
+        "flexGrow": "1",
+        "flexShrink": "1",
         "verticalAlign": "middle",
       }
     }
@@ -117,7 +133,9 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is re
     multiple={false}
     style={
       Object {
-        "flex": "1 2 auto",
+        "flexBasis": "auto",
+        "flexGrow": "1",
+        "flexShrink": "1",
         "verticalAlign": "middle",
       }
     }
@@ -143,7 +161,9 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is re
     readOnly={true}
     style={
       Object {
-        "flex": "1 1 auto",
+        "flexBasis": "auto",
+        "flexGrow": "1",
+        "flexShrink": "1",
         "verticalAlign": "middle",
       }
     } />
@@ -153,7 +173,9 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is re
     onSaveClick={[Function]}
     style={
       Object {
-        "flex": "1 1 auto",
+        "flexBasis": "auto",
+        "flexGrow": "1",
+        "flexShrink": "1",
         "verticalAlign": "middle",
       }
     } />

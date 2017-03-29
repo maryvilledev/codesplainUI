@@ -30,7 +30,7 @@ const API_URL = process.env.REACT_APP_API_URL;
 const styles = {
   snippetAreaCardText: {
     display: 'flex',
-    flexFlow: 'column',
+    flexDirection: 'column',
     height: 'inherit',
   },
 };
