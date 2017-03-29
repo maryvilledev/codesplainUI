@@ -29,6 +29,8 @@ const API_URL = process.env.REACT_APP_API_URL;
 
 const styles = {
   snippetAreaCardText: {
+    display: 'flex',
+    flexDirection: 'column',
     height: 'inherit',
   },
 };
@@ -215,12 +217,12 @@ export class SnippetArea extends React.Component {
     return (
       <CardText style={styles.snippetAreaCardText}>
         <SnippetAreaToolbar
-          title={snippetTitle}
+          onLockClick={this.handleLock}
+          onSaveAsClick={this.handleSaveAs}
+          onSaveClick={this.handleSave}
           onTitleChange={this.handleTitleChanged}d
           readOnly={readOnly}
-          onLockClick={this.handleLock}
-          onSaveClick={this.handleSave}
-          onSaveAsClick={this.handleSaveAs}
+          title={snippetTitle}
         />
         <ConfirmLockDialog
           accept={this.handleToggleReadOnly}
@@ -238,10 +240,10 @@ export class SnippetArea extends React.Component {
           value={snippet}
         />
         <Snackbar
-          open={this.state.showSnackbar}
-          message={this.state.snackbarMessage}
           autoHideDuration={3000}
+          message={this.state.snackbarMessage}
           onRequestClose={() => this.setState({ showSnackbar: false })}
+          open={this.state.showSnackbar}
         />
       </CardText>
     );

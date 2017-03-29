@@ -1,211 +1,183 @@
 exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is not read-only 1`] = `
-<ul
+<div
   style={
     Object {
       "backgroundColor": "transparent",
-      "height": "7.5%",
-      "listStyleType": "none",
+      "display": "flex",
+      "flexBasis": "auto",
+      "flexDirection": "row",
+      "flexGrow": "1",
+      "flexShrink": "1",
+      "flexWrap": "wrap",
       "margin": "0",
-      "overflow": "auto",
       "padding": "0",
     }
   }>
-  <li
+  <TextField
+    disabled={false}
+    floatingLabelFixed={false}
+    fullWidth={false}
+    hintText="Snippet Name"
+    id="titleField"
+    multiLine={false}
+    onChange={[Function]}
+    rows={1}
     style={
       Object {
-        "display": "block",
-        "float": "left",
-        "padding": "5px 10px",
+        "flexBasis": "auto",
+        "flexGrow": "1",
+        "flexShrink": "1",
+        "verticalAlign": "middle",
       }
-    }>
-    <TextField
+    }
+    type="text"
+    underlineShow={true}
+    value="" />
+  <SelectField
+    autoWidth={false}
+    disabled={true}
+    fullWidth={false}
+    id="languageSelector"
+    multiple={false}
+    style={
+      Object {
+        "flexBasis": "auto",
+        "flexGrow": "1",
+        "flexShrink": "1",
+        "verticalAlign": "middle",
+      }
+    }
+    value={1}>
+    <MenuItem
+      anchorOrigin={
+        Object {
+          "horizontal": "right",
+          "vertical": "top",
+        }
+      }
+      checked={false}
+      desktop={false}
       disabled={false}
-      floatingLabelFixed={false}
-      fullWidth={false}
-      hintText="Snippet Name"
-      id="titleField"
-      multiLine={false}
-      onChange={[Function]}
-      rows={1}
-      style={
-        Object {
-          "verticalAlign": "middle",
-          "width": "225px",
-        }
-      }
-      type="text"
-      underlineShow={true}
-      value="" />
-  </li>
-  <li
+      focusState="none"
+      insetChildren={false}
+      primaryText="Python 3"
+      value={1} />
+  </SelectField>
+  <LockButton
+    id="lockButton"
+    onClick={[Function]}
+    readOnly={false}
     style={
       Object {
-        "display": "block",
-        "float": "left",
-        "padding": "5px 10px",
+        "flexBasis": "auto",
+        "flexGrow": "1",
+        "flexShrink": "1",
+        "verticalAlign": "middle",
       }
-    }>
-    <SelectField
-      autoWidth={false}
-      disabled={true}
-      fullWidth={false}
-      id="languageSelector"
-      multiple={false}
-      style={
-        Object {
-          "verticalAlign": "middle",
-          "width": "120px",
-        }
-      }
-      value={1}>
-      <MenuItem
-        anchorOrigin={
-          Object {
-            "horizontal": "right",
-            "vertical": "top",
-          }
-        }
-        checked={false}
-        desktop={false}
-        disabled={false}
-        focusState="none"
-        insetChildren={false}
-        primaryText="Python 3"
-        value={1} />
-    </SelectField>
-  </li>
-  <li
+    } />
+  <SaveMenu
+    id="saveMenu"
+    onSaveAsClick={[Function]}
+    onSaveClick={[Function]}
     style={
       Object {
-        "display": "block",
-        "float": "left",
-        "padding": "5px 10px",
+        "flexBasis": "auto",
+        "flexGrow": "1",
+        "flexShrink": "1",
+        "verticalAlign": "middle",
       }
-    }>
-    <LockButton
-      id="lockButton"
-      onClick={[Function]}
-      readOnly={false}
-      style={
-        Object {
-          "verticalAlign": "middle",
-        }
-      } />
-    <SaveMenu
-      id="saveMenu"
-      onSaveAsClick={[Function]}
-      onSaveClick={[Function]}
-      style={
-        Object {
-          "verticalAlign": "middle",
-        }
-      } />
-  </li>
-</ul>
+    } />
+</div>
 `;
 
 exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is read-only 1`] = `
-<ul
+<div
   style={
     Object {
       "backgroundColor": "transparent",
-      "height": "7.5%",
-      "listStyleType": "none",
+      "display": "flex",
+      "flexBasis": "auto",
+      "flexDirection": "row",
+      "flexGrow": "1",
+      "flexShrink": "1",
+      "flexWrap": "wrap",
       "margin": "0",
-      "overflow": "auto",
       "padding": "0",
     }
   }>
-  <li
+  <TextField
+    disabled={false}
+    floatingLabelFixed={false}
+    fullWidth={false}
+    hintText="Snippet Name"
+    id="titleField"
+    multiLine={false}
+    onChange={[Function]}
+    rows={1}
     style={
       Object {
-        "display": "block",
-        "float": "left",
-        "padding": "5px 10px",
+        "flexBasis": "auto",
+        "flexGrow": "1",
+        "flexShrink": "1",
+        "verticalAlign": "middle",
       }
-    }>
-    <TextField
+    }
+    type="text"
+    underlineShow={true}
+    value="" />
+  <SelectField
+    autoWidth={false}
+    disabled={true}
+    fullWidth={false}
+    id="languageSelector"
+    multiple={false}
+    style={
+      Object {
+        "flexBasis": "auto",
+        "flexGrow": "1",
+        "flexShrink": "1",
+        "verticalAlign": "middle",
+      }
+    }
+    value={1}>
+    <MenuItem
+      anchorOrigin={
+        Object {
+          "horizontal": "right",
+          "vertical": "top",
+        }
+      }
+      checked={false}
+      desktop={false}
       disabled={false}
-      floatingLabelFixed={false}
-      fullWidth={false}
-      hintText="Snippet Name"
-      id="titleField"
-      multiLine={false}
-      onChange={[Function]}
-      rows={1}
-      style={
-        Object {
-          "verticalAlign": "middle",
-          "width": "225px",
-        }
-      }
-      type="text"
-      underlineShow={true}
-      value="" />
-  </li>
-  <li
+      focusState="none"
+      insetChildren={false}
+      primaryText="Python 3"
+      value={1} />
+  </SelectField>
+  <LockButton
+    id="lockButton"
+    onClick={[Function]}
+    readOnly={true}
     style={
       Object {
-        "display": "block",
-        "float": "left",
-        "padding": "5px 10px",
+        "flexBasis": "auto",
+        "flexGrow": "1",
+        "flexShrink": "1",
+        "verticalAlign": "middle",
       }
-    }>
-    <SelectField
-      autoWidth={false}
-      disabled={true}
-      fullWidth={false}
-      id="languageSelector"
-      multiple={false}
-      style={
-        Object {
-          "verticalAlign": "middle",
-          "width": "120px",
-        }
-      }
-      value={1}>
-      <MenuItem
-        anchorOrigin={
-          Object {
-            "horizontal": "right",
-            "vertical": "top",
-          }
-        }
-        checked={false}
-        desktop={false}
-        disabled={false}
-        focusState="none"
-        insetChildren={false}
-        primaryText="Python 3"
-        value={1} />
-    </SelectField>
-  </li>
-  <li
+    } />
+  <SaveMenu
+    id="saveMenu"
+    onSaveAsClick={[Function]}
+    onSaveClick={[Function]}
     style={
       Object {
-        "display": "block",
-        "float": "left",
-        "padding": "5px 10px",
+        "flexBasis": "auto",
+        "flexGrow": "1",
+        "flexShrink": "1",
+        "verticalAlign": "middle",
       }
-    }>
-    <LockButton
-      id="lockButton"
-      onClick={[Function]}
-      readOnly={true}
-      style={
-        Object {
-          "verticalAlign": "middle",
-        }
-      } />
-    <SaveMenu
-      id="saveMenu"
-      onSaveAsClick={[Function]}
-      onSaveClick={[Function]}
-      style={
-        Object {
-          "verticalAlign": "middle",
-        }
-      } />
-  </li>
-</ul>
+    } />
+</div>
 `;

@@ -10,26 +10,25 @@ import SaveMenu from '../components/menus/SaveMenu';
 const styles = {
   toolbar: {
     backgroundColor: 'transparent',
-    height: '7.5%',
-    listStyleType: 'none',
+    display: 'flex',
+    flexBasis: 'auto',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    flexGrow: '1',
+    flexShrink: '1',
     margin: '0',
-    overflow: 'auto',
     padding: '0',
   },
-  toolbarItem: {
-    display: 'block',
-    float: 'left',
-    padding: '5px 10px',
-  },
-  titleField: {
-    verticalAlign: 'middle',
-    width: '225px',
-  },
-  selectField: {
-    verticalAlign: 'middle',
-    width: '120px',
-  },
   buttons: {
+    flexBasis: 'auto',
+    flexGrow: '1',
+    flexShrink: '1',
+    verticalAlign: 'middle',
+  },
+  toolbarField: {
+    flexBasis: 'auto',
+    flexGrow: '1',
+    flexShrink: '1',
     verticalAlign: 'middle',
   },
 }
@@ -42,50 +41,44 @@ here, because it does not reflow correctly when the screen is resized.
 const SnippetAreaToolbar = ({
   title, onTitleChange, readOnly, onLockClick, onSaveClick, onSaveAsClick
 }) => (
-  <ul style={styles.toolbar}>
-    <li style={styles.toolbarItem}>
-      <TextField
-        id="titleField"
-        hintText="Snippet Name"
-        value={title}
-        onChange={onTitleChange}
-        style={styles.titleField}
-      />
-    </li>
-    <li style={styles.toolbarItem}>
-      <SelectField
-        id="languageSelector"
-        disabled={true}
-        value={1}
-        style={styles.selectField}
-      >
-        <MenuItem value={1} primaryText="Python 3" />
-      </SelectField>
-    </li>
-    <li style={styles.toolbarItem}>
-      <LockButton
-        id="lockButton"
-        onClick={onLockClick}
-        readOnly={readOnly}
-        style={styles.buttons}
-      />
-      <SaveMenu
-        id="saveMenu"
-        onSaveClick={onSaveClick}
-        onSaveAsClick={onSaveAsClick}
-        style={styles.buttons}
-      />
-    </li>
-  </ul>
+  <div style={styles.toolbar}>
+    <TextField
+      hintText="Snippet Name"
+      id="titleField"
+      onChange={onTitleChange}
+      style={styles.toolbarField}
+      value={title}
+    />
+    <SelectField
+      disabled={true}
+      id="languageSelector"
+      style={styles.toolbarField}
+      value={1}
+    >
+      <MenuItem value={1} primaryText="Python 3" />
+    </SelectField>
+    <LockButton
+      id="lockButton"
+      onClick={onLockClick}
+      readOnly={readOnly}
+      style={styles.buttons}
+    />
+    <SaveMenu
+      id="saveMenu"
+      onSaveClick={onSaveClick}
+      onSaveAsClick={onSaveAsClick}
+      style={styles.buttons}
+    />
+  </div>
 );
 
 SnippetAreaToolbar.propTypes = {
-  title: PropTypes.string.isRequired,
+  onLockClick: PropTypes.func.isRequired,
+  onSaveAsClick: PropTypes.func.isRequired,
+  onSaveClick: PropTypes.func.isRequired,
   onTitleChange: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
-  onLockClick: PropTypes.func.isRequired,
-  onSaveClick: PropTypes.func.isRequired,
-  onSaveAsClick: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
 }
 
 export default SnippetAreaToolbar;

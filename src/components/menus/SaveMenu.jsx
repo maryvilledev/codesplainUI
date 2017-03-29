@@ -1,13 +1,19 @@
 import React, { PropTypes } from 'react';
-import { 
-  IconButton, 
-  IconMenu, 
-  MenuItem, 
-  Dialog, 
+import {
+  IconButton,
+  IconMenu,
+  MenuItem,
+  Dialog,
   FlatButton,
   TextField,
 } from 'material-ui';
 import SaveIcon from 'material-ui/svg-icons/content/save';
+
+const styles = {
+  container: {
+    height: '48px',
+  },
+};
 
 const saveIconButton = (
   <IconButton
@@ -33,13 +39,13 @@ class SaveMenu extends React.Component {
         id="menu"
         iconButtonElement={saveIconButton}
       >
-        <MenuItem 
+        <MenuItem
           onTouchTap={this.props.onSaveClick}
-          primaryText="Save" 
+          primaryText="Save"
         />
-        <MenuItem 
+        <MenuItem
           onTouchTap={() => this.setState({ showSaveAsDialog: true })}
-          primaryText="Save As" 
+          primaryText="Save As"
         />
       </IconMenu>
     );
@@ -67,7 +73,7 @@ class SaveMenu extends React.Component {
         open={this.state.showSaveAsDialog}
         onRequestClose={() => this.setState({ showSaveAsDialog: false })}
       >
-        <TextField 
+        <TextField
           hintText="Enter new title"
           onChange={(ev, newVal) => this.setState({ saveAsName: newVal })}
         />
@@ -77,9 +83,9 @@ class SaveMenu extends React.Component {
 
   render() {
     return (
-      <span>
-      {this.getMenu()}
-      {this.getSaveAsDialog()}
+      <span style={styles.container}>
+        {this.getMenu()}
+        {this.getSaveAsDialog()}
       </span>
     );
   }

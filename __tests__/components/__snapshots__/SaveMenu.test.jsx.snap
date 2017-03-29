@@ -1,5 +1,10 @@
 exports[`<SaveMenu /> matches snapshot 1`] = `
-<span>
+<span
+  style={
+    Object {
+      "height": "48px",
+    }
+  }>
   <IconMenu
     anchorOrigin={
       Object {
