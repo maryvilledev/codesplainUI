@@ -1,10 +1,12 @@
 /* Object mapping token types to pretty names and colors for display */
 export const rules = {
-  'arith_expr': { prettyName: 'Arithmetic Expression', color: '#FFA500' },
+  // Non-terminal rules
   'and_expr': { prettyName: 'And', color: '#F0E68C' },
   'argument': { prettyName: 'Arguments', color: '#EAF7AB' },
+  'arith_expr': { prettyName: 'Arithmetic Expression', color: '#FFA500' },
   'atom':     { prettyName: 'Atoms', color: '#ABDBF7' },
   'augassign':   { prettyName: 'Augmented Assignment', color: '#00ffff' },
+  'break_stmt': { prettyName: 'Break Statement', color: '#00ffa0' },
   'classdef': { prettyName: 'Class Definitions', color: '#03C03C' },
   'comp_op':  { prettyName: 'Comparison Operator', color: '#DAA520' },
   'dictorsetmaker': { prettyName: 'Dictionary', color: '#00FF7F' },
@@ -22,6 +24,7 @@ export const rules = {
   'str':      { prettyName: 'Strings', color: '#CAABF7' },
   'try_stmt': { prettyName: 'Try Statements', color: '#CCCCFF' },
   'while_stmt':  { prettyName: 'While Loops', color: '#F0E68C' },
+  // Terminal rules
   '.TRUE': { prettyName: 'Boolean (True)', color: '#FF9933' },
   '.FALSE': { prettyName: 'Boolean (False)', color: '#E67300' },
 }
