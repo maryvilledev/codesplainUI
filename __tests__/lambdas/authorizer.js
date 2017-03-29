@@ -1,6 +1,6 @@
 const mockClientId = process.env.CLIENT_ID
 
-import { handler } from '../../awslambda/authorizer'
+import { handler } from '../../awslambda/Authorize'
 
 const mockMethodArn = 'Teleport'
 
