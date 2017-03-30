@@ -14,12 +14,3 @@ Once your code is written, you can add an annotation to a line by clicking its n
 Say anything you want about it. Markdown is even supported.
 ### Save and Share
 Once you are all done, save your code to a persistant URL, and we'll hold on to it for you or anyone you want ot show it to.
-
-## Running it yourself
-
-1. Clone this repository `git clone https://github.com/maryvilledev/codeplainUI`
-2. Download [Docker](https://docs.docker.com/engine/installation/) and [Heroku](https://devcenter.heroku.com/articles/heroku-cli)
-3. Run `./devstack`
-4. Create a file called `.env` that sets `PORT=8080` and `REDIS_URL=localhost`
-5. Run `heroku local`
-6. Navigate to `http//localhost:8080`
