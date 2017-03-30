@@ -36,12 +36,7 @@ const RulesSelector = ({ filters, onRuleSelected }) => {
   const listItems = makeListItems(filters, onRuleSelected);
   return (
     <div>
-      <Subheader style={styles.subheader}>
-        Select a token type to highlight all occurences
-      </Subheader>
-      <div>
-        {listItems}
-      </div>
+      {listItems}
     </div>
   );
 };

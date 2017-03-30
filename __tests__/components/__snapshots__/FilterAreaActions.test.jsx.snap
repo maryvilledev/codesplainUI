@@ -1,0 +1,38 @@
+exports[`<FilterAreaActions /> matches snapshot of when the app is not in read-only mode 1`] = `
+<CardActions>
+  <FlatButton
+    disabled={false}
+    fullWidth={true}
+    label="Select All"
+    labelPosition="after"
+    labelStyle={
+      Object {
+        "fontSize": "12px",
+      }
+    }
+    onKeyboardFocus={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onTouchStart={[Function]}
+    onTouchTap={[Function]}
+    primary={true}
+    secondary={false} />
+  <FlatButton
+    disabled={false}
+    fullWidth={true}
+    label="Clear All"
+    labelPosition="after"
+    labelStyle={
+      Object {
+        "fontSize": "12px",
+      }
+    }
+    onKeyboardFocus={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onTouchStart={[Function]}
+    onTouchTap={[Function]}
+    primary={false}
+    secondary={true} />
+</CardActions>
+`;

@@ -2,11 +2,12 @@ import React from 'react'
 import { connect } from 'react-redux'
 import _ from 'lodash'
 import {
+  Card,
   CardText,
-  Divider,
-  RaisedButton,
+  CardTitle,
 } from 'material-ui';
 
+import FilterAreaActions from '../components/FilterAreaActions';
 import RulesSelector from '../components/RulesSelector';
 
 import {
@@ -14,10 +15,6 @@ import {
   selectAllFilters,
   setRuleFilters
 } from '../actions/app';
-
-const labelStyle = {
-  fontSize: '12px',
-};
 
 const toggleFilter = (filters, filterName) => {
   filters[filterName].selected = !filters[filterName].selected
@@ -27,7 +24,7 @@ export class FilterArea extends React.Component {
   constructor(props) {
     super(props)
     this.handleRuleSelected = this.handleRuleSelected.bind(this);
-    this.handleResetFilters = this.handleResetFilters.bind(this);;
+    this.handleClearAllFilters = this.handleClearAllFilters.bind(this);;
     this.handleSelectAllFilters = this.handleSelectAllFilters.bind(this);
   }
   handleRuleSelected(filterName) {
@@ -36,7 +33,7 @@ export class FilterArea extends React.Component {
     toggleFilter(newFilters, filterName)
     dispatch(setRuleFilters(newFilters))
   }
-  handleResetFilters() {
+  handleClearAllFilters() {
     const { dispatch } = this.props;
     dispatch(resetFilters());
   }
@@ -46,28 +43,22 @@ export class FilterArea extends React.Component {
   }
   render() {
     const { filters } = this.props;
+    const filterAreaActions = Object.keys(filters).length ?
+      <FilterAreaActions
+        clearAll={this.handleClearAllFilters}
+        selectAll={this.handleSelectAllFilters}
+      /> : null;
     return (
-      <CardText>
-        <RulesSelector
-          filters={filters}
-          onRuleSelected={this.handleRuleSelected}
-        />
-        <br /><Divider /><br />
-        <RaisedButton
-          fullWidth
-          label="Select All"
-          labelStyle={labelStyle}
-          onTouchTap={this.handleSelectAllFilters}
-          primary
-        />
-        <RaisedButton
-          fullWidth
-          label="Reset"
-          labelStyle={labelStyle}
-          onTouchTap={this.handleResetFilters}
-          secondary
-        />
-      </CardText>
+      <Card>
+        <CardTitle title="Filters" />
+        <CardText>
+          <RulesSelector
+            filters={filters}
+            onRuleSelected={this.handleRuleSelected}
+          />
+        </CardText>
+        { filterAreaActions }
+      </Card>
     );
   }
 }
