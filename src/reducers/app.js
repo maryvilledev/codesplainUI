@@ -1,6 +1,8 @@
 import * as actions from '../actions/app';
 import { generateFilters } from '../util/rules';
 
+import _ from 'lodash';
+
 export const initialState = {
   annotations: {},
   AST: {},
@@ -36,6 +38,30 @@ const app = (state = initialState, action) => {
         hasUnsavedChanges: true,
         readOnly: !state.readOnly,
       };
+    }
+    case actions.SELECT_ALL_FILTERS: {
+      const filters = _.mapValues(state.filters, (filter) => {
+        if (filter.selected) {
+          return filter;
+        }
+        return { ...filter, selected: true };
+      });
+      return {
+        ...state,
+        filters,
+      }
+    }
+    case actions.RESET_RULE_FILTERS: {
+      const filters = _.mapValues(state.filters, (filter) => {
+        if (filter.selected) {
+          return { ...filter, selected: false };
+        }
+        return filter;
+      });
+      return {
+        ...state,
+        filters,
+      }
     }
     case actions.SET_AST: {
       return {
