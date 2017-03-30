@@ -1,13 +1,5 @@
 import React, { PropTypes } from 'react';
 import RuleLabel from './RuleLabel';
-import { Subheader } from 'material-ui';
-
-const styles = {
-  subheader: {
-    lineHeight: 1,
-    padding: 0,
-  },
-}
 
 const makeListItems = (filters, onRuleSelected) => {
   return Object.keys(filters)
@@ -36,12 +28,7 @@ const RulesSelector = ({ filters, onRuleSelected }) => {
   const listItems = makeListItems(filters, onRuleSelected);
   return (
     <div>
-      <Subheader style={styles.subheader}>
-        Select a token type to highlight all occurences
-      </Subheader>
-      <div>
-        {listItems}
-      </div>
+      {listItems}
     </div>
   );
 };

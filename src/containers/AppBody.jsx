@@ -67,7 +67,7 @@ export class AppBody extends React.Component {
       <div className='container-fluid'>
         <div className='row'>
           <div className='col-lg-2'>
-            <Card><FilterArea /></Card>
+            <FilterArea />
           </div>
           <div
             className='col-lg-5 col-md-7'
