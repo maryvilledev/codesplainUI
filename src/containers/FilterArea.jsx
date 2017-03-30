@@ -1,17 +1,23 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import _ from 'lodash'
-import { CardText, Divider } from 'material-ui'
+import {
+  CardText,
+  Divider,
+  RaisedButton,
+} from 'material-ui'
 
-import RulesSelector from '../components/RulesSelector'
-import ResetFiltersButton from '../components/buttons/ResetFiltersButton';
-import SelectAllFiltersButton from '../components/buttons/SelectAllFiltersButton';
+import RulesSelector from '../components/RulesSelector';
 
 import {
   resetFilters,
   selectAllFilters,
   setRuleFilters
 } from '../actions/app';
+
+const labelStyle = {
+  fontSize: '12px',
+};
 
 const toggleFilter = (filters, filterName) => {
   filters[filterName].selected = !filters[filterName].selected
@@ -47,8 +53,20 @@ export class FilterArea extends React.Component {
           onRuleSelected={this.handleRuleSelected}
         />
         <br /><Divider /><br />
-        <SelectAllFiltersButton selectCallback={this.handleSelectAllFilters} />
-        <ResetFiltersButton resetCallback={this.handleResetFilters} />
+        <RaisedButton
+          fullWidth
+          label="Select All"
+          labelStyle={labelStyle}
+          onTouchTap={this.handleSelectAllFilters}
+          primary
+        />
+        <RaisedButton
+          fullWidth
+          label="Reset"
+          labelStyle={labelStyle}
+          onTouchTap={this.handleResetFilters}
+          secondary
+        />
       </CardText>
     );
   }
