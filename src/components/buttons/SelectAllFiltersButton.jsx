@@ -1,9 +1,15 @@
 import React, { PropTypes } from 'react';
 import { RaisedButton } from 'material-ui';
 
+const labelStyle = {
+  fontSize: '12px',
+};
+
 const SelectAllFiltersButton = ({ selectCallback }) => (
   <RaisedButton
-    label="Select All Filters"
+    fullWidth
+    label="Select All"
+    labelStyle={labelStyle}
     onTouchTap={selectCallback}
     primary
   />

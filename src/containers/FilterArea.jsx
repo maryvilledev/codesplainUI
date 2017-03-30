@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import _ from 'lodash'
-import { CardText } from 'material-ui'
+import { CardText, Divider } from 'material-ui'
 
 import RulesSelector from '../components/RulesSelector'
 import ResetFiltersButton from '../components/buttons/ResetFiltersButton';
@@ -42,12 +42,13 @@ export class FilterArea extends React.Component {
     const { filters } = this.props;
     return (
       <CardText>
-        <ResetFiltersButton resetCallback={this.handleResetFilters} />
-        <SelectAllFiltersButton selectCallback={this.handleSelectAllFilters} />
         <RulesSelector
           filters={filters}
           onRuleSelected={this.handleRuleSelected}
         />
+        <br /><Divider /><br />
+        <SelectAllFiltersButton selectCallback={this.handleSelectAllFilters} />
+        <ResetFiltersButton resetCallback={this.handleResetFilters} />
       </CardText>
     );
   }

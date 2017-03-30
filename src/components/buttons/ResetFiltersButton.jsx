@@ -1,9 +1,15 @@
 import React, { PropTypes } from 'react';
 import { RaisedButton } from 'material-ui';
 
+const labelStyle = {
+  fontSize: '12px',
+};
+
 const ResetFiltersButton = ({resetCallback}) => (
   <RaisedButton
-    label="Reset Filters"
+    fullWidth
+    label="Reset"
+    labelStyle={labelStyle}
     onTouchTap={resetCallback}
     secondary
   />
