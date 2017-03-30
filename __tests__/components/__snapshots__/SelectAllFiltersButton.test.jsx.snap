@@ -1,0 +1,15 @@
+exports[`<SelectAllFiltersButton /> matches snapshot 1`] = `
+<RaisedButton
+  disabled={false}
+  fullWidth={true}
+  label="Select All"
+  labelPosition="after"
+  labelStyle={
+    Object {
+      "fontSize": "12px",
+    }
+  }
+  onTouchTap={[Function]}
+  primary={true}
+  secondary={false} />
+`;
