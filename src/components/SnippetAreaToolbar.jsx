@@ -15,7 +15,7 @@ const styles = {
     flexDirection: 'row',
     flexWrap: 'wrap',
     flexGrow: '1',
-    flexShrink: '1',
+    flexShrink: '0',
     margin: '0',
     padding: '0',
   },
