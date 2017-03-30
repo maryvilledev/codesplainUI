@@ -1,0 +1,5 @@
+exports[`Actions: App RESET_RULE_FILTERS creates an action 1`] = `
+Object {
+  "type": "RESET_RULE_FILTERS",
+}
+`;

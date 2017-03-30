@@ -5,6 +5,7 @@ export const CLEAR_UNSAVED_CHANGES = 'CLEAR_UNSAVED_CHANGES';
 export const EDIT_ANNOTATION = 'EDIT_ANNOTATION';
 export const PARSE_SNIPPET = 'PARSE_SNIPPET';
 export const RESTORE_STATE = 'RESTORE_STATE';
+export const RESET_RULE_FILTERS = 'RESET_RULE_FILTERS';
 export const SAVE_ANNOTATION = 'SAVE_ANNOTATION';
 export const SET_AST = 'SET_AST';
 export const SET_RULE_FILTERS = 'SET_RULE_FILTERS';
@@ -27,6 +28,10 @@ export const setSnippetContents = (snippet) => ({
 export const setRuleFilters = (filters) => ({
   type: SET_RULE_FILTERS,
   payload: filters,
+});
+
+export const resetFilters = () => ({
+  type: RESET_RULE_FILTERS,
 });
 
 export const setAST = (AST) => ({
