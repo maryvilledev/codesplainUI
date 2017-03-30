@@ -13,4 +13,7 @@ Pick out which concepts are important to you, and they will be highlighted in th
 Once your code is written, you can add an annotation to a line by clicking its number.
 Say anything you want about it. Markdown is even supported.
 ### Save and Share
-Once you are all done, save your code to a persistant URL, and we'll hold on to it for you or anyone you want ot show it to.
+Once you are all done, save your code to a persistant URL, and we'll hold on to it for you or anyone you want to show it to.
+
+## Serverless Application
+This application is built as a React SPA and uses XHR for data requests to a REST API. As a result, the application can be deployed serverless. For a better idea of what that looks like, see https://github.com/maryvilledev/codesplain-lambdas.
