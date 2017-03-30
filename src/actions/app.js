@@ -17,6 +17,7 @@ export const SAVE_STATE = 'SAVE_STATE';
 export const SAVE_STATE_STARTED = 'SAVE_STATE_STARTED';
 export const SAVE_STATE_SUCCEEDED = 'SAVE_STATE_SUCCEEDED';
 export const SAVE_STATE_FAILED = 'SAVE_STATE_FAILED';
+export const SELECT_ALL_FILTERS = 'SELECT_ALL_FILTERS';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -28,6 +29,10 @@ export const setSnippetContents = (snippet) => ({
 export const setRuleFilters = (filters) => ({
   type: SET_RULE_FILTERS,
   payload: filters,
+});
+
+export const selectAllFilters = () => ({
+  type: SELECT_ALL_FILTERS,
 });
 
 export const resetFilters = () => ({

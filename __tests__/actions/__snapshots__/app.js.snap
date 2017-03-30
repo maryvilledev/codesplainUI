@@ -1,5 +1,11 @@
-exports[`Actions: App RESET_RULE_FILTERS creates an action 1`] = `
+exports[`Actions: App RESET_RULE_FILTERS matches snapshot 1`] = `
 Object {
   "type": "RESET_RULE_FILTERS",
+}
+`;
+
+exports[`Actions: App SELECT_ALL_FILTERS matches snapshot 1`] = `
+Object {
+  "type": "SELECT_ALL_FILTERS",
 }
 `;

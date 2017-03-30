@@ -94,6 +94,38 @@ describe('Reducer: App', () => {
     };
     expect(reducer({ filters }, action)).toEqual(expected);
   });
+  it('should handle SELECT_ALL_FILTERS', () => {
+    const filters = {
+      'for_stmt': {
+        prettyTokenName: 'For Loops',
+        count: 1,
+        selected: false
+      },
+      'atom': {
+        prettyTokenName: 'Atoms',
+        count: 21,
+        selected: false,
+      },
+    };
+    const action = {
+      type: actions.SELECT_ALL_FILTERS,
+    }
+    const expected = {
+      filters: {
+        'for_stmt': {
+          prettyTokenName: 'For Loops',
+          count: 1,
+          selected: true,
+        },
+        'atom': {
+          prettyTokenName: 'Atoms',
+          count: 21,
+          selected: true,
+        },
+      },
+    };
+    expect(reducer({ filters }, action)).toEqual(expected);
+  });
   it('should handle SET_AST', () => {
     const AST = {
       "type": "file_input",

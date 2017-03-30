@@ -38,8 +38,13 @@ describe('Actions: App', () => {
     });
   });
   describe('RESET_RULE_FILTERS', () => {
-    it('creates an action', () => {
+    it('matches snapshot', () => {
       expect(actions.resetFilters()).toMatchSnapshot();
+    });
+  });
+  describe('SELECT_ALL_FILTERS', () => {
+    it('matches snapshot', () => {
+      expect(actions.selectAllFilters()).toMatchSnapshot();
     });
   });
   describe('SET_AST', () => {
