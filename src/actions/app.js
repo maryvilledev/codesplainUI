@@ -5,6 +5,7 @@ export const CLEAR_UNSAVED_CHANGES = 'CLEAR_UNSAVED_CHANGES';
 export const EDIT_ANNOTATION = 'EDIT_ANNOTATION';
 export const PARSE_SNIPPET = 'PARSE_SNIPPET';
 export const RESTORE_STATE = 'RESTORE_STATE';
+export const RESET_RULE_FILTERS = 'RESET_RULE_FILTERS';
 export const SAVE_ANNOTATION = 'SAVE_ANNOTATION';
 export const SET_AST = 'SET_AST';
 export const SET_RULE_FILTERS = 'SET_RULE_FILTERS';
@@ -16,6 +17,7 @@ export const SAVE_STATE = 'SAVE_STATE';
 export const SAVE_STATE_STARTED = 'SAVE_STATE_STARTED';
 export const SAVE_STATE_SUCCEEDED = 'SAVE_STATE_SUCCEEDED';
 export const SAVE_STATE_FAILED = 'SAVE_STATE_FAILED';
+export const SELECT_ALL_FILTERS = 'SELECT_ALL_FILTERS';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -27,6 +29,14 @@ export const setSnippetContents = (snippet) => ({
 export const setRuleFilters = (filters) => ({
   type: SET_RULE_FILTERS,
   payload: filters,
+});
+
+export const selectAllFilters = () => ({
+  type: SELECT_ALL_FILTERS,
+});
+
+export const resetFilters = () => ({
+  type: RESET_RULE_FILTERS,
 });
 
 export const setAST = (AST) => ({

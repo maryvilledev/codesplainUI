@@ -37,6 +37,16 @@ describe('Actions: App', () => {
       expect(actions.setRuleFilters(filters)).toEqual(expected);
     });
   });
+  describe('RESET_RULE_FILTERS', () => {
+    it('matches snapshot', () => {
+      expect(actions.resetFilters()).toMatchSnapshot();
+    });
+  });
+  describe('SELECT_ALL_FILTERS', () => {
+    it('matches snapshot', () => {
+      expect(actions.selectAllFilters()).toMatchSnapshot();
+    });
+  });
   describe('SET_AST', () => {
     it('creates an action to set the abstract syntax tree', () => {
       const AST = {
