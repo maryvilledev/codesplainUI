@@ -5,6 +5,7 @@ exports[`<LanguageSelector /> matches snapshot 1`] = `
       "cursorBlinkRate": -1,
       "firstLineNumber": 1,
       "lineNumbers": true,
+      "lineWrapping": true,
       "readOnly": true,
       "theme": "codesplain",
     }
