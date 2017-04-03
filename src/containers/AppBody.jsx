@@ -37,13 +37,21 @@ export class AppBody extends React.Component {
     } = this.props;
 
     if (!username && !id) {
+      // Reload the state if returning from login.
       const signInState = cookie.load('signInState');
       if (signInState) {
         cookie.remove('signInState', { path: '/' });
         cookie.remove('signInRedirect', { path: '/' });
         dispatch(restoreState(signInState));
+        return;
       }
-      return null;
+      // This is a new snippet for the current user, enable all permissions
+      const permissions = {
+        canRead: true,
+        canEdit: true
+      }
+      dispatch(setPermissions(permissions))
+      return;
     }
 
     const token = cookie.load('token');
