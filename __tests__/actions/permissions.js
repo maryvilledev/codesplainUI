@@ -9,7 +9,7 @@ describe("Actions: permissions", () => {
       }
       const expected = {
         type: actions.SET_PERMISSIONS,
-        payload: permissons
+        payload: permissions
       }
       expect(actions.setPermissions(permissions)).toEqual(expected)
     })
