@@ -17,7 +17,7 @@ const styles = {
 
 const saveIconButton = (disabled) => (
   <IconButton
-    title="Save Options"
+    title={disabled ? "Login to Save" : "Save Options"}
     children={<SaveIcon />}
     disabled={disabled}
   />
