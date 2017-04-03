@@ -40,6 +40,12 @@ const makeMarker = () => {
   return marker;
 };
 
+const pushValueToCodeMirror = _.once((value, codeMirrorInst) => {
+  if (codeMirrorInst.getValue() === '' && value !== '') {
+    codeMirrorInst.setValue(value);
+  }
+})
+
 class Editor extends React.Component {
   constructor(props) {
     super(props);
@@ -75,9 +81,7 @@ class Editor extends React.Component {
 
     // If this is the first time through, value may be set without Codemirror
     // knowing about it. Push the value to codemirror to rectify
-    if (codeMirrorInst.getValue() === '' && value !== '') {
-      codeMirrorInst.setValue(value);
-    }
+    pushValueToCodeMirror(value, codeMirrorInst)
     codeMirrorInst.clearGutter('annotations');
     // eslint-disable-next-line array-callback-return
     markedLines.forEach((lineNumber) => {
