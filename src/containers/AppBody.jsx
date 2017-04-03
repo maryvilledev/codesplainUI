@@ -37,21 +37,22 @@ export class AppBody extends React.Component {
     } = this.props;
 
     if (!username && !id) {
+
+      // This is a new snippet for the current user, enable all permissions
+      const permissions = {
+        canRead: true,
+        canEdit: true
+      }
+      dispatch(setPermissions(permissions));
+
       // Reload the state if returning from login.
       const signInState = cookie.load('signInState');
       if (signInState) {
         cookie.remove('signInState', { path: '/' });
         cookie.remove('signInRedirect', { path: '/' });
         dispatch(restoreState(signInState));
-        return;
       }
-      // This is a new snippet for the current user, enable all permissions
-      const permissions = {
-        canRead: true,
-        canEdit: true
-      }
-      dispatch(setPermissions(permissions))
-      return;
+      return null;
     }
 
     const token = cookie.load('token');
