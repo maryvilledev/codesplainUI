@@ -143,7 +143,7 @@ export class SnippetArea extends React.Component {
     else { // if we're saving a new snippet...
       axios.post(`${API_URL}/users/${username}/snippets`, stateString, config)
         .then((res) => {
-          browserHistory.push(`/${username}/snippets/${res.data.key}`);
+          browserHistory.push(`/${username}/${res.data.key}`);
           this.showSnackbar('Codesplaination Saved!');
           dispatch(clearUnsavedChanges());
         }, (err) => {
@@ -183,7 +183,7 @@ export class SnippetArea extends React.Component {
     }
     axios.post(`${API_URL}/users/${username}/snippets`, stateString, config)
       .then((res) => {
-        browserHistory.push(`/${username}/snippets/${res.data.key}`);
+        browserHistory.push(`/${username}/${res.data.key}`);
         this.showSnackbar('Codesplaination Saved!');
         dispatch(clearUnsavedChanges());
       }, (err) => {

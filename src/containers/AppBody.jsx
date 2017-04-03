@@ -55,6 +55,7 @@ export class AppBody extends React.Component {
     axios.get(`${API_URL}/users/${username}/snippets/${id}`, config)
       .then(res => {
         dispatch(restoreState(res.data));
+        browserHistory.push(`/${username}/${id}`)
       }, err => {
         // Failed to get the snippet, either bad URL or unauthorized
         browserHistory.push('/');
