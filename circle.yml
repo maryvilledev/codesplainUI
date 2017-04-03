@@ -25,4 +25,4 @@ deployment:
               REACT_APP_CLIENT_ID: 5b8ef62086ba2e6acfc9
         - ./publish dev
         - aws configure set preview.cloudfront true
-        - aws cloudfront create-invalidation --distribution-id $dev_cf_id --paths "/index.html"
+        - aws cloudfront create-invalidation --distribution-id $dev_cf_id --paths "/index.html" --region us-west-2
