@@ -4,10 +4,8 @@ import reducer from '../../src/reducers/permissions';
 describe('Reducer: permissions', () => {
   it('should have initial state', () => {
     const initial = {
-      permissions: {
-        canRead: false,
-        canWrite: false,
-      }
+      canRead: false,
+      canEdit: false,
     }
     expect(reducer(undefined, {})).toEqual(initial)
   })
@@ -19,11 +17,11 @@ describe('Reducer: permissions', () => {
     };
     const action = {
       type: actions.SET_PERMISSIONS,
-      payload: parserURL
+      payload: permissions
     };
     const expected = {
-      permissions
+      ...permissions
     };
-    expect(reducer(undefined, action)).toEqual(expect.objectContaining(expected))
+    expect(reducer(undefined, action)).toEqual(expected)
   })
 })
