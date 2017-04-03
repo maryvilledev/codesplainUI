@@ -220,6 +220,7 @@ export class SnippetArea extends React.Component {
           onLockClick={this.handleLock}
           onSaveAsClick={this.handleSaveAs}
           onSaveClick={this.handleSave}
+          saveEnabled={(cookie.load('username') !== undefined)}
           onTitleChange={this.handleTitleChanged}d
           readOnly={readOnly}
           title={snippetTitle}

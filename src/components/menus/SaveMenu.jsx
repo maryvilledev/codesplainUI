@@ -15,10 +15,11 @@ const styles = {
   },
 };
 
-const saveIconButton = (
+const saveIconButton = (disabled) => (
   <IconButton
     title="Save Options"
     children={<SaveIcon />}
+    disabled={disabled}
   />
 );
 
@@ -37,7 +38,7 @@ class SaveMenu extends React.Component {
     return (
       <IconMenu
         id="menu"
-        iconButtonElement={saveIconButton}
+        iconButtonElement={saveIconButton(!this.props.enabled)}
       >
         <MenuItem
           onTouchTap={this.props.onSaveClick}
