@@ -37,6 +37,7 @@ class CodesplainAppBar extends React.Component {
     cookie.remove('username', { path: '/' });
     cookie.remove('userAvatarURL', { path: '/' });
     this.setState({ isLoggedIn: false });
+    location.reload();
   }
 
   onLoginClick() {
