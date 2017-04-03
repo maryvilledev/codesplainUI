@@ -39,7 +39,7 @@ Note that the Materual UI <Toolbar /> component does not work
 here, because it does not reflow correctly when the screen is resized.
 */
 const SnippetAreaToolbar = ({
-  title, onTitleChange, readOnly, onLockClick, onSaveClick, onSaveAsClick
+  title, onTitleChange, readOnly, onLockClick, onSaveClick, onSaveAsClick, canSave
 }) => (
   <div style={styles.toolbar}>
     <TextField
@@ -68,6 +68,7 @@ const SnippetAreaToolbar = ({
       onSaveClick={onSaveClick}
       onSaveAsClick={onSaveAsClick}
       style={styles.buttons}
+      canSave={canSave}
     />
   </div>
 );
@@ -79,6 +80,7 @@ SnippetAreaToolbar.propTypes = {
   onTitleChange: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
   title: PropTypes.string.isRequired,
+  canSave: PropTypes.bool.isRequired,
 }
 
 export default SnippetAreaToolbar;

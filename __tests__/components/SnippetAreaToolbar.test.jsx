@@ -19,6 +19,7 @@ describe('<SnippetAreaToolbar />', () => {
           onLockClick={jest.fn()}
           onSaveClick={jest.fn()}
           onSaveAsClick={jest.fn()}
+          canSave={true}
         />
       );
       expect(shallowToJson(wrapper)).toMatchSnapshot();
@@ -33,6 +34,7 @@ describe('<SnippetAreaToolbar />', () => {
           onLockClick={jest.fn()}
           onSaveClick={jest.fn()}
           onSaveAsClick={jest.fn()}
+          canSave={true}
         />
       );
       expect(shallowToJson(wrapper)).toMatchSnapshot();
@@ -50,6 +52,7 @@ describe('<SnippetAreaToolbar />', () => {
           onLockClick={jest.fn()}
           onSaveClick={jest.fn()}
           onSaveAsClick={jest.fn()}
+          canSave={true}
         />
       );
       expect(wrapper.find('TextField[id="titleField"]').prop('value')).toEqual(title);
@@ -67,6 +70,7 @@ describe('<SnippetAreaToolbar />', () => {
           onLockClick={jest.fn()}
           onSaveClick={jest.fn()}
           onSaveAsClick={jest.fn()}
+          canSave={true}
         />
       );
       const titleField = wrapper.find('[id="titleField"]');
@@ -86,6 +90,7 @@ describe('<SnippetAreaToolbar />', () => {
           onLockClick={jest.fn()}
           onSaveClick={jest.fn()}
           onSaveAsClick={jest.fn()}
+          canSave={true}
         />
       );
       const languageSelector = wrapper.find('[id="languageSelector"]');
@@ -104,6 +109,7 @@ describe('<SnippetAreaToolbar />', () => {
           onLockClick={onLockClick}
           onSaveClick={jest.fn()}
           onSaveAsClick={jest.fn()}
+          canSave={true}
         />
       );
       expect(wrapper.find('LockButton').prop('onClick')).toEqual(onLockClick);
@@ -121,6 +127,7 @@ describe('<SnippetAreaToolbar />', () => {
           onLockClick={jest.fn()}
           onSaveClick={onSaveClick}
           onSaveAsClick={jest.fn()}
+          canSave={true}
         />
       );
       expect(wrapper.find('SaveMenu').prop('onSaveClick')).toBe(onSaveClick);
@@ -138,6 +145,7 @@ describe('<SnippetAreaToolbar />', () => {
           onLockClick={jest.fn()}
           onSaveClick={jest.fn()}
           onSaveAsClick={onSaveAsClick}
+          canSave={true}
         />
       );
       expect(wrapper.find('SaveMenu').prop('onSaveAsClick')).toBe(onSaveAsClick);
