@@ -71,11 +71,12 @@ export class SnippetArea extends React.Component {
   }
 
   handleSnippetChanged(snippetContents) {
-    const { dispatch } = this.props;
+    const { dispatch, snippet } = this.props;
     dispatch(setSnippetContents(snippetContents));
     // Don't parse the snippet if a whitespace character was prepended/appended
-    // So appending a newline of a snippet will not trigger a parse action
-    if (snippetContents === snippetContents.trim()) {
+    // Parsing should only be triggered if you add a non-whitespace char, or if
+    // a whitespace was added in between non-WS chars (thus not being trimmed)
+    if (snippet.trim() !== snippetContents.trim()) {
       debouncedParseSnippetDispatch(snippetContents, dispatch)
     }
   }
