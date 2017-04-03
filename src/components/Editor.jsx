@@ -18,6 +18,7 @@ const baseCodeMirrorOptions = {
   theme: 'codesplain',
   gutters: ['annotations', 'CodeMirror-linenumbers'],
   mode: 'python',
+  lineWrapping: true,
 };
 
 // Options specific for edit mode should be set here
