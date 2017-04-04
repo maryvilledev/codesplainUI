@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import CodeMirror from 'react-codemirror';
-import _ from 'lodash'
+import _ from 'lodash';
 
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/python/python.js';
@@ -17,7 +17,6 @@ const baseCodeMirrorOptions = {
   lineNumbers: true,
   theme: 'codesplain',
   gutters: ['annotations', 'CodeMirror-linenumbers'],
-  mode: 'python',
   lineWrapping: true,
 };
 
@@ -90,8 +89,7 @@ class Editor extends React.Component {
     });
     this.deEmphasize();
     if (openLine !== undefined) {
-      // Must be left as such, as line 0
-      // would evaluate to false
+      // Must be left as such, as line 0 would evaluate to false
       this.emphasizeLine(openLine);
     }
     if ((newAST || newFilters) && value) {
@@ -132,12 +130,14 @@ class Editor extends React.Component {
 
   render() {
     const {
+      language,
+      onChange,
       readOnly,
       value,
-      onChange
     } = this.props;
 
     const codeMirrorOptions = {
+      mode: language,
       ...(readOnly ? annotationModeOptions : editModeOptions),
     };
 
@@ -155,6 +155,7 @@ class Editor extends React.Component {
 Editor.propTypes = {
   AST: PropTypes.object.isRequired,
   filters: PropTypes.object.isRequired,
+  language: PropTypes.string.isRequired,
   markedLines: PropTypes.arrayOf(PropTypes.number).isRequired,
   onChange: PropTypes.func.isRequired,
   onGutterClick: PropTypes.func.isRequired,

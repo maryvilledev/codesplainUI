@@ -39,6 +39,7 @@ describe('<SnippetArea />', () => {
       AST={mockAST}
       filters={mockFilters}
       readOnly={true}
+      language="python"
     />
   )
   it('updates the snippet on handleSnippetChanged', () => {

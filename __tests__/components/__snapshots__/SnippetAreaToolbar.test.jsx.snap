@@ -33,12 +33,9 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is no
     type="text"
     underlineShow={true}
     value="" />
-  <SelectField
-    autoWidth={false}
-    disabled={true}
-    fullWidth={false}
-    id="languageSelector"
-    multiple={false}
+  <LanguageSelector
+    language="python"
+    onChange={[Function]}
     style={
       Object {
         "flexBasis": "auto",
@@ -46,23 +43,7 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is no
         "flexShrink": "1",
         "verticalAlign": "middle",
       }
-    }
-    value={1}>
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
-        }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="Python 3"
-      value={1} />
-  </SelectField>
+    } />
   <LockButton
     id="lockButton"
     onClick={[Function]}
@@ -126,12 +107,9 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is re
     type="text"
     underlineShow={true}
     value="" />
-  <SelectField
-    autoWidth={false}
-    disabled={true}
-    fullWidth={false}
-    id="languageSelector"
-    multiple={false}
+  <LanguageSelector
+    language="python"
+    onChange={[Function]}
     style={
       Object {
         "flexBasis": "auto",
@@ -139,23 +117,7 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is re
         "flexShrink": "1",
         "verticalAlign": "middle",
       }
-    }
-    value={1}>
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
-        }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="Python 3"
-      value={1} />
-  </SelectField>
+    } />
   <LockButton
     id="lockButton"
     onClick={[Function]}
