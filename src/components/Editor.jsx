@@ -18,6 +18,7 @@ const baseCodeMirrorOptions = {
   theme: 'codesplain',
   gutters: ['annotations', 'CodeMirror-linenumbers'],
   mode: 'python',
+  lineWrapping: true,
 };
 
 // Options specific for edit mode should be set here
@@ -39,6 +40,12 @@ const makeMarker = () => {
   marker.innerHTML = '●';
   return marker;
 };
+
+const pushValueToCodeMirror = _.once((value, codeMirrorInst) => {
+  if (codeMirrorInst.getValue() === '' && value !== '') {
+    codeMirrorInst.setValue(value);
+  }
+})
 
 class Editor extends React.Component {
   constructor(props) {
@@ -72,6 +79,10 @@ class Editor extends React.Component {
     } = this.state
 
     const codeMirrorInst = this.codeMirror.getCodeMirror();
+
+    // If this is the first time through, value may be set without Codemirror
+    // knowing about it. Push the value to codemirror to rectify
+    pushValueToCodeMirror(value, codeMirrorInst)
     codeMirrorInst.clearGutter('annotations');
     // eslint-disable-next-line array-callback-return
     markedLines.forEach((lineNumber) => {

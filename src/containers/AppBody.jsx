@@ -71,6 +71,7 @@ export class AppBody extends React.Component {
         }
         dispatch(setPermissions(permissions))
         dispatch(restoreState(res.data));
+        browserHistory.push(`/${username}/${id}`)
       }, err => {
         // Failed to get the snippet, either bad URL or unauthorized
         browserHistory.push('/');

@@ -74,9 +74,14 @@ export class SnippetArea extends React.Component {
   }
 
   handleSnippetChanged(snippetContents) {
-    const { dispatch } = this.props;
+    const { dispatch, snippet } = this.props;
     dispatch(setSnippetContents(snippetContents));
-    debouncedParseSnippetDispatch(snippetContents, dispatch)
+    // Don't parse the snippet if a whitespace character was prepended/appended
+    // Parsing should only be triggered if you add a non-whitespace char, or if
+    // a whitespace was added in between non-WS chars (thus not being trimmed)
+    if (snippet.trim() !== snippetContents.trim()) {
+      debouncedParseSnippetDispatch(snippetContents, dispatch)
+    }
   }
 
   handleTitleChanged(ev) {
@@ -146,7 +151,7 @@ export class SnippetArea extends React.Component {
     else { // if we're saving a new snippet...
       axios.post(`${API_URL}/users/${username}/snippets`, stateString, config)
         .then((res) => {
-          browserHistory.push(`/${username}/snippets/${res.data.key}`);
+          browserHistory.push(`/${username}/${res.data.key}`);
           this.showSnackbar('Codesplaination Saved!');
           dispatch(clearUnsavedChanges());
         }, (err) => {
@@ -186,7 +191,7 @@ export class SnippetArea extends React.Component {
     }
     axios.post(`${API_URL}/users/${username}/snippets`, stateString, config)
       .then((res) => {
-        browserHistory.push(`/${username}/snippets/${res.data.key}`);
+        browserHistory.push(`/${username}/${res.data.key}`);
         this.showSnackbar('Codesplaination Saved!');
         dispatch(clearUnsavedChanges());
         const permissions = {
@@ -229,6 +234,7 @@ export class SnippetArea extends React.Component {
           onLockClick={this.handleLock}
           onSaveAsClick={this.handleSaveAs}
           onSaveClick={this.handleSave}
+          saveEnabled={(cookie.load('username') !== undefined)}
           onTitleChange={this.handleTitleChanged}
           readOnly={readOnly}
           title={snippetTitle}

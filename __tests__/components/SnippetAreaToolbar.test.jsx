@@ -20,6 +20,7 @@ describe('<SnippetAreaToolbar />', () => {
           onSaveClick={jest.fn()}
           onSaveAsClick={jest.fn()}
           canSave={true}
+          saveEnabled={true}
         />
       );
       expect(shallowToJson(wrapper)).toMatchSnapshot();
@@ -35,6 +36,7 @@ describe('<SnippetAreaToolbar />', () => {
           onSaveClick={jest.fn()}
           onSaveAsClick={jest.fn()}
           canSave={true}
+          saveEnabled={true}
         />
       );
       expect(shallowToJson(wrapper)).toMatchSnapshot();
@@ -53,6 +55,7 @@ describe('<SnippetAreaToolbar />', () => {
           onSaveClick={jest.fn()}
           onSaveAsClick={jest.fn()}
           canSave={true}
+          saveEnabled={true}
         />
       );
       expect(wrapper.find('TextField[id="titleField"]').prop('value')).toEqual(title);
@@ -71,6 +74,7 @@ describe('<SnippetAreaToolbar />', () => {
           onSaveClick={jest.fn()}
           onSaveAsClick={jest.fn()}
           canSave={true}
+          saveEnabled={true}
         />
       );
       const titleField = wrapper.find('[id="titleField"]');
@@ -91,6 +95,7 @@ describe('<SnippetAreaToolbar />', () => {
           onSaveClick={jest.fn()}
           onSaveAsClick={jest.fn()}
           canSave={true}
+          saveEnabled={true}
         />
       );
       const languageSelector = wrapper.find('[id="languageSelector"]');
@@ -110,6 +115,7 @@ describe('<SnippetAreaToolbar />', () => {
           onSaveClick={jest.fn()}
           onSaveAsClick={jest.fn()}
           canSave={true}
+          saveEnabled={true}
         />
       );
       expect(wrapper.find('LockButton').prop('onClick')).toEqual(onLockClick);
@@ -128,6 +134,7 @@ describe('<SnippetAreaToolbar />', () => {
           onSaveClick={onSaveClick}
           onSaveAsClick={jest.fn()}
           canSave={true}
+          saveEnabled={true}
         />
       );
       expect(wrapper.find('SaveMenu').prop('onSaveClick')).toBe(onSaveClick);
@@ -146,6 +153,7 @@ describe('<SnippetAreaToolbar />', () => {
           onSaveClick={jest.fn()}
           onSaveAsClick={onSaveAsClick}
           canSave={true}
+          saveEnabled={true}
         />
       );
       expect(wrapper.find('SaveMenu').prop('onSaveAsClick')).toBe(onSaveAsClick);

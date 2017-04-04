@@ -7,6 +7,7 @@ const baseOptions = {
   theme: 'codesplain',
   readOnly: true,
   cursorBlinkRate: -1,
+  lineWrapping: true,
 };
 
 class LineSnippet extends React.Component {
