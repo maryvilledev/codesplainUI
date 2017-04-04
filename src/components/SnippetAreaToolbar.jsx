@@ -45,7 +45,8 @@ const SnippetAreaToolbar = ({
   onLockClick,
   onSaveClick,
   onSaveAsClick,
-  saveEnabled
+  saveEnabled,
+  canSave
 }) => (
   <div style={styles.toolbar}>
     <TextField
@@ -74,6 +75,7 @@ const SnippetAreaToolbar = ({
       onSaveClick={onSaveClick}
       onSaveAsClick={onSaveAsClick}
       style={styles.buttons}
+      canSave={canSave}
       enabled={saveEnabled}
     />
   </div>
@@ -87,6 +89,7 @@ SnippetAreaToolbar.propTypes = {
   onTitleChange: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
   title: PropTypes.string.isRequired,
+  canSave: PropTypes.bool.isRequired,
 }
 
 export default SnippetAreaToolbar;

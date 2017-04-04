@@ -19,6 +19,7 @@ describe('<SnippetAreaToolbar />', () => {
           onLockClick={jest.fn()}
           onSaveClick={jest.fn()}
           onSaveAsClick={jest.fn()}
+          canSave={true}
           saveEnabled={true}
         />
       );
@@ -34,6 +35,7 @@ describe('<SnippetAreaToolbar />', () => {
           onLockClick={jest.fn()}
           onSaveClick={jest.fn()}
           onSaveAsClick={jest.fn()}
+          canSave={true}
           saveEnabled={true}
         />
       );
@@ -52,6 +54,7 @@ describe('<SnippetAreaToolbar />', () => {
           onLockClick={jest.fn()}
           onSaveClick={jest.fn()}
           onSaveAsClick={jest.fn()}
+          canSave={true}
           saveEnabled={true}
         />
       );
@@ -70,6 +73,7 @@ describe('<SnippetAreaToolbar />', () => {
           onLockClick={jest.fn()}
           onSaveClick={jest.fn()}
           onSaveAsClick={jest.fn()}
+          canSave={true}
           saveEnabled={true}
         />
       );
@@ -90,6 +94,7 @@ describe('<SnippetAreaToolbar />', () => {
           onLockClick={jest.fn()}
           onSaveClick={jest.fn()}
           onSaveAsClick={jest.fn()}
+          canSave={true}
           saveEnabled={true}
         />
       );
@@ -109,6 +114,7 @@ describe('<SnippetAreaToolbar />', () => {
           onLockClick={onLockClick}
           onSaveClick={jest.fn()}
           onSaveAsClick={jest.fn()}
+          canSave={true}
           saveEnabled={true}
         />
       );
@@ -127,6 +133,7 @@ describe('<SnippetAreaToolbar />', () => {
           onLockClick={jest.fn()}
           onSaveClick={onSaveClick}
           onSaveAsClick={jest.fn()}
+          canSave={true}
           saveEnabled={true}
         />
       );
@@ -145,6 +152,7 @@ describe('<SnippetAreaToolbar />', () => {
           onLockClick={jest.fn()}
           onSaveClick={jest.fn()}
           onSaveAsClick={onSaveAsClick}
+          canSave={true}
           saveEnabled={true}
         />
       );

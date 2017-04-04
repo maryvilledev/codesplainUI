@@ -42,6 +42,7 @@ class SaveMenu extends React.Component {
       >
         <MenuItem
           onTouchTap={this.props.onSaveClick}
+          disabled={!this.props.canSave}
           primaryText="Save"
         />
         <MenuItem
@@ -95,6 +96,7 @@ class SaveMenu extends React.Component {
 SaveMenu.propTypes = {
   onSaveClick: PropTypes.func.isRequired,
   onSaveAsClick: PropTypes.func.isRequired,
+  canSave: PropTypes.bool.isRequired,
 };
 
 export default SaveMenu

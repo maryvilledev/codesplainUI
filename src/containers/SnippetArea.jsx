@@ -16,6 +16,9 @@ import {
 import {
   loadParser
 } from '../actions/parser';
+import {
+  setPermissions
+} from '../actions/permissions';
 
 import {
   openAnnotationPanel,
@@ -191,6 +194,11 @@ export class SnippetArea extends React.Component {
         browserHistory.push(`/${username}/${res.data.key}`);
         this.showSnackbar('Codesplaination Saved!');
         dispatch(clearUnsavedChanges());
+        const permissions = {
+          canRead: true,
+          canEdit: true
+        } //All permission, this is now her file.
+        dispatch(setPermissions(permissions))
       }, (err) => {
         this.showSnackbar('Failed to save - an error occurred');
       });
@@ -215,6 +223,7 @@ export class SnippetArea extends React.Component {
       readOnly,
       snippet,
       snippetTitle,
+      permissions,
     } = this.props;
 
     const markedLines = Object.keys(annotations).map((key) => Number(key))
@@ -226,9 +235,10 @@ export class SnippetArea extends React.Component {
           onSaveAsClick={this.handleSaveAs}
           onSaveClick={this.handleSave}
           saveEnabled={(cookie.load('username') !== undefined)}
-          onTitleChange={this.handleTitleChanged}d
+          onTitleChange={this.handleTitleChanged}
           readOnly={readOnly}
           title={snippetTitle}
+          canSave={permissions.canEdit}
         />
         <ConfirmLockDialog
           accept={this.handleToggleReadOnly}
@@ -264,6 +274,7 @@ SnippetArea.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   snippet: PropTypes.string.isRequired,
   snippetTitle: PropTypes.string.isRequired,
+  permissions: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -277,6 +288,7 @@ const mapStateToProps = state => ({
   snippet: state.app.snippet,
   snippetTitle: state.app.snippetTitle,
   appState: state.app,
+  permissions: state.permissions,
 });
 
 export default connect(mapStateToProps)(SnippetArea);
