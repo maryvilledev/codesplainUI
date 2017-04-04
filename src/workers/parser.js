@@ -33,8 +33,7 @@ self.onmessage = ({ data : action }) => {
         self.importScripts(parserURL);
         // Script exports the parser as a global var, set the local ref to point
         // at it
-        parser = Codesplain_parse_python3;
-        //parser = CodesplainParser;
+        parser = CodesplainParser;
         // Add the parser to the cache so we don't have to load it again
         parserCache[parserURL] = parser;
       }
