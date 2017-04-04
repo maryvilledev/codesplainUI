@@ -8,7 +8,7 @@ export const initialState = {
   AST: {},
   filters: {},
   hasUnsavedChanges: false,
-  language: 'python',
+  snippetLanguage: 'python3',
   readOnly: false,
   snippet: '',
   snippetTitle: '',
