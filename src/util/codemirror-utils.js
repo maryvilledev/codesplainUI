@@ -78,3 +78,15 @@ export async function highlight(codeMirror, AST, filters) {
   //Codemirror buffers its calls ahead of time, then performs them atomically
   codeMirror.operation(func)
 }
+
+const parserCodeMirrorModes = {
+  python3: 'python',
+};
+
+export const getCodeMirrorMode = (parserName) => {
+  /*
+  Return the parser's corresponding CodeMirror mode if it exists in
+  parserCodeMirrorModes; else return the parser
+  */
+  return parserCodeMirrorModes[parserName] || parserName;
+};

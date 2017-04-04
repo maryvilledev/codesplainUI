@@ -21,7 +21,7 @@ exports[`<LanguageSelector /> matches snapshot 1`] = `
     focusState="none"
     insetChildren={false}
     primaryText="Python 3"
-    value="python" />
+    value="python3" />
   <MenuItem
     anchorOrigin={
       Object {

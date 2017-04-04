@@ -6,6 +6,7 @@ import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/python/python.js';
 
 import {
+  getCodeMirrorMode,
   highlight,
   styleLine,
   styleAll,
@@ -137,7 +138,7 @@ class Editor extends React.Component {
     } = this.props;
 
     const codeMirrorOptions = {
-      mode: language,
+      mode: getCodeMirrorMode(language),
       ...(readOnly ? annotationModeOptions : editModeOptions),
     };
 
