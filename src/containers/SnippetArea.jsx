@@ -227,12 +227,12 @@ export class SnippetArea extends React.Component {
       annotations,
       AST,
       filters,
-      language,
       openLine,
+      permissions,
       readOnly,
       snippet,
+      snippetLanguage,
       snippetTitle,
-      permissions,
     } = this.props;
 
     const markedLines = Object.keys(annotations).map((key) => Number(key))
@@ -241,7 +241,7 @@ export class SnippetArea extends React.Component {
       <CardText style={styles.snippetAreaCardText}>
         <SnippetAreaToolbar
           canSave={permissions.canEdit}
-          language={language}
+          language={snippetLanguage}
           onLanguageChange={this.handleLanguageChanged}
           onLockClick={this.handleLock}
           onSaveAsClick={this.handleSaveAs}
@@ -259,7 +259,7 @@ export class SnippetArea extends React.Component {
         <Editor
           AST={AST}
           filters={filters}
-          language={language}
+          language={snippetLanguage}
           markedLines={markedLines}
           onChange={this.handleSnippetChanged}
           onGutterClick={this.handleGutterClick}
@@ -293,7 +293,7 @@ const mapStateToProps = state => ({
   annotations: state.app.annotations,
   AST: state.app.AST,
   filters: state.app.filters,
-  language: state.app.language,
+  snippetLanguage: state.app.snippetLanguage,
   openLine: (state.annotation.isDisplayingAnnotation
     ? state.annotation.snippetInformation.lineNumber
     : undefined),
