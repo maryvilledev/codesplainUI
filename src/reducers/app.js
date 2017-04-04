@@ -80,7 +80,10 @@ const app = (state = initialState, action) => {
       };
     }
     case actions.RESTORE_STATE: {
-      return action.payload
+      return {
+        ...action.payload,
+        hasUnsavedChanges: false,
+      };
     }
     case actions.SET_SNIPPET_TITLE: {
       return {
