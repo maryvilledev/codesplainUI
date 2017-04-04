@@ -8,6 +8,7 @@ describe('Reducer: App', () => {
       AST: {},
       filters: {},
       hasUnsavedChanges: false,
+      language: 'python',
       readOnly: false,
       snippet: '',
       snippetTitle: '',
