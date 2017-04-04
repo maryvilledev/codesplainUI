@@ -76,6 +76,7 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is no
       }
     } />
   <SaveMenu
+    enabled={true}
     id="saveMenu"
     onSaveAsClick={[Function]}
     onSaveClick={[Function]}
@@ -168,6 +169,7 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is re
       }
     } />
   <SaveMenu
+    enabled={true}
     id="saveMenu"
     onSaveAsClick={[Function]}
     onSaveClick={[Function]}

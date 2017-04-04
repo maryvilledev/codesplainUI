@@ -16,9 +16,9 @@ exports[`<SaveMenu /> matches snapshot 1`] = `
     iconButtonElement={
       <IconButton
         disableTouchRipple={false}
-        disabled={false}
+        disabled={true}
         iconStyle={Object {}}
-        title="Save Options"
+        title="Login to Save"
         tooltipPosition="bottom-center"
         touch={false}>
         <ContentSave />
