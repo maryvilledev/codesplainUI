@@ -6,7 +6,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import LanguageSelector from '../../src/components/LanguageSelector';
 
 const defaultMockProps = {
-  language: 'python',
+  language: 'python3',
   onChange: jest.fn(),
   style: {},
 };

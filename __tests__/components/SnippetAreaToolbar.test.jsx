@@ -6,6 +6,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import SnippetAreaToolbar from '../../src/components/SnippetAreaToolbar';
 
 const defaultProps = {
+  canSave: true,
   language: 'python',
   onLanguageChange: jest.fn(),
   onLockClick: jest.fn(),

@@ -22,6 +22,10 @@ const mockFilters = {
     prettyTokenName: 'Morty Smith'
   }
 }
+const mockPermissions = {
+  canRead: true,
+  canEdit: true
+}
 const mockSnippet = "print('Squanch ya later!')"
 const mockSnippetTitle = 'Squanchy AI'
 const mockOpenLine = 2
@@ -39,7 +43,8 @@ describe('<SnippetArea />', () => {
       AST={mockAST}
       filters={mockFilters}
       readOnly={true}
-      language="python"
+      language="python3"
+      permissions={mockPermissions}
     />
   )
   it('updates the snippet on handleSnippetChanged', () => {

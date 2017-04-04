@@ -8,7 +8,7 @@ import Editor from '../../src/components/Editor';
 const defaultProps = {
   AST: {},
   filters: {},
-  language: 'python',
+  language: 'python3',
   markedLines: [],
   onChange: jest.fn(),
   onGutterClick: jest.fn(),

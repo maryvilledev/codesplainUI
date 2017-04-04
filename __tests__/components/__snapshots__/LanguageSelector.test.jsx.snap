@@ -7,7 +7,7 @@ exports[`<LanguageSelector /> matches snapshot 1`] = `
   multiple={false}
   onChange={[Function]}
   style={Object {}}
-  value="python">
+  value="python3">
   <MenuItem
     anchorOrigin={
       Object {

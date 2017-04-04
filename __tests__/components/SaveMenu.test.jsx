@@ -15,6 +15,7 @@ describe('<SaveMenu />', () => {
       <SaveMenu
         onSaveClick={jest.fn()}
         onSaveAsClick={jest.fn()}
+        canSave={true}
       />
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
@@ -27,6 +28,7 @@ describe('<SaveMenu />', () => {
         <SaveMenu
           onSaveClick={onSaveClick}
           onSaveAsClick={jest.fn()}
+          canSave={true}
         />
       );
 
@@ -43,6 +45,7 @@ describe('<SaveMenu />', () => {
         <SaveMenu
           onSaveClick={jest.fn()}
           onSaveAsClick={jest.fn()}
+          canSave={true}
         />
       )
       wrapper.find('TextField').simulate('change', {}, 'testing');
@@ -55,6 +58,7 @@ describe('<SaveMenu />', () => {
         <SaveMenu
           onSaveClick={jest.fn()}
           onSaveAsClick={onSaveAsClick}
+          canSave={true}
         />
       );
       const title = 'test title';
@@ -70,6 +74,7 @@ describe('<SaveMenu />', () => {
         <SaveMenu
           onSaveClick={jest.fn()}
           onSaveAsClick={onSaveAsClick}
+          canSave={true}
         />
       );
       const dialogButtons = shallowWithContext(wrapper.find('Dialog').prop('actions'))

@@ -6,6 +6,7 @@ import { browserHistory } from 'react-router';
 import cookie from 'react-cookie';
 
 import { restoreState } from '../actions/app';
+import { setPermissions } from '../actions/permissions'
 
 import Annotations from './Annotations';
 import FilterArea from './FilterArea';
@@ -36,6 +37,15 @@ export class AppBody extends React.Component {
     } = this.props;
 
     if (!username && !id) {
+
+      // This is a new snippet for the current user, enable all permissions
+      const permissions = {
+        canRead: true,
+        canEdit: true
+      }
+      dispatch(setPermissions(permissions));
+
+      // Reload the state if returning from login.
       const signInState = cookie.load('signInState');
       if (signInState) {
         cookie.remove('signInState', { path: '/' });
@@ -54,6 +64,12 @@ export class AppBody extends React.Component {
 
     axios.get(`${API_URL}/users/${username}/snippets/${id}`, config)
       .then(res => {
+        const permissions = {
+          canRead: true,
+          //Currently, users may only edit a file they own
+          canEdit: (username === cookie.load('username'))
+        }
+        dispatch(setPermissions(permissions))
         dispatch(restoreState(res.data));
         browserHistory.push(`/${username}/${id}`)
       }, err => {

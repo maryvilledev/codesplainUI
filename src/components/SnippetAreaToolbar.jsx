@@ -40,6 +40,7 @@ here, because it does not reflow correctly when the screen is resized.
 */
 const SnippetAreaToolbar = (props) => {
   const {
+    canSave,
     language,
     onLanguageChange,
     onLockClick,
@@ -72,6 +73,7 @@ const SnippetAreaToolbar = (props) => {
         style={styles.buttons}
       />
       <SaveMenu
+        canSave={canSave}
         enabled={saveEnabled}
         id="saveMenu"
         onSaveAsClick={onSaveAsClick}
@@ -83,6 +85,7 @@ const SnippetAreaToolbar = (props) => {
 };
 
 SnippetAreaToolbar.propTypes = {
+  canSave: PropTypes.bool.isRequired,
   language: PropTypes.string.isRequired,
   onLanguageChange: PropTypes.func.isRequired,
   onLockClick: PropTypes.func.isRequired,
