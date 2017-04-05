@@ -6,6 +6,11 @@ import Loading from '../components/Loading';
 import Alert from '../components/Alert';
 
 const API_URL = process.env.REACT_APP_API_URL;
+const errors = {
+  badCode: "Failed to login with GitHub, sorry.",
+  badOrg: "Sorry, you are not a member of an organization authorized to use" +
+  " this application."
+}
 
 /*
 <Auth /> is the component that is rendered for the '{{url}}/auth' endpoint (which
@@ -41,7 +46,19 @@ class Auth extends React.Component {
         })
       }, err => {
         // If this fails, we need to make sure the error dialog shows
-        this.setState({ waiting: false, error: true });
+        let error
+        switch (error.response.status) {
+          case 403: {
+            error = errors.badOrg
+          }
+          // eslint-disable-next-line
+          case 400: //Intentional fallthrough
+          default: {
+            error = errors.badCode;
+            break;
+          }
+        }
+        this.setState({ waiting: false, error: error });
       })
       .then(res => {
         // Can pull lots of other stuff out of res.data if needed
@@ -78,7 +95,7 @@ class Auth extends React.Component {
       if (this.state.error) {
         return (
           <Alert
-            text="Failed to login with GitHub, sorry."
+            text={this.state.error}
             onClose={this.redirectUser}
           />
         );
