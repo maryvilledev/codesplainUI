@@ -29,7 +29,6 @@ class CodesplainAppBar extends React.Component {
       isLoggedIn: cookie.load('token') !== undefined,
     }
     this.handleSignOut = this.handleSignOut.bind(this);
-    this.fetchSnippetTitles = this.fetchSnippetTitles.bind(this);
     this.handleTitleClick = this.handleTitleClick.bind(this);
     this.onLoginClick = this.onLoginClick.bind(this);
   }
@@ -51,6 +50,8 @@ class CodesplainAppBar extends React.Component {
     // later when GitHub sends the user back to the app, and send the user back
     // to the page they were on when they clicked the login button.
     const appState = JSON.stringify(this.props.appState);
+    cookie.remove('signInState', { path: '/' });
+    cookie.remove('signInRedirect', { path: '/' });
     cookie.save('signInState', appState, { path: '/' });
     cookie.save('signInRedirect', location.pathname, { path: '/' });
 
@@ -60,16 +61,29 @@ class CodesplainAppBar extends React.Component {
   }
 
   render() {
-    // const rightElement = this.state.isLoggedIn ?
-    //   <AppMenu onSignOut={this.handleSignOut} /> :
-    //   <LoginButton onClick={this.onLoginClick}/>
-    const snippetTitles = this.appState.userSnippets.map(s => s.snippetName);
-    const rightElement =
-    <AppMenu
-      onSignOut={this.handleSignOut}
-      snippetTitles={snippetTitles}
-      onTitleClicked={this.handleTitleClick}
-    />;
+    let snippetTitles = [];
+    if (this.props.appState.snippetMeta)
+      snippetTitles = this.props.appState.snippetMeta.map(s => s.snippetName);
+    const rightElement = this.state.isLoggedIn ?
+      <AppMenu
+        onSignOut={this.handleSignOut}
+        // snippetTitles={['none']}
+        snippetTitles={snippetTitles}
+        onTitleClicked={this.handleTitleClick}
+      /> :
+      <LoginButton
+        onClick={this.onLoginClick}
+      />;
+    console.log(this.props.appState)
+    // let snippetTitles = [];
+    // if (this.props.appState.snippetMeta)
+    //   snippetTitles = this.props.appState.snippetMeta.map(s => s.snippetName);
+    // const rightElement =
+    // <AppMenu
+    //   onSignOut={this.handleSignOut}
+    //   snippetTitles={snippetTitles}
+    //   onTitleClicked={this.handleTitleClick}
+    // />;
     return (
       <AppBar
         showMenuIconButton={false}

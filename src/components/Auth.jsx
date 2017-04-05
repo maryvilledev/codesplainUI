@@ -1,9 +1,12 @@
 import React from 'react';
 import cookie from 'react-cookie';
 import axios from 'axios';
+import { connect } from 'react-redux';
 
 import Loading from '../components/Loading';
 import Alert from '../components/Alert';
+
+import { saveUserSnippets, restoreState } from '../actions/app';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -29,39 +32,11 @@ class Auth extends React.Component {
     // Extract the code provided by GitHub from the redirect query string
     const { code } = this.props.location.query
     this.runLoginSequence(code);
-
-    // // Post it to the API to be verified by GitHub as authentic
-    // axios.post(`${API_URL}/auth`, { code })
-    //   .then(res => {
-    //     // Code was accepted, so extract and save the token from the response
-    //     const { token } = res.data;
-    //     cookie.save('token', token, { path: '/' });
-    //
-    //     // Return Promise to get the user's basic info
-    //     return axios.get('https://api.github.com/user', {
-    //       headers: {
-    //         Accept: 'application/json',
-    //         Authorization: `token ${token}`,
-    //       }
-    //     })
-    //   }, err => {
-    //     // If this fails, we need to make sure the error dialog shows
-    //     this.setState({ waiting: false, error: true });
-    //   })
-    //   .then(res => {
-    //     // Can pull lots of other stuff out of res.data if needed
-    //     const { login, avatar_url } = res.data;
-    //     cookie.save('userAvatarURL', avatar_url, { path: '/' });
-    //     cookie.save('username', login, { path: '/' });
-    //     this.setState({ waiting: false });
-    //   }, err => {
-    //     // Failed to pull in user info, but that's fine. Log and continue.
-    //     this.setState({ waiting: false });
-    //   })
-    //   .catch(err => console.log(err))
   }
 
   async runLoginSequence(authCode) {
+    const { dispatch } = this.props;
+
     // Use authorization code to get access token from API
     const token = await this.fetchAccessToken(authCode);
     if (!token) {
@@ -77,7 +52,13 @@ class Auth extends React.Component {
     }
 
     // Now get meta data about the user's snippets and save to redux
-    await this.fetchUserSnippets(token, username);
+    const snippetMeta = await this.fetchUserSnippets(token, username);
+    if (snippetMeta) {
+      // Add snippetMeta to signInState cookie
+      const signInState = cookie.load('signInState');
+      const newSignInState = { ...signInState, snippetMeta };
+      cookie.save('signInState', newSignInState, { path: '/' });
+    }
     this.setState({ waiting: false });
   }
 
@@ -85,7 +66,7 @@ class Auth extends React.Component {
   async fetchAccessToken(authCode) {
     let res;
     try {
-      res = axios.post(`${API_URL}/auth`, { code: authCode });
+      res = await axios.post(`${API_URL}/auth`, { code: authCode });
     } catch(e) {
       return; // can't keep going so bail out
     }
@@ -105,7 +86,7 @@ class Auth extends React.Component {
         Accept: 'application/json',
         Authorization: `token ${token}`,
       };
-      res = axios.get('https://api.github.com/user', { headers });
+      res = await axios.get('https://api.github.com/user', { headers });
     } catch(e) {
       return; // it didn't work, so bail out
     }
@@ -117,20 +98,27 @@ class Auth extends React.Component {
     return login;
   }
 
-  // Returns true if successful, otherwise undefined
+  // Returns snippet meta data array if successful, otherwise returns undefined
   async fetchUserSnippets(token, username) {
-    let res;
-    try {
-      const headers = {
-        Accept: 'application/json',
-        Authorization: `token ${token}`,
-      };
-      res = axios.get(`${API_URL}/users/${username}/snippets`, { headers });
-    } catch(e) {
-      return;
-    }
-    // Dispatch redux action to update state with info from response
-    return true;
+    // let res;
+    // try {
+    //   const headers = {
+    //     Accept: 'application/json',
+    //     Authorization: `token ${token}`,
+    //   };
+    //   res = await axios.get(`${API_URL}/users/${username}/snippets`, { headers });
+    // } catch(e) {
+    //   return;
+    // }
+    const snippetMeta = [
+      {
+        snippetName: 'Test Snippet',
+        language:    'Python 3',
+        lastEdited:  '2017-04-05T12:52:20.099Z',
+        'private':   true,
+      }
+    ];
+    return snippetMeta;
   }
 
   redirectUser() {
@@ -168,4 +156,4 @@ class Auth extends React.Component {
   }
 }
 
-export default Auth
+export default connect()(Auth);

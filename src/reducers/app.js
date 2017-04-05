@@ -123,6 +123,12 @@ const app = (state = initialState, action) => {
         filters,
       };
     }
+    case actions.SAVE_USER_SNIPPETS: {
+      return {
+        ...state,
+        snippetMeta: action.payload,
+      }
+    }
     default: {
       return state;
     }

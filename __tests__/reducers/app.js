@@ -285,4 +285,23 @@ describe('Reducer: App', () => {
     };
     expect(reducer(state, action)).toEqual(expected);
   });
+  it('should handle SAVE_USER_SNIPPETS', () => {
+    const snippetMeta = [
+      {
+        snippetName: 'Test Snippet',
+        language:    'Python 3',
+        lastEdited:  '2017-04-05T12:52:20.099Z',
+        'private':   true,
+      }
+    ];
+    const action = {
+      type:    actions.SAVE_USER_SNIPPETS,
+      payload: snippetMeta,
+    };
+    const expected = {
+      ...initialState,
+      snippetMeta,
+    }
+    expect(reducer(undefined, action)).toEqual(expected);
+  })
 });

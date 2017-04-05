@@ -18,6 +18,7 @@ export const SAVE_STATE_STARTED = 'SAVE_STATE_STARTED';
 export const SAVE_STATE_SUCCEEDED = 'SAVE_STATE_SUCCEEDED';
 export const SAVE_STATE_FAILED = 'SAVE_STATE_FAILED';
 export const SELECT_ALL_FILTERS = 'SELECT_ALL_FILTERS';
+export const SAVE_USER_SNIPPETS = 'SAVE_USER_SNIPPETS';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -92,6 +93,11 @@ export const saveStateSucceeded = () => ({
 
 export const saveStateFailed = () => ({
   type: SAVE_STATE_FAILED,
+});
+
+export const saveUserSnippets = (snippetMeta) => ({
+  type: SAVE_USER_SNIPPETS,
+  payload: snippetMeta,
 });
 
 export const saveState = (id) => {

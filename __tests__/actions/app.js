@@ -249,4 +249,21 @@ describe('Actions: App', () => {
       });
     });
   });
+  describe('SAVE_USER_SNIPPETS', () => {
+    it('creates an action to save meta data about user`s snippets', () => {
+      const snippetMeta = [
+        {
+          snippetName: 'Test Snippet',
+          language:    'Python 3',
+          lastEdited:  '2017-04-05T12:52:20.099Z',
+          'private':   true,
+        }
+      ];
+      const expected = {
+        type:    actions.SAVE_USER_SNIPPETS,
+        payload: snippetMeta,
+      };
+      expect(actions.saveUserSnippets(snippetMeta)).toEqual(expected);
+    });
+  });
 });
