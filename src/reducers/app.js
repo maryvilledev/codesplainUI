@@ -1,13 +1,14 @@
+import _ from 'lodash';
+
 import * as actions from '../actions/app';
 import { generateFilters } from '../util/rules';
-
-import _ from 'lodash';
 
 export const initialState = {
   annotations: {},
   AST: {},
   filters: {},
   hasUnsavedChanges: false,
+  snippetLanguage: 'python3',
   readOnly: false,
   snippet: '',
   snippetTitle: '',

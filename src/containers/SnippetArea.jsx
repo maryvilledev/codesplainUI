@@ -10,11 +10,12 @@ import {
   clearUnsavedChanges,
   parseSnippet,
   setSnippetContents,
+  setSnippetLanguage,
   setSnippetTitle,
   toggleEditState,
 } from '../actions/app';
 import {
-  loadParser
+  loadParser,
 } from '../actions/parser';
 import {
   setPermissions
@@ -56,6 +57,7 @@ export class SnippetArea extends React.Component {
 
     this.handleCloseModal = this.handleCloseModal.bind(this);
     this.handleGutterClick = this.handleGutterClick.bind(this);
+    this.handleLanguageChanged = this.handleLanguageChanged.bind(this);
     this.handleLock = this.handleLock.bind(this);
     this.handleSave = this.handleSave.bind(this);
     this.handleSaveAs = this.handleSaveAs.bind(this);
@@ -65,11 +67,23 @@ export class SnippetArea extends React.Component {
     this.showSnackbar = this.showSnackbar.bind(this);
   }
 
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch(loadParser(`${API_URL}/parsers/python3`))
+  }
+
   showSnackbar( message ) {
     this.setState({
       showSnackbar: true,
       snackbarMessage: message
     })
+  }
+
+  handleLanguageChanged(ev, key, language) {
+    const { dispatch, language: currentLanguage } = this.props;
+    if (currentLanguage !== language) {
+      dispatch(setSnippetLanguage(language));
+    }
   }
 
   handleSnippetChanged(snippetContents) {
@@ -212,21 +226,17 @@ export class SnippetArea extends React.Component {
     dispatch(openAnnotationPanel({lineNumber, lineText}))
   }
 
-  componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch(loadParser(`${process.env.REACT_APP_API_URL}/parsers/python3`))
-  }
-
   render() {
     const {
       annotations,
       AST,
       filters,
       openLine,
+      permissions,
       readOnly,
       snippet,
+      snippetLanguage,
       snippetTitle,
-      permissions,
     } = this.props;
 
     const markedLines = Object.keys(annotations).map((key) => Number(key))
@@ -234,14 +244,16 @@ export class SnippetArea extends React.Component {
     return (
       <CardText style={styles.snippetAreaCardText}>
         <SnippetAreaToolbar
+          canSave={permissions.canEdit}
+          language={snippetLanguage}
+          onLanguageChange={this.handleLanguageChanged}
           onLockClick={this.handleLock}
           onSaveAsClick={this.handleSaveAs}
           onSaveClick={this.handleSave}
-          saveEnabled={(cookie.load('username') !== undefined)}
           onTitleChange={this.handleTitleChanged}
           readOnly={readOnly}
+          saveEnabled={(cookie.load('username') !== undefined)}
           title={snippetTitle}
-          canSave={permissions.canEdit}
         />
         <ConfirmLockDialog
           accept={this.handleToggleReadOnly}
@@ -251,6 +263,7 @@ export class SnippetArea extends React.Component {
         <Editor
           AST={AST}
           filters={filters}
+          language={snippetLanguage}
           markedLines={markedLines}
           onChange={this.handleSnippetChanged}
           onGutterClick={this.handleGutterClick}
@@ -284,6 +297,7 @@ const mapStateToProps = state => ({
   annotations: state.app.annotations,
   AST: state.app.AST,
   filters: state.app.filters,
+  snippetLanguage: state.app.snippetLanguage,
   openLine: (state.annotation.isDisplayingAnnotation
     ? state.annotation.snippetInformation.lineNumber
     : undefined),
