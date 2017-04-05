@@ -44,14 +44,14 @@ class Auth extends React.Component {
     const { code } = this.props.location.query
 
     // Post it to the API to be verified by GitHub as authentic
-    axios.post(`${API_URL}/auth`, { code })
+    return axios.post(`${API_URL}/auth`, { code })
       .then(res => {
         // Code was accepted, so extract and save the token from the response
         const { token } = res.data;
         cookie.save('token', token, { path: '/' });
 
         // Return Promise to get the user's basic info
-        axios.get('https://api.github.com/user', {
+        return axios.get('https://api.github.com/user', {
           headers: {
             Accept: 'application/json',
             Authorization: `token ${token}`,
