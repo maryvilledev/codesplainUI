@@ -7,8 +7,9 @@ import cookie from 'react-cookie';
 import LoginButton from '../components/buttons/LoginButton'
 import AppMenu from '../components/menus/AppMenu';
 
-const CLIENT_ID = process.env.REACT_APP_CLIENT_ID
-const GITHUB_URL = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&scope=read:org`
+const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
+const GITHUB_URL = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&scope=read:org`;
+const API_URL = process.env.API_URL;
 
 const styles = {
   title: {
@@ -29,6 +30,8 @@ class CodesplainAppBar extends React.Component {
       isLoggedIn: cookie.load('token') !== undefined,
     }
     this.handleSignOut = this.handleSignOut.bind(this);
+    this.fetchSnippetTitles = this.fetchSnippetTitles.bind(this);
+    this.handleTitleClick = this.handleTitleClick.bind(this);
     this.onLoginClick = this.onLoginClick.bind(this);
   }
 
@@ -38,6 +41,10 @@ class CodesplainAppBar extends React.Component {
     cookie.remove('userAvatarURL', { path: '/' });
     this.setState({ isLoggedIn: false });
     location.reload();
+  }
+
+  handleTitleClick(title) {
+    console.log(`${title} was clicked`);
   }
 
   onLoginClick() {
@@ -54,9 +61,16 @@ class CodesplainAppBar extends React.Component {
   }
 
   render() {
-    const rightElement = this.state.isLoggedIn ?
-      <AppMenu onSignOut={this.handleSignOut} /> :
-      <LoginButton onClick={this.onLoginClick}/>
+    // const rightElement = this.state.isLoggedIn ?
+    //   <AppMenu onSignOut={this.handleSignOut} /> :
+    //   <LoginButton onClick={this.onLoginClick}/>
+    const snippetTitles = this.appState.userSnippets.map(s => s.snippetName);
+    const rightElement =
+    <AppMenu
+      onSignOut={this.handleSignOut}
+      snippetTitles={snippetTitles}
+      onTitleClicked={this.handleTitleClick}
+    />;
     return (
       <AppBar
         showMenuIconButton={false}
