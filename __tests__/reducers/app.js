@@ -7,6 +7,7 @@ describe('Reducer: App', () => {
       annotations: {},
       AST: {},
       filters: {},
+      snippetLanguage: 'python3',
       hasUnsavedChanges: false,
       readOnly: false,
       snippet: '',

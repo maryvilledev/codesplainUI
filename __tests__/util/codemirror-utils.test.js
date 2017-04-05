@@ -80,4 +80,16 @@ describe('util: codemirror-utils', () => {
       expect(codeMirror.markText).not.toBeCalled();
     });
   });
+
+  describe('getCodeMirrorMode', () => {
+    it('should return the input if not in the data object', () => {
+      const parser = 'NOT A REAL PARSER';
+      expect(codemirrorUtils.getCodeMirrorMode(parser)).toEqual(parser);
+    });
+    it('should return the CodeMirror mode for a parser if it exists', () => {
+      const parser = 'python3';
+      const expected = 'python';
+      expect(codemirrorUtils.getCodeMirrorMode(parser)).toEqual(expected);
+    });
+  });
 });
