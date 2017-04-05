@@ -4,7 +4,7 @@ import { CardText, Snackbar } from 'material-ui';
 import React, { PropTypes } from 'react';
 import cookie from 'react-cookie';
 import { connect } from 'react-redux';
-import { browserHistory } from 'react-router'
+import { withRouter } from 'react-router';
 
 import {
   clearUnsavedChanges,
@@ -113,9 +113,11 @@ export class SnippetArea extends React.Component {
     const {
       appState,
       dispatch,
-      id,
+      router,
       snippetTitle,
     } = this.props;
+
+    const { id } = router.params;
 
     if (!snippetTitle) {
       this.setState({ titleErrorText: 'This field is required' });
@@ -139,6 +141,7 @@ export class SnippetArea extends React.Component {
         'Authorization': token,
       }
     }
+
     if (id) { // if we're updating an existing snippet...
       axios.put(`${API_URL}/users/${username}/snippets/${id}`, stateString, config)
         .then(res => {
@@ -151,7 +154,7 @@ export class SnippetArea extends React.Component {
     else { // if we're saving a new snippet...
       axios.post(`${API_URL}/users/${username}/snippets`, stateString, config)
         .then((res) => {
-          browserHistory.push(`/${username}/${res.data.key}`);
+          router.push(`/${username}/${res.data.key}`);
           this.showSnackbar('Codesplaination Saved!');
           dispatch(clearUnsavedChanges());
         }, (err) => {
@@ -177,6 +180,7 @@ export class SnippetArea extends React.Component {
     const {
       appState,
       dispatch,
+      router,
     } = this.props;
     dispatch(setSnippetTitle(title));
 
@@ -191,7 +195,7 @@ export class SnippetArea extends React.Component {
     }
     axios.post(`${API_URL}/users/${username}/snippets`, stateString, config)
       .then((res) => {
-        browserHistory.push(`/${username}/${res.data.key}`);
+        router.push(`/${username}/${res.data.key}`);
         this.showSnackbar('Codesplaination Saved!');
         dispatch(clearUnsavedChanges());
         const permissions = {
@@ -291,4 +295,4 @@ const mapStateToProps = state => ({
   permissions: state.permissions,
 });
 
-export default connect(mapStateToProps)(SnippetArea);
+export default withRouter(connect(mapStateToProps)(SnippetArea));

@@ -1,11 +1,11 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { CardText } from 'material-ui/Card';
+import { withRouter } from 'react-router';
 
 import {
   closeAnnotationPanel,
 } from '../actions/annotation';
-
 import {
   saveAnnotation,
   saveState,
@@ -29,7 +29,15 @@ export class Annotations extends React.Component {
   }
 
   handleSaveAnnotation(annotation) {
-    const { dispatch, id, snippetInformation } = this.props;
+    const {
+      dispatch,
+      router: {
+        params: {
+          id,
+        },
+      },
+      snippetInformation
+    } = this.props;
     const annotationData = {
       annotation,
       ...snippetInformation,
@@ -94,4 +102,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Annotations);
+export default withRouter(connect(mapStateToProps)(Annotations));

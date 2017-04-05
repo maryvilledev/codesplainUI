@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
-import Auth from '../../src/components/Auth';
+import { Auth } from '../../src/components/Auth';
 
 describe('<Auth />', () => {
   const muiTheme = getMuiTheme();
