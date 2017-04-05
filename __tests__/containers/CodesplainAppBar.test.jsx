@@ -6,7 +6,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { createStore } from 'redux';
 import app from '../../src/reducers/app.js'
 
-import CodesplainAppBar from '../../src/containers/CodesplainAppBar';
+import { CodesplainAppBar } from '../../src/containers/CodesplainAppBar';
 
 describe('<CodesplainAppBar />', () => {
   const muiTheme = getMuiTheme();
@@ -18,7 +18,7 @@ describe('<CodesplainAppBar />', () => {
     });
     it('user is not logged in', () => {
       const wrapper = shallowWithContext(
-        <CodesplainAppBar 
+        <CodesplainAppBar
           store={createStore(app)}
         />
       );
@@ -28,7 +28,7 @@ describe('<CodesplainAppBar />', () => {
     it('user is logged in', () => {
       cookie.save('token', 'foobar')
       const wrapper = shallowWithContext(
-        <CodesplainAppBar 
+        <CodesplainAppBar
           store={createStore(app)}
         />
       );
