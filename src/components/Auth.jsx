@@ -12,6 +12,19 @@ export const errors = {
   " this application."
 }
 
+const resolveErrorMessage = (status) => {
+  switch (status) {
+    case 403: {
+      return errors.badOrg;
+    }
+    // eslint-disable-next-line
+    case 400: //Intentional fallthrough
+    default: {
+      return errors.badCode;
+    }
+  }
+}
+
 /*
 <Auth /> is the component that is rendered for the '{{url}}/auth' endpoint (which
 is the endpoint the user is sent to after signing in to GitHub). It initially
@@ -58,18 +71,7 @@ class Auth extends React.Component {
       })
       .catch( err => {
         // If this fails, we need to make sure the error dialog shows
-        let error
-        switch (err.response.status) {
-          case 403: {
-            error = errors.badOrg
-            break;
-          }
-          // eslint-disable-next-line
-          case 400: //Intentional fallthrough
-          default: {
-            error = errors.badCode;
-          }
-        }
+        const error = resolveErrorMessage(err.response.status);
         this.setState({ waiting: false, error });
       })
   }
