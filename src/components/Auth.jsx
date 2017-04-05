@@ -6,7 +6,7 @@ import Loading from '../components/Loading';
 import Alert from '../components/Alert';
 
 const API_URL = process.env.REACT_APP_API_URL;
-const errors = {
+export const errors = {
   badCode: "Failed to login with GitHub, sorry.",
   badOrg: "Sorry, you are not a member of an organization authorized to use" +
   " this application."
@@ -38,39 +38,40 @@ class Auth extends React.Component {
         cookie.save('token', token, { path: '/' });
 
         // Return Promise to get the user's basic info
-        return axios.get('https://api.github.com/user', {
+        axios.get('https://api.github.com/user', {
           headers: {
             Accept: 'application/json',
             Authorization: `token ${token}`,
           }
         })
-      }, err => {
+        .then(res => {
+          // Can pull lots of other stuff out of res.data if needed
+          const { login, avatar_url } = res.data;
+          cookie.save('userAvatarURL', avatar_url, { path: '/' });
+          cookie.save('username', login, { path: '/' });
+          this.setState({ waiting: false });
+        }, err => {
+          // Failed to pull in user info, but that's fine. Log and continue.
+          this.setState({ waiting: false });
+        })
+        .catch(err => console.log(err))
+      })
+      .catch( err => {
         // If this fails, we need to make sure the error dialog shows
         let error
-        switch (error.response.status) {
+        switch (err.response.status) {
           case 403: {
             error = errors.badOrg
+            break;
           }
           // eslint-disable-next-line
           case 400: //Intentional fallthrough
           default: {
             error = errors.badCode;
-            break;
           }
         }
-        this.setState({ waiting: false, error: error });
+        this.setState({ waiting: false, error });
       })
-      .then(res => {
-        // Can pull lots of other stuff out of res.data if needed
-        const { login, avatar_url } = res.data;
-        cookie.save('userAvatarURL', avatar_url, { path: '/' });
-        cookie.save('username', login, { path: '/' });
-        this.setState({ waiting: false });
-      }, err => {
-        // Failed to pull in user info, but that's fine. Log and continue.
-        this.setState({ waiting: false });
-      })
-      .catch(err => console.log(err))
   }
 
   redirectUser() {
