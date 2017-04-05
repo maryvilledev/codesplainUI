@@ -43,7 +43,7 @@ describe('<SnippetArea />', () => {
       AST={mockAST}
       filters={mockFilters}
       readOnly={true}
-      language="python3"
+      snippetLanguage="python3"
       permissions={mockPermissions}
     />
   )

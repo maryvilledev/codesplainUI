@@ -68,8 +68,8 @@ export class SnippetArea extends React.Component {
   }
 
   componentDidMount() {
-    const { dispatch, language } = this.props;
-    dispatch(loadParser(`${API_URL}/parsers/${language}`))
+    const { dispatch, snippetLanguage } = this.props;
+    dispatch(loadParser(`${API_URL}/parsers/${snippetLanguage}`))
   }
 
   showSnackbar( message ) {
@@ -80,7 +80,7 @@ export class SnippetArea extends React.Component {
   }
 
   handleLanguageChanged(ev, key, language) {
-    const { dispatch, language: currentLanguage } = this.props;
+    const { dispatch, snippetLanguage: currentLanguage } = this.props;
     if (currentLanguage !== language) {
       dispatch(setSnippetLanguage(language));
       dispatch(loadParser(`${API_URL}/parsers/${language}`));
@@ -228,12 +228,12 @@ export class SnippetArea extends React.Component {
       annotations,
       AST,
       filters,
-      language,
       openLine,
+      permissions,
       readOnly,
       snippet,
+      snippetLanguage,
       snippetTitle,
-      permissions,
     } = this.props;
 
     const markedLines = Object.keys(annotations).map((key) => Number(key))
@@ -241,7 +241,7 @@ export class SnippetArea extends React.Component {
       <CardText style={styles.snippetAreaCardText}>
         <SnippetAreaToolbar
           canSave={permissions.canEdit}
-          language={language}
+          language={snippetLanguage}
           onLanguageChange={this.handleLanguageChanged}
           onLockClick={this.handleLock}
           onSaveAsClick={this.handleSaveAs}
@@ -259,7 +259,7 @@ export class SnippetArea extends React.Component {
         <Editor
           AST={AST}
           filters={filters}
-          language={language}
+          language={snippetLanguage}
           markedLines={markedLines}
           onChange={this.handleSnippetChanged}
           onGutterClick={this.handleGutterClick}
@@ -293,7 +293,7 @@ const mapStateToProps = state => ({
   annotations: state.app.annotations,
   AST: state.app.AST,
   filters: state.app.filters,
-  language: state.app.snippetLanguage,
+  snippetLanguage: state.app.snippetLanguage,
   openLine: (state.annotation.isDisplayingAnnotation
     ? state.annotation.snippetInformation.lineNumber
     : undefined),
