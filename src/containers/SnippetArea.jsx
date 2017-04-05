@@ -19,7 +19,6 @@ import {
 import {
   setPermissions
 } from '../actions/permissions';
-
 import {
   openAnnotationPanel,
 } from '../actions/annotation';
@@ -55,7 +54,6 @@ export class SnippetArea extends React.Component {
       titleErrorText: '',
     };
 
-    this.showSnackbar = this.showSnackbar.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
     this.handleGutterClick = this.handleGutterClick.bind(this);
     this.handleLock = this.handleLock.bind(this);
@@ -64,6 +62,7 @@ export class SnippetArea extends React.Component {
     this.handleSnippetChanged = this.handleSnippetChanged.bind(this);
     this.handleTitleChanged = this.handleTitleChanged.bind(this);
     this.handleToggleReadOnly = this.handleToggleReadOnly.bind(this);
+    this.showSnackbar = this.showSnackbar.bind(this);
   }
 
   showSnackbar( message ) {
