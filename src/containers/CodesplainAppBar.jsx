@@ -9,7 +9,6 @@ import AppMenu from '../components/menus/AppMenu';
 
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 const GITHUB_URL = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&scope=read:org`;
-const API_URL = process.env.API_URL;
 
 const styles = {
   title: {

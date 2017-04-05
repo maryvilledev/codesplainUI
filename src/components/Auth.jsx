@@ -19,41 +19,118 @@ class Auth extends React.Component {
     super(props);
     this.state = { waiting: true };
     this.redirectUser = this.redirectUser.bind(this);
+    this.runLoginSequence = this.runLoginSequence.bind(this);
+    this.fetchAccessToken = this.fetchAccessToken.bind(this);
+    this.fetchUserInfo = this.fetchUserInfo.bind(this);
+    this.fetchUserSnippets = this.fetchUserSnippets.bind(this);
   }
 
   componentDidMount() {
     // Extract the code provided by GitHub from the redirect query string
     const { code } = this.props.location.query
+    this.runLoginSequence(code);
 
-    // Post it to the API to be verified by GitHub as authentic
-    axios.post(`${API_URL}/auth`, { code })
-      .then(res => {
-        // Code was accepted, so extract and save the token from the response
-        const { token } = res.data;
-        cookie.save('token', token, { path: '/' });
+    // // Post it to the API to be verified by GitHub as authentic
+    // axios.post(`${API_URL}/auth`, { code })
+    //   .then(res => {
+    //     // Code was accepted, so extract and save the token from the response
+    //     const { token } = res.data;
+    //     cookie.save('token', token, { path: '/' });
+    //
+    //     // Return Promise to get the user's basic info
+    //     return axios.get('https://api.github.com/user', {
+    //       headers: {
+    //         Accept: 'application/json',
+    //         Authorization: `token ${token}`,
+    //       }
+    //     })
+    //   }, err => {
+    //     // If this fails, we need to make sure the error dialog shows
+    //     this.setState({ waiting: false, error: true });
+    //   })
+    //   .then(res => {
+    //     // Can pull lots of other stuff out of res.data if needed
+    //     const { login, avatar_url } = res.data;
+    //     cookie.save('userAvatarURL', avatar_url, { path: '/' });
+    //     cookie.save('username', login, { path: '/' });
+    //     this.setState({ waiting: false });
+    //   }, err => {
+    //     // Failed to pull in user info, but that's fine. Log and continue.
+    //     this.setState({ waiting: false });
+    //   })
+    //   .catch(err => console.log(err))
+  }
 
-        // Return Promise to get the user's basic info
-        return axios.get('https://api.github.com/user', {
-          headers: {
-            Accept: 'application/json',
-            Authorization: `token ${token}`,
-          }
-        })
-      }, err => {
-        // If this fails, we need to make sure the error dialog shows
-        this.setState({ waiting: false, error: true });
-      })
-      .then(res => {
-        // Can pull lots of other stuff out of res.data if needed
-        const { login, avatar_url } = res.data;
-        cookie.save('userAvatarURL', avatar_url, { path: '/' });
-        cookie.save('username', login, { path: '/' });
-        this.setState({ waiting: false });
-      }, err => {
-        // Failed to pull in user info, but that's fine. Log and continue.
-        this.setState({ waiting: false });
-      })
-      .catch(err => console.log(err))
+  async runLoginSequence(authCode) {
+    // Use authorization code to get access token from API
+    const token = await this.fetchAccessToken(authCode);
+    if (!token) {
+      this.setState({ waiting: false, error: true });
+      return;
+    }
+
+    // Now get their username, and save other basic info to cookies
+    const username = await this.fetchUserInfo(token);
+    if (!username) {
+      this.setState({ waiting: false, error: true });
+      return;
+    }
+
+    // Now get meta data about the user's snippets and save to redux
+    await this.fetchUserSnippets(token, username);
+    this.setState({ waiting: false });
+  }
+
+  // Returns access token if successful, otherwise returns undefined
+  async fetchAccessToken(authCode) {
+    let res;
+    try {
+      res = axios.post(`${API_URL}/auth`, { code: authCode });
+    } catch(e) {
+      return; // can't keep going so bail out
+    }
+
+    // Code was accepted, so extract and save the token from the response
+    const { token } = res.data;
+    cookie.save('token', token, { path: '/' });
+    return token;
+  }
+
+  // Returns username if successful, otherwise returns undefined
+  async fetchUserInfo(token) {
+    // Get the user's basic info
+    let res;
+    try {
+      const headers = {
+        Accept: 'application/json',
+        Authorization: `token ${token}`,
+      };
+      res = axios.get('https://api.github.com/user', { headers });
+    } catch(e) {
+      return; // it didn't work, so bail out
+    }
+    // Can pull lots of other stuff out of res.data if needed
+    const { login, avatar_url } = res.data;
+    cookie.save('userAvatarURL', avatar_url, { path: '/' });
+    cookie.save('username', login, { path: '/' });
+    this.setState({ waiting: false });
+    return login;
+  }
+
+  // Returns true if successful, otherwise undefined
+  async fetchUserSnippets(token, username) {
+    let res;
+    try {
+      const headers = {
+        Accept: 'application/json',
+        Authorization: `token ${token}`,
+      };
+      res = axios.get(`${API_URL}/users/${username}/snippets`, { headers });
+    } catch(e) {
+      return;
+    }
+    // Dispatch redux action to update state with info from response
+    return true;
   }
 
   redirectUser() {
