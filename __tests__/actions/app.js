@@ -175,63 +175,97 @@ describe('Actions: App', () => {
       expect(actions.saveFailed()).toEqual(expected);
     });
   });
-  // describe('async actions', () => {
-  //   const middlewares = [ thunk ];
-  //   const mockStore = configureMockStore(middlewares);
-  //   const mockId = 0;
-  //
-  //   beforeEach(() => {
-  //     moxios.install();
-  //   });
-  //   afterEach(() => {
-  //     cookie.remove('username');
-  //     moxios.uninstall();
-  //   });
-  //   describe('save()', () => {
-  //     it('dispatches no additional actions if not logged in', () => {
-  //       const store = mockStore({});
-  //       return store.dispatch(actions.saveState(mockId))
-  //         .then(() => { // return of async actions
-  //         expect(store.getActions()).toEqual([])
-  //       });
-  //     });
-  //     it('creates SAVE_SUCCEEDED if saved', () => {
-  //       moxios.wait(() => {
-  //         const request = moxios.requests.mostRecent();
-  //         request.respondWith({
-  //           status: 200,
-  //           response: { id: mockId, status: '200' },
-  //         });
-  //       });
-  //       cookie.save('username', 'foo');
-  //       const expectedActions = [
-  //         { type: actions.SAVE_STARTED, },
-  //         { type: actions.SAVE_SUCCEEDED, },
-  //       ];
-  //       const store = mockStore({});
-  //       return store.dispatch(actions.saveState(mockId))
-  //         .then(() => { // return of async actions
-  //         expect(store.getActions()).toEqual(expectedActions)
-  //       });
-  //     });
-  //     it('creates SAVE_FAILED if save failed', () => {
-  //       moxios.wait(() => {
-  //         const request = moxios.requests.mostRecent();
-  //         request.respondWith({
-  //           status: 400,
-  //         });
-  //       });
-  //       cookie.save('username', 'foo');
-  //       const expectedActions = [
-  //         { type: actions.SAVE_STARTED, },
-  //         { type: actions.SAVE_FAILED, },
-  //       ];
-  //       const store = mockStore({});
-  //       return store.dispatch(actions.saveState(mockId))
-  //         .then(() => { // return of async actions
-  //         expect(store.getActions()).toEqual(expectedActions)
-  //       });
-  //     });
-  //   });
-  // });
+  describe('async actions', () => {
+    const middlewares = [ thunk ];
+    const mockStore = configureMockStore(middlewares);
+
+    beforeEach(() => {
+      cookie.save('token', 'rick')
+      cookie.save('username', 'morty');
+      moxios.install();
+    });
+    afterEach(() => {
+      cookie.remove('token');
+      cookie.remove('username');
+      moxios.uninstall();
+    });
+    describe('saveNew()', () => {
+      it('dispatches SAVE_SUCCEEDED if saved', () => {
+        const key = 'gazorpazorp';
+        moxios.wait(() => {
+          const request = moxios.requests.mostRecent();
+          request.respondWith({
+            status: 200,
+            response: { key, status: '200' },
+          });
+        });
+        const expectedActions = [
+          { type: actions.SAVE_STARTED, },
+          { type: actions.SAVE_SUCCEEDED, },
+        ];
+        const store = mockStore({});
+        return store.dispatch(actions.saveNew())
+          .then((returnVal) => { // return of async actions
+            expect(store.getActions()).toEqual(expectedActions);
+            expect(returnVal).toEqual(key);
+          });
+      });
+      it('dispatches SAVE_FAILED if save failed', () => {
+        moxios.wait(() => {
+          const request = moxios.requests.mostRecent();
+          request.respondWith({
+            status: 400,
+          });
+        });
+        const expectedActions = [
+          { type: actions.SAVE_STARTED, },
+          { type: actions.SAVE_FAILED, },
+        ];
+        const store = mockStore({});
+        return store.dispatch(actions.saveNew())
+          .then(() => { // return of async actions
+            expect(store.getActions()).toEqual(expectedActions)
+          });
+      });
+    });
+    describe('saveExisting()', () => {
+      it('description', () => {
+        it('dispatches SAVE_SUCCEEDED if saved', () => {
+          moxios.wait(() => {
+            const request = moxios.requests.mostRecent();
+            request.respondWith({
+              status: 200,
+              response: { key, status: '200' },
+            });
+          });
+          const expectedActions = [
+            { type: actions.SAVE_STARTED, },
+            { type: actions.SAVE_SUCCEEDED, },
+          ];
+          const store = mockStore({ snippetTitle: 'foo' });
+          return store.dispatch(actions.saveExisting())
+            .then(() => { // return of async actions
+              expect(store.getActions()).toEqual(expectedActions);
+            });
+        });
+        it('dispatches SAVE_FAILED if save failed', () => {
+          moxios.wait(() => {
+            const request = moxios.requests.mostRecent();
+            request.respondWith({
+              status: 400,
+            });
+          });
+          const expectedActions = [
+            { type: actions.SAVE_STARTED, },
+            { type: actions.SAVE_FAILED, },
+          ];
+          const store = mockStore({});
+          return store.dispatch(actions.saveExisting())
+            .then(() => { // return of async actions
+              expect(store.getActions()).toEqual(expectedActions)
+            });
+        });
+      });
+    });
+  });
 });
