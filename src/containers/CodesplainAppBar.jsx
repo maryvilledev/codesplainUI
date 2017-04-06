@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import AppBar from 'material-ui/AppBar';
 import { browserHistory } from 'react-router';
 import cookie from 'react-cookie';
-import { saveUserSnippets } from '../actions/app';
+import { saveUserSnippets, updateUserSnippets } from '../actions/app';
 
 import LoginButton from '../components/buttons/LoginButton'
 import AppMenu from '../components/menus/AppMenu';
@@ -36,9 +36,11 @@ class CodesplainAppBar extends React.Component {
   }
 
   componentDidMount() {
-    const token = cookie.load('token');
-    const username = cookie.load('username');
-    this.fetchUserSnippets(token, username);
+    // const token = cookie.load('token');
+    // const username = cookie.load('username');
+    // this.fetchUserSnippets(token, username);
+    const { dispatch } = this.props;
+    dispatch(updateUserSnippets())
   }
 
   handleSignOut() {
@@ -79,27 +81,30 @@ class CodesplainAppBar extends React.Component {
     // } catch(e) {
     //   return;
     // }
-    const snippetMeta = [
-      {
+    const snippetMeta = {
+      'test_snippet_1': {
         snippetName: 'Test Snippet 1',
         language:    'Python 3',
         lastEdited:  '2017-04-05T12:52:20.099Z',
         'private':   true,
       },
-      {
+      'test_snippet_1': {
         snippetName: 'Test Snippet 2',
         language:    'Python 3',
         lastEdited:  '2017-04-05T12:52:20.099Z',
         'private':   true,
       }
-    ];
+    };
 
     dispatch(saveUserSnippets(snippetMeta));
   }
 
   render() {
     const { snippetMeta } = this.props.appState;
-    const titles = snippetMeta ? snippetMeta.map(s => s.snippetName) : null;
+    const titles = snippetMeta ? 
+      Object.entries(snippetMeta).map(snippet => snippet.snippetName)
+      :
+      null;
     const rightElement = this.state.isLoggedIn ?
       <AppMenu
         onSignOut={this.handleSignOut}

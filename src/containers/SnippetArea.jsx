@@ -12,6 +12,7 @@ import {
   setSnippetContents,
   setSnippetTitle,
   toggleEditState,
+  updateUserSnippets,
 } from '../actions/app';
 import {
   loadParser
@@ -144,6 +145,7 @@ export class SnippetArea extends React.Component {
         .then(res => {
           this.showSnackbar('Codesplaination Saved!');
           dispatch(clearUnsavedChanges());
+          dispatch(updateUserSnippets());
         }, err => {
           this.showSnackbar('Failed to save - an error occurred');
         })
@@ -154,6 +156,7 @@ export class SnippetArea extends React.Component {
           browserHistory.push(`/${username}/${res.data.key}`);
           this.showSnackbar('Codesplaination Saved!');
           dispatch(clearUnsavedChanges());
+          dispatch(updateUserSnippets());
         }, (err) => {
           this.showSnackbar('Failed to save - an error occurred');
         });
@@ -197,8 +200,9 @@ export class SnippetArea extends React.Component {
         const permissions = {
           canRead: true,
           canEdit: true
-        } //All permission, this is now her file.
-        dispatch(setPermissions(permissions))
+        }; // Grant all permissions, this is now her file.
+        dispatch(setPermissions(permissions));
+          dispatch(updateUserSnippets());
       }, (err) => {
         this.showSnackbar('Failed to save - an error occurred');
       });
