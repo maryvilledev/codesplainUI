@@ -278,12 +278,12 @@ describe('Reducer: App', () => {
       expect(reducer(undefined, action)).toEqual(expected);
     });
   });
-  it('should handle SAVE_STATE_SUCCEEDED', () => {
+  it('should handle SAVE_SUCCEEDED', () => {
     const state = {
       hasUnsavedChanges: true,
     };
     const action = {
-      type: actions.SAVE_STATE_SUCCEEDED,
+      type: actions.SAVE_SUCCEEDED,
     };
     const expected = {
       hasUnsavedChanges: false,

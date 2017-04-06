@@ -1,4 +1,3 @@
-import axios from 'axios';
 import _ from 'lodash';
 import { CardText, Snackbar } from 'material-ui';
 import React, { PropTypes } from 'react';
@@ -7,8 +6,9 @@ import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 
 import {
-  clearUnsavedChanges,
   parseSnippet,
+  saveNew,
+  saveExisting,
   setSnippetContents,
   setSnippetLanguage,
   setSnippetTitle,
@@ -125,7 +125,6 @@ export class SnippetArea extends React.Component {
   handleSave() {
     // Make sure title is populated
     const {
-      appState,
       dispatch,
       id,
       snippetTitle,
@@ -145,33 +144,22 @@ export class SnippetArea extends React.Component {
       return;
     }
 
-    // Save the snippet
-    const stateString = JSON.stringify(appState);
-    const token = cookie.load('token');
-    const config = {
-      headers: {
-        'Authorization': token,
-      }
-    }
-    if (id) { // if we're updating an existing snippet...
-      axios.put(`${API_URL}/users/${username}/snippets/${id}`, stateString, config)
-        .then(res => {
+     // Update a pre-existing snippet
+    if (id) {
+      return dispatch(saveExisting())
+        .then(() => {
           this.showSnackbar('Codesplaination Saved!');
-          dispatch(clearUnsavedChanges());
-        }, err => {
-          this.showSnackbar('Failed to save - an error occurred');
-        })
-    }
-    else { // if we're saving a new snippet...
-      axios.post(`${API_URL}/users/${username}/snippets`, stateString, config)
-        .then((res) => {
-          browserHistory.push(`/${username}/${res.data.key}`);
-          this.showSnackbar('Codesplaination Saved!');
-          dispatch(clearUnsavedChanges());
-        }, (err) => {
+        }, () => {
           this.showSnackbar('Failed to save - an error occurred');
         });
     }
+    return dispatch(saveNew())
+      .then((snippetTitle) => {
+        browserHistory.push(`/${username}/${snippetTitle}`);
+        this.showSnackbar('Codesplaination Saved!');
+      }, () => {
+        this.showSnackbar('Failed to save - an error occurred');
+      });
   }
 
   handleSaveAs(title) {
@@ -189,31 +177,21 @@ export class SnippetArea extends React.Component {
 
     // Render the new title
     const {
-      appState,
       dispatch,
     } = this.props;
     dispatch(setSnippetTitle(title));
 
     // Save the snippet
-    appState.snippetTitle = title;
-    const stateString = JSON.stringify(appState);
-    const token = cookie.load('token');
-    const config = {
-      headers: {
-        'Authorization': token,
-      }
-    }
-    axios.post(`${API_URL}/users/${username}/snippets`, stateString, config)
-      .then((res) => {
-        browserHistory.push(`/${username}/${res.data.key}`);
+    return dispatch(saveNew())
+      .then((snippetTitle) => {
+        browserHistory.push(`/${username}/${snippetTitle}`);
         this.showSnackbar('Codesplaination Saved!');
-        dispatch(clearUnsavedChanges());
         const permissions = {
           canRead: true,
           canEdit: true
         } //All permission, this is now her file.
         dispatch(setPermissions(permissions))
-      }, (err) => {
+      }, () => {
         this.showSnackbar('Failed to save - an error occurred');
       });
   }
