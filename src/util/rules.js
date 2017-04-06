@@ -93,3 +93,10 @@ export const generateFilters = (prevFilters, ruleCounts) => {
 export const removeDeprecatedFilters = (filters) => {
   return _.omit(filters, ignoredRules);
 }
+
+export const removeDeprecatedFiltersFromState = (state) => {
+  return {
+    ...state,
+    filters: removeDeprecatedFilters(state.filters),
+  };
+};
