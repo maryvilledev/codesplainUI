@@ -81,7 +81,10 @@ const app = (state = initialState, action) => {
       };
     }
     case actions.RESTORE_STATE: {
-      return action.payload
+      return {
+        ...action.payload,
+        hasUnsavedChanges: false,
+      };
     }
     case actions.SET_SNIPPET_TITLE: {
       return {
@@ -90,7 +93,7 @@ const app = (state = initialState, action) => {
         snippetTitle: action.payload
       };
     }
-    case actions.SAVE_STATE_SUCCEEDED: {
+    case actions.SAVE_SUCCEEDED: {
       return {
         ...state,
         hasUnsavedChanges: false,

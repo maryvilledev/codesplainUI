@@ -7,6 +7,24 @@ import Loading from '../components/Loading';
 import Alert from '../components/Alert';
 
 const API_URL = process.env.REACT_APP_API_URL;
+export const errors = {
+  badCode: "Failed to login with GitHub, sorry.",
+  badOrg: "Sorry, you are not a member of an organization authorized to use" +
+  " this application."
+}
+
+const resolveErrorMessage = (status) => {
+  switch (status) {
+    case 403: {
+      return errors.badOrg;
+    }
+    // eslint-disable-next-line
+    case 400: //Intentional fallthrough
+    default: {
+      return errors.badCode;
+    }
+  }
+}
 
 /*
 <Auth /> is the component that is rendered for the '{{url}}/auth' endpoint (which
@@ -27,7 +45,7 @@ export class Auth extends React.Component {
     const { code } = this.props.router.location.query;
 
     // Post it to the API to be verified by GitHub as authentic
-    axios.post(`${API_URL}/auth`, { code })
+    return axios.post(`${API_URL}/auth`, { code })
       .then(res => {
         // Code was accepted, so extract and save the token from the response
         const { token } = res.data;
@@ -40,21 +58,23 @@ export class Auth extends React.Component {
             Authorization: `token ${token}`,
           }
         })
-      }, err => {
+        .then(res => {
+          // Can pull lots of other stuff out of res.data if needed
+          const { login, avatar_url } = res.data;
+          cookie.save('userAvatarURL', avatar_url, { path: '/' });
+          cookie.save('username', login, { path: '/' });
+          this.setState({ waiting: false });
+        }, err => {
+          // Failed to pull in user info, but that's fine. Log and continue.
+          this.setState({ waiting: false });
+        })
+        .catch(err => console.log(err))
+      })
+      .catch( err => {
         // If this fails, we need to make sure the error dialog shows
-        this.setState({ waiting: false, error: true });
+        const error = resolveErrorMessage(err.response.status);
+        this.setState({ waiting: false, error });
       })
-      .then(res => {
-        // Can pull lots of other stuff out of res.data if needed
-        const { login, avatar_url } = res.data;
-        cookie.save('userAvatarURL', avatar_url, { path: '/' });
-        cookie.save('username', login, { path: '/' });
-        this.setState({ waiting: false });
-      }, err => {
-        // Failed to pull in user info, but that's fine. Log and continue.
-        this.setState({ waiting: false });
-      })
-      .catch(err => console.log(err))
   }
 
   redirectUser() {
@@ -82,7 +102,7 @@ export class Auth extends React.Component {
       if (this.state.error) {
         return (
           <Alert
-            text="Failed to login with GitHub, sorry."
+            text={this.state.error}
             onClose={this.redirectUser}
           />
         );

@@ -1,7 +1,7 @@
 exports[`<LanguageSelector /> matches snapshot 1`] = `
 <SelectField
   autoWidth={false}
-  disabled={true}
+  disabled={false}
   fullWidth={false}
   id="languageSelector"
   multiple={false}
@@ -31,7 +31,7 @@ exports[`<LanguageSelector /> matches snapshot 1`] = `
     }
     checked={false}
     desktop={false}
-    disabled={false}
+    disabled={true}
     focusState="none"
     insetChildren={false}
     primaryText="Java"

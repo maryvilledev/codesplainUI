@@ -8,7 +8,7 @@ import {
 } from '../actions/annotation';
 import {
   saveAnnotation,
-  saveState,
+  saveExisting,
 } from '../actions/app';
 
 import AnnotationPanel from '../components/AnnotationPanel';
@@ -31,19 +31,16 @@ export class Annotations extends React.Component {
   handleSaveAnnotation(annotation) {
     const {
       dispatch,
-      router: {
-        params: {
-          id,
-        },
-      },
       snippetInformation
     } = this.props;
+
     const annotationData = {
       annotation,
       ...snippetInformation,
     };
+
     dispatch(saveAnnotation(annotationData));
-    dispatch(saveState(id));
+    dispatch(saveExisting());
   }
 
   render() {
