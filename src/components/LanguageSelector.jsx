@@ -13,14 +13,13 @@ const LanguageSelector = (props) => {
 
   return (
     <SelectField
-      disabled
       id="languageSelector"
       onChange={onChange}
       style={style}
       value={language}
     >
       <MenuItem value="python3" primaryText="Python 3"/>
-      <MenuItem value="java" primaryText="Java"/>
+      <MenuItem value="java" primaryText="Java" disabled/>
     </SelectField>
   );
 }

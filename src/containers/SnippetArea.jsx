@@ -68,8 +68,8 @@ export class SnippetArea extends React.Component {
   }
 
   componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch(loadParser(`${API_URL}/parsers/python3`))
+    const { dispatch, snippetLanguage } = this.props;
+    dispatch(loadParser(`${API_URL}/parsers/${snippetLanguage}`))
   }
 
   showSnackbar( message ) {
@@ -80,9 +80,10 @@ export class SnippetArea extends React.Component {
   }
 
   handleLanguageChanged(ev, key, language) {
-    const { dispatch, language: currentLanguage } = this.props;
+    const { dispatch, snippetLanguage: currentLanguage } = this.props;
     if (currentLanguage !== language) {
       dispatch(setSnippetLanguage(language));
+      dispatch(loadParser(`${API_URL}/parsers/${language}`));
     }
   }
 
@@ -236,7 +237,6 @@ export class SnippetArea extends React.Component {
     } = this.props;
 
     const markedLines = Object.keys(annotations).map((key) => Number(key))
-
     return (
       <CardText style={styles.snippetAreaCardText}>
         <SnippetAreaToolbar
