@@ -101,7 +101,7 @@ export const saveNew = () => {
         Authorization: token,
       },
     };
-
+    dispatch(saveStarted());
     // Save the new snippet
     return axios.post(makeSaveEndpointUrl(username), reqBody, reqHeaders)
       .then((res) => {
@@ -132,7 +132,7 @@ export const saveExisting = () => {
         Authorization: token,
       },
     };
-
+    dispatch(saveStarted());
     // Update the snippet
     return axios.put(makeSaveEndpointUrl(username, title), reqBody, reqHeaders)
       .then(() => {
