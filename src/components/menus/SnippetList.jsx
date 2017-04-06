@@ -4,6 +4,7 @@ import { MenuItem } from 'material-ui';
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 
 const makeMenuItems = (titles, onClick) => {
+  if (!titles.length) return null;
   return titles.map(title => (
     <MenuItem
       key={title}
@@ -26,6 +27,6 @@ const SnippetList = ({ titles, onClick }) => {
 export default SnippetList;
 
 SnippetList.proptypes = {
-  titles: PropTypes.string.isRequired,
+  titles: PropTypes.array.isRequired,
   onClick: PropTypes.func.isRequired,
 }

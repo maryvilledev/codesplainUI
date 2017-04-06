@@ -6,8 +6,6 @@ import { connect } from 'react-redux';
 import Loading from '../components/Loading';
 import Alert from '../components/Alert';
 
-import { saveUserSnippets, restoreState } from '../actions/app';
-
 const API_URL = process.env.REACT_APP_API_URL;
 
 /*
@@ -25,7 +23,6 @@ class Auth extends React.Component {
     this.runLoginSequence = this.runLoginSequence.bind(this);
     this.fetchAccessToken = this.fetchAccessToken.bind(this);
     this.fetchUserInfo = this.fetchUserInfo.bind(this);
-    this.fetchUserSnippets = this.fetchUserSnippets.bind(this);
   }
 
   componentDidMount() {
@@ -35,8 +32,6 @@ class Auth extends React.Component {
   }
 
   async runLoginSequence(authCode) {
-    const { dispatch } = this.props;
-
     // Use authorization code to get access token from API
     const token = await this.fetchAccessToken(authCode);
     if (!token) {
@@ -50,16 +45,6 @@ class Auth extends React.Component {
       this.setState({ waiting: false, error: true });
       return;
     }
-
-    // Now get meta data about the user's snippets and save to redux
-    const snippetMeta = await this.fetchUserSnippets(token, username);
-    if (snippetMeta) {
-      // Add snippetMeta to signInState cookie
-      const signInState = cookie.load('signInState');
-      const newSignInState = { ...signInState, snippetMeta };
-      cookie.save('signInState', newSignInState, { path: '/' });
-    }
-    this.setState({ waiting: false });
   }
 
   // Returns access token if successful, otherwise returns undefined
@@ -96,29 +81,6 @@ class Auth extends React.Component {
     cookie.save('username', login, { path: '/' });
     this.setState({ waiting: false });
     return login;
-  }
-
-  // Returns snippet meta data array if successful, otherwise returns undefined
-  async fetchUserSnippets(token, username) {
-    // let res;
-    // try {
-    //   const headers = {
-    //     Accept: 'application/json',
-    //     Authorization: `token ${token}`,
-    //   };
-    //   res = await axios.get(`${API_URL}/users/${username}/snippets`, { headers });
-    // } catch(e) {
-    //   return;
-    // }
-    const snippetMeta = [
-      {
-        snippetName: 'Test Snippet',
-        language:    'Python 3',
-        lastEdited:  '2017-04-05T12:52:20.099Z',
-        'private':   true,
-      }
-    ];
-    return snippetMeta;
   }
 
   redirectUser() {

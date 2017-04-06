@@ -9,7 +9,7 @@ import {
 } from 'material-ui';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
-import SnippetList from '../SnippetList';
+import SnippetList from './SnippetList';
 
 const styles = {
   avatar: {
