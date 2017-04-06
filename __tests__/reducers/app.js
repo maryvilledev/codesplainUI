@@ -191,7 +191,11 @@ describe('Reducer: App', () => {
       type: actions.RESTORE_STATE,
       payload: savedState
     };
-    expect(reducer(undefined, action)).toEqual(savedState);
+    const expected = {
+      ...savedState,
+      hasUnsavedChanges: false,
+    };
+    expect(reducer(undefined, action)).toEqual(expected);
   });
   it('should handle SET_SNIPPET_TITLE', () => {
     const snippetTitle = 'Get Schwifty'
