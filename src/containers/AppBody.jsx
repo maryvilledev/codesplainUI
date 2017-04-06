@@ -11,6 +11,7 @@ import { setPermissions } from '../actions/permissions'
 import Annotations from './Annotations';
 import FilterArea from './FilterArea';
 import SnippetArea from './SnippetArea';
+import ReferenceArea from '../components/ReferenceArea';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -106,6 +107,9 @@ export class AppBody extends React.Component {
               />
             </Card>
           </div>
+        </div>
+        <div className='row'>
+          <ReferenceArea />
         </div>
       </div>
     );
