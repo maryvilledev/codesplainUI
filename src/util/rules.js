@@ -1,5 +1,8 @@
 import axios from 'axios'
 import { setRules, setIgnoredRules } from './codemirror-utils';
+
+const API_URL = process.env.REACT_APP_API_URL
+
 const setAllRules = (allRules) => {
   const {rules, ignoredRules} = allRules;
   setRules(rules);
@@ -11,7 +14,7 @@ let mappingCache = {};
 
 // Load csv and parse to rules and ignoredRules objects
 const loadRules = async (language) => {
-  const allRules = await axios.get(`${process.env.PUBLIC_URL}/python3.csv`) //TODO change to API url
+  const allRules = await axios.get(`${API_URL}/mappings/${language}`) 
     .then((res) => {
       const csv = res.data;
       const rows = csv.split('\n')
