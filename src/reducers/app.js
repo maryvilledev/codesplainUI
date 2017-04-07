@@ -93,7 +93,7 @@ const app = (state = initialState, action) => {
         snippetTitle: action.payload
       };
     }
-    case actions.SAVE_STATE_SUCCEEDED: {
+    case actions.SAVE_SUCCEEDED: {
       return {
         ...state,
         hasUnsavedChanges: false,
