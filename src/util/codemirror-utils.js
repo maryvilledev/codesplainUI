@@ -1,7 +1,7 @@
 import _ from 'lodash'
 
-let rules = [];
-let ignoredRules = [];
+let rules;
+let ignoredRules;
 
 export const setRules = (newRules) => {
   rules = newRules;
@@ -83,6 +83,11 @@ Given a CodeMirror instance, highlight() will use the specified AST and filters
 objects to apply highlighting to the code in the CodeMirror editor.
 */
 export async function highlight(codeMirror, AST, filters) {
+  if (!rules || !ignoredRules) {
+    // Possibly not done loading these. Hooray, an asynchronous spin-lock!
+    setTimeout(() => highlight(codeMirror, AST, filters), 100)
+    return;
+  }
   //Make this a first-class function
   const func = () => highlightNode(codeMirror, AST, filters, 'transparent');
   //Codemirror buffers its calls ahead of time, then performs them atomically
