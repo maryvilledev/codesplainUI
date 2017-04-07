@@ -1,6 +1,10 @@
 import * as actions from '../../src/actions/app';
 import reducer, { initialState } from '../../src/reducers/app';
 
+jest.mock('../../src/util/codemirror-utils', () => ({
+  generateFilters: jest.fn(() => ({}))
+}));
+
 describe('Reducer: App', () => {
   it('should have initial state', () => {
     const initial = {
