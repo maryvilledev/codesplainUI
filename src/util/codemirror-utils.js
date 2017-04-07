@@ -105,3 +105,22 @@ export const getCodeMirrorMode = (parserName) => {
   */
   return parserCodeMirrorModes[parserName] || parserName;
 };
+
+export const generateFilters = (prevFilters, ruleCounts) => {
+  const newFilters = {};
+  if (!ruleCounts || Object.keys(ruleCounts) === 0) {
+    return newFilters;
+  }
+  Object.keys(ruleCounts)
+    .filter(r => {return rules[r] !== undefined})
+    .forEach(r => {
+      const selected = prevFilters[r] ? prevFilters[r].selected : false;
+      newFilters[r] = {
+        prettyTokenName: rules[r].prettyName,
+        count:           ruleCounts[r],
+        selected:        selected,
+        color:           rules[r].color,
+      }
+    });
+  return newFilters;
+}
