@@ -4,19 +4,19 @@ import reducer from '../../src/reducers/parser';
 describe('Reducer: Parser', () => {
   it('should have initial state', () => {
     const initial = {
-      parserURL: ''
+      language: ''
     }
     expect(reducer(undefined, {})).toEqual(initial)
   })
 
   it('should handle LOAD_PARSER', () => {
-    const parserURL = 'https://www.rickandmorty100years.com'
+    const language = 'squanchy'
     const action = {
       type: actions.LOAD_PARSER,
-      payload: parserURL
+      payload: language
     };
     const expected = {
-      parserURL
+      language
     };
     expect(reducer(undefined, action)).toEqual(expect.objectContaining(expected))
   })
