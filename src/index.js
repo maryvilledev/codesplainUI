@@ -16,14 +16,12 @@ import {
 import App from './containers/App';
 import Auth from './components/Auth';
 import configureStore from './store/configureStore';
-import { initRules } from './util/rules'
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
 
 const store = configureStore();
-initRules(store);
 const history = useRouterHistory(useBeforeUnload(createHistory))()
 
 history.listenBeforeUnload(() => {

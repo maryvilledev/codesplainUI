@@ -1,21 +1,12 @@
 import _ from 'lodash'
-
-let rules = [];
-let ignoredRules = [];
-
-export const setRules = (newRules) => {
-  rules = newRules;
-}
-
-export const setIgnoredRules = (newIgnoredRules) => {
-  ignoredRules = newIgnoredRules;
-}
+import { getMappings } from './rules'
 
 /*
 Recursive function for highlighting code in a CodeMirror. highlight() is an
 exported wrapper func for this, and starts the recursion.
 */
-export function highlightNode(codeMirror, node, filters, parentColor) {
+export function highlightNode(codeMirror, node, filters, parentColor, allRules) {
+  const { rules, ignoredRules } = allRules
   let color = parentColor;
 
   // If we aren't ignoring this token...
@@ -46,7 +37,7 @@ export function highlightNode(codeMirror, node, filters, parentColor) {
   // Highlight all children of this token
   node.children.forEach(child => {
     if (child === Object(child))
-      highlightNode(codeMirror, child, filters, color);
+      highlightNode(codeMirror, child, filters, color, allRules);
   });
 }
 
@@ -82,9 +73,10 @@ export function styleAll(codeMirror, css) {
 Given a CodeMirror instance, highlight() will use the specified AST and filters
 objects to apply highlighting to the code in the CodeMirror editor.
 */
-export async function highlight(codeMirror, AST, filters) {
+export async function highlight(codeMirror, AST, filters, language) {
   //Make this a first-class function
-  const func = () => highlightNode(codeMirror, AST, filters, 'transparent');
+  const mappings = await getMappings(language);
+  const func = () => highlightNode(codeMirror, AST, filters, 'transparent', mappings);
   //Codemirror buffers its calls ahead of time, then performs them atomically
   codeMirror.operation(func)
 }
