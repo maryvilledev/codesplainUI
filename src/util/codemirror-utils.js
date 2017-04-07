@@ -1,5 +1,15 @@
-import { rules, ignoredRules } from './rules.js';
 import _ from 'lodash'
+
+let rules = [];
+let ignoredRules = [];
+
+export const setRules = (newRules) => {
+  rules = newRules;
+}
+
+export const setIgnoredRules = (newIgnoredRules) => {
+  ignoredRules = newIgnoredRules;
+}
 
 /*
 Recursive function for highlighting code in a CodeMirror. highlight() is an

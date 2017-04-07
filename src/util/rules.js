@@ -1,3 +1,4 @@
+import { setRules, setIgnoredRules } from './codemirror-utils';
 /* Object mapping token types to pretty names and colors for display */
 export const rules = {
   // Non-terminal rules
@@ -55,6 +56,9 @@ export const ignoredRules = [
   '.DECIMAL_INTEGER',
   '.COMMA',
 ]
+
+setRules(rules);
+setIgnoredRules(ignoredRules);
 
 /*
 Given an AST getRuleCount() recursively populates the specified map with
