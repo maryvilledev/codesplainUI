@@ -19,7 +19,17 @@ const codeMirror = {
   posFromIndex,
 };
 
+const mockAllRules = {
+  rules: {},
+  ignoredRules: []
+}
+
 describe('util: codemirror-utils', () => {
+  beforeEach(() => {
+    const { rules, ignoredRules } = mockAllRules;
+    codemirrorUtils.setRules(rules);
+    codemirrorUtils.setIgnoredRules(ignoredRules);
+  })
   afterEach(() => {
     codeMirror.markText.mockClear();
     codeMirror.getLine.mockClear();
