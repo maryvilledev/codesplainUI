@@ -1,6 +1,8 @@
-import { getRuleCount, rules } from '../util/rules.js';
-import { LOAD_PARSER } from '../actions/parser'
-import { PARSE_SNIPPET } from '../actions/app'
+import { getRuleCount } from '../util/rules.js';
+import { LOAD_PARSER } from '../actions/parser';
+import { PARSE_SNIPPET } from '../actions/app';
+
+const API_URL = process.env.REACT_APP_API_URL;
 
 let parser = null;
 let parserCache = {};
@@ -24,18 +26,18 @@ self.onmessage = ({ data : action }) => {
       break;
     }
     case LOAD_PARSER: {
-      const parserURL = action.payload;
+      const language = action.payload;
       //Check to see if we already have the parser loaded.
-      if (parserURL in parserCache) {
-        parser = parserCache[parserURL];
+      if (language in parserCache) {
+        parser = parserCache[language];
       } else {
         // Load and execute script from the URL
-        self.importScripts(parserURL);
+        self.importScripts(`${API_URL}/parsers/${language}`);
         // Script exports the parser as a global var, set the local ref to point
         // at it
         parser = CodesplainParser;
         // Add the parser to the cache so we don't have to load it again
-        parserCache[parserURL] = parser;
+        parserCache[language] = parser;
       }
       self.postMessage({
         type: action.type,
