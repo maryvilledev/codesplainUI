@@ -34,7 +34,7 @@ ReactDOM.render(
   <MuiThemeProvider>
     <Provider store={store}>
       <Router history={history}>
-        <Route path="/auth"  component={Auth} />
+        <Route path="/auth" component={Auth} />
         <Route path="/" component={App} />
         {/* Leave this for legacy support */}
         <Route path="/(:username)/snippets/(:id)" component={App} />
