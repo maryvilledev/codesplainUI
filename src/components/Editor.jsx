@@ -71,8 +71,7 @@ class Editor extends React.Component {
       openLine,
       AST,
       filters,
-      value,
-      language
+      value
     } = this.props;
     const {
       newAST,
@@ -95,7 +94,7 @@ class Editor extends React.Component {
       this.emphasizeLine(openLine);
     }
     if ((newAST || newFilters) && value) {
-      highlight(codeMirrorInst, AST, filters, language)
+      highlight(codeMirrorInst, AST, filters)
     }
   }
   componentWillReceiveProps(nextProps) {

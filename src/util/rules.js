@@ -1,4 +1,11 @@
 import axios from 'axios'
+import { setRules, setIgnoredRules } from './codemirror-utils';
+const setAllRules = (allRules) => {
+  const {rules, ignoredRules} = allRules;
+  setRules(rules);
+  setIgnoredRules(ignoredRules);
+}
+let store;
 let language = '';
 let mappingCache = {};
 
@@ -27,7 +34,8 @@ const loadRules = async (language) => {
 }
 
 // Listen for new parser languages
-export const getMappings = async (newLanguage) => {
+const onStateChange = async () => {
+  const newLanguage = store.getState().parser.language;
   let allRules;
   if (language === newLanguage){
     // No need to see this through, we already have the rules
@@ -41,7 +49,13 @@ export const getMappings = async (newLanguage) => {
     mappingCache[newLanguage] = allRules;
   }
   language = newLanguage;
-  return allRules;
+  setAllRules(allRules);
+}
+
+// Subscribe to store
+export const initRules = (newStore) => {
+  store = newStore;
+  store.subscribe(onStateChange) //This will be our listener
 }
 
 // // Push rules to codemirror-utils
