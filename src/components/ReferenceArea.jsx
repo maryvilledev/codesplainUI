@@ -4,18 +4,21 @@ import { Paper } from 'material-ui'
 import mtIcon from '../../res/mt.png'
 
 const style = {
-  area: {
+  paper: {
     position: 'fixed',
     bottom: 0,
-    right: 0
+    right: 0,
+    padding: '1%',
   },
-  paper: {
-    padding: '3%'
+  linkArea: {
+    display: 'inline-block',
+  },
+  link: {
+    padding: '4px',
   }
 }
 
 const ReferenceArea = () => (
-  <span style={style.area}>
     <Paper style={style.paper}>
       <a href="https://maryvilledevcenter.com/">
       <img
@@ -24,12 +27,21 @@ const ReferenceArea = () => (
         width={80}
       />
       </a>
-      <a href="https://github.com/maryvilledev/codesplain/issues">
+      <div style={style.linkArea}>
+      <a
+        href="https://github.com/maryvilledev/codesplain/issues"
+        style={style.link}
+      >
         Report bug
       </a>
-      <a href="mailto://support.maryville.com">Contact Us</a>
+      <a
+        href="mailto://support.maryville.com"
+        style={style.link}
+        >
+          Contact Us
+        </a>
+      </div>
     </Paper>
-  </span>
 );
 
 export default ReferenceArea;
