@@ -9,9 +9,6 @@ const style = {
     position: 'fixed',
     bottom: 0,
     right: 0,
-    backgroundColor: 'grey',
-    padding: '4px',
-    radius: '3%'
   },
   linkArea: {
     padding: 2,
