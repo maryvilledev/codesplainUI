@@ -13,6 +13,7 @@ import FilterArea from './FilterArea';
 import SnippetArea from './SnippetArea';
 
 import { removeDeprecatedFiltersFromState } from '../util/rules';
+import { setDefaults } from '../util/state-management';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -72,7 +73,8 @@ export class AppBody extends React.Component {
           canEdit: (username === cookie.load('username')),
         };
         dispatch(setPermissions(permissions));
-        dispatch(restoreState(removeDeprecatedFiltersFromState(res.data)));
+        // dispatch(restoreState(removeDeprecatedFiltersFromState(res.data)));
+        dispatch(restoreState(setDefaults(removeDeprecatedFiltersFromState(res.data))));
         router.push(`/${username}/${id}`)
       }, () => {
         // Failed to get the snippet, either bad URL or unauthorized
