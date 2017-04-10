@@ -6,11 +6,13 @@ import { withRouter } from 'react-router';
 import cookie from 'react-cookie';
 
 import { restoreState } from '../actions/app';
-import { setPermissions } from '../actions/permissions'
+import { setPermissions } from '../actions/permissions';
 
 import Annotations from './Annotations';
 import FilterArea from './FilterArea';
 import SnippetArea from './SnippetArea';
+
+import { removeDeprecatedFiltersFromState } from '../util/rules';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -67,12 +69,12 @@ export class AppBody extends React.Component {
         const permissions = {
           canRead: true,
           //Currently, users may only edit a file they own
-          canEdit: (username === cookie.load('username'))
-        }
-        dispatch(setPermissions(permissions))
-        dispatch(restoreState(res.data));
+          canEdit: (username === cookie.load('username')),
+        };
+        dispatch(setPermissions(permissions));
+        dispatch(restoreState(removeDeprecatedFiltersFromState(res.data)));
         router.push(`/${username}/${id}`)
-      }, err => {
+      }, () => {
         // Failed to get the snippet, either bad URL or unauthorized
         router.push('/');
       });

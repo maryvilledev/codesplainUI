@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 /* Object mapping token types to pretty names and colors for display */
 export const rules = {
   // Non-terminal rules
@@ -87,3 +89,14 @@ export const generateFilters = (prevFilters, ruleCounts) => {
     });
   return newFilters;
 }
+
+export const removeDeprecatedFilters = (filters) => {
+  return _.omit(filters, ignoredRules);
+}
+
+export const removeDeprecatedFiltersFromState = (state) => {
+  return {
+    ...state,
+    filters: removeDeprecatedFilters(state.filters),
+  };
+};

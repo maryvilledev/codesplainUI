@@ -117,4 +117,51 @@ describe('util: rules', () => {
       expect(newFilters.number.count).toEqual(2);
     });
   });
+  describe('removeDeprecatedFilters', () => {
+    it('removes filters that are in ignoredRules', () => {
+      const filters = {
+        'and_expr': {},
+        'atom': {},
+        'file_input': {},
+        'comp_op': {},
+        'classdef': {},
+        'try_stmt': {},
+        'arglist': {},
+      };
+      const expected = {
+        'and_expr': {},
+        'comp_op': {},
+        'classdef': {},
+        'try_stmt': {},
+      }
+      expect(rules.removeDeprecatedFilters(filters)).toEqual(expected);
+    });
+  });
+  describe('removeDeprecatedFiltersFromState', () => {
+    it('returns the updated state object', () => {
+      const filters = {
+        'and_expr': {},
+        'atom': {},
+        'file_input': {},
+        'comp_op': {},
+        'classdef': {},
+        'try_stmt': {},
+        'arglist': {},
+      };
+      const state = {
+        snippetTitle: '',
+        filters,
+      };
+      const expected = {
+        ...state,
+        filters: {
+          'and_expr': {},
+          'comp_op': {},
+          'classdef': {},
+          'try_stmt': {},
+        }
+      };
+      expect(rules.removeDeprecatedFiltersFromState(state)).toEqual(expected);
+    });
+  });
 });
