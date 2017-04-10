@@ -9,6 +9,7 @@ const style = {
     position: 'fixed',
     bottom: 0,
     right: 0,
+    padding: 4
   },
   linkArea: {
     padding: 2,
@@ -22,7 +23,7 @@ const style = {
   },
   link: {
     padding: '4px',
-    color: '#00BCD4',
+    color: '#666666',
   }
 }
 
