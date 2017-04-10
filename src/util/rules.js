@@ -13,14 +13,19 @@ let store;
 let language = '';
 let mappingCache = {};
 
+// This will parse a csv into rows of columns
+export const parseCSV = (csv) => {
+  return csv.split('\n')
+    .slice(1, -1)
+    .map((row) => row.split(','));
+}
+
 // Load csv and parse to rules and ignoredRules objects
 const loadRules = async (language) => {
   const allRules = await axios.get(`${API_URL}/mappings/${language}`)
     .then((res) => {
       const csv = res.data;
-      const rows = csv.split('\n')
-        .slice(1, -1)
-        .map((row) => row.split(','));
+      const rows = parseCSV(csv)
       const reducer = (map, row) => {
         map[row[0]] = {
           prettyName: row[2],

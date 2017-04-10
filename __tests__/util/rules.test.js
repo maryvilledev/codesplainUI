@@ -60,4 +60,17 @@ describe('util: rules', () => {
       expect(ruleCounts[nodeType]).toEqual(3);
     });
   });
+  describe('parseCSV()', () => {
+    it('parses CSV to rows and columns', () => {
+      const csv =`NAME,ROLE,CATCHPHRASE,
+Rick,Genius,Wubba Lubba Dub Dub
+Morty,Teenager,Aw Geez Rick
+`;
+      const expected = [
+        ["Rick", "Genius", "Wubba Lubba Dub Dub"],
+        ["Morty", "Teenager", "Aw Geez Rick"]
+      ];
+      expect(rules.parseCSV(csv)).toEqual(expected)
+    })
+  })
 });
