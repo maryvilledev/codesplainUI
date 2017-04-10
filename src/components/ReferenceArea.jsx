@@ -25,7 +25,7 @@ const style = {
   },
   link: {
     padding: '4px',
-    color: '#F2F2F2',
+    color: '#00BCD4',
   }
 }
 
