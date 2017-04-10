@@ -47,6 +47,11 @@ describe('Actions: App', () => {
       expect(actions.selectAllFilters()).toMatchSnapshot();
     });
   });
+  describe('RESET_STATE', () => {
+    it('matches snapshot', () => {
+      expect(actions.resetState()).toMatchSnapshot();
+    });
+  });
   describe('SET_AST', () => {
     it('creates an action to set the abstract syntax tree', () => {
       const AST = {
