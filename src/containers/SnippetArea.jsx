@@ -191,7 +191,7 @@ export class SnippetArea extends React.Component {
       .then((snippetKey) => {
         router.push(`/${username}/${snippetKey}`);
         if (title !== snippetKey) {
-          dispatch(snippetKey);
+          dispatch(setSnippetTitle(snippetKey));
         }
         this.showSnackbar('Codesplaination Saved!');
         const permissions = {
