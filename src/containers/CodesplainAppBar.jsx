@@ -4,6 +4,7 @@ import AppBar from 'material-ui/AppBar';
 import { withRouter } from 'react-router';
 import cookie from 'react-cookie';
 
+import { resetState } from '../actions/app';
 import LoginButton from '../components/buttons/LoginButton'
 import AppMenu from '../components/menus/AppMenu';
 
@@ -61,7 +62,8 @@ export class CodesplainAppBar extends React.Component {
   }
 
   redirectToHomePage() {
-    const { router } = this.props;
+    const { dispatch, router } = this.props;
+    dispatch(resetState());
     router.push('/');
   }
 
