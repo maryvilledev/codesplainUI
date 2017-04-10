@@ -112,7 +112,7 @@ export const generateFilters = (prevFilters, ruleCounts) => {
     return newFilters;
   }
   Object.keys(ruleCounts)
-    .filter(r => {return rules[r] !== undefined})
+    .filter(r => rules[r] !== undefined)
     .forEach(r => {
       const selected = prevFilters[r] ? prevFilters[r].selected : false;
       newFilters[r] = {
@@ -124,3 +124,14 @@ export const generateFilters = (prevFilters, ruleCounts) => {
     });
   return newFilters;
 }
+
+export const removeDeprecatedFilters = (filters) => {
+  return _.omit(filters, ignoredRules);
+}
+
+export const removeDeprecatedFiltersFromState = (state) => {
+  return {
+    ...state,
+    filters: removeDeprecatedFilters(state.filters),
+  };
+};

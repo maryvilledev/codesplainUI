@@ -1,6 +1,7 @@
 import React from 'react';
 import cookie from 'react-cookie';
 import axios from 'axios';
+import { withRouter } from 'react-router';
 
 import Loading from '../components/Loading';
 import Alert from '../components/Alert';
@@ -32,7 +33,7 @@ renders as a <CircularProgress /> and sends a POST request to the express backen
 to complete the OAuth authentication with GitHub. Upon completion of this, the
 user is redirected to the URL they attempted to login from initially.
 */
-class Auth extends React.Component {
+export class Auth extends React.Component {
   constructor(props) {
     super(props);
     this.state = { waiting: true };
@@ -41,7 +42,7 @@ class Auth extends React.Component {
 
   componentDidMount() {
     // Extract the code provided by GitHub from the redirect query string
-    const { code } = this.props.location.query
+    const { code } = this.props.router.location.query;
 
     // Post it to the API to be verified by GitHub as authentic
     return axios.post(`${API_URL}/auth`, { code })
@@ -77,13 +78,16 @@ class Auth extends React.Component {
   }
 
   redirectUser() {
+    const {
+      router,
+    } = this.props;
     // Load the URL to redirect user to, default to the
     // home page if non exists
     const signInRedirect = cookie.load('signInRedirect');
     if (signInRedirect) {
-      window.location = signInRedirect;
+      router.push(signInRedirect);
     } else {
-      window.location = '/';
+      router.push('/');
     }
   }
 
@@ -111,4 +115,4 @@ class Auth extends React.Component {
   }
 }
 
-export default Auth
+export default withRouter(Auth);

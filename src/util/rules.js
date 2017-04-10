@@ -1,4 +1,5 @@
 import axios from 'axios'
+import _ from 'lodash';
 import { setRules, setIgnoredRules } from './codemirror-utils';
 
 const API_URL = process.env.REACT_APP_API_URL
@@ -35,6 +36,7 @@ const loadRules = async (language) => {
     });
   return allRules;
 }
+
 
 // Listen for new parser languages
 const onStateChange = async () => {

@@ -1,59 +1,33 @@
 exports[`<CodesplainAppBar /> snapshot tests user is logged in 1`] = `
-<CodesplainAppBar
-  dispatch={[Function]}
-  store={
+<AppBar
+  iconElementRight={
+    <AppMenu
+      onSignOut={[Function]} />
+  }
+  onTitleTouchTap={[Function]}
+  showMenuIconButton={false}
+  style={
     Object {
-      "dispatch": [Function],
-      "getState": [Function],
-      "replaceReducer": [Function],
-      "subscribe": [Function],
+      "cursor": "pointer",
     }
   }
-  storeSubscription={
-    Subscription {
-      "listeners": Object {
-        "notify": [Function],
-      },
-      "onStateChange": [Function],
-      "parentSub": undefined,
-      "store": Object {
-        "dispatch": [Function],
-        "getState": [Function],
-        "replaceReducer": [Function],
-        "subscribe": [Function],
-        Symbol(observable): [Function],
-      },
-      "unsubscribe": null,
-    }
-  } />
+  title="Codesplain"
+  zDepth={1} />
 `;
 
 exports[`<CodesplainAppBar /> snapshot tests user is not logged in 1`] = `
-<CodesplainAppBar
-  dispatch={[Function]}
-  store={
+<AppBar
+  iconElementRight={
+    <LoginButton
+      onClick={[Function]} />
+  }
+  onTitleTouchTap={[Function]}
+  showMenuIconButton={false}
+  style={
     Object {
-      "dispatch": [Function],
-      "getState": [Function],
-      "replaceReducer": [Function],
-      "subscribe": [Function],
+      "cursor": "pointer",
     }
   }
-  storeSubscription={
-    Subscription {
-      "listeners": Object {
-        "notify": [Function],
-      },
-      "onStateChange": [Function],
-      "parentSub": undefined,
-      "store": Object {
-        "dispatch": [Function],
-        "getState": [Function],
-        "replaceReducer": [Function],
-        "subscribe": [Function],
-        Symbol(observable): [Function],
-      },
-      "unsubscribe": null,
-    }
-  } />
+  title="Codesplain"
+  zDepth={1} />
 `;

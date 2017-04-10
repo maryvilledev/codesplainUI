@@ -8,7 +8,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
 
-import Auth, { errors } from '../../src/components/Auth';
+import { Auth, errors } from '../../src/components/Auth';
 import Alert from '../../src/components/Alert';
 
 describe('<Auth />', () => {
@@ -35,9 +35,13 @@ describe('<Auth />', () => {
     })
 
     it('should respond to a 400', done => {
-      const location = {query: "badcode"}
+      const mockRouter = {
+        location: {
+          query: 'badcode',
+        },
+      };
       const wrapper = mountWithContext(
-        <Auth location={location} />
+        <Auth router={mockRouter} />
       );
       moxios.wait(() => {
         const request = moxios.requests.mostRecent();
@@ -53,9 +57,13 @@ describe('<Auth />', () => {
       });
     })
     it('should respond to a 403', done => {
-      const location = {query: "badcode"}
+      const mockRouter = {
+        location: {
+          query: 'badcode',
+        },
+      };
       const wrapper = mountWithContext(
-        <Auth location={location} />
+        <Auth router={mockRouter} />
       );
       moxios.wait(() => {
         const request = moxios.requests.mostRecent();

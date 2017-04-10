@@ -2,15 +2,17 @@ import axios from 'axios';
 import { Card } from 'material-ui';
 import React from 'react';
 import { connect } from 'react-redux';
-import { browserHistory } from 'react-router';
+import { withRouter } from 'react-router';
 import cookie from 'react-cookie';
 
 import { restoreState } from '../actions/app';
-import { setPermissions } from '../actions/permissions'
+import { setPermissions } from '../actions/permissions';
 
 import Annotations from './Annotations';
 import FilterArea from './FilterArea';
 import SnippetArea from './SnippetArea';
+
+import { removeDeprecatedFiltersFromState } from '../util/rules';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -30,14 +32,14 @@ export class AppBody extends React.Component {
   componentDidMount() {
     const {
       dispatch,
-      params: {
-        id,
-        username,
-      },
+      router,
     } = this.props;
+    const {
+      id,
+      username,
+    } = router.params;
 
     if (!username && !id) {
-
       // This is a new snippet for the current user, enable all permissions
       const permissions = {
         canRead: true,
@@ -67,19 +69,18 @@ export class AppBody extends React.Component {
         const permissions = {
           canRead: true,
           //Currently, users may only edit a file they own
-          canEdit: (username === cookie.load('username'))
-        }
-        dispatch(setPermissions(permissions))
-        dispatch(restoreState(res.data));
-        browserHistory.push(`/${username}/${id}`)
-      }, err => {
+          canEdit: (username === cookie.load('username')),
+        };
+        dispatch(setPermissions(permissions));
+        dispatch(restoreState(removeDeprecatedFiltersFromState(res.data)));
+        router.push(`/${username}/${id}`)
+      }, () => {
         // Failed to get the snippet, either bad URL or unauthorized
-        browserHistory.push('/');
+        router.push('/');
       });
   }
 
   render() {
-    const { id } = this.props.params;
     return (
       <div className='container-fluid'>
         <div className='row'>
@@ -94,16 +95,12 @@ export class AppBody extends React.Component {
               containerStyle={styles.snippetAreaSectionCardContainer}
               style={styles.snippetAreaSectionCard}
             >
-              <SnippetArea
-                id={id}
-              />
+              <SnippetArea />
             </Card>
           </div>
           <div className='col-lg-5 col-md-5'>
             <Card>
-              <Annotations
-                id={id}
-              />
+              <Annotations />
             </Card>
           </div>
         </div>
@@ -112,4 +109,4 @@ export class AppBody extends React.Component {
   }
 }
 
-export default connect()(AppBody);
+export default withRouter(connect()(AppBody));
