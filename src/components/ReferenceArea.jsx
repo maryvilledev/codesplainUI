@@ -11,8 +11,14 @@ const style = {
     right: 0,
   },
   linkArea: {
+    padding: 2,
     display: 'inline-block',
     font: '12pt Lato, sans-serif',
+    verticalAlign: 'bottom'
+  },
+  logoArea: {
+    display: 'block',
+    textAlign: 'center',
   },
   link: {
     padding: '4px',
@@ -29,6 +35,8 @@ const ReferenceArea = () => (
         width={80}
       />
       </a>
+      <div style={style.linkArea}>
+      <div style={style.logoArea}>
       <a href="https://www.twitter.com/MaryvilleTech"
       style={style.link}>
         <img
@@ -45,7 +53,7 @@ const ReferenceArea = () => (
           width={30}
         />
       </a>
-      <div style={style.linkArea}>
+      </div>
       <a
         href="mailto://support.maryville.com"
         style={style.link}
