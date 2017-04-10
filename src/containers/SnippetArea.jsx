@@ -156,7 +156,9 @@ export class SnippetArea extends React.Component {
     }
     return dispatch(saveNew())
       .then((snippetKey) => {
+        // Redirect the user to the snippet's page
         router.push(`/${username}/${snippetKey}`);
+        // Update the snippet's title if the request returned a different key
         if (snippetTitle !== snippetKey) {
           dispatch(setSnippetTitle(snippetKey))
         }
@@ -189,7 +191,9 @@ export class SnippetArea extends React.Component {
     // Save the snippet
     return dispatch(saveNew())
       .then((snippetKey) => {
+        // Redirect the user to the snippet's page
         router.push(`/${username}/${snippetKey}`);
+        // Update the snippet's title if the request returned a different key
         if (title !== snippetKey) {
           dispatch(setSnippetTitle(snippetKey));
         }
