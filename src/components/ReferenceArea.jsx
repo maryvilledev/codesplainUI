@@ -37,7 +37,7 @@ const ReferenceArea = () => (
       </a>
       <div style={style.linkArea}>
       <div style={style.logoArea}>
-      <a href="https://www.twitter.com/MaryvilleTech"
+      <a href="https://www.twitter.com/MaryvilleDev"
       style={style.link}>
         <img
           src={twitterIcon}
