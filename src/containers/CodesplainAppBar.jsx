@@ -7,6 +7,7 @@ import { withRouter } from 'react-router';
 import cookie from 'react-cookie';
 
 import { resetState } from '../actions/app';
+import { closeAnnotationPanel } from '../actions/annotation';
 import LoginButton from '../components/buttons/LoginButton'
 import AppMenu from '../components/menus/AppMenu';
 
@@ -86,6 +87,8 @@ export class CodesplainAppBar extends React.Component {
 
     // Reset state
     dispatch(resetState());
+    // Close the annotation panel
+    dispatch(closeAnnotationPanel());
     // If the user is not already at the home page, redirect them to it
     if (router.location.pathname !== '/') {
       router.push('/');
