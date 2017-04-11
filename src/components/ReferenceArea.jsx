@@ -56,8 +56,8 @@ const ReferenceArea = () => (
           </a>
         </div>
         <a
-          href="mailto:support@codesplain.io"
-        style={style.link}
+          href="mailto:support@maryville.com"
+          style={style.link}
         >
           Contact Us
         </a>
