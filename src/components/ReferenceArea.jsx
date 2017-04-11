@@ -30,34 +30,34 @@ const style = {
 const ReferenceArea = () => (
     <div style={style.paper}>
       <a href="https://maryvilledevcenter.com/">
-      <img
-        src={mtIcon}
-        alt="Maryville DevCenter Logo"
-        width={80}
-      />
+        <img
+          src={mtIcon}
+          alt="Maryville DevCenter Logo"
+          width={80}
+        />
       </a>
       <div style={style.linkArea}>
-      <div style={style.logoArea}>
-      <a href="https://www.twitter.com/MaryvilleDev"
-      style={style.link}>
-        <img
-          src={twitterIcon}
-          alt="Twitter Icon"
-          width={30}
-        />
-      </a>
-      <a href="https://github.com/maryvilledev"
-      style={style.link}>
-        <img
-          src={githubIcon}
-          alt="Github Icon"
-          width={30}
-        />
-      </a>
-      </div>
-      <a
-        href="mailto:support@maryville.com"
-        style={style.link}
+        <div style={style.logoArea}>
+          <a href="https://www.twitter.com/MaryvilleDev"
+            style={style.link}>
+            <img
+              src={twitterIcon}
+              alt="Twitter Icon"
+              width={30}
+            />
+          </a>
+          <a href="https://github.com/maryvilledev"
+            style={style.link}>
+            <img
+              src={githubIcon}
+              alt="Github Icon"
+              width={30}
+            />
+          </a>
+        </div>
+        <a
+          href="mailto:support@codesplain.io"
+          style={style.link}
         >
           Contact Us
         </a>

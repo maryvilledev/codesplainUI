@@ -59,7 +59,7 @@ exports[`<ReferenceArea /> matches snapshot 1`] = `
       </a>
     </div>
     <a
-      href="mailto:support@maryville.com"
+      href="mailto:support@codesplain.io"
       style={
         Object {
           "color": "#666666",
