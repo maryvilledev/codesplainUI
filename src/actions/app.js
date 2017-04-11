@@ -135,7 +135,7 @@ export const updateUserSnippets = () => {
       .then(
         res => {
           dispatch(setUserSnippets(res));
-          dispath(updateUserSnippetsSucceeded());
+          dispatch(updateUserSnippetsSucceeded());
         },
         err => dispatch(updateUserSnippetsFailed)
       );
