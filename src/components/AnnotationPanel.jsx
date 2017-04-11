@@ -83,7 +83,6 @@ class AnnotationPanel extends React.Component {
       </div>
     );
   }
-
 }
 
 AnnotationPanel.propTypes = {

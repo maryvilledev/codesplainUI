@@ -26,16 +26,17 @@ const AnnotationDisplay = (props) => {
       />
       <RaisedButton
         label="Close"
-        secondary
         onTouchTap={closeAnnotation}
+        secondary
       />
       <RaisedButton
         label="Edit"
-        primary
         onTouchTap={editAnnotation}
+        primary
       />
       <IconButton
         disabled={hasPrevAnnotation}
+        id="previous-annotation"
         onTouchTap={getPreviousAnnotation}
         tooltip="View previous annotation"
       >
@@ -43,6 +44,7 @@ const AnnotationDisplay = (props) => {
       </IconButton>
       <IconButton
         disabled={hasNextAnnotation}
+        id="next-annotation"
         onTouchTap={getNextAnnotation}
         tooltip="View next annotation"
       >

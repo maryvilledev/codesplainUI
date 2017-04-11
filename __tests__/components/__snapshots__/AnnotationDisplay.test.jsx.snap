@@ -1,7 +1,7 @@
-exports[`<AnnotationDisplay /> matches snapshot 1`] = `
+exports[`<AnnotationDisplay /> snapshots when an annotation after current one exists matches snapshot 1`] = `
 <div>
   <MarkdownRenderer
-    markdown="some annotation"
+    markdown=""
     options={
       Object {
         "highlight": [Function],
@@ -28,6 +28,59 @@ exports[`<AnnotationDisplay /> matches snapshot 1`] = `
     disableTouchRipple={false}
     disabled={false}
     iconStyle={Object {}}
+    id="previous-annotation"
+    onTouchTap={[Function]}
+    tooltip="View previous annotation"
+    tooltipPosition="bottom-center"
+    touch={false}>
+    <ImageNavigateBefore />
+  </IconButton>
+  <IconButton
+    disableTouchRipple={false}
+    disabled={true}
+    iconStyle={Object {}}
+    id="next-annotation"
+    onTouchTap={[Function]}
+    tooltip="View next annotation"
+    tooltipPosition="bottom-center"
+    touch={false}>
+    <ImageNavigateNext />
+  </IconButton>
+</div>
+`;
+
+exports[`<AnnotationDisplay /> snapshots when an annotation before current one exists matches snapshot 1`] = `
+<div>
+  <MarkdownRenderer
+    markdown=""
+    options={
+      Object {
+        "highlight": [Function],
+        "langPrefix": "hljs language-",
+      }
+    } />
+  <RaisedButton
+    disabled={false}
+    fullWidth={false}
+    label="Close"
+    labelPosition="after"
+    onTouchTap={[Function]}
+    primary={false}
+    secondary={true} />
+  <RaisedButton
+    disabled={false}
+    fullWidth={false}
+    label="Edit"
+    labelPosition="after"
+    onTouchTap={[Function]}
+    primary={true}
+    secondary={false} />
+  <IconButton
+    disableTouchRipple={false}
+    disabled={true}
+    iconStyle={Object {}}
+    id="previous-annotation"
+    onTouchTap={[Function]}
     tooltip="View previous annotation"
     tooltipPosition="bottom-center"
     touch={false}>
@@ -37,6 +90,110 @@ exports[`<AnnotationDisplay /> matches snapshot 1`] = `
     disableTouchRipple={false}
     disabled={false}
     iconStyle={Object {}}
+    id="next-annotation"
+    onTouchTap={[Function]}
+    tooltip="View next annotation"
+    tooltipPosition="bottom-center"
+    touch={false}>
+    <ImageNavigateNext />
+  </IconButton>
+</div>
+`;
+
+exports[`<AnnotationDisplay /> snapshots when annotation exists before/after current one matches snapshot 1`] = `
+<div>
+  <MarkdownRenderer
+    markdown=""
+    options={
+      Object {
+        "highlight": [Function],
+        "langPrefix": "hljs language-",
+      }
+    } />
+  <RaisedButton
+    disabled={false}
+    fullWidth={false}
+    label="Close"
+    labelPosition="after"
+    onTouchTap={[Function]}
+    primary={false}
+    secondary={true} />
+  <RaisedButton
+    disabled={false}
+    fullWidth={false}
+    label="Edit"
+    labelPosition="after"
+    onTouchTap={[Function]}
+    primary={true}
+    secondary={false} />
+  <IconButton
+    disableTouchRipple={false}
+    disabled={true}
+    iconStyle={Object {}}
+    id="previous-annotation"
+    onTouchTap={[Function]}
+    tooltip="View previous annotation"
+    tooltipPosition="bottom-center"
+    touch={false}>
+    <ImageNavigateBefore />
+  </IconButton>
+  <IconButton
+    disableTouchRipple={false}
+    disabled={true}
+    iconStyle={Object {}}
+    id="next-annotation"
+    onTouchTap={[Function]}
+    tooltip="View next annotation"
+    tooltipPosition="bottom-center"
+    touch={false}>
+    <ImageNavigateNext />
+  </IconButton>
+</div>
+`;
+
+exports[`<AnnotationDisplay /> snapshots when no annotations before/after current one exist matches snapshot 1`] = `
+<div>
+  <MarkdownRenderer
+    markdown=""
+    options={
+      Object {
+        "highlight": [Function],
+        "langPrefix": "hljs language-",
+      }
+    } />
+  <RaisedButton
+    disabled={false}
+    fullWidth={false}
+    label="Close"
+    labelPosition="after"
+    onTouchTap={[Function]}
+    primary={false}
+    secondary={true} />
+  <RaisedButton
+    disabled={false}
+    fullWidth={false}
+    label="Edit"
+    labelPosition="after"
+    onTouchTap={[Function]}
+    primary={true}
+    secondary={false} />
+  <IconButton
+    disableTouchRipple={false}
+    disabled={false}
+    iconStyle={Object {}}
+    id="previous-annotation"
+    onTouchTap={[Function]}
+    tooltip="View previous annotation"
+    tooltipPosition="bottom-center"
+    touch={false}>
+    <ImageNavigateBefore />
+  </IconButton>
+  <IconButton
+    disableTouchRipple={false}
+    disabled={false}
+    iconStyle={Object {}}
+    id="next-annotation"
+    onTouchTap={[Function]}
     tooltip="View next annotation"
     tooltipPosition="bottom-center"
     touch={false}>
