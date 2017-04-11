@@ -2,18 +2,20 @@ import * as actions from '../../src/actions/app';
 import reducer, { initialState } from '../../src/reducers/app';
 
 describe('Reducer: App', () => {
-  it('should have initial state', () => {
-    const initial = {
-      annotations: {},
-      AST: {},
-      filters: {},
-      snippetLanguage: 'python3',
-      hasUnsavedChanges: false,
-      readOnly: false,
-      snippet: '',
-      snippetTitle: '',
+  describe('initialState', () => {
+    it('matches snapshot', () => {
+      expect(initialState).toMatchSnapshot();
+    });
+  });
+  it('handles RESET_STATE', () => {
+    const action = {
+      type: actions.RESET_STATE,
     };
-    expect(reducer(undefined, {})).toEqual(initial);
+    const state = {
+      foo: 'bar',
+      spam: 'eggs',
+    };
+    expect(reducer(state, action)).toEqual(initialState);
   });
   it('should handle SET_SNIPPET_CONTENTS', () => {
     const snippet = 'Show me what you got';

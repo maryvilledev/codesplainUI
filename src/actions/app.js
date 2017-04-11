@@ -3,6 +3,7 @@ import cookie from 'react-cookie';
 
 import { makeSaveEndpointUrl } from '../util/requests';
 
+export const RESET_STATE = 'RESET_STATE';
 export const EDIT_ANNOTATION = 'EDIT_ANNOTATION';
 export const PARSE_SNIPPET = 'PARSE_SNIPPET';
 export const RESET_RULE_FILTERS = 'RESET_RULE_FILTERS';
@@ -18,6 +19,10 @@ export const SET_SNIPPET_CONTENTS = 'SET_SNIPPET_CONTENTS';
 export const SET_SNIPPET_LANGUAGE = 'SET_SNIPPET_LANGUAGE';
 export const SET_SNIPPET_TITLE = 'SET_SNIPPET_TITLE';
 export const TOGGLE_EDITING_STATE = 'TOGGLE_EDITING_STATE';
+
+export const resetState = () => ({
+  type: RESET_STATE,
+});
 
 export const setSnippetContents = (snippet) => ({
   type: SET_SNIPPET_CONTENTS,

@@ -16,6 +16,11 @@ export const initialState = {
 
 const app = (state = initialState, action) => {
   switch (action.type) {
+    case actions.RESET_STATE: {
+      return {
+        ...initialState,
+      };
+    }
     case actions.SET_SNIPPET_CONTENTS: {
       return {
         ...state,

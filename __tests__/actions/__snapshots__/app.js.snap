@@ -4,6 +4,12 @@ Object {
 }
 `;
 
+exports[`Actions: App RESET_STATE matches snapshot 1`] = `
+Object {
+  "type": "RESET_STATE",
+}
+`;
+
 exports[`Actions: App SELECT_ALL_FILTERS matches snapshot 1`] = `
 Object {
   "type": "SELECT_ALL_FILTERS",

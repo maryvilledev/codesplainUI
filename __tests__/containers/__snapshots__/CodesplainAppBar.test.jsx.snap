@@ -1,33 +1,115 @@
 exports[`<CodesplainAppBar /> snapshot tests user is logged in 1`] = `
-<AppBar
-  iconElementRight={
-    <AppMenu
-      onSignOut={[Function]} />
-  }
-  onTitleTouchTap={[Function]}
-  showMenuIconButton={false}
-  style={
-    Object {
-      "cursor": "pointer",
+<div>
+  <AppBar
+    iconElementRight={
+      <AppMenu
+        onSignOut={[Function]} />
     }
-  }
-  title="Codesplain"
-  zDepth={1} />
+    onTitleTouchTap={[Function]}
+    showMenuIconButton={false}
+    style={
+      Object {
+        "cursor": "pointer",
+      }
+    }
+    title="Codesplain"
+    zDepth={1} />
+  <Dialog
+    actions={
+      Array [
+        <FlatButton
+          disabled={false}
+          fullWidth={false}
+          label="Cancel"
+          labelPosition="after"
+          labelStyle={Object {}}
+          onKeyboardFocus={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onTouchStart={[Function]}
+          onTouchTap={[Function]}
+          primary={false}
+          secondary={true} />,
+        <FlatButton
+          disabled={false}
+          fullWidth={false}
+          label="Discard"
+          labelPosition="after"
+          labelStyle={Object {}}
+          onKeyboardFocus={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onTouchStart={[Function]}
+          onTouchTap={[Function]}
+          primary={true}
+          secondary={false} />,
+      ]
+    }
+    autoDetectWindowHeight={true}
+    autoScrollBodyContent={false}
+    modal={false}
+    onRequestClose={[Function]}
+    open={false}
+    repositionOnUpdate={true}>
+    Discard unsaved changes?
+  </Dialog>
+</div>
 `;
 
 exports[`<CodesplainAppBar /> snapshot tests user is not logged in 1`] = `
-<AppBar
-  iconElementRight={
-    <LoginButton
-      onClick={[Function]} />
-  }
-  onTitleTouchTap={[Function]}
-  showMenuIconButton={false}
-  style={
-    Object {
-      "cursor": "pointer",
+<div>
+  <AppBar
+    iconElementRight={
+      <LoginButton
+        onClick={[Function]} />
     }
-  }
-  title="Codesplain"
-  zDepth={1} />
+    onTitleTouchTap={[Function]}
+    showMenuIconButton={false}
+    style={
+      Object {
+        "cursor": "pointer",
+      }
+    }
+    title="Codesplain"
+    zDepth={1} />
+  <Dialog
+    actions={
+      Array [
+        <FlatButton
+          disabled={false}
+          fullWidth={false}
+          label="Cancel"
+          labelPosition="after"
+          labelStyle={Object {}}
+          onKeyboardFocus={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onTouchStart={[Function]}
+          onTouchTap={[Function]}
+          primary={false}
+          secondary={true} />,
+        <FlatButton
+          disabled={false}
+          fullWidth={false}
+          label="Discard"
+          labelPosition="after"
+          labelStyle={Object {}}
+          onKeyboardFocus={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onTouchStart={[Function]}
+          onTouchTap={[Function]}
+          primary={true}
+          secondary={false} />,
+      ]
+    }
+    autoDetectWindowHeight={true}
+    autoScrollBodyContent={false}
+    modal={false}
+    onRequestClose={[Function]}
+    open={false}
+    repositionOnUpdate={true}>
+    Discard unsaved changes?
+  </Dialog>
+</div>
 `;
