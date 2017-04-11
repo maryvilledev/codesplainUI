@@ -11,6 +11,7 @@ import { setPermissions } from '../actions/permissions';
 import Annotations from './Annotations';
 import FilterArea from './FilterArea';
 import SnippetArea from './SnippetArea';
+import ReferenceArea from '../components/ReferenceArea';
 
 import { removeDeprecatedFiltersFromState } from '../util/rules';
 import { setDefaults } from '../util/state-management';
@@ -105,6 +106,9 @@ export class AppBody extends React.Component {
               <Annotations />
             </Card>
           </div>
+        </div>
+        <div className='row'>
+          <ReferenceArea />
         </div>
       </div>
     );
