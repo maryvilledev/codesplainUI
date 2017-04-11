@@ -56,7 +56,7 @@ const ReferenceArea = () => (
       </a>
       </div>
       <a
-        href="mailto://support.maryville.com"
+        href="mailto:support@maryville.com"
         style={style.link}
         >
           Contact Us
