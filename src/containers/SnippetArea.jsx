@@ -155,8 +155,13 @@ export class SnippetArea extends React.Component {
         });
     }
     return dispatch(saveNew())
-      .then((snippetTitle) => {
-        router.push(`/${username}/${snippetTitle}`);
+      .then((snippetKey) => {
+        // Redirect the user to the snippet's page
+        router.push(`/${username}/${snippetKey}`);
+        // Update the snippet's title if the request returned a different key
+        if (snippetTitle !== snippetKey) {
+          dispatch(setSnippetTitle(snippetKey))
+        }
         this.showSnackbar('Codesplaination Saved!');
       }, () => {
         this.showSnackbar('Failed to save - an error occurred');
@@ -185,8 +190,13 @@ export class SnippetArea extends React.Component {
 
     // Save the snippet
     return dispatch(saveNew())
-      .then((snippetTitle) => {
-        router.push(`/${username}/${snippetTitle}`);
+      .then((snippetKey) => {
+        // Redirect the user to the snippet's page
+        router.push(`/${username}/${snippetKey}`);
+        // Update the snippet's title if the request returned a different key
+        if (title !== snippetKey) {
+          dispatch(setSnippetTitle(snippetKey));
+        }
         this.showSnackbar('Codesplaination Saved!');
         const permissions = {
           canRead: true,
