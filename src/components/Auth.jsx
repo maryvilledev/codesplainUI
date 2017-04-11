@@ -1,12 +1,30 @@
 import React from 'react';
 import cookie from 'react-cookie';
 import axios from 'axios';
-import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 
 import Loading from '../components/Loading';
 import Alert from '../components/Alert';
 
 const API_URL = process.env.REACT_APP_API_URL;
+export const errors = {
+  badCode: "Failed to login with GitHub, sorry.",
+  badOrg: "Sorry, you are not a member of an organization authorized to use" +
+  " this application."
+}
+
+const resolveErrorMessage = (status) => {
+  switch (status) {
+    case 403: {
+      return errors.badOrg;
+    }
+    // eslint-disable-next-line
+    case 400: //Intentional fallthrough
+    default: {
+      return errors.badCode;
+    }
+  }
+}
 
 /*
 <Auth /> is the component that is rendered for the '{{url}}/auth' endpoint (which
@@ -15,7 +33,7 @@ renders as a <CircularProgress /> and sends a POST request to the express backen
 to complete the OAuth authentication with GitHub. Upon completion of this, the
 user is redirected to the URL they attempted to login from initially.
 */
-class Auth extends React.Component {
+export class Auth extends React.Component {
   constructor(props) {
     super(props);
     this.state = { waiting: true };
@@ -27,7 +45,7 @@ class Auth extends React.Component {
 
   componentDidMount() {
     // Extract the code provided by GitHub from the redirect query string
-    const { code } = this.props.location.query
+    const { code } = this.props.router.location.query;
     this.runLoginSequence(code);
   }
 
@@ -35,14 +53,12 @@ class Auth extends React.Component {
     // Use authorization code to get access token from API
     const token = await this.fetchAccessToken(authCode);
     if (!token) {
-      this.setState({ waiting: false, error: true });
       return;
     }
 
     // Now get their username, and save other basic info to cookies
     const username = await this.fetchUserInfo(token);
     if (!username) {
-      this.setState({ waiting: false, error: true });
       return;
     }
   }
@@ -52,7 +68,9 @@ class Auth extends React.Component {
     let res;
     try {
       res = await axios.post(`${API_URL}/auth`, { code: authCode });
-    } catch(e) {
+    } catch(err) {
+      const error = resolveErrorMessage(err.response.status);
+      this.setState({ waiting: false, error });
       return; // can't keep going so bail out
     }
 
@@ -72,8 +90,10 @@ class Auth extends React.Component {
         Authorization: `token ${token}`,
       };
       res = await axios.get('https://api.github.com/user', { headers });
-    } catch(e) {
-      return; // it didn't work, so bail out
+    } catch(err) {
+      const error = resolveErrorMessage(err.response.status);
+      this.setState({ waiting: false, error });
+      return ; // it didn't work, so bail out
     }
     // Can pull lots of other stuff out of res.data if needed
     const { login, avatar_url } = res.data;
@@ -84,13 +104,16 @@ class Auth extends React.Component {
   }
 
   redirectUser() {
+    const {
+      router,
+    } = this.props;
     // Load the URL to redirect user to, default to the
     // home page if non exists
     const signInRedirect = cookie.load('signInRedirect');
     if (signInRedirect) {
-      window.location = signInRedirect;
+      router.push(signInRedirect);
     } else {
-      window.location = '/';
+      router.push('/');
     }
   }
 
@@ -105,7 +128,7 @@ class Auth extends React.Component {
       if (this.state.error) {
         return (
           <Alert
-            text="Failed to login with GitHub, sorry."
+            text={this.state.error}
             onClose={this.redirectUser}
           />
         );
@@ -118,4 +141,4 @@ class Auth extends React.Component {
   }
 }
 
-export default connect()(Auth);
+export default withRouter(Auth);

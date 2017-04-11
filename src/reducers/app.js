@@ -1,13 +1,14 @@
+import _ from 'lodash';
+
 import * as actions from '../actions/app';
 import { generateFilters } from '../util/rules';
-
-import _ from 'lodash';
 
 export const initialState = {
   annotations: {},
   AST: {},
   filters: {},
   hasUnsavedChanges: false,
+  snippetLanguage: 'python3',
   readOnly: false,
   snippet: '',
   snippetTitle: '',
@@ -15,6 +16,11 @@ export const initialState = {
 
 const app = (state = initialState, action) => {
   switch (action.type) {
+    case actions.RESET_STATE: {
+      return {
+        ...initialState,
+      };
+    }
     case actions.SET_SNIPPET_CONTENTS: {
       return {
         ...state,
@@ -80,7 +86,10 @@ const app = (state = initialState, action) => {
       };
     }
     case actions.RESTORE_STATE: {
-      return action.payload
+      return {
+        ...action.payload,
+        hasUnsavedChanges: false,
+      };
     }
     case actions.SET_SNIPPET_TITLE: {
       return {
@@ -89,7 +98,7 @@ const app = (state = initialState, action) => {
         snippetTitle: action.payload
       };
     }
-    case actions.SAVE_STATE_SUCCEEDED: {
+    case actions.SAVE_SUCCEEDED: {
       return {
         ...state,
         hasUnsavedChanges: false,

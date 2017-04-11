@@ -8,7 +8,7 @@ export class App extends Component {
     return (
       <div className="container-fluid">
         <CodesplainAppBar />
-        <AppBody {...this.props} />
+        <AppBody />
       </div>
     );
   }

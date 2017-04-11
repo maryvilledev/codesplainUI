@@ -1,26 +1,26 @@
-import axios from 'axios';
 import _ from 'lodash';
 import { CardText, Snackbar } from 'material-ui';
 import React, { PropTypes } from 'react';
 import cookie from 'react-cookie';
 import { connect } from 'react-redux';
-import { browserHistory } from 'react-router'
+import { withRouter } from 'react-router';
 
 import {
-  clearUnsavedChanges,
   parseSnippet,
+  saveNew,
+  saveExisting,
   setSnippetContents,
+  setSnippetLanguage,
   setSnippetTitle,
   toggleEditState,
   updateUserSnippets,
 } from '../actions/app';
 import {
-  loadParser
+  loadParser,
 } from '../actions/parser';
 import {
   setPermissions
 } from '../actions/permissions';
-
 import {
   openAnnotationPanel,
 } from '../actions/annotation';
@@ -56,15 +56,21 @@ export class SnippetArea extends React.Component {
       titleErrorText: '',
     };
 
-    this.showSnackbar = this.showSnackbar.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
     this.handleGutterClick = this.handleGutterClick.bind(this);
+    this.handleLanguageChanged = this.handleLanguageChanged.bind(this);
     this.handleLock = this.handleLock.bind(this);
     this.handleSave = this.handleSave.bind(this);
     this.handleSaveAs = this.handleSaveAs.bind(this);
     this.handleSnippetChanged = this.handleSnippetChanged.bind(this);
     this.handleTitleChanged = this.handleTitleChanged.bind(this);
     this.handleToggleReadOnly = this.handleToggleReadOnly.bind(this);
+    this.showSnackbar = this.showSnackbar.bind(this);
+  }
+
+  componentDidMount() {
+    const { dispatch, snippetLanguage } = this.props;
+    dispatch(loadParser(`${API_URL}/parsers/${snippetLanguage}`))
   }
 
   showSnackbar( message ) {
@@ -72,6 +78,14 @@ export class SnippetArea extends React.Component {
       showSnackbar: true,
       snackbarMessage: message
     })
+  }
+
+  handleLanguageChanged(ev, key, language) {
+    const { dispatch, snippetLanguage: currentLanguage } = this.props;
+    if (currentLanguage !== language) {
+      dispatch(setSnippetLanguage(language));
+      dispatch(loadParser(`${API_URL}/parsers/${language}`));
+    }
   }
 
   handleSnippetChanged(snippetContents) {
@@ -112,11 +126,12 @@ export class SnippetArea extends React.Component {
   handleSave() {
     // Make sure title is populated
     const {
-      appState,
       dispatch,
-      id,
+      router,
       snippetTitle,
     } = this.props;
+
+    const { id } = router.params;
 
     if (!snippetTitle) {
       this.setState({ titleErrorText: 'This field is required' });
@@ -131,36 +146,29 @@ export class SnippetArea extends React.Component {
       this.showSnackbar('Please login to save snippets.');
       return;
     }
-
-    // Save the snippet
-    const stateString = JSON.stringify(appState);
-    const token = cookie.load('token');
-    const config = {
-      headers: {
-        'Authorization': token,
-      }
-    }
-    if (id) { // if we're updating an existing snippet...
-      axios.put(`${API_URL}/users/${username}/snippets/${id}`, stateString, config)
-        .then(res => {
+     // Update a pre-existing snippet
+    if (id) {
+      return dispatch(saveExisting())
+        .then(() => {
           this.showSnackbar('Codesplaination Saved!');
-          dispatch(clearUnsavedChanges());
           dispatch(updateUserSnippets());
-        }, err => {
-          this.showSnackbar('Failed to save - an error occurred');
-        })
-    }
-    else { // if we're saving a new snippet...
-      axios.post(`${API_URL}/users/${username}/snippets`, stateString, config)
-        .then((res) => {
-          browserHistory.push(`/${username}/${res.data.key}`);
-          this.showSnackbar('Codesplaination Saved!');
-          dispatch(clearUnsavedChanges());
-          dispatch(updateUserSnippets());
-        }, (err) => {
+        }, () => {
           this.showSnackbar('Failed to save - an error occurred');
         });
     }
+    return dispatch(saveNew())
+      .then((snippetKey) => {
+        // Redirect the user to the snippet's page
+        router.push(`/${username}/${snippetKey}`);
+        // Update the snippet's title if the request returned a different key
+        if (snippetTitle !== snippetKey) {
+          dispatch(setSnippetTitle(snippetKey))
+        }
+        this.showSnackbar('Codesplaination Saved!');
+        dispatch(updateUserSnippets());
+      }, () => {
+        this.showSnackbar('Failed to save - an error occurred');
+      });
   }
 
   handleSaveAs(title) {
@@ -176,34 +184,30 @@ export class SnippetArea extends React.Component {
       return;
     }
 
-    // Render the new title
     const {
-      appState,
       dispatch,
+      router,
     } = this.props;
+    // Render the new title
     dispatch(setSnippetTitle(title));
 
     // Save the snippet
-    appState.snippetTitle = title;
-    const stateString = JSON.stringify(appState);
-    const token = cookie.load('token');
-    const config = {
-      headers: {
-        'Authorization': token,
-      }
-    }
-    axios.post(`${API_URL}/users/${username}/snippets`, stateString, config)
-      .then((res) => {
-        browserHistory.push(`/${username}/${res.data.key}`);
+    return dispatch(saveNew())
+      .then((snippetKey) => {
+        // Redirect the user to the snippet's page
+        router.push(`/${username}/${snippetKey}`);
+        // Update the snippet's title if the request returned a different key
+        if (title !== snippetKey) {
+          dispatch(setSnippetTitle(snippetKey));
+        }
         this.showSnackbar('Codesplaination Saved!');
-        dispatch(clearUnsavedChanges());
         const permissions = {
           canRead: true,
-          canEdit: true
-        }; // Grant all permissions, this is now her file.
+          canEdit: true,
+        } // Grant all permissions, this is now her file.
         dispatch(setPermissions(permissions));
-          dispatch(updateUserSnippets());
-      }, (err) => {
+        dispatch(updateUserSnippets());
+      }, () => {
         this.showSnackbar('Failed to save - an error occurred');
       });
   }
@@ -213,36 +217,33 @@ export class SnippetArea extends React.Component {
     dispatch(openAnnotationPanel({lineNumber, lineText}))
   }
 
-  componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch(loadParser(`${process.env.REACT_APP_API_URL}/parsers/python3`))
-  }
-
   render() {
     const {
       annotations,
       AST,
       filters,
       openLine,
+      permissions,
       readOnly,
       snippet,
+      snippetLanguage,
       snippetTitle,
-      permissions,
     } = this.props;
 
     const markedLines = Object.keys(annotations).map((key) => Number(key))
-
     return (
       <CardText style={styles.snippetAreaCardText}>
         <SnippetAreaToolbar
+          canSave={permissions.canEdit}
+          language={snippetLanguage}
+          onLanguageChange={this.handleLanguageChanged}
           onLockClick={this.handleLock}
           onSaveAsClick={this.handleSaveAs}
           onSaveClick={this.handleSave}
-          saveEnabled={(cookie.load('username') !== undefined)}
           onTitleChange={this.handleTitleChanged}
           readOnly={readOnly}
+          saveEnabled={(cookie.load('username') !== undefined)}
           title={snippetTitle}
-          canSave={permissions.canEdit}
         />
         <ConfirmLockDialog
           accept={this.handleToggleReadOnly}
@@ -252,6 +253,7 @@ export class SnippetArea extends React.Component {
         <Editor
           AST={AST}
           filters={filters}
+          language={snippetLanguage}
           markedLines={markedLines}
           onChange={this.handleSnippetChanged}
           onGutterClick={this.handleGutterClick}
@@ -285,6 +287,7 @@ const mapStateToProps = state => ({
   annotations: state.app.annotations,
   AST: state.app.AST,
   filters: state.app.filters,
+  snippetLanguage: state.app.snippetLanguage,
   openLine: (state.annotation.isDisplayingAnnotation
     ? state.annotation.snippetInformation.lineNumber
     : undefined),
@@ -295,4 +298,4 @@ const mapStateToProps = state => ({
   permissions: state.permissions,
 });
 
-export default connect(mapStateToProps)(SnippetArea);
+export default withRouter(connect(mapStateToProps)(SnippetArea));

@@ -2,17 +2,20 @@ import * as actions from '../../src/actions/app';
 import reducer, { initialState } from '../../src/reducers/app';
 
 describe('Reducer: App', () => {
-  it('should have initial state', () => {
-    const initial = {
-      annotations: {},
-      AST: {},
-      filters: {},
-      hasUnsavedChanges: false,
-      readOnly: false,
-      snippet: '',
-      snippetTitle: '',
+  describe('initialState', () => {
+    it('matches snapshot', () => {
+      expect(initialState).toMatchSnapshot();
+    });
+  });
+  it('handles RESET_STATE', () => {
+    const action = {
+      type: actions.RESET_STATE,
     };
-    expect(reducer(undefined, {})).toEqual(initial);
+    const state = {
+      foo: 'bar',
+      spam: 'eggs',
+    };
+    expect(reducer(state, action)).toEqual(initialState);
   });
   it('should handle SET_SNIPPET_CONTENTS', () => {
     const snippet = 'Show me what you got';
@@ -190,7 +193,11 @@ describe('Reducer: App', () => {
       type: actions.RESTORE_STATE,
       payload: savedState
     };
-    expect(reducer(undefined, action)).toEqual(savedState);
+    const expected = {
+      ...savedState,
+      hasUnsavedChanges: false,
+    };
+    expect(reducer(undefined, action)).toEqual(expected);
   });
   it('should handle SET_SNIPPET_TITLE', () => {
     const snippetTitle = 'Get Schwifty'
@@ -273,12 +280,12 @@ describe('Reducer: App', () => {
       expect(reducer(undefined, action)).toEqual(expected);
     });
   });
-  it('should handle SAVE_STATE_SUCCEEDED', () => {
+  it('should handle SAVE_SUCCEEDED', () => {
     const state = {
       hasUnsavedChanges: true,
     };
     const action = {
-      type: actions.SAVE_STATE_SUCCEEDED,
+      type: actions.SAVE_SUCCEEDED,
     };
     const expected = {
       hasUnsavedChanges: false,

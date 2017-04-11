@@ -5,6 +5,19 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import SnippetAreaToolbar from '../../src/components/SnippetAreaToolbar';
 
+const defaultProps = {
+  canSave: true,
+  language: 'python',
+  onLanguageChange: jest.fn(),
+  onLockClick: jest.fn(),
+  onSaveClick: jest.fn(),
+  onSaveAsClick: jest.fn(),
+  onTitleChange: jest.fn(),
+  readOnly: false,
+  saveEnabled: true,
+  title: '',
+};
+
 describe('<SnippetAreaToolbar />', () => {
   const muiTheme = getMuiTheme();
   const shallowWithContext = (node) => shallow(node, { context: { muiTheme } });
@@ -12,16 +25,7 @@ describe('<SnippetAreaToolbar />', () => {
   describe('snapshot tests', () => {
     it('matches snapshot of when it is not read-only', () => {
       const wrapper = shallowWithContext(
-        <SnippetAreaToolbar
-          title={''}
-          onTitleChange={jest.fn()}
-          readOnly={false}
-          onLockClick={jest.fn()}
-          onSaveClick={jest.fn()}
-          onSaveAsClick={jest.fn()}
-          canSave={true}
-          saveEnabled={true}
-        />
+        <SnippetAreaToolbar {...defaultProps} />
       );
       expect(shallowToJson(wrapper)).toMatchSnapshot();
     });
@@ -29,14 +33,8 @@ describe('<SnippetAreaToolbar />', () => {
     it('matches snapshot of when it is read-only', () => {
       const wrapper = shallowWithContext(
         <SnippetAreaToolbar
-          title={''}
-          onTitleChange={jest.fn()}
+          {...defaultProps}
           readOnly={true}
-          onLockClick={jest.fn()}
-          onSaveClick={jest.fn()}
-          onSaveAsClick={jest.fn()}
-          canSave={true}
-          saveEnabled={true}
         />
       );
       expect(shallowToJson(wrapper)).toMatchSnapshot();
@@ -48,14 +46,8 @@ describe('<SnippetAreaToolbar />', () => {
       const title = 'Jan Quadrant Vincent 16';
       const wrapper = shallowWithContext(
         <SnippetAreaToolbar
+          {...defaultProps}
           title={title}
-          onTitleChange={jest.fn()}
-          readOnly={false}
-          onLockClick={jest.fn()}
-          onSaveClick={jest.fn()}
-          onSaveAsClick={jest.fn()}
-          canSave={true}
-          saveEnabled={true}
         />
       );
       expect(wrapper.find('TextField[id="titleField"]').prop('value')).toEqual(title);
@@ -67,14 +59,8 @@ describe('<SnippetAreaToolbar />', () => {
       const onTitleChange = jest.fn();
       const wrapper = shallowWithContext(
         <SnippetAreaToolbar
-          title={''}
+          {...defaultProps}
           onTitleChange={onTitleChange}
-          readOnly={false}
-          onLockClick={jest.fn()}
-          onSaveClick={jest.fn()}
-          onSaveAsClick={jest.fn()}
-          canSave={true}
-          saveEnabled={true}
         />
       );
       const titleField = wrapper.find('[id="titleField"]');
@@ -84,38 +70,13 @@ describe('<SnippetAreaToolbar />', () => {
     });
   });
 
-  describe('the Language Selector dropdown', () => {
-    it('should be disabled', () => {
-      const wrapper = shallowWithContext(
-        <SnippetAreaToolbar
-          title={''}
-          onTitleChange={jest.fn()}
-          readOnly={false}
-          onLockClick={jest.fn()}
-          onSaveClick={jest.fn()}
-          onSaveAsClick={jest.fn()}
-          canSave={true}
-          saveEnabled={true}
-        />
-      );
-      const languageSelector = wrapper.find('[id="languageSelector"]');
-      expect(languageSelector.prop('disabled')).toBe(true);
-    });
-  });
-
   describe('prop: onLockClick', () => {
     it('is forwarded to the LockButton', () => {
       const onLockClick = jest.fn();
       const wrapper = shallowWithContext(
         <SnippetAreaToolbar
-          title={''}
-          onTitleChange={jest.fn()}
-          readOnly={false}
+          {...defaultProps}
           onLockClick={onLockClick}
-          onSaveClick={jest.fn()}
-          onSaveAsClick={jest.fn()}
-          canSave={true}
-          saveEnabled={true}
         />
       );
       expect(wrapper.find('LockButton').prop('onClick')).toEqual(onLockClick);
@@ -127,14 +88,8 @@ describe('<SnippetAreaToolbar />', () => {
       const onSaveClick = jest.fn();
       const wrapper = shallowWithContext(
         <SnippetAreaToolbar
-          title={''}
-          onTitleChange={jest.fn()}
-          readOnly={false}
-          onLockClick={jest.fn()}
+          {...defaultProps}
           onSaveClick={onSaveClick}
-          onSaveAsClick={jest.fn()}
-          canSave={true}
-          saveEnabled={true}
         />
       );
       expect(wrapper.find('SaveMenu').prop('onSaveClick')).toBe(onSaveClick);
@@ -146,14 +101,8 @@ describe('<SnippetAreaToolbar />', () => {
       const onSaveAsClick = jest.fn();
       const wrapper = shallowWithContext(
         <SnippetAreaToolbar
-          title={''}
-          onTitleChange={jest.fn()}
-          readOnly={false}
-          onLockClick={jest.fn()}
-          onSaveClick={jest.fn()}
+          {...defaultProps}
           onSaveAsClick={onSaveAsClick}
-          canSave={true}
-          saveEnabled={true}
         />
       );
       expect(wrapper.find('SaveMenu').prop('onSaveAsClick')).toBe(onSaveAsClick);

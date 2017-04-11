@@ -1,12 +1,18 @@
 import axios from 'axios';
 import cookie from 'react-cookie';
 
-export const CLEAR_UNSAVED_CHANGES = 'CLEAR_UNSAVED_CHANGES';
+import { makeSaveEndpointUrl } from '../util/requests';
+
+export const RESET_STATE = 'RESET_STATE';
 export const EDIT_ANNOTATION = 'EDIT_ANNOTATION';
 export const PARSE_SNIPPET = 'PARSE_SNIPPET';
-export const RESTORE_STATE = 'RESTORE_STATE';
 export const RESET_RULE_FILTERS = 'RESET_RULE_FILTERS';
+export const RESTORE_STATE = 'RESTORE_STATE';
 export const SAVE_ANNOTATION = 'SAVE_ANNOTATION';
+export const SAVE_FAILED = 'SAVE_FAILED';
+export const SAVE_STARTED = 'SAVE_STARTED';
+export const SAVE_SUCCEEDED = 'SAVE_SUCCEEDED';
+export const SELECT_ALL_FILTERS = 'SELECT_ALL_FILTERS';
 export const SET_AST = 'SET_AST';
 export const SET_RULE_FILTERS = 'SET_RULE_FILTERS';
 export const SET_SNIPPET_CONTENTS = 'SET_SNIPPET_CONTENTS';
@@ -17,14 +23,15 @@ export const SAVE_STATE = 'SAVE_STATE';
 export const SAVE_STATE_STARTED = 'SAVE_STATE_STARTED';
 export const SAVE_STATE_SUCCEEDED = 'SAVE_STATE_SUCCEEDED';
 export const SAVE_STATE_FAILED = 'SAVE_STATE_FAILED';
-export const SELECT_ALL_FILTERS = 'SELECT_ALL_FILTERS';
 export const SET_USER_SNIPPETS = 'SET_USER_SNIPPETS';
 export const UPDATE_USER_SNIPPETS_STARTED = 'UPDATE_USER_SNIPPETS_STARTED';
 export const UPDATE_USER_SNIPPETS_SUCCEEDED = 'UPDATE_USER_SNIPPETS_SUCCEEDED';
 export const UPDATE_USER_SNIPPETS_FAILED = 'UPDATE_USER_SNIPPETS_FAILED';
 export const UPDATE_USER_SNIPPETS = 'UPDATE_USER_SNIPPETS';
 
-const API_URL = process.env.REACT_APP_API_URL;
+export const resetState = () => ({
+  type: RESET_STATE,
+});
 
 export const setSnippetContents = (snippet) => ({
   type: SET_SNIPPET_CONTENTS,
@@ -83,20 +90,16 @@ export const parseSnippet = (snippet) => ({
   },
 });
 
-export const clearUnsavedChanges = () => ({
-  type: CLEAR_UNSAVED_CHANGES,
-})
-
-export const saveStateStarted = () => ({
-  type: SAVE_STATE_STARTED,
+export const saveStarted = () => ({
+  type: SAVE_STARTED,
 });
 
-export const saveStateSucceeded = () => ({
-  type: SAVE_STATE_SUCCEEDED,
+export const saveSucceeded = () => ({
+  type: SAVE_SUCCEEDED,
 });
 
-export const saveStateFailed = () => ({
-  type: SAVE_STATE_FAILED,
+export const saveFailed = () => ({
+  type: SAVE_FAILED,
 });
 
 export const setUserSnippets = (snippetMeta) => ({
@@ -131,7 +134,7 @@ export const updateUserSnippets = () => {
       Authorization: `token ${token}`,
     };
     dispatch(updateUserSnippetsStarted());
-    return axios.get(`${API_URL}/users/${username}/snippets`, { headers })
+    return axios.get(makeSaveEndpointUrl(username), { headers })
       .then(
         res => {
           dispatch(setUserSnippets(res));
@@ -142,23 +145,57 @@ export const updateUserSnippets = () => {
   };
 };
 
-export const saveState = (id) => {
+export const saveNew = () => {
   return (dispatch, getState) => {
-    // If the snippet has not been saved, then saving an annotation shouldn't
-    // trigger a POST request to save the snippet (and its annotations)
+    // Load the token and username from cookie storage
+    const token = cookie.load('token');
     const username = cookie.load('username');
-    if (id === undefined || !username) {
-      // Return a Promise object to make this action "thenable"
-      return Promise.resolve();
-    }
-    dispatch(saveStateStarted());
-    // Get the app state and stringify it
-    const stateString = JSON.stringify(getState().app);
-    return axios.post(`${API_URL}/users/${username}/snippets/${id}`, { json: stateString, })
+
+    // Construct the necessary request objects
+    const reqBody = JSON.stringify(getState().app);
+    const reqHeaders = {
+      headers: {
+        Authorization: token,
+      },
+    };
+    dispatch(saveStarted());
+    // Save the new snippet
+    return axios.post(makeSaveEndpointUrl(username), reqBody, reqHeaders)
       .then((res) => {
-        dispatch(saveStateSucceeded());
-      }, (err) => {
-        dispatch(saveStateFailed());
+        dispatch(saveSucceeded());
+        // Return the key of the newly-saved snippet so that the browser
+        // location can be updated
+        return res.data.key;
+      }, () => {
+        dispatch(saveFailed());
+      });
+  };
+};
+
+export const saveExisting = () => {
+  return (dispatch, getState) => {
+    // Load the token and username from cookie storage
+    const token = cookie.load('token');
+    const username = cookie.load('username');
+
+    // Get the app state to save (and the snippet title to save to)
+    const appState = getState().app;
+    const { snippetTitle: title } = appState;
+
+    // Construct the necessary request objects
+    const reqBody = JSON.stringify(appState);
+    const reqHeaders = {
+      headers: {
+        Authorization: token,
+      },
+    };
+    dispatch(saveStarted());
+    // Update the snippet
+    return axios.put(makeSaveEndpointUrl(username, title), reqBody, reqHeaders)
+      .then(() => {
+        dispatch(saveSucceeded());
+      }, () => {
+        dispatch(saveFailed());
       });
   };
 };

@@ -1,10 +1,11 @@
+import _ from 'lodash';
+
 /* Object mapping token types to pretty names and colors for display */
 export const rules = {
   // Non-terminal rules
   'and_expr': { prettyName: 'And', color: '#F0E68C' },
   'argument': { prettyName: 'Arguments', color: '#EAF7AB' },
   'arith_expr': { prettyName: 'Arithmetic Expression', color: '#FFA500' },
-  'atom':     { prettyName: 'Atoms', color: '#ABDBF7' },
   'augassign':   { prettyName: 'Augmented Assignment', color: '#00ffff' },
   'break_stmt': { prettyName: 'Break Statement', color: '#00ffa0' },
   'classdef': { prettyName: 'Class Definitions', color: '#03C03C' },
@@ -31,6 +32,7 @@ export const rules = {
 
 /* Array of rules produced by parser, but ignored by the UI layer */
 export const ignoredRules = [
+  'atom',
   'suite',
   'file_input',
   'simple_stmt',
@@ -87,3 +89,14 @@ export const generateFilters = (prevFilters, ruleCounts) => {
     });
   return newFilters;
 }
+
+export const removeDeprecatedFilters = (filters) => {
+  return _.omit(filters, ignoredRules);
+}
+
+export const removeDeprecatedFiltersFromState = (state) => {
+  return {
+    ...state,
+    filters: removeDeprecatedFilters(state.filters),
+  };
+};

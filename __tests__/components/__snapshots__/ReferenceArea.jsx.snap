@@ -1,0 +1,73 @@
+exports[`<ReferenceArea /> matches snapshot 1`] = `
+<div
+  style={
+    Object {
+      "bottom": 0,
+      "padding": 4,
+      "position": "fixed",
+      "right": 0,
+    }
+  }>
+  <a
+    href="https://maryvilledevcenter.com/">
+    <img
+      alt="Maryville DevCenter Logo"
+      src="mt.png"
+      width={80} />
+  </a>
+  <div
+    style={
+      Object {
+        "display": "inline-block",
+        "font": "12pt Lato, sans-serif",
+        "padding": 2,
+        "verticalAlign": "bottom",
+      }
+    }>
+    <div
+      style={
+        Object {
+          "display": "block",
+          "textAlign": "center",
+        }
+      }>
+      <a
+        href="https://www.twitter.com/MaryvilleDev"
+        style={
+          Object {
+            "color": "#666666",
+            "padding": "4px",
+          }
+        }>
+        <img
+          alt="Twitter Icon"
+          src="twitter.png"
+          width={30} />
+      </a>
+      <a
+        href="https://github.com/maryvilledev"
+        style={
+          Object {
+            "color": "#666666",
+            "padding": "4px",
+          }
+        }>
+        <img
+          alt="Github Icon"
+          src="github-icon-blue.png"
+          width={30} />
+      </a>
+    </div>
+    <a
+      href="mailto:support@codesplain.io"
+      style={
+        Object {
+          "color": "#666666",
+          "padding": "4px",
+        }
+      }>
+      Contact Us
+    </a>
+  </div>
+</div>
+`;

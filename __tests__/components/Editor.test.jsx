@@ -5,21 +5,24 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import Editor from '../../src/components/Editor';
 
+const defaultProps = {
+  AST: {},
+  filters: {},
+  language: 'python3',
+  markedLines: [],
+  onChange: jest.fn(),
+  onGutterClick: jest.fn(),
+  readOnly: false,
+  value: '',
+};
+
 describe('<Editor />', () => {
   const muiTheme = getMuiTheme();
   const shallowWithContext = (node) => shallow(node, { context: { muiTheme } });
 
   it('matches snapshot', () => {
     const wrapper = shallowWithContext(
-      <Editor
-        AST={{}}
-        filters={{}}
-        markedLines={[]}
-        readOnly={false}
-        value=""
-        onChange={jest.fn()}
-        onGutterClick={jest.fn()}
-      />
+      <Editor {...defaultProps} />
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
@@ -29,13 +32,8 @@ describe('<Editor />', () => {
       const onChange = jest.fn();
       const wrapper = shallowWithContext(
         <Editor
-          AST={{}}
-          filters={{}}
-          markedLines={[]}
-          readOnly={false}
-          value=""
+          {...defaultProps}
           onChange={onChange}
-          onGutterClick={jest.fn()}
         />
       );
       expect(wrapper.find('CodeMirror').prop('onChange')).toEqual(onChange);
@@ -47,13 +45,8 @@ describe('<Editor />', () => {
       const snippetContents = "What up, my glib globs!";
       const wrapper = shallowWithContext(
         <Editor
-          AST={{}}
-          filters={{}}
-          markedLines={[]}
-          readOnly={false}
+          {...defaultProps}
           value={snippetContents}
-          onChange={jest.fn()}
-          onGutterClick={jest.fn()}
         />
       );
       expect(wrapper.find('CodeMirror').prop('value')).toEqual(snippetContents);

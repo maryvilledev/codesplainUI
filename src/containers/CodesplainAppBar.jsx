@@ -1,10 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import AppBar from 'material-ui/AppBar';
-import { browserHistory } from 'react-router';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
+import { withRouter } from 'react-router';
 import cookie from 'react-cookie';
 import { saveUserSnippets, updateUserSnippets } from '../actions/app';
 
+import { resetState } from '../actions/app';
+import { closeAnnotationPanel } from '../actions/annotation';
 import LoginButton from '../components/buttons/LoginButton'
 import AppMenu from '../components/menus/AppMenu';
 
@@ -23,16 +27,22 @@ contains the text "Codesplain" on the far left, and either <AppMenu /> or
 <LoginButton /> components on its right, depending on whether or not the user
 has signed in with GitHub.
 */
-class CodesplainAppBar extends React.Component {
+export class CodesplainAppBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isLoggedIn: cookie.load('token') !== undefined,
+      isDialogOpen: false,
     }
+    this.handleConfirmNavigation = this.handleConfirmNavigation.bind(this);
+    this.handleDialogClose = this.handleDialogClose.bind(this);
     this.handleSignOut = this.handleSignOut.bind(this);
     this.handleTitleClick = this.handleTitleClick.bind(this);
     this.onLoginClick = this.onLoginClick.bind(this);
     this.fetchUserSnippets = this.fetchUserSnippets.bind(this);
+    this.handleTitleTouchTap = this.handleTitleTouchTap.bind(this);
+    this.onLoginClick = this.onLoginClick.bind(this);
+    this.redirectToHomePage = this.redirectToHomePage.bind(this);
   }
 
   componentDidMount() {
@@ -56,15 +66,21 @@ class CodesplainAppBar extends React.Component {
   }
 
   onLoginClick() {
+    const {
+      appState,
+      router,
+    } = this.props;
     // Saves a cookie containing the current URL path, so we can retrieve it
     // later when GitHub sends the user back to the app, and send the user back
     // to the page they were on when they clicked the login button.
-    const appState = JSON.stringify(this.props.appState);
-    cookie.save('signInState', appState, { path: '/' });
-    cookie.save('signInRedirect', location.pathname, { path: '/' });
+    const body = JSON.stringify(appState);
+    cookie.save('signInState', body, { path: '/' });
+    cookie.save('signInRedirect', router.location.pathname, { path: '/' });
 
     // Send the user to the GitHub OAuth authorization URL, where the client ID
     // is set to the CLIENT_ID env var.
+    // This does not use the router to route the user to Github because
+    // router is used for routing within the application, not the entire web
     window.location = GITHUB_URL;
   }
 
@@ -88,7 +104,7 @@ class CodesplainAppBar extends React.Component {
         lastEdited:  '2017-04-05T12:52:20.099Z',
         'private':   true,
       },
-      'test_snippet_1': {
+      'test_snippet_2': {
         snippetName: 'Test Snippet 2',
         language:    'Python 3',
         lastEdited:  '2017-04-05T12:52:20.099Z',
@@ -99,12 +115,63 @@ class CodesplainAppBar extends React.Component {
     dispatch(saveUserSnippets(snippetMeta));
   }
 
+  handleTitleTouchTap() {
+    const { hasUnsavedChanges } = this.props;
+
+    if (hasUnsavedChanges) {
+      // Confirm navigation from user
+      this.setState({ isDialogOpen: true });
+    } else {
+      this.redirectToHomePage()
+    }
+  }
+
+  redirectToHomePage() {
+    const {
+      dispatch,
+      router,
+    } = this.props;
+
+    // Reset state
+    dispatch(resetState());
+    // Close the annotation panel
+    dispatch(closeAnnotationPanel());
+    // If the user is not already at the home page, redirect them to it
+    if (router.location.pathname !== '/') {
+      router.push('/');
+    }
+  }
+
+  handleDialogClose() {
+    this.setState({ isDialogOpen: false });
+  }
+
+  handleConfirmNavigation() {
+    // Close the dialog
+    this.handleDialogClose();
+    // Redirect the user to the home page
+    this.redirectToHomePage();
+  }
+
   render() {
+    const actions = [
+      <FlatButton
+        label="Cancel"
+        secondary
+        onTouchTap={this.handleDialogClose}
+      />,
+      <FlatButton
+        label="Discard"
+        primary
+        onTouchTap={this.handleConfirmNavigation}
+      />
+    ];
+
     const { snippetMeta } = this.props.appState;
-    const titles = snippetMeta ? 
+    const titles = snippetMeta ?
       Object.entries(snippetMeta).map(snippet => snippet.snippetName)
       :
-      null;
+      [];
     const rightElement = this.state.isLoggedIn ?
       <AppMenu
         onSignOut={this.handleSignOut}
@@ -115,23 +182,32 @@ class CodesplainAppBar extends React.Component {
       <LoginButton
         onClick={this.onLoginClick}
       />;
+
     return (
-      <AppBar
-        showMenuIconButton={false}
-        title="Codesplain"
-        style={styles.title}
-        onTitleTouchTap={() => {
-          browserHistory.push('/');
-          location.reload();
-        }}
-        iconElementRight={rightElement}
-      />
+      <div>
+        <AppBar
+          showMenuIconButton={false}
+          title="Codesplain"
+          style={styles.title}
+          onTitleTouchTap={this.handleTitleTouchTap}
+          iconElementRight={rightElement}
+        />
+        <Dialog
+          actions={actions}
+          modal={false}
+          open={this.state.isDialogOpen}
+          onRequestClose={this.handleDialogClose}
+        >
+          Discard unsaved changes?
+        </Dialog>
+      </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
+  hasUnsavedChanges: state.app.hasUnsavedChanges,
   appState: state.app,
 })
 
-export default connect(mapStateToProps)(CodesplainAppBar);
+export default withRouter(connect(mapStateToProps)(CodesplainAppBar));

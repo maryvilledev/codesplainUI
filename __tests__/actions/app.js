@@ -47,6 +47,11 @@ describe('Actions: App', () => {
       expect(actions.selectAllFilters()).toMatchSnapshot();
     });
   });
+  describe('RESET_STATE', () => {
+    it('matches snapshot', () => {
+      expect(actions.resetState()).toMatchSnapshot();
+    });
+  });
   describe('SET_AST', () => {
     it('creates an action to set the abstract syntax tree', () => {
       const AST = {
@@ -151,101 +156,120 @@ describe('Actions: App', () => {
       expect(actions.parseSnippet(snippet)).toEqual(expected);
     });
   });
-  describe('CLEAR_UNSAVED_CHANGES', () => {
-    it('creates an action to clear the flag that denotes unsaved changes', () => {
+  describe('SAVE_STARTED', () => {
+    it('creates the correct action object', () => {
       const expected = {
-        type: actions.CLEAR_UNSAVED_CHANGES,
+        type: actions.SAVE_STARTED,
       };
-      expect(actions.clearUnsavedChanges()).toEqual(expected)
+      expect(actions.saveStarted()).toEqual(expected);
     });
   });
-  describe('SAVE_STATE_STARTED', () => {
-    it('creates an action to notify state save has started', () => {
+  describe('SAVE_SUCCEEDED', () => {
+    it('creates the correct action object', () => {
       const expected = {
-        type: actions.SAVE_STATE_STARTED,
+        type: actions.SAVE_SUCCEEDED,
       };
-      expect(actions.saveStateStarted()).toEqual(expected);
+      expect(actions.saveSucceeded()).toEqual(expected);
     });
   });
-  describe('SAVE_STATE_SUCCEEDED', () => {
-    it('creates an action to notify state save has succeeded', () => {
+  describe('SAVE_FAILED', () => {
+    it('creates the correct action object', () => {
       const expected = {
-        type: actions.SAVE_STATE_SUCCEEDED,
+        type: actions.SAVE_FAILED,
       };
-      expect(actions.saveStateSucceeded()).toEqual(expected);
-    });
-  });
-  describe('SAVE_STATE_FAILED', () => {
-    it('creates an action to notify state save has failed', () => {
-      const expected = {
-        type: actions.SAVE_STATE_FAILED,
-      };
-      expect(actions.saveStateFailed()).toEqual(expected);
+      expect(actions.saveFailed()).toEqual(expected);
     });
   });
   describe('async actions', () => {
     const middlewares = [ thunk ];
     const mockStore = configureMockStore(middlewares);
-    const mockId = 0;
 
     beforeEach(() => {
+      cookie.save('token', 'rick')
+      cookie.save('username', 'morty');
       moxios.install();
     });
     afterEach(() => {
+      cookie.remove('token');
       cookie.remove('username');
       cookie.remove('token');
       moxios.uninstall();
     });
-    describe('SAVE_STATE', () => {
-      it('dispatches no additional actions if an id is not supplied', () => {
-        const store = mockStore({});
-        return store.dispatch(actions.saveState())
-          .then(() => { // return of async actions
-          expect(store.getActions()).toEqual([])
-        });
-      });
-      it('dispatches no additional actions if not logged in', () => {
-        const store = mockStore({});
-        return store.dispatch(actions.saveState(mockId))
-          .then(() => { // return of async actions
-          expect(store.getActions()).toEqual([])
-        });
-      });
-      it('creates SAVE_STATE_SUCCEEDED if saved', () => {
+    describe('saveNew()', () => {
+      it('dispatches SAVE_SUCCEEDED if saved', () => {
+        const key = 'gazorpazorp';
         moxios.wait(() => {
           const request = moxios.requests.mostRecent();
           request.respondWith({
             status: 200,
-            response: { id: mockId, status: '200' },
+            response: { key, status: '200' },
           });
         });
-        cookie.save('username', 'foo');
         const expectedActions = [
-          { type: actions.SAVE_STATE_STARTED, },
-          { type: actions.SAVE_STATE_SUCCEEDED, },
+          { type: actions.SAVE_STARTED, },
+          { type: actions.SAVE_SUCCEEDED, },
         ];
         const store = mockStore({});
-        return store.dispatch(actions.saveState(mockId))
-          .then(() => { // return of async actions
-          expect(store.getActions()).toEqual(expectedActions)
-        });
+        return store.dispatch(actions.saveNew())
+          .then((returnVal) => { // return of async actions
+            expect(store.getActions()).toEqual(expectedActions);
+            expect(returnVal).toEqual(key);
+          });
       });
-      it('creates SAVE_STATE_FAILED if save failed', () => {
+      it('dispatches SAVE_FAILED if save failed', () => {
         moxios.wait(() => {
           const request = moxios.requests.mostRecent();
           request.respondWith({
             status: 400,
           });
         });
-        cookie.save('username', 'foo');
         const expectedActions = [
-          { type: actions.SAVE_STATE_STARTED, },
-          { type: actions.SAVE_STATE_FAILED, },
+          { type: actions.SAVE_STARTED, },
+          { type: actions.SAVE_FAILED, },
         ];
         const store = mockStore({});
-        return store.dispatch(actions.saveState(mockId))
+        return store.dispatch(actions.saveNew())
           .then(() => { // return of async actions
-          expect(store.getActions()).toEqual(expectedActions)
+            expect(store.getActions()).toEqual(expectedActions)
+          });
+      });
+    });
+    describe('saveExisting()', () => {
+      it('description', () => {
+        it('dispatches SAVE_SUCCEEDED if saved', () => {
+          moxios.wait(() => {
+            const request = moxios.requests.mostRecent();
+            request.respondWith({
+              status: 200,
+              response: { key, status: '200' },
+            });
+          });
+          const expectedActions = [
+            { type: actions.SAVE_STARTED, },
+            { type: actions.SAVE_SUCCEEDED, },
+          ];
+          const store = mockStore({ snippetTitle: 'foo' });
+          return store.dispatch(actions.saveExisting())
+            .then(() => { // return of async actions
+              expect(store.getActions()).toEqual(expectedActions);
+            });
+        });
+        it('dispatches SAVE_FAILED if save failed', () => {
+          moxios.wait(() => {
+            const request = moxios.requests.mostRecent();
+            request.respondWith({
+              status: 400,
+            });
+          });
+          const expectedActions = [
+            { type: actions.SAVE_STARTED, },
+            { type: actions.SAVE_FAILED, },
+          ];
+          const store = mockStore({});
+          return store.dispatch(actions.saveExisting())
+            .then(() => { // return of async actions
+              expect(store.getActions()).toEqual(expectedActions)
+            });
         });
       });
     });
