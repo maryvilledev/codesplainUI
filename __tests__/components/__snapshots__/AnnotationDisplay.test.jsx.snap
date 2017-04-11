@@ -24,5 +24,23 @@ exports[`<AnnotationDisplay /> matches snapshot 1`] = `
     onTouchTap={[Function]}
     primary={true}
     secondary={false} />
+  <IconButton
+    disableTouchRipple={false}
+    disabled={false}
+    iconStyle={Object {}}
+    tooltip="View previous annotation"
+    tooltipPosition="bottom-center"
+    touch={false}>
+    <ImageNavigateBefore />
+  </IconButton>
+  <IconButton
+    disableTouchRipple={false}
+    disabled={false}
+    iconStyle={Object {}}
+    tooltip="View next annotation"
+    tooltipPosition="bottom-center"
+    touch={false}>
+    <ImageNavigateNext />
+  </IconButton>
 </div>
 `;

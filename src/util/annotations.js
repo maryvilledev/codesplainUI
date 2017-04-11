@@ -1,12 +1,18 @@
 import _ from 'lodash';
 
+export const hasPreviousAnnotation = (annotatedLines, lineNumber) =>
+  _.head(annotatedLines) === lineNumber;
+
+export const hasNextAnnotation = (annotatedLines, lineNumber) =>
+  _.last(annotatedLines) === lineNumber;
+
 export const getAnnotatedLines = (annotations) => {
   return _.sortBy(_.keys(annotations).map(key => Number(key)));
 };
 
 export const getPreviousAnnotation = (annotations, displayedLineNumber) => {
   const annotatedLines = getAnnotatedLines(annotations);
-  if (_.head(annotatedLines) === displayedLineNumber) {
+  if (hasPreviousAnnotation(annotatedLines, displayedLineNumber)) {
     // First annotation is the one being displayed so there isn't another
     // annotation before this one; return undefined
     return undefined;
@@ -19,7 +25,7 @@ export const getPreviousAnnotation = (annotations, displayedLineNumber) => {
 
 export const getNextAnnotation = (annotations, displayedLineNumber) => {
   const annotatedLines = getAnnotatedLines(annotations);
-  if (_.last(annotatedLines) === displayedLineNumber) {
+  if (hasNextAnnotation(annotatedLines, displayedLineNumber)) {
     // Last annotation is the one being displayed so there isn't another
     // annotation after this one; return undefined
     return undefined;

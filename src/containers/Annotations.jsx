@@ -4,13 +4,20 @@ import { CardText } from 'material-ui/Card';
 import { withRouter } from 'react-router';
 
 import {
+  openAnnotationPanel,
   closeAnnotationPanel,
 } from '../actions/annotation';
 import {
   saveAnnotation,
   saveExisting,
 } from '../actions/app';
-
+import {
+  getAnnotatedLines,
+  getNextAnnotation,
+  getPreviousAnnotation,
+  hasNextAnnotation,
+  hasPreviousAnnotation,
+} from '../util/annotations';
 import AnnotationPanel from '../components/AnnotationPanel';
 
 export class Annotations extends React.Component {
@@ -18,9 +25,27 @@ export class Annotations extends React.Component {
     super(props);
     this.state = {
       displayStatus: 'none',
+      hasPrevAnnotation: false,
+      hasNextAnnotation: false,
     };
     this.handleCloseAnnotation = this.handleCloseAnnotation.bind(this);
     this.handleSaveAnnotation = this.handleSaveAnnotation.bind(this);
+    this.getPreviousAnnotation = this.getPreviousAnnotation.bind(this);
+    this.getNextAnnotation = this.getNextAnnotation.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const {
+      annotations,
+      lineAnnotated: {
+        lineNumber,
+      },
+    } = nextProps;
+    const nextAnnotatedLines = getAnnotatedLines(annotations);
+    this.setState({
+      hasNextAnnotation: hasNextAnnotation(nextAnnotatedLines, lineNumber),
+      hasPrevAnnotation: hasPreviousAnnotation(nextAnnotatedLines, lineNumber),
+    });
   }
 
   handleCloseAnnotation() {
@@ -43,13 +68,60 @@ export class Annotations extends React.Component {
     dispatch(saveExisting());
   }
 
+  getPreviousAnnotation() {
+    const {
+      lineAnnotated: {
+        lineNumber: currentLineNumber,
+      },
+      annotations,
+      dispatch,
+    } = this.props;
+
+    // Get the annotated lines
+    const previous = getPreviousAnnotation(annotations, currentLineNumber);
+    if (!previous) {
+      return;
+    }
+    const toDisplay = {
+      lineNumber: previous.lineNumber,
+      lineText: previous.lineText,
+    };
+    dispatch(openAnnotationPanel(toDisplay));
+  }
+
+  getNextAnnotation() {
+    const {
+      lineAnnotated: {
+        lineNumber: currentLineNumber,
+      },
+      annotations,
+      dispatch,
+    } = this.props;
+
+    // Get the annotated lines
+    const next = getNextAnnotation(annotations, currentLineNumber);
+    if (!next) {
+      return;
+    }
+    const toDisplay = {
+      lineNumber: next.lineNumber,
+      lineText: next.lineText,
+    };
+    dispatch(openAnnotationPanel(toDisplay));
+  }
+
   render() {
     const {
       annotation,
       isDisplayingAnnotation,
-      readOnly,
       lineAnnotated,
+      readOnly,
     } = this.props;
+
+    const {
+      hasNextAnnotation,
+      hasPrevAnnotation,
+    } = this.state;
 
     if (!isDisplayingAnnotation) {
       const prompt = readOnly ?
@@ -65,6 +137,10 @@ export class Annotations extends React.Component {
         lineAnnotated={lineAnnotated}
         saveAnnotation={this.handleSaveAnnotation}
         closeAnnotation={this.handleCloseAnnotation}
+        getNextAnnotation={this.getNextAnnotation}
+        getPreviousAnnotation={this.getPreviousAnnotation}
+        hasPrevAnnotation={hasPrevAnnotation}
+        hasNextAnnotation={hasNextAnnotation}
       />
     );
   }
