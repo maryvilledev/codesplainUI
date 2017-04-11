@@ -31,12 +31,12 @@ export class Annotations extends React.Component {
   handleSaveAnnotation(annotation) {
     const {
       dispatch,
-      snippetInformation
+      lineAnnotated
     } = this.props;
 
     const annotationData = {
       annotation,
-      ...snippetInformation,
+      ...lineAnnotated,
     };
 
     dispatch(saveAnnotation(annotationData));
@@ -48,7 +48,7 @@ export class Annotations extends React.Component {
       annotation,
       isDisplayingAnnotation,
       readOnly,
-      snippetInformation,
+      lineAnnotated,
     } = this.props;
 
     if (!isDisplayingAnnotation) {
@@ -62,7 +62,7 @@ export class Annotations extends React.Component {
     return (
       <AnnotationPanel
         annotation={annotation}
-        snippetInformation={snippetInformation}
+        lineAnnotated={lineAnnotated}
         saveAnnotation={this.handleSaveAnnotation}
         closeAnnotation={this.handleCloseAnnotation}
       />
@@ -74,28 +74,34 @@ Annotations.propTypes = {
   annotation: PropTypes.string.isRequired,
   isDisplayingAnnotation: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
-  snippetInformation: PropTypes.shape({
+  lineAnnotated: PropTypes.shape({
     lineNumber: PropTypes.number,
     lineText: PropTypes.string,
   }).isRequired,
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const {
-    isDisplayingAnnotation,
-    snippetInformation: {
-      lineNumber,
+    annotation: {
+      isDisplayingAnnotation,
+      lineAnnotated,
     },
-  } = state.annotation;
+    app: {
+      annotations,
+      readOnly,
+      snippetLanguage,
+    },
+  } = state;
+  const { lineNumber } = lineAnnotated;
   // Check that
-  const annotation = isDisplayingAnnotation ? (state.app.annotations[lineNumber] && state.app.annotations[lineNumber].annotation) || '' : '';
+  const annotation = (isDisplayingAnnotation && annotations[lineNumber] && annotations[lineNumber].annotation) || '';
   return {
-    isDisplayingAnnotation,
-    readOnly: state.app.readOnly,
-    snippetLanguage: state.app.snippetLanguage,
-    snippetInformation: state.annotation.snippetInformation,
     annotation,
-    appState: state.app,
+    annotations,
+    isDisplayingAnnotation,
+    lineAnnotated,
+    readOnly,
+    snippetLanguage,
   };
 };
 

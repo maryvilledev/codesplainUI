@@ -19,7 +19,7 @@ describe('<AnnotationPanel />', () => {
       const wrapper = shallowWithContext(
         <AnnotationPanel
           annotation=''
-          snippetInformation={{
+          lineAnnotated={{
             lineNumber: 0,
             lineText: 'True',
           }}
@@ -33,7 +33,7 @@ describe('<AnnotationPanel />', () => {
       const wrapper = shallowWithContext(
         <AnnotationPanel
           annotation='Wubba lubba dub dub!'
-          snippetInformation={{
+          lineAnnotated={{
             lineNumber: 0,
             lineText: 'True',
           }}
@@ -44,7 +44,7 @@ describe('<AnnotationPanel />', () => {
     });
   });
 
-  describe('prop: snippetInformation', () => {
+  describe('prop: lineAnnotated', () => {
     it('is forwarded to LineSnippet', () => {
       const lineInfo = {
         lineNumber: 0,
@@ -53,7 +53,7 @@ describe('<AnnotationPanel />', () => {
       const wrapper = shallowWithContext(
         <AnnotationPanel
           annotation='some annotation'
-          snippetInformation={lineInfo}
+          lineAnnotated={lineInfo}
           {...mockFunctionProps}
         />
       );

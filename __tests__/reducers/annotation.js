@@ -5,24 +5,24 @@ describe('Reducer: Annotation', () => {
   it('should have initial state', () => {
     const initial = {
       isDisplayingAnnotation: false,
-      snippetInformation: {},
+      lineAnnotated: {},
     }
     expect(reducer(undefined, {})).toEqual(initialState);
   });
 
   it('should handle OPEN_ANNOTATION_PANEL', () => {
-    const snippetInformation = {
+    const lineAnnotated = {
       lineNumber: 1,
       lineText: 'Wubba lubba dub dub!',
     };
     const action = {
       type: actions.OPEN_ANNOTATION_PANEL,
-      payload: snippetInformation
+      payload: lineAnnotated
     }
     const expected = {
       ...initialState,
       isDisplayingAnnotation: true,
-      snippetInformation: action.payload
+      lineAnnotated: action.payload
     }
     expect(reducer(undefined, action)).toEqual(expected)
   });
@@ -34,7 +34,7 @@ describe('Reducer: Annotation', () => {
     const expected = {
       ...initialState,
       isDisplayingAnnotation: false,
-      snippetInformation: {}
+      lineAnnotated: {}
     };
     expect(reducer(undefined, action)).toEqual(expected);
   });
