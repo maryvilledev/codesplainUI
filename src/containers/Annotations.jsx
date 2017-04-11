@@ -78,6 +78,7 @@ Annotations.propTypes = {
     lineNumber: PropTypes.number,
     lineText: PropTypes.string,
   }).isRequired,
+  snippetLanguage: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = state => {

@@ -14,11 +14,12 @@ describe('<Annotations />', () => {
   const wrapper = shallow(
     <Annotations
       annotation={mockAnnotation}
-      isDisplayingAnnotation={true}
-      readOnly={true}
-      lineAnnotated={mocklineAnnotated}
       dispatch={mockDispatch}
+      isDisplayingAnnotation={true}
+      lineAnnotated={mocklineAnnotated}
+      readOnly={true}
       router={mockRouter}
+      snippetLanguage="python3"
     />
   );
 
