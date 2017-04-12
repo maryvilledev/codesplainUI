@@ -57,12 +57,9 @@ export class CodesplainAppBar extends React.Component {
     location.reload();
   }
 
-  handleSnippetSelected(title) {
-    const { userSnippets } = this.props.userState;
-    const username         = cookie.load('username');
-    const snippetID = Object.keys(userSnippets)
-      .filter(key => userSnippets[key].snippetTitle === title);
-    window.location = `/${username}/${snippetID}`;
+  handleSnippetSelected(key) {
+    const username  = cookie.load('username');
+    window.location = `/${username}/${key}`;
   }
 
   onLoginClick() {
@@ -137,14 +134,10 @@ export class CodesplainAppBar extends React.Component {
     ];
 
     const { userSnippets } = this.props.userState;
-    const titles = userSnippets ?
-      Object.keys(userSnippets).map(key => userSnippets[key].snippetTitle)
-      :
-      [];
     const rightElement = this.state.isLoggedIn ?
       <AppMenu
         onSignOut={this.handleSignOut}
-        snippetTitles={titles}
+        snippetTitles={userSnippets ? userSnippets : {}}
         onTitleClicked={this.handleSnippetSelected}
       />
       :

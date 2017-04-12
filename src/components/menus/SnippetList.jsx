@@ -3,13 +3,13 @@ import React, { PropTypes } from 'react';
 import { MenuItem } from 'material-ui';
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 
-const makeMenuItems = (titles, onClick) => {
-  if (!titles.length) return null;
-  return titles.map(title => (
+const makeMenuItems = (userSnippets, onClick) => {
+  if (!Object.keys(userSnippets).length === 0) return null;
+  return Object.keys(userSnippets).map(key => (
     <MenuItem
-      key={title}
-      primaryText={title}
-      onClick={() => onClick(title)}
+      key={key}
+      primaryText={userSnippets[key].snippetTitle}
+      onClick={() => onClick(key)}
     />
   ));
 };
