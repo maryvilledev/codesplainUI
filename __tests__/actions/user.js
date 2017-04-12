@@ -21,7 +21,7 @@ describe('Actions: User', () => {
 
     describe('UPDATE_USER_SNIPPETS', () => {
       it('dispatches SET_USER_SNIPPETS, UPDATE_USER_SNIPPETS_STARTED, and ' +
-         'UPDATE_USER_SNIPPETS_SUCCEEDED if successful', () => {
+         'UPDATE_USER_SNIPPETS_SUCCEEDED if successful', done => {
         moxios.wait(() => {
           const request = moxios.requests.mostRecent();
           request.respondWith({
@@ -52,10 +52,11 @@ describe('Actions: User', () => {
           return store.dispatch(actions.updateUserSnippets())
             .then(() => { // return of async actions
               expect(store.getActions()).toEqual(expectedActions);
+              done();
             });
         });
       });
-      it('dispatches UPDATE_USER_SNIPPETS_FAILED if unsuccessful', () => {
+      it('dispatches UPDATE_USER_SNIPPETS_FAILED if unsuccessful', done => {
         moxios.wait(() => {
           const request = moxios.requests.mostRecent();
           request.respondWith({
@@ -71,6 +72,7 @@ describe('Actions: User', () => {
         store.dispatch(actions.updateUserSnippets())
           .then(() => {
             expect(store.getActions()).toEqual(expectedActions);
+            done();
           });
       });
     });
