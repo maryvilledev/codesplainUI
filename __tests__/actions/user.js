@@ -21,7 +21,7 @@ describe('Actions: User', () => {
 
     describe('UPDATE_USER_SNIPPETS', () => {
       it('dispatches SET_USER_SNIPPETS, UPDATE_USER_SNIPPETS_STARTED, and ' +
-         'UPDATE_USER_SNIPPETS_SUCCEEDED if successful', done => {
+         'UPDATE_USER_SNIPPETS_SUCCEEDED if successful', () => {
         moxios.wait(() => {
           const request = moxios.requests.mostRecent();
           request.respondWith({
@@ -52,11 +52,10 @@ describe('Actions: User', () => {
           return store.dispatch(actions.updateUserSnippets())
             .then(() => { // return of async actions
               expect(store.getActions()).toEqual(expectedActions);
-              done();
             });
         });
       });
-      it('dispatches UPDATE_USER_SNIPPETS_FAILED if unsuccessful', done => {
+      it('dispatches UPDATE_USER_SNIPPETS_FAILED if unsuccessful', () => {
         moxios.wait(() => {
           const request = moxios.requests.mostRecent();
           request.respondWith({
@@ -66,13 +65,13 @@ describe('Actions: User', () => {
         cookie.save('token', '1234', { path: '/' });
         cookie.save('username', 'foo', { path: '/' });
         const expectedActions = [
+          { type: actions.UPDATE_USER_SNIPPETS_STARTED },
           { type: actions.UPDATE_USER_SNIPPETS_FAILED },
         ];
         const store = mockStore({});
-        store.dispatch(actions.updateUserSnippets())
-          .then(() => {
+        return store.dispatch(actions.updateUserSnippets())
+          .catch(() => {
             expect(store.getActions()).toEqual(expectedActions);
-            done();
           });
       });
     });
