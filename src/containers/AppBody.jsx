@@ -74,9 +74,23 @@ export class AppBody extends React.Component {
           canEdit: (username === cookie.load('username')),
         };
         dispatch(setPermissions(permissions));
-        // dispatch(restoreState(removeDeprecatedFiltersFromState(res.data)));
-        dispatch(restoreState(setDefaults(removeDeprecatedFiltersFromState(res.data))));
-        router.push(`/${username}/${id}`)
+
+        // Normalize the app state received from S3
+        const appState = setDefaults(removeDeprecatedFiltersFromState(res.data));
+        // Snippet may not have a S3 key value saved; set it to the URL's id
+        // param if the state object is lacking it
+        if (!appState.snippetKey) {
+          appState.snippetKey = id;
+        }
+        // Restore the application's state
+        dispatch(restoreState(appState));
+
+        // Reroute if not at the 'correct' location
+        // So /:username/snippets/:id -> /:username/:id
+        const nextRoute = `/${username}/${id}`;
+        if (router.location.pathname !== nextRoute) {
+          router.push(nextRoute);
+        }
       }, () => {
         // Failed to get the snippet, either bad URL or unauthorized
         router.push('/');
