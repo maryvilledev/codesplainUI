@@ -13,8 +13,10 @@ import {
   setSnippetLanguage,
   setSnippetTitle,
   toggleEditState,
-  updateUserSnippets,
 } from '../actions/app';
+import {
+  updateUserSnippets,
+} from '../actions/user';
 import {
   loadParser,
 } from '../actions/parser';

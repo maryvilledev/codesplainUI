@@ -5,7 +5,8 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import { withRouter } from 'react-router';
 import cookie from 'react-cookie';
-import { saveUserSnippets, updateUserSnippets } from '../actions/app';
+import { saveUserSnippets } from '../actions/app';
+import { updateUserSnippets } from '../actions/user';
 
 import { resetState } from '../actions/app';
 import { closeAnnotationPanel } from '../actions/annotation';
@@ -167,9 +168,14 @@ export class CodesplainAppBar extends React.Component {
       />
     ];
 
-    const { snippetMeta } = this.props.appState;
-    const titles = snippetMeta ?
-      Object.entries(snippetMeta).map(snippet => snippet.snippetName)
+    console.log(this.props.userState);
+    const { userSnippets } = this.props.userState;
+    if (userSnippets) {
+      console.log('Object.entries(userSnippets):')
+      console.log(Object.entries(userSnippets))
+    }
+    const titles = userSnippets ?
+      Object.keys(userSnippets).map(key => userSnippets[key].snippetTitle)
       :
       [];
     const rightElement = this.state.isLoggedIn ?
@@ -208,6 +214,7 @@ export class CodesplainAppBar extends React.Component {
 const mapStateToProps = state => ({
   hasUnsavedChanges: state.app.hasUnsavedChanges,
   appState: state.app,
+  userState: state.user,
 })
 
 export default withRouter(connect(mapStateToProps)(CodesplainAppBar));
