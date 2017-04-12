@@ -71,7 +71,7 @@ export class Auth extends React.Component {
     } catch(err) {
       const error = resolveErrorMessage(err.response.status);
       this.setState({ waiting: false, error });
-      return; // can't keep going so bail out
+      return;
     }
 
     // Code was accepted, so extract and save the token from the response
@@ -93,7 +93,7 @@ export class Auth extends React.Component {
     } catch(err) {
       const error = resolveErrorMessage(err.response.status);
       this.setState({ waiting: false, error });
-      return ; // it didn't work, so bail out
+      return;
     }
     // Can pull lots of other stuff out of res.data if needed
     const { login, avatar_url } = res.data;
