@@ -7,6 +7,17 @@ describe('Reducer: App', () => {
       expect(initialState).toMatchSnapshot();
     });
   });
+  it('handles SET_SNIPPET_KEY', () => {
+    const snippetKey = 'szechuan sauce';
+    const action = {
+      type: actions.SET_SNIPPET_KEY,
+      payload: snippetKey,
+    };
+    const expected = {
+      snippetKey
+    }
+    expect(reducer({}, action)).toEqual(expected);
+  });
   it('handles RESET_STATE', () => {
     const action = {
       type: actions.RESET_STATE,
@@ -17,7 +28,7 @@ describe('Reducer: App', () => {
     };
     expect(reducer(state, action)).toEqual(initialState);
   });
-  it('should handle SET_SNIPPET_CONTENTS', () => {
+  it('handles SET_SNIPPET_CONTENTS', () => {
     const snippet = 'Show me what you got';
     const action = {
       type: actions.SET_SNIPPET_CONTENTS,
@@ -30,7 +41,7 @@ describe('Reducer: App', () => {
     }
     expect(reducer(undefined, action)).toEqual(expected);
   });
-  it('should handle TOGGLE_EDITING_STATE', () => {
+  it('handles TOGGLE_EDITING_STATE', () => {
     const action = {
       type: actions.TOGGLE_EDITING_STATE,
     };
@@ -41,7 +52,7 @@ describe('Reducer: App', () => {
     };
     expect(reducer(undefined, action)).toEqual(expected);
   });
-  it('should handle SET_RULE_FILTERS', () => {
+  it('handles SET_RULE_FILTERS', () => {
     const filters = {
       'for_stmt': {
         prettyTokenName: 'For Loops',
@@ -65,7 +76,7 @@ describe('Reducer: App', () => {
     };
     expect(reducer(undefined, action)).toEqual(expected);
   });
-  it('should handle RESET_RULE_FILTERS', () => {
+  it('handles RESET_RULE_FILTERS', () => {
     const filters = {
       'for_stmt': {
         prettyTokenName: 'For Loops',
@@ -97,7 +108,7 @@ describe('Reducer: App', () => {
     };
     expect(reducer({ filters }, action)).toEqual(expected);
   });
-  it('should handle SELECT_ALL_FILTERS', () => {
+  it('handles SELECT_ALL_FILTERS', () => {
     const filters = {
       'for_stmt': {
         prettyTokenName: 'For Loops',
@@ -129,7 +140,7 @@ describe('Reducer: App', () => {
     };
     expect(reducer({ filters }, action)).toEqual(expected);
   });
-  it('should handle SET_AST', () => {
+  it('handles SET_AST', () => {
     const AST = {
       "type": "file_input",
       "begin": 0,
@@ -151,7 +162,7 @@ describe('Reducer: App', () => {
     };
     expect(reducer(undefined, action)).toEqual(expected)
   });
-  it('should handle SAVE_ANNOTATION', () => {
+  it('handles SAVE_ANNOTATION', () => {
     const annotationData = {
       annotation: 'You pass butter.',
       lineNumber: 1,
@@ -170,7 +181,7 @@ describe('Reducer: App', () => {
     };
     expect(reducer(undefined, action)).toEqual(expected);
   });
-  it('should handle RESTORE_STATE', () => {
+  it('handles RESTORE_STATE', () => {
     const savedState = {
       "snippet": "\t",
       "snippetTitle": "",
@@ -199,7 +210,7 @@ describe('Reducer: App', () => {
     };
     expect(reducer(undefined, action)).toEqual(expected);
   });
-  it('should handle SET_SNIPPET_TITLE', () => {
+  it('handles SET_SNIPPET_TITLE', () => {
     const snippetTitle = 'Get Schwifty'
     const action = {
       type: actions.SET_SNIPPET_TITLE,
@@ -212,7 +223,7 @@ describe('Reducer: App', () => {
     }
     expect(reducer(undefined, action)).toEqual(expected);
   });
-  it('should handle SET_SNIPPET_LANGUAGE', () => {
+  it('handles SET_SNIPPET_LANGUAGE', () => {
     const snippetLanguage = 'Gromflomite';
     const action = {
       type: actions.SET_SNIPPET_LANGUAGE,
@@ -225,7 +236,7 @@ describe('Reducer: App', () => {
     };
     expect(reducer(undefined, action)).toEqual(expected);
   });
-  it('should handle CLEAR_UNSAVED_CHANGES', () => {
+  it('handles CLEAR_UNSAVED_CHANGES', () => {
     const action = {
       type: actions.CLEAR_UNSAVED_CHANGES,
     };
@@ -280,7 +291,7 @@ describe('Reducer: App', () => {
       expect(reducer(undefined, action)).toEqual(expected);
     });
   });
-  it('should handle SAVE_SUCCEEDED', () => {
+  it('handles SAVE_SUCCEEDED', () => {
     const state = {
       hasUnsavedChanges: true,
     };

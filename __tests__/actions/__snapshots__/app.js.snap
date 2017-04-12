@@ -15,3 +15,10 @@ Object {
   "type": "SELECT_ALL_FILTERS",
 }
 `;
+
+exports[`Actions: App SET_SNIPPET_KEY creates correct action object 1`] = `
+Object {
+  "payload": "szechuan sauce",
+  "type": "SET_SNIPPET_KEY",
+}
+`;

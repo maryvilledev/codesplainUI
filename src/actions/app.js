@@ -19,6 +19,12 @@ export const SET_SNIPPET_CONTENTS = 'SET_SNIPPET_CONTENTS';
 export const SET_SNIPPET_LANGUAGE = 'SET_SNIPPET_LANGUAGE';
 export const SET_SNIPPET_TITLE = 'SET_SNIPPET_TITLE';
 export const TOGGLE_EDITING_STATE = 'TOGGLE_EDITING_STATE';
+export const SET_SNIPPET_KEY = 'SET_SNIPPET_KEY';
+
+export const setSnippetKey = (key) => ({
+  type: SET_SNIPPET_KEY,
+  payload: key,
+})
 
 export const resetState = () => ({
   type: RESET_STATE,

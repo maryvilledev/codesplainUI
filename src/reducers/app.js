@@ -11,6 +11,7 @@ export const initialState = {
   snippetLanguage: 'python3',
   readOnly: false,
   snippet: '',
+  snippetKey: '',
   snippetTitle: '',
 };
 
@@ -20,6 +21,12 @@ const app = (state = initialState, action) => {
       return {
         ...initialState,
       };
+    }
+    case actions.SET_SNIPPET_KEY: {
+      return {
+        ...state,
+        snippetKey: action.payload
+      }
     }
     case actions.SET_SNIPPET_CONTENTS: {
       return {
