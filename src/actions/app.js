@@ -134,7 +134,7 @@ export const saveExisting = () => {
 
     // Get the app state to save (and the snippet title to save to)
     const appState = getState().app;
-    const { snippetTitle: title } = appState;
+    const { snippetKey: key } = appState;
 
     // Construct the necessary request objects
     const reqBody = JSON.stringify(appState);
@@ -145,7 +145,7 @@ export const saveExisting = () => {
     };
     dispatch(saveStarted());
     // Update the snippet
-    return axios.put(makeSaveEndpointUrl(username, title), reqBody, reqHeaders)
+    return axios.put(makeSaveEndpointUrl(username, key), reqBody, reqHeaders)
       .then(() => {
         dispatch(saveSucceeded());
       }, () => {

@@ -10,6 +10,7 @@ import {
   saveNew,
   saveExisting,
   setSnippetContents,
+  setSnippetKey,
   setSnippetLanguage,
   setSnippetTitle,
   toggleEditState,
@@ -158,10 +159,8 @@ export class SnippetArea extends React.Component {
       .then((snippetKey) => {
         // Redirect the user to the snippet's page
         router.push(`/${username}/${snippetKey}`);
-        // Update the snippet's title if the request returned a different key
-        if (snippetTitle !== snippetKey) {
-          dispatch(setSnippetTitle(snippetKey))
-        }
+        // Update the snippet's key
+        dispatch(setSnippetKey(snippetKey))
         this.showSnackbar('Codesplaination Saved!');
       }, () => {
         this.showSnackbar('Failed to save - an error occurred');
@@ -193,10 +192,8 @@ export class SnippetArea extends React.Component {
       .then((snippetKey) => {
         // Redirect the user to the snippet's page
         router.push(`/${username}/${snippetKey}`);
-        // Update the snippet's title if the request returned a different key
-        if (title !== snippetKey) {
-          dispatch(setSnippetTitle(snippetKey));
-        }
+        // Update the snippet's key
+        dispatch(setSnippetKey(snippetKey))
         this.showSnackbar('Codesplaination Saved!');
         const permissions = {
           canRead: true,
