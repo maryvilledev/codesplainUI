@@ -7,8 +7,20 @@ import AnnotationPanel from '../../src/components/AnnotationPanel';
 
 const mockFunctionProps = {
   closeAnnotation: jest.fn(),
+  getNextAnnotation: jest.fn(),
+  getPreviousAnnotation: jest.fn(),
   saveAnnotation: jest.fn(),
 };
+const defaultProps = {
+  ...mockFunctionProps,
+  annotation: '',
+  lineAnnotated: {
+    lineNumber: 0,
+    lineText: 'You don\'t know me!',
+  },
+  hasNextAnnotation: false,
+  hasPrevAnnotation: false,
+}
 
 describe('<AnnotationPanel />', () => {
   const muiTheme = getMuiTheme();
@@ -18,12 +30,7 @@ describe('<AnnotationPanel />', () => {
     it('matches snapshot when no annotation is saved for a line', () => {
       const wrapper = shallowWithContext(
         <AnnotationPanel
-          annotation=''
-          snippetInformation={{
-            lineNumber: 0,
-            lineText: 'True',
-          }}
-          {...mockFunctionProps}
+          {...defaultProps}
         />
       );
       expect(shallowToJson(wrapper)).toMatchSnapshot();
@@ -32,34 +39,30 @@ describe('<AnnotationPanel />', () => {
     it('matches snapshot when an annotation is saved for a line', () => {
       const wrapper = shallowWithContext(
         <AnnotationPanel
+          {...defaultProps}
           annotation='Wubba lubba dub dub!'
-          snippetInformation={{
-            lineNumber: 0,
-            lineText: 'True',
-          }}
-          {...mockFunctionProps}
         />
       );
       expect(shallowToJson(wrapper)).toMatchSnapshot();
     });
   });
 
-  describe('prop: snippetInformation', () => {
+  describe('prop: lineAnnotated', () => {
     it('is forwarded to LineSnippet', () => {
-      const lineInfo = {
+      const lineAnnotated = {
         lineNumber: 0,
         lineText: 'You pass butter',
       };
       const wrapper = shallowWithContext(
         <AnnotationPanel
+          {...defaultProps}
           annotation='some annotation'
-          snippetInformation={lineInfo}
-          {...mockFunctionProps}
+          lineAnnotated={lineAnnotated}
         />
       );
       const lineSnippet = wrapper.find('LineSnippet');
-      expect(lineSnippet.prop('lineNumber')).toEqual(Number(lineInfo['lineNumber']) + 1);
-      expect(lineSnippet.prop('value')).toEqual(lineInfo['lineText']);
+      expect(lineSnippet.prop('lineNumber')).toEqual(Number(lineAnnotated['lineNumber']) + 1);
+      expect(lineSnippet.prop('value')).toEqual(lineAnnotated['lineText']);
     });
   });
 });

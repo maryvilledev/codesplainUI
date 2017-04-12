@@ -10,6 +10,7 @@ import {
   saveNew,
   saveExisting,
   setSnippetContents,
+  setSnippetKey,
   setSnippetLanguage,
   setSnippetTitle,
   toggleEditState,
@@ -162,10 +163,8 @@ export class SnippetArea extends React.Component {
       .then((snippetKey) => {
         // Redirect the user to the snippet's page
         router.push(`/${username}/${snippetKey}`);
-        // Update the snippet's title if the request returned a different key
-        if (snippetTitle !== snippetKey) {
-          dispatch(setSnippetTitle(snippetKey))
-        }
+        // Update the snippet's key
+        dispatch(setSnippetKey(snippetKey))
         this.showSnackbar('Codesplaination Saved!');
         dispatch(updateUserSnippets());
       }, () => {
@@ -198,10 +197,8 @@ export class SnippetArea extends React.Component {
       .then((snippetKey) => {
         // Redirect the user to the snippet's page
         router.push(`/${username}/${snippetKey}`);
-        // Update the snippet's title if the request returned a different key
-        if (title !== snippetKey) {
-          dispatch(setSnippetTitle(snippetKey));
-        }
+        // Update the snippet's key
+        dispatch(setSnippetKey(snippetKey))
         this.showSnackbar('Codesplaination Saved!');
         const permissions = {
           canRead: true,
@@ -291,7 +288,7 @@ const mapStateToProps = state => ({
   filters: state.app.filters,
   snippetLanguage: state.app.snippetLanguage,
   openLine: (state.annotation.isDisplayingAnnotation
-    ? state.annotation.snippetInformation.lineNumber
+    ? state.annotation.lineAnnotated.lineNumber
     : undefined),
   readOnly: state.app.readOnly,
   snippet: state.app.snippet,
