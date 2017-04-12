@@ -21,7 +21,7 @@ describe('Actions: User', () => {
 
     describe('UPDATE_USER_SNIPPETS', () => {
       it('dispatches SET_USER_SNIPPETS, UPDATE_USER_SNIPPETS_STARTED, and ' +
-         'UPDATE_USER_SNIPPETS_SUCCEEDED if successful', () => {
+         'UPDATE_USER_SNIPPETS_SUCCEEDED if successful', done => {
         moxios.wait(() => {
           const request = moxios.requests.mostRecent();
           request.respondWith({
@@ -52,26 +52,28 @@ describe('Actions: User', () => {
           return store.dispatch(actions.updateUserSnippets())
             .then(() => { // return of async actions
               expect(store.getActions()).toEqual(expectedActions);
+              done();
             });
         });
-        it('dispatches UPDATE_USER_SNIPPETS_FAILED if unsuccessful', () => {
-          moxios.wait(() => {
-            const request = moxios.requests.mostRecent();
-            request.respondWith({
-              status: 400,
-            });
+      });
+      it('dispatches UPDATE_USER_SNIPPETS_FAILED if unsuccessful', done => {
+        moxios.wait(() => {
+          const request = moxios.requests.mostRecent();
+          request.respondWith({
+            status: 400,
           });
-          cookie.save('token', '1234', { path: '/' });
-          cookie.save('username', 'foo', { path: '/' });
-          const expectedActions = [
-            { type: actions.UPDATE_USER_SNIPPETS_FAILED },
-          ];
-          const store = mockStore({});
-          return store.dispatch(actions.updateUserSnippets())
-            .then(() => {
-              expect(store.getActions()).toEqual(expectedActions);
-            });
         });
+        cookie.save('token', '1234', { path: '/' });
+        cookie.save('username', 'foo', { path: '/' });
+        const expectedActions = [
+          { type: actions.UPDATE_USER_SNIPPETS_FAILED },
+        ];
+        const store = mockStore({});
+        store.dispatch(actions.updateUserSnippets())
+          .then(() => {
+            expect(store.getActions()).toEqual(expectedActions);
+            done();
+          });
       });
     });
     describe('SET_USER_SNIPPETS', () => {
