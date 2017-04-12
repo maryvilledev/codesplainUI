@@ -1,14 +1,35 @@
 import React, { PropTypes } from 'react';
 import MarkdownRenderer from 'react-markdown-renderer';
 import RaisedButton from 'material-ui/RaisedButton';
+import IconButton from 'material-ui/IconButton';
+import Previous from 'material-ui/svg-icons/navigation/arrow-back';
+import Next from 'material-ui/svg-icons/navigation/arrow-forward';
 
 import markdownRendererOptions from '../util/markdown-renderer-options';
+
+const styles = {
+  actionRow: {
+    alignItems: 'center',
+    display: 'flex',
+    flexFlow: 'row wrap',
+    justifyContent: 'space-between',
+  },
+  annotationViewButtons: {
+    display: 'flex',
+    flex: '0 1 auto',
+    justifyContent: 'flex-end',
+  },
+}
 
 const AnnotationDisplay = (props) => {
   const {
     annotation,
     closeAnnotation,
     editAnnotation,
+    getNextAnnotation,
+    getPreviousAnnotation,
+    hasNextAnnotation,
+    hasPrevAnnotation,
   } = props;
 
   return (
@@ -17,16 +38,38 @@ const AnnotationDisplay = (props) => {
         markdown={annotation}
         options={markdownRendererOptions}
       />
-      <RaisedButton
-        label="Close"
-        secondary
-        onTouchTap={closeAnnotation}
-      />
-      <RaisedButton
-        label="Edit"
-        primary
-        onTouchTap={editAnnotation}
-      />
+      <div style={styles.actionRow}>
+        <div>
+          <RaisedButton
+            label="Close"
+            onTouchTap={closeAnnotation}
+            secondary
+          />
+          <RaisedButton
+            label="Edit"
+            onTouchTap={editAnnotation}
+            primary
+          />
+        </div>
+        <div style={styles.annotationViewButtons}>
+          <IconButton
+            disabled={hasPrevAnnotation}
+            children={<Previous />}
+            id="previous-annotation"
+            onTouchTap={getPreviousAnnotation}
+            tooltip="Previous Annotation"
+            touch
+          />
+          <IconButton
+            disabled={hasNextAnnotation}
+            children={<Next />}
+            id="next-annotation"
+            onTouchTap={getNextAnnotation}
+            tooltip="Next Annotation"
+            touch
+          />
+        </div>
+      </div>
     </div>
   );
 };
@@ -35,6 +78,10 @@ AnnotationDisplay.propTypes = {
   annotation: PropTypes.string.isRequired,
   closeAnnotation: PropTypes.func.isRequired,
   editAnnotation: PropTypes.func.isRequired,
+  getNextAnnotation: PropTypes.func.isRequired,
+  getPreviousAnnotation: PropTypes.func.isRequired,
+  hasNextAnnotation: PropTypes.bool.isRequired,
+  hasPrevAnnotation: PropTypes.bool.isRequired,
 };
 
 export default AnnotationDisplay;

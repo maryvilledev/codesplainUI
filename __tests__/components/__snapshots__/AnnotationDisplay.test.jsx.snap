@@ -1,28 +1,287 @@
-exports[`<AnnotationDisplay /> matches snapshot 1`] = `
+exports[`<AnnotationDisplay /> snapshots when an annotation after current one exists matches snapshot 1`] = `
 <div>
   <MarkdownRenderer
-    markdown="some annotation"
+    markdown=""
     options={
       Object {
         "highlight": [Function],
         "langPrefix": "hljs language-",
       }
     } />
-  <RaisedButton
-    disabled={false}
-    fullWidth={false}
-    label="Close"
-    labelPosition="after"
-    onTouchTap={[Function]}
-    primary={false}
-    secondary={true} />
-  <RaisedButton
-    disabled={false}
-    fullWidth={false}
-    label="Edit"
-    labelPosition="after"
-    onTouchTap={[Function]}
-    primary={true}
-    secondary={false} />
+  <div
+    style={
+      Object {
+        "alignItems": "center",
+        "display": "flex",
+        "flexFlow": "row wrap",
+        "justifyContent": "space-between",
+      }
+    }>
+    <div>
+      <RaisedButton
+        disabled={false}
+        fullWidth={false}
+        label="Close"
+        labelPosition="after"
+        onTouchTap={[Function]}
+        primary={false}
+        secondary={true} />
+      <RaisedButton
+        disabled={false}
+        fullWidth={false}
+        label="Edit"
+        labelPosition="after"
+        onTouchTap={[Function]}
+        primary={true}
+        secondary={false} />
+    </div>
+    <div
+      style={
+        Object {
+          "display": "flex",
+          "flex": "0 1 auto",
+          "justifyContent": "flex-end",
+        }
+      }>
+      <IconButton
+        disableTouchRipple={false}
+        disabled={false}
+        iconStyle={Object {}}
+        id="previous-annotation"
+        onTouchTap={[Function]}
+        tooltip="Previous Annotation"
+        tooltipPosition="bottom-center"
+        touch={true}>
+        <NavigationArrowBack />
+      </IconButton>
+      <IconButton
+        disableTouchRipple={false}
+        disabled={true}
+        iconStyle={Object {}}
+        id="next-annotation"
+        onTouchTap={[Function]}
+        tooltip="Next Annotation"
+        tooltipPosition="bottom-center"
+        touch={true}>
+        <NavigationArrowForward />
+      </IconButton>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<AnnotationDisplay /> snapshots when an annotation before current one exists matches snapshot 1`] = `
+<div>
+  <MarkdownRenderer
+    markdown=""
+    options={
+      Object {
+        "highlight": [Function],
+        "langPrefix": "hljs language-",
+      }
+    } />
+  <div
+    style={
+      Object {
+        "alignItems": "center",
+        "display": "flex",
+        "flexFlow": "row wrap",
+        "justifyContent": "space-between",
+      }
+    }>
+    <div>
+      <RaisedButton
+        disabled={false}
+        fullWidth={false}
+        label="Close"
+        labelPosition="after"
+        onTouchTap={[Function]}
+        primary={false}
+        secondary={true} />
+      <RaisedButton
+        disabled={false}
+        fullWidth={false}
+        label="Edit"
+        labelPosition="after"
+        onTouchTap={[Function]}
+        primary={true}
+        secondary={false} />
+    </div>
+    <div
+      style={
+        Object {
+          "display": "flex",
+          "flex": "0 1 auto",
+          "justifyContent": "flex-end",
+        }
+      }>
+      <IconButton
+        disableTouchRipple={false}
+        disabled={true}
+        iconStyle={Object {}}
+        id="previous-annotation"
+        onTouchTap={[Function]}
+        tooltip="Previous Annotation"
+        tooltipPosition="bottom-center"
+        touch={true}>
+        <NavigationArrowBack />
+      </IconButton>
+      <IconButton
+        disableTouchRipple={false}
+        disabled={false}
+        iconStyle={Object {}}
+        id="next-annotation"
+        onTouchTap={[Function]}
+        tooltip="Next Annotation"
+        tooltipPosition="bottom-center"
+        touch={true}>
+        <NavigationArrowForward />
+      </IconButton>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<AnnotationDisplay /> snapshots when annotation exists before/after current one matches snapshot 1`] = `
+<div>
+  <MarkdownRenderer
+    markdown=""
+    options={
+      Object {
+        "highlight": [Function],
+        "langPrefix": "hljs language-",
+      }
+    } />
+  <div
+    style={
+      Object {
+        "alignItems": "center",
+        "display": "flex",
+        "flexFlow": "row wrap",
+        "justifyContent": "space-between",
+      }
+    }>
+    <div>
+      <RaisedButton
+        disabled={false}
+        fullWidth={false}
+        label="Close"
+        labelPosition="after"
+        onTouchTap={[Function]}
+        primary={false}
+        secondary={true} />
+      <RaisedButton
+        disabled={false}
+        fullWidth={false}
+        label="Edit"
+        labelPosition="after"
+        onTouchTap={[Function]}
+        primary={true}
+        secondary={false} />
+    </div>
+    <div
+      style={
+        Object {
+          "display": "flex",
+          "flex": "0 1 auto",
+          "justifyContent": "flex-end",
+        }
+      }>
+      <IconButton
+        disableTouchRipple={false}
+        disabled={true}
+        iconStyle={Object {}}
+        id="previous-annotation"
+        onTouchTap={[Function]}
+        tooltip="Previous Annotation"
+        tooltipPosition="bottom-center"
+        touch={true}>
+        <NavigationArrowBack />
+      </IconButton>
+      <IconButton
+        disableTouchRipple={false}
+        disabled={true}
+        iconStyle={Object {}}
+        id="next-annotation"
+        onTouchTap={[Function]}
+        tooltip="Next Annotation"
+        tooltipPosition="bottom-center"
+        touch={true}>
+        <NavigationArrowForward />
+      </IconButton>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<AnnotationDisplay /> snapshots when no annotations before/after current one exist matches snapshot 1`] = `
+<div>
+  <MarkdownRenderer
+    markdown=""
+    options={
+      Object {
+        "highlight": [Function],
+        "langPrefix": "hljs language-",
+      }
+    } />
+  <div
+    style={
+      Object {
+        "alignItems": "center",
+        "display": "flex",
+        "flexFlow": "row wrap",
+        "justifyContent": "space-between",
+      }
+    }>
+    <div>
+      <RaisedButton
+        disabled={false}
+        fullWidth={false}
+        label="Close"
+        labelPosition="after"
+        onTouchTap={[Function]}
+        primary={false}
+        secondary={true} />
+      <RaisedButton
+        disabled={false}
+        fullWidth={false}
+        label="Edit"
+        labelPosition="after"
+        onTouchTap={[Function]}
+        primary={true}
+        secondary={false} />
+    </div>
+    <div
+      style={
+        Object {
+          "display": "flex",
+          "flex": "0 1 auto",
+          "justifyContent": "flex-end",
+        }
+      }>
+      <IconButton
+        disableTouchRipple={false}
+        disabled={false}
+        iconStyle={Object {}}
+        id="previous-annotation"
+        onTouchTap={[Function]}
+        tooltip="Previous Annotation"
+        tooltipPosition="bottom-center"
+        touch={true}>
+        <NavigationArrowBack />
+      </IconButton>
+      <IconButton
+        disableTouchRipple={false}
+        disabled={false}
+        iconStyle={Object {}}
+        id="next-annotation"
+        onTouchTap={[Function]}
+        tooltip="Next Annotation"
+        tooltipPosition="bottom-center"
+        touch={true}>
+        <NavigationArrowForward />
+      </IconButton>
+    </div>
+  </div>
 </div>
 `;

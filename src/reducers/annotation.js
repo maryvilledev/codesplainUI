@@ -2,7 +2,7 @@ import * as actions from '../actions/annotation';
 
 export const initialState = {
   isDisplayingAnnotation: false,
-  snippetInformation: {},
+  lineAnnotated: {},
 };
 
 const annotation = (state = initialState, action) => {
@@ -11,7 +11,7 @@ const annotation = (state = initialState, action) => {
       return {
         ...state,
         isDisplayingAnnotation: true,
-        snippetInformation: action.payload,
+        lineAnnotated: action.payload,
       };
     }
     case actions.CLOSE_ANNOTATION_PANEL: {
@@ -21,7 +21,7 @@ const annotation = (state = initialState, action) => {
       return {
         ...state,
         isDisplayingAnnotation: false,
-        snippetInformation: {},
+        lineAnnotated: {},
       };
     }
     default: {
