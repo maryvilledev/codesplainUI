@@ -54,24 +54,24 @@ describe('Actions: User', () => {
               expect(store.getActions()).toEqual(expectedActions);
             });
         });
-        it('dispatches UPDATE_USER_SNIPPETS_FAILED if unsuccessful', () => {
-          moxios.wait(() => {
-            const request = moxios.requests.mostRecent();
-            request.respondWith({
-              status: 400,
-            });
+      });
+      it('dispatches UPDATE_USER_SNIPPETS_FAILED if unsuccessful', () => {
+        moxios.wait(() => {
+          const request = moxios.requests.mostRecent();
+          request.respondWith({
+            status: 400,
           });
-          cookie.save('token', '1234', { path: '/' });
-          cookie.save('username', 'foo', { path: '/' });
-          const expectedActions = [
-            { type: actions.UPDATE_USER_SNIPPETS_FAILED },
-          ];
-          const store = mockStore({});
-          return store.dispatch(actions.updateUserSnippets())
-            .then(() => {
-              expect(store.getActions()).toEqual(expectedActions);
-            });
         });
+        cookie.save('token', '1234', { path: '/' });
+        cookie.save('username', 'foo', { path: '/' });
+        const expectedActions = [
+          { type: actions.UPDATE_USER_SNIPPETS_FAILED },
+        ];
+        const store = mockStore({});
+        store.dispatch(actions.updateUserSnippets())
+          .then(() => {
+            expect(store.getActions()).toEqual(expectedActions);
+          });
       });
     });
     describe('SET_USER_SNIPPETS', () => {
