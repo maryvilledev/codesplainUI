@@ -168,12 +168,7 @@ export class CodesplainAppBar extends React.Component {
       />
     ];
 
-    console.log(this.props.userState);
     const { userSnippets } = this.props.userState;
-    if (userSnippets) {
-      console.log('Object.entries(userSnippets):')
-      console.log(Object.entries(userSnippets))
-    }
     const titles = userSnippets ?
       Object.keys(userSnippets).map(key => userSnippets[key].snippetTitle)
       :

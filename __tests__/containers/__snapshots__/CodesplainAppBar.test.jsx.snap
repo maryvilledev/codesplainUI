@@ -3,7 +3,9 @@ exports[`<CodesplainAppBar /> snapshot tests user is logged in 1`] = `
   <AppBar
     iconElementRight={
       <AppMenu
-        onSignOut={[Function]} />
+        onSignOut={[Function]}
+        onTitleClicked={[Function]}
+        snippetTitles={Array []} />
     }
     onTitleTouchTap={[Function]}
     showMenuIconButton={false}
