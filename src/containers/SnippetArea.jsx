@@ -16,6 +16,9 @@ import {
   toggleEditState,
 } from '../actions/app';
 import {
+  updateUserSnippets,
+} from '../actions/user';
+import {
   loadParser,
 } from '../actions/parser';
 import {
@@ -151,6 +154,7 @@ export class SnippetArea extends React.Component {
       return dispatch(saveExisting())
         .then(() => {
           this.showSnackbar('Codesplaination Saved!');
+          dispatch(updateUserSnippets());
         }, () => {
           this.showSnackbar('Failed to save - an error occurred');
         });
@@ -162,6 +166,7 @@ export class SnippetArea extends React.Component {
         // Update the snippet's key
         dispatch(setSnippetKey(snippetKey))
         this.showSnackbar('Codesplaination Saved!');
+        dispatch(updateUserSnippets());
       }, () => {
         this.showSnackbar('Failed to save - an error occurred');
       });
@@ -198,8 +203,9 @@ export class SnippetArea extends React.Component {
         const permissions = {
           canRead: true,
           canEdit: true,
-        } //All permission, this is now her file.
+        } // Grant all permissions, this is now her file.
         dispatch(setPermissions(permissions));
+        dispatch(updateUserSnippets());
       }, () => {
         this.showSnackbar('Failed to save - an error occurred');
       });

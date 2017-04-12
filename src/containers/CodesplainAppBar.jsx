@@ -5,14 +5,15 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import { withRouter } from 'react-router';
 import cookie from 'react-cookie';
+import { updateUserSnippets } from '../actions/user';
 
 import { resetState } from '../actions/app';
 import { closeAnnotationPanel } from '../actions/annotation';
 import LoginButton from '../components/buttons/LoginButton'
 import AppMenu from '../components/menus/AppMenu';
 
-const CLIENT_ID = process.env.REACT_APP_CLIENT_ID
-const GITHUB_URL = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&scope=read:org`
+const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
+const GITHUB_URL = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&scope=read:org`;
 
 const styles = {
   title: {
@@ -36,9 +37,16 @@ export class CodesplainAppBar extends React.Component {
     this.handleConfirmNavigation = this.handleConfirmNavigation.bind(this);
     this.handleDialogClose = this.handleDialogClose.bind(this);
     this.handleSignOut = this.handleSignOut.bind(this);
+    this.handleSnippetSelected = this.handleSnippetSelected.bind(this);
+    this.onLoginClick = this.onLoginClick.bind(this);
     this.handleTitleTouchTap = this.handleTitleTouchTap.bind(this);
     this.onLoginClick = this.onLoginClick.bind(this);
     this.redirectToHomePage = this.redirectToHomePage.bind(this);
+  }
+
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch(updateUserSnippets())
   }
 
   handleSignOut() {
@@ -47,6 +55,13 @@ export class CodesplainAppBar extends React.Component {
     cookie.remove('userAvatarURL', { path: '/' });
     this.setState({ isLoggedIn: false });
     location.reload();
+  }
+
+  handleSnippetSelected(key) {
+    const username  = cookie.load('username');
+    window.location = `/${username}/${key}`;
+    const { router } = this.props;
+    router.push(`/${username}/${key}`)
   }
 
   onLoginClick() {
@@ -107,10 +122,6 @@ export class CodesplainAppBar extends React.Component {
   }
 
   render() {
-    const rightElement = this.state.isLoggedIn ?
-      <AppMenu onSignOut={this.handleSignOut} /> :
-      <LoginButton onClick={this.onLoginClick}/>
-
     const actions = [
       <FlatButton
         label="Cancel"
@@ -123,6 +134,19 @@ export class CodesplainAppBar extends React.Component {
         onTouchTap={this.handleConfirmNavigation}
       />
     ];
+
+    const { userSnippets } = this.props.userState;
+    const rightElement = this.state.isLoggedIn ?
+      <AppMenu
+        onSignOut={this.handleSignOut}
+        snippetTitles={userSnippets ? userSnippets : {}}
+        onTitleClicked={this.handleSnippetSelected}
+      />
+      :
+      <LoginButton
+        onClick={this.onLoginClick}
+      />;
+
     return (
       <div>
         <AppBar
@@ -148,6 +172,7 @@ export class CodesplainAppBar extends React.Component {
 const mapStateToProps = state => ({
   hasUnsavedChanges: state.app.hasUnsavedChanges,
   appState: state.app,
+  userState: state.user,
 })
 
 export default withRouter(connect(mapStateToProps)(CodesplainAppBar));

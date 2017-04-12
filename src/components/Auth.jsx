@@ -38,43 +38,69 @@ export class Auth extends React.Component {
     super(props);
     this.state = { waiting: true };
     this.redirectUser = this.redirectUser.bind(this);
+    this.runLoginSequence = this.runLoginSequence.bind(this);
+    this.fetchAccessToken = this.fetchAccessToken.bind(this);
+    this.fetchUserInfo = this.fetchUserInfo.bind(this);
   }
 
   componentDidMount() {
     // Extract the code provided by GitHub from the redirect query string
     const { code } = this.props.router.location.query;
+    this.runLoginSequence(code);
+  }
 
-    // Post it to the API to be verified by GitHub as authentic
-    return axios.post(`${API_URL}/auth`, { code })
-      .then(res => {
-        // Code was accepted, so extract and save the token from the response
-        const { token } = res.data;
-        cookie.save('token', token, { path: '/' });
+  async runLoginSequence(authCode) {
+    // Use authorization code to get access token from API
+    const token = await this.fetchAccessToken(authCode);
+    if (!token) {
+      return;
+    }
 
-        // Return Promise to get the user's basic info
-        return axios.get('https://api.github.com/user', {
-          headers: {
-            Accept: 'application/json',
-            Authorization: `token ${token}`,
-          }
-        })
-        .then(res => {
-          // Can pull lots of other stuff out of res.data if needed
-          const { login, avatar_url } = res.data;
-          cookie.save('userAvatarURL', avatar_url, { path: '/' });
-          cookie.save('username', login, { path: '/' });
-          this.setState({ waiting: false });
-        }, err => {
-          // Failed to pull in user info, but that's fine. Log and continue.
-          this.setState({ waiting: false });
-        })
-        .catch(err => console.log(err))
-      })
-      .catch( err => {
-        // If this fails, we need to make sure the error dialog shows
-        const error = resolveErrorMessage(err.response.status);
-        this.setState({ waiting: false, error });
-      })
+    // Now get their username, and save other basic info to cookies
+    const username = await this.fetchUserInfo(token);
+    if (!username) {
+      return;
+    }
+  }
+
+  // Returns access token if successful, otherwise returns undefined
+  async fetchAccessToken(authCode) {
+    let res;
+    try {
+      res = await axios.post(`${API_URL}/auth`, { code: authCode });
+    } catch(err) {
+      const error = resolveErrorMessage(err.response.status);
+      this.setState({ waiting: false, error });
+      return;
+    }
+
+    // Code was accepted, so extract and save the token from the response
+    const { token } = res.data;
+    cookie.save('token', token, { path: '/' });
+    return token;
+  }
+
+  // Returns username if successful, otherwise returns undefined
+  async fetchUserInfo(token) {
+    // Get the user's basic info
+    let res;
+    try {
+      const headers = {
+        Accept: 'application/json',
+        Authorization: `token ${token}`,
+      };
+      res = await axios.get('https://api.github.com/user', { headers });
+    } catch(err) {
+      const error = resolveErrorMessage(err.response.status);
+      this.setState({ waiting: false, error });
+      return;
+    }
+    // Can pull lots of other stuff out of res.data if needed
+    const { login, avatar_url } = res.data;
+    cookie.save('userAvatarURL', avatar_url, { path: '/' });
+    cookie.save('username', login, { path: '/' });
+    this.setState({ waiting: false });
+    return login;
   }
 
   redirectUser() {
