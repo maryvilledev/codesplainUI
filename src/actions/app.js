@@ -19,6 +19,12 @@ export const SET_SNIPPET_CONTENTS = 'SET_SNIPPET_CONTENTS';
 export const SET_SNIPPET_LANGUAGE = 'SET_SNIPPET_LANGUAGE';
 export const SET_SNIPPET_TITLE = 'SET_SNIPPET_TITLE';
 export const TOGGLE_EDITING_STATE = 'TOGGLE_EDITING_STATE';
+export const SET_SNIPPET_KEY = 'SET_SNIPPET_KEY';
+
+export const setSnippetKey = (key) => ({
+  type: SET_SNIPPET_KEY,
+  payload: key,
+})
 
 export const resetState = () => ({
   type: RESET_STATE,
@@ -128,7 +134,7 @@ export const saveExisting = () => {
 
     // Get the app state to save (and the snippet title to save to)
     const appState = getState().app;
-    const { snippetTitle: title } = appState;
+    const { snippetKey: key } = appState;
 
     // Construct the necessary request objects
     const reqBody = JSON.stringify(appState);
@@ -139,7 +145,7 @@ export const saveExisting = () => {
     };
     dispatch(saveStarted());
     // Update the snippet
-    return axios.put(makeSaveEndpointUrl(username, title), reqBody, reqHeaders)
+    return axios.put(makeSaveEndpointUrl(username, key), reqBody, reqHeaders)
       .then(() => {
         dispatch(saveSucceeded());
       }, () => {
