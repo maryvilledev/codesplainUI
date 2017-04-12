@@ -5,7 +5,6 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import { withRouter } from 'react-router';
 import cookie from 'react-cookie';
-import { saveUserSnippets } from '../actions/app';
 import { updateUserSnippets } from '../actions/user';
 
 import { resetState } from '../actions/app';
@@ -38,18 +37,14 @@ export class CodesplainAppBar extends React.Component {
     this.handleConfirmNavigation = this.handleConfirmNavigation.bind(this);
     this.handleDialogClose = this.handleDialogClose.bind(this);
     this.handleSignOut = this.handleSignOut.bind(this);
-    this.handleTitleClick = this.handleTitleClick.bind(this);
+    this.handleSnippetSelected = this.handleSnippetSelected.bind(this);
     this.onLoginClick = this.onLoginClick.bind(this);
-    this.fetchUserSnippets = this.fetchUserSnippets.bind(this);
     this.handleTitleTouchTap = this.handleTitleTouchTap.bind(this);
     this.onLoginClick = this.onLoginClick.bind(this);
     this.redirectToHomePage = this.redirectToHomePage.bind(this);
   }
 
   componentDidMount() {
-    // const token = cookie.load('token');
-    // const username = cookie.load('username');
-    // this.fetchUserSnippets(token, username);
     const { dispatch } = this.props;
     dispatch(updateUserSnippets())
   }
@@ -62,8 +57,12 @@ export class CodesplainAppBar extends React.Component {
     location.reload();
   }
 
-  handleTitleClick(title) {
-    console.log(`${title} was clicked`);
+  handleSnippetSelected(title) {
+    const { userSnippets } = this.props.userState;
+    const username         = cookie.load('username');
+    const snippetID = Object.keys(userSnippets)
+      .filter(key => userSnippets[key].snippetTitle === title);
+    window.location = `/${username}/${snippetID}`;
   }
 
   onLoginClick() {
@@ -83,37 +82,6 @@ export class CodesplainAppBar extends React.Component {
     // This does not use the router to route the user to Github because
     // router is used for routing within the application, not the entire web
     window.location = GITHUB_URL;
-  }
-
-  // Get meta data about the user's snippets and save to redux
-  async fetchUserSnippets(token, username) {
-    const { dispatch } = this.props;
-    // let res;
-    // try {
-    //   const headers = {
-    //     Accept: 'application/json',
-    //     Authorization: `token ${token}`,
-    //   };
-    //   res = await axios.get(`${API_URL}/users/${username}/snippets`, { headers });
-    // } catch(e) {
-    //   return;
-    // }
-    const snippetMeta = {
-      'test_snippet_1': {
-        snippetName: 'Test Snippet 1',
-        language:    'Python 3',
-        lastEdited:  '2017-04-05T12:52:20.099Z',
-        'private':   true,
-      },
-      'test_snippet_2': {
-        snippetName: 'Test Snippet 2',
-        language:    'Python 3',
-        lastEdited:  '2017-04-05T12:52:20.099Z',
-        'private':   true,
-      }
-    };
-
-    dispatch(saveUserSnippets(snippetMeta));
   }
 
   handleTitleTouchTap() {
@@ -177,7 +145,7 @@ export class CodesplainAppBar extends React.Component {
       <AppMenu
         onSignOut={this.handleSignOut}
         snippetTitles={titles}
-        onTitleClicked={this.handleTitleClick}
+        onTitleClicked={this.handleSnippetSelected}
       />
       :
       <LoginButton

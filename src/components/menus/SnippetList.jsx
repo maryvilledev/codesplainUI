@@ -4,8 +4,6 @@ import { MenuItem } from 'material-ui';
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 
 const makeMenuItems = (titles, onClick) => {
-  console.log('titles:')
-  console.log(titles)
   if (!titles.length) return null;
   return titles.map(title => (
     <MenuItem
