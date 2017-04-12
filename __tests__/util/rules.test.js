@@ -1,17 +1,6 @@
 import * as rules from '../../src/util/rules';
 
 describe('util: rules', () => {
-  describe('rules', () => {
-    it('should match snapshot', () => {
-      expect(rules.rules).toMatchSnapshot();
-    });
-  });
-  describe('ignored rules', () => {
-    it('should match snapshot', () => {
-      expect(rules.ignoredRules).toMatchSnapshot();
-    });
-  });
-
   describe('getRuleCount()', () => {
     it('should return if node.type === undefined', () => {
       const node = {
