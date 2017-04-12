@@ -192,7 +192,6 @@ describe('Actions: App', () => {
     afterEach(() => {
       cookie.remove('token');
       cookie.remove('username');
-      cookie.remove('token');
       moxios.uninstall();
     });
     describe('saveNew()', () => {

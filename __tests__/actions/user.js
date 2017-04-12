@@ -20,13 +20,6 @@ describe('Actions: User', () => {
     });
 
     describe('UPDATE_USER_SNIPPETS', () => {
-      it('dispatches no additional actions if not logged in', () => {
-        const store = mockStore({});
-        return store.dispatch(actions.updateUserSnippets())
-          .then(() => { // return of async actions
-            expect(store.getActions()).toEqual([]);
-          });
-      });
       it('dispatches SET_USER_SNIPPETS, UPDATE_USER_SNIPPETS_STARTED, and ' +
          'UPDATE_USER_SNIPPETS_SUCCEEDED if successful', () => {
         moxios.wait(() => {

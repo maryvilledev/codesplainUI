@@ -32,9 +32,6 @@ export const updateUserSnippets = () => {
     // Load requisite cookies, return Promise if they aren't present
     const token    = cookie.load('token');
     const username = cookie.load('username');
-    if (!token || !username) {
-      return Promise.resolve();
-    }
 
     // Fetch the user's snippet meta data and save it
     const headers = {
@@ -48,7 +45,7 @@ export const updateUserSnippets = () => {
           dispatch(setUserSnippets(res.data));
           dispatch(updateUserSnippetsSucceeded());
         },
-        err => dispatch(updateUserSnippetsFailed)
+        err => dispatch(updateUserSnippetsFailed())
       );
   };
 };

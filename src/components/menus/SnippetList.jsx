@@ -1,9 +1,10 @@
 import React, { PropTypes } from 'react';
+import _ from 'lodash';
 
 import { MenuItem } from 'material-ui';
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 
-const makeMenuItems = (userSnippets, onClick) => {
+const makeMenuItems = _.memoize((userSnippets, onClick) => {
   if (!Object.keys(userSnippets).length === 0) return null;
   return Object.keys(userSnippets).map(key => (
     <MenuItem
@@ -12,7 +13,7 @@ const makeMenuItems = (userSnippets, onClick) => {
       onClick={() => onClick(key)}
     />
   ));
-};
+});
 
 const SnippetList = ({ titles, onClick }) => {
   return (
