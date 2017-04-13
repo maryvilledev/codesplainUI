@@ -6,8 +6,8 @@ const API_URL = process.env.REACT_APP_API_URL;
  */
 export const makeSaveEndpointUrl = (username, snippetId = '') => {
   if (snippetId) {
-    // Return a URL for PUT requests
-    return `${API_URL}/users/${username}/snippets/${snippetId}`;
+    // Return a URL for GET & PUT requests
+    return `${API_URL}/users/${username}/snippets/${encodeURIComponent(snippetId)}`;
   }
   // Return a URL for POST requests
   return `${API_URL}/users/${username}/snippets`;
