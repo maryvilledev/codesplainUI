@@ -3,6 +3,7 @@ exports[`<Editor /> matches snapshot 1`] = `
   onChange={[Function]}
   options={
     Object {
+      "cursorBlinkRate": 500,
       "gutters": Array [
         "annotations",
         "CodeMirror-linenumbers",
