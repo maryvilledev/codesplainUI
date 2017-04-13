@@ -17,8 +17,6 @@ import { makeSaveEndpointUrl } from '../util/requests';
 import { removeDeprecatedFiltersFromState } from '../util/rules';
 import { setDefaults } from '../util/state-management';
 
-const API_URL = process.env.REACT_APP_API_URL;
-
 const styles = {
   snippetAreaSection: {
     height: '90vh',
