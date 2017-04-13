@@ -56,7 +56,8 @@ export class Annotations extends React.Component {
   handleSaveAnnotation(annotation) {
     const {
       dispatch,
-      lineAnnotated
+      lineAnnotated,
+      snippetKey
     } = this.props;
 
     const annotationData = {
@@ -65,7 +66,10 @@ export class Annotations extends React.Component {
     };
 
     dispatch(saveAnnotation(annotationData));
-    dispatch(saveExisting());
+    // Save the snippet only if this snippet has already been saved.
+    if (snippetKey) {
+      dispatch(saveExisting());
+    }
   }
 
   getPreviousAnnotation() {
@@ -154,6 +158,7 @@ Annotations.propTypes = {
     lineNumber: PropTypes.number,
     lineText: PropTypes.string,
   }).isRequired,
+  snippetKey: PropTypes.string.isRequired,
   snippetLanguage: PropTypes.string.isRequired,
 };
 
@@ -166,6 +171,7 @@ const mapStateToProps = state => {
     app: {
       annotations,
       readOnly,
+      snippetKey,
       snippetLanguage,
     },
   } = state;
@@ -178,6 +184,7 @@ const mapStateToProps = state => {
     isDisplayingAnnotation,
     lineAnnotated,
     readOnly,
+    snippetKey,
     snippetLanguage,
   };
 };

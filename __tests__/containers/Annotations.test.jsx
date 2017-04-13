@@ -19,6 +19,7 @@ describe('<Annotations />', () => {
       lineAnnotated={mocklineAnnotated}
       readOnly={true}
       router={mockRouter}
+      snippetKey=""
       snippetLanguage="python3"
     />
   );
