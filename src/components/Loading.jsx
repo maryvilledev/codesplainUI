@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { CircularProgress } from 'material-ui'
+import { CircularProgress } from 'material-ui';
 
 const styles = {
   centered: {
@@ -29,6 +29,10 @@ const Loading = ({ text }) => (
 
 Loading.propTypes = {
   text: PropTypes.string,
+};
+
+Loading.defaultProps = {
+  text: '',
 };
 
 export default Loading;
