@@ -42,7 +42,8 @@ export const updateUserSnippets = () => {
     return axios.get(makeSaveEndpointUrl(username), { headers })
       .then(res => {
         // Jump to catch block if the user has no index.json file:
-        if (res.data.includes(
+        if (typeof(res.data) === 'string' &&
+            res.data.includes(
           '<Error><Code>NoSuchKey</Code><Message>The specified key does not exist.</Message>'
         )) {
           throw new Error(`index.json does not exist for ${username}!`);
