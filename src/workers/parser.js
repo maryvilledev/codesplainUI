@@ -2,6 +2,9 @@ import { LOAD_PARSER } from '../actions/parser';
 import { PARSE_SNIPPET } from '../actions/app';
 import onError from '../util/parser-error-logger.js';
 import { getRuleCount, rules } from '../util/rules.js';
+import { makeParserEndpointUrl } from '../util/requests.js';
+
+const API_URL = process.env.REACT_APP_API_URL;
 
 let parser = null;
 let parserCache = {};
@@ -29,7 +32,7 @@ self.onmessage = ({ data : action }) => {
         parser = parserCache[language];
       } else {
         // Load and execute script from the URL
-        self.importScripts(`${API_URL}/parsers/${language}`);
+        self.importScripts(makeParserEndpointUrl(language));
         // Script exports the parser as a global var, set the local ref to point
         // at it
         parser = CodesplainParser;
