@@ -8,23 +8,23 @@ import Alert from '../components/Alert';
 
 const API_URL = process.env.REACT_APP_API_URL;
 export const errors = {
-  badCode: "Failed to login with GitHub, sorry.",
-  badOrg: "Sorry, you are not a member of an organization authorized to use" +
-  " this application."
-}
+  badCode: 'Failed to login with GitHub, sorry.',
+  badOrg: 'Sorry, you are not a member of an organization authorized to use' +
+  ' this application.',
+};
 
 const resolveErrorMessage = (status) => {
   switch (status) {
-    case 403: {
-      return errors.badOrg;
-    }
+  case 403: {
+    return errors.badOrg;
+  }
     // eslint-disable-next-line
     case 400: //Intentional fallthrough
-    default: {
-      return errors.badCode;
-    }
+  default: {
+    return errors.badCode;
   }
-}
+  }
+};
 
 /*
 <Auth /> is the component that is rendered for the '{{url}}/auth' endpoint (which
@@ -57,7 +57,7 @@ export class Auth extends React.Component {
     }
 
     // Now get their username, and save other basic info to cookies
-    const username = await this.fetchUserInfo(token);
+    await this.fetchUserInfo(token);
   }
 
   // Returns access token if successful, otherwise returns undefined
@@ -65,10 +65,10 @@ export class Auth extends React.Component {
     let res;
     try {
       res = await axios.post(`${API_URL}/auth`, { code: authCode });
-    } catch(err) {
+    } catch (err) {
       const error = resolveErrorMessage(err.response.status);
       this.setState({ waiting: false, error });
-      return;
+      return undefined;
     }
 
     // Code was accepted, so extract and save the token from the response
@@ -87,7 +87,7 @@ export class Auth extends React.Component {
         Authorization: `token ${token}`,
       };
       res = await axios.get('https://api.github.com/user', { headers });
-    } catch(err) {
+    } catch (err) {
       const error = resolveErrorMessage(err.response.status);
       this.setState({ waiting: false, error });
       return;
@@ -97,7 +97,6 @@ export class Auth extends React.Component {
     cookie.save('userAvatarURL', avatar_url, { path: '/' });
     cookie.save('username', login, { path: '/' });
     this.setState({ waiting: false });
-    return login;
   }
 
   redirectUser() {
@@ -118,23 +117,21 @@ export class Auth extends React.Component {
     // Conditionally render a <CircularProgress /> or redirect user, depending
     // on whether the backend has responded yet
     if (this.state.waiting) {
-      return <Loading text="Logging in..." />
-    } else {
+      return <Loading text="Logging in..." />;
+    }
       // We're done waiting, now render an alert if
       // the login attempt failed
-      if (this.state.error) {
-        return (
-          <Alert
-            text={this.state.error}
-            onClose={this.redirectUser}
-          />
-        );
-      } else {
-        // Otherwise, it succeeded, so just redirect the user
-        this.redirectUser();
-        return null;
-      }
+    if (this.state.error) {
+      return (
+        <Alert
+          text={this.state.error}
+          onClose={this.redirectUser}
+        />
+      );
     }
+        // Otherwise, it succeeded, so just redirect the user
+    this.redirectUser();
+    return null;
   }
 }
 
