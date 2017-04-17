@@ -19,7 +19,7 @@ const styles = {
     flex: '0 1 auto',
     justifyContent: 'flex-end',
   },
-}
+};
 
 const AnnotationDisplay = (props) => {
   const {
@@ -54,20 +54,22 @@ const AnnotationDisplay = (props) => {
         <div style={styles.annotationViewButtons}>
           <IconButton
             disabled={hasPrevAnnotation}
-            children={<Previous />}
             id="previous-annotation"
             onTouchTap={getPreviousAnnotation}
             tooltip="Previous Annotation"
             touch
-          />
+          >
+            <Previous />
+          </IconButton>
           <IconButton
             disabled={hasNextAnnotation}
-            children={<Next />}
             id="next-annotation"
             onTouchTap={getNextAnnotation}
             tooltip="Next Annotation"
             touch
-          />
+          >
+            <Next />
+          </IconButton>
         </div>
       </div>
     </div>

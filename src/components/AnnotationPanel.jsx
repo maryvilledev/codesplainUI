@@ -6,9 +6,9 @@ import LineSnippet from './LineSnippet';
 
 const style = {
   container: {
-    padding: '3%'
-  }
-}
+    padding: '3%',
+  },
+};
 
 class AnnotationPanel extends React.Component {
   constructor(props) {
@@ -23,9 +23,9 @@ class AnnotationPanel extends React.Component {
   componentWillReceiveProps(nextProps) {
     const {
       lineAnnotated: {
-        lineNumber
+        lineNumber,
       },
-    } = this.props
+    } = this.props;
     if (lineNumber !== nextProps.lineAnnotated.lineNumber) {
       this.setState({
         isEditing: nextProps.annotation.length === 0,
@@ -64,7 +64,7 @@ class AnnotationPanel extends React.Component {
           lineNumber={lineNumber + 1}
           value={lineText}
         />
-      { isEditing ?
+        { isEditing ?
           <AnnotationEditor
             annotation={annotation}
             closeAnnotation={closeAnnotation}
