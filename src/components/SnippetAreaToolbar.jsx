@@ -62,9 +62,10 @@ const SnippetAreaToolbar = (props) => {
         value={title}
       />
       <LanguageSelector
+        disabled={readOnly}
+        language={language}
         onChange={onLanguageChange}
         style={styles.toolbarField}
-        language={language}
       />
       <LockButton
         id="lockButton"

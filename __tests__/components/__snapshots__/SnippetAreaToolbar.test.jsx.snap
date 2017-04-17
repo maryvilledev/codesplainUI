@@ -34,6 +34,7 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is no
     underlineShow={true}
     value="" />
   <LanguageSelector
+    disabled={false}
     language="python"
     onChange={[Function]}
     style={
@@ -109,6 +110,7 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is re
     underlineShow={true}
     value="" />
   <LanguageSelector
+    disabled={true}
     language="python"
     onChange={[Function]}
     style={

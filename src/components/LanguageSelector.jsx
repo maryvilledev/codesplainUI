@@ -6,6 +6,7 @@ import {
 
 const LanguageSelector = (props) => {
   const {
+    disabled,
     language,
     onChange,
     style,
@@ -13,6 +14,7 @@ const LanguageSelector = (props) => {
 
   return (
     <SelectField
+      disabled={disabled}
       id="languageSelector"
       onChange={onChange}
       style={style}
@@ -25,6 +27,7 @@ const LanguageSelector = (props) => {
 }
 
 LanguageSelector.propTypes = {
+  disabled: PropTypes.bool.isRequired,
   language: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   style: PropTypes.object,

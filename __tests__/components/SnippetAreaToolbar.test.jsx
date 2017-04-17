@@ -84,7 +84,7 @@ describe('<SnippetAreaToolbar />', () => {
   });
 
   describe('prop: onSaveClick', () => {
-    it('forwarded to the SaveMenu', () => {
+    it('is forwarded to the SaveMenu', () => {
       const onSaveClick = jest.fn();
       const wrapper = shallowWithContext(
         <SnippetAreaToolbar
@@ -97,7 +97,7 @@ describe('<SnippetAreaToolbar />', () => {
   });
 
   describe('prop: onSaveAsClick', () => {
-    it('forwarded to the SaveMenu', () => {
+    it('is forwarded to the SaveMenu', () => {
       const onSaveAsClick = jest.fn();
       const wrapper = shallowWithContext(
         <SnippetAreaToolbar
@@ -106,6 +106,29 @@ describe('<SnippetAreaToolbar />', () => {
         />
       );
       expect(wrapper.find('SaveMenu').prop('onSaveAsClick')).toBe(onSaveAsClick);
+    });
+  });
+
+  describe('prop: readOnly', () => {
+    it('is forwarded to the LockButton', () => {
+      const readOnly = false;
+      const wrapper = shallowWithContext(
+        <SnippetAreaToolbar
+          {...defaultProps}
+          readOnly={readOnly}
+        />
+      );
+      expect(wrapper.find('LockButton').prop('readOnly')).toBe(readOnly);
+    });
+    it('is forwarded to the LanguageSelector\'s disabled prop', () => {
+      const readOnly = false;
+      const wrapper = shallowWithContext(
+        <SnippetAreaToolbar
+          {...defaultProps}
+          readOnly={readOnly}
+        />
+      );
+      expect(wrapper.find('LanguageSelector').prop('disabled')).toBe(readOnly);
     });
   });
 });
