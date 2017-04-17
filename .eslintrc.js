@@ -34,7 +34,7 @@ module.exports = {
         "ignore": [
           "children",
           "dispatch",
-          "history",
+          "router",
           "style"
         ]
       }
