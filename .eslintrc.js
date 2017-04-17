@@ -35,7 +35,9 @@ module.exports = {
           "children",
           "dispatch",
           "router",
-          "style"
+          "style",
+          "AST",
+          "appState"
         ]
       }
     ],

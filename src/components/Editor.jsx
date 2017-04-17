@@ -155,7 +155,6 @@ class Editor extends React.Component {
 }
 
 Editor.propTypes = {
-  AST: PropTypes.object.isRequired,
   filters: CustomPropTypes.filters.isRequired,
   language: PropTypes.string.isRequired,
   markedLines: PropTypes.arrayOf(PropTypes.number).isRequired,

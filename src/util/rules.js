@@ -64,7 +64,11 @@ each token type's occurence count in the AST.
 */
 export function getRuleCount(node, map) {
   if (node.type === undefined) return;
-  if (map[node.type] === undefined) { map[node.type] = 1; } else { map[node.type] += 1; }
+  if (map[node.type] === undefined) {
+    map[node.type] = 1;
+  } else {
+    map[node.type] += 1;
+  }
   node.children.forEach(child => getRuleCount(child, map));
 }
 
