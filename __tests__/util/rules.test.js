@@ -51,8 +51,8 @@ describe('util: rules', () => {
       const node = {
         type: nodeType,
         children: [
-          { type: nodeType, children: [], },
-          { type: nodeType, children: [], },
+          { type: nodeType, children: [] },
+          { type: nodeType, children: [] },
         ],
       };
       const ruleCounts = {};
@@ -92,8 +92,8 @@ describe('util: rules', () => {
     });
     it('sets selected property to filter\'s value in prevFilters', () => {
       const prevFilters = {
-        str: { selected: true, },
-        number: { selected: false, },
+        str: { selected: true },
+        number: { selected: false },
       };
       const ruleCounts = {
         str: 1,
@@ -105,8 +105,8 @@ describe('util: rules', () => {
     });
     it('sets the filter\'s count property from ruleCounts', () => {
       const prevFilters = {
-        str: { selected: true, },
-        number: { selected: false, },
+        str: { selected: true },
+        number: { selected: false },
       };
       const ruleCounts = {
         str: 1,
@@ -120,33 +120,33 @@ describe('util: rules', () => {
   describe('removeDeprecatedFilters', () => {
     it('removes filters that are in ignoredRules', () => {
       const filters = {
-        'and_expr': {},
-        'atom': {},
-        'file_input': {},
-        'comp_op': {},
-        'classdef': {},
-        'try_stmt': {},
-        'arglist': {},
+        and_expr: {},
+        atom: {},
+        file_input: {},
+        comp_op: {},
+        classdef: {},
+        try_stmt: {},
+        arglist: {},
       };
       const expected = {
-        'and_expr': {},
-        'comp_op': {},
-        'classdef': {},
-        'try_stmt': {},
-      }
+        and_expr: {},
+        comp_op: {},
+        classdef: {},
+        try_stmt: {},
+      };
       expect(rules.removeDeprecatedFilters(filters)).toEqual(expected);
     });
   });
   describe('removeDeprecatedFiltersFromState', () => {
     it('returns the updated state object', () => {
       const filters = {
-        'and_expr': {},
-        'atom': {},
-        'file_input': {},
-        'comp_op': {},
-        'classdef': {},
-        'try_stmt': {},
-        'arglist': {},
+        and_expr: {},
+        atom: {},
+        file_input: {},
+        comp_op: {},
+        classdef: {},
+        try_stmt: {},
+        arglist: {},
       };
       const state = {
         snippetTitle: '',
@@ -155,11 +155,11 @@ describe('util: rules', () => {
       const expected = {
         ...state,
         filters: {
-          'and_expr': {},
-          'comp_op': {},
-          'classdef': {},
-          'try_stmt': {},
-        }
+          and_expr: {},
+          comp_op: {},
+          classdef: {},
+          try_stmt: {},
+        },
       };
       expect(rules.removeDeprecatedFiltersFromState(state)).toEqual(expected);
     });

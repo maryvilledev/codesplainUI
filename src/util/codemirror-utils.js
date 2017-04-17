@@ -1,5 +1,5 @@
 import { rules, ignoredRules } from './rules.js';
-import _ from 'lodash'
+import _ from 'lodash';
 
 /*
 Recursive function for highlighting code in a CodeMirror. highlight() is an
@@ -29,14 +29,13 @@ export function highlightNode(codeMirror, node, filters, parentColor) {
       codeMirror,
       node.begin,
       node.end,
-      `background-color: ${color};`
+      `background-color: ${color};`,
     );
   }
 
   // Highlight all children of this token
-  node.children.forEach(child => {
-    if (child === Object(child))
-      highlightNode(codeMirror, child, filters, color);
+  node.children.forEach((child) => {
+    if (child === Object(child)) { highlightNode(codeMirror, child, filters, color); }
   });
 }
 
@@ -48,16 +47,16 @@ start and end are inclusive.
 */
 export function styleRegion(codeMirror, start, end, css) {
   if (end < start) throw new Error('end must be greater than start');
-  codeMirror.markText(codeMirror.posFromIndex(start), codeMirror.posFromIndex(end), {css});
+  codeMirror.markText(codeMirror.posFromIndex(start), codeMirror.posFromIndex(end), { css });
 }
 /*
 Given a CodeMirror instance styleLine() will apply the specified css style to the
 specified line of code in the editor. The first line is considered line 0, not 1.
 */
 export function styleLine(codeMirror, line, css) {
-    const lineStart = { line: line, ch: 0 };
-    const lineEnd = { line: line, ch: codeMirror.getLine(line).length };
-    codeMirror.markText(lineStart, lineEnd, {css: css});
+  const lineStart = { line, ch: 0 };
+  const lineEnd = { line, ch: codeMirror.getLine(line).length };
+  codeMirror.markText(lineStart, lineEnd, { css });
 }
 
 /*
@@ -73,20 +72,19 @@ Given a CodeMirror instance, highlight() will use the specified AST and filters
 objects to apply highlighting to the code in the CodeMirror editor.
 */
 export async function highlight(codeMirror, AST, filters) {
-  //Make this a first-class function
+  // Make this a first-class function
   const func = () => highlightNode(codeMirror, AST, filters, 'transparent');
-  //Codemirror buffers its calls ahead of time, then performs them atomically
-  codeMirror.operation(func)
+  // Codemirror buffers its calls ahead of time, then performs them atomically
+  codeMirror.operation(func);
 }
 
 const parserCodeMirrorModes = {
   python3: 'python',
 };
 
-export const getCodeMirrorMode = (parserName) => {
+export const getCodeMirrorMode = parserName =>
   /*
   Return the parser's corresponding CodeMirror mode if it exists in
   parserCodeMirrorModes; else return the parser
   */
-  return parserCodeMirrorModes[parserName] || parserName;
-};
+   parserCodeMirrorModes[parserName] || parserName;

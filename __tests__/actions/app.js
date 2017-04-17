@@ -25,20 +25,20 @@ describe('Actions: App', () => {
   describe('SET_RULE_FILTERS', () => {
     it('creates an action to set the rule filters', () => {
       const filters = {
-        'for_stmt': {
+        for_stmt: {
           prettyTokenName: 'For Loops',
           count: 1,
-          selected: false
+          selected: false,
         },
-        'atom': {
+        atom: {
           prettyTokenName: 'Atoms',
           count: 21,
-          selected: true
+          selected: true,
         },
       };
       const expected = {
         type: actions.SET_RULE_FILTERS,
-        payload: filters
+        payload: filters,
       };
       expect(actions.setRuleFilters(filters)).toEqual(expected);
     });
@@ -61,19 +61,19 @@ describe('Actions: App', () => {
   describe('SET_AST', () => {
     it('creates an action to set the abstract syntax tree', () => {
       const AST = {
-        "type": "file_input",
-        "begin": 0,
-        "end": 1,
-        "children": [
-          "NEWLINE",
-          "INDENT",
-          "NEWLINE",
-          "DEDENT"
+        type: 'file_input',
+        begin: 0,
+        end: 1,
+        children: [
+          'NEWLINE',
+          'INDENT',
+          'NEWLINE',
+          'DEDENT',
         ],
       };
       const expected = {
         type: actions.SET_AST,
-        payload: AST
+        payload: AST,
       };
       expect(actions.setAST(AST)).toEqual(expected);
     });
@@ -91,7 +91,7 @@ describe('Actions: App', () => {
       const annotationData = {
         annotation: 'You pass butter.',
         lineNumber: 1,
-        lineText: 'What is my purpose?'
+        lineText: 'What is my purpose?',
       };
       const expected = {
         type: actions.SAVE_ANNOTATION,
@@ -103,26 +103,26 @@ describe('Actions: App', () => {
   describe('RESTORE_STATE', () => {
     it('creates an action that restores state', () => {
       const savedState = {
-        "snippet": "\t",
-        "snippetTitle": "",
-        "annotations": {},
-        "AST": {
-          "type": "file_input",
-          "begin": 0,
-          "end": 1,
-          "children": [
-            "NEWLINE",
-            "INDENT",
-            "NEWLINE",
-            "DEDENT"
-          ]
+        snippet: '\t',
+        snippetTitle: '',
+        annotations: {},
+        AST: {
+          type: 'file_input',
+          begin: 0,
+          end: 1,
+          children: [
+            'NEWLINE',
+            'INDENT',
+            'NEWLINE',
+            'DEDENT',
+          ],
         },
-        "filters": {},
-        "readOnly": false
+        filters: {},
+        readOnly: false,
       };
       const expected = {
         type: actions.RESTORE_STATE,
-        payload: savedState
+        payload: savedState,
       };
       expect(actions.restoreState(savedState)).toEqual(expected);
     });
@@ -132,7 +132,7 @@ describe('Actions: App', () => {
       const snippetTitle = 'Get Schwifty';
       const expected = {
         type: actions.SET_SNIPPET_TITLE,
-        payload: snippetTitle
+        payload: snippetTitle,
       };
       expect(actions.setSnippetTitle(snippetTitle)).toEqual(expected);
     });
@@ -142,7 +142,7 @@ describe('Actions: App', () => {
       const snippetLanguage = 'Gromflomite';
       const expected = {
         type: actions.SET_SNIPPET_LANGUAGE,
-        payload: snippetLanguage
+        payload: snippetLanguage,
       };
       expect(actions.setSnippetLanguage(snippetLanguage)).toEqual(expected);
     });
@@ -187,11 +187,11 @@ describe('Actions: App', () => {
     });
   });
   describe('async actions', () => {
-    const middlewares = [ thunk ];
+    const middlewares = [thunk];
     const mockStore = configureMockStore(middlewares);
 
     beforeEach(() => {
-      cookie.save('token', 'rick')
+      cookie.save('token', 'rick');
       cookie.save('username', 'morty');
       moxios.install();
     });
@@ -211,8 +211,8 @@ describe('Actions: App', () => {
           });
         });
         const expectedActions = [
-          { type: actions.SAVE_STARTED, },
-          { type: actions.SAVE_SUCCEEDED, },
+          { type: actions.SAVE_STARTED },
+          { type: actions.SAVE_SUCCEEDED },
         ];
         const store = mockStore({});
         return store.dispatch(actions.saveNew())
@@ -229,13 +229,13 @@ describe('Actions: App', () => {
           });
         });
         const expectedActions = [
-          { type: actions.SAVE_STARTED, },
-          { type: actions.SAVE_FAILED, },
+          { type: actions.SAVE_STARTED },
+          { type: actions.SAVE_FAILED },
         ];
         const store = mockStore({});
         return store.dispatch(actions.saveNew())
           .then(() => { // return of async actions
-            expect(store.getActions()).toEqual(expectedActions)
+            expect(store.getActions()).toEqual(expectedActions);
           });
       });
     });
@@ -250,8 +250,8 @@ describe('Actions: App', () => {
             });
           });
           const expectedActions = [
-            { type: actions.SAVE_STARTED, },
-            { type: actions.SAVE_SUCCEEDED, },
+            { type: actions.SAVE_STARTED },
+            { type: actions.SAVE_SUCCEEDED },
           ];
           const store = mockStore({ snippetTitle: 'foo' });
           return store.dispatch(actions.saveExisting())
@@ -267,13 +267,13 @@ describe('Actions: App', () => {
             });
           });
           const expectedActions = [
-            { type: actions.SAVE_STARTED, },
-            { type: actions.SAVE_FAILED, },
+            { type: actions.SAVE_STARTED },
+            { type: actions.SAVE_FAILED },
           ];
           const store = mockStore({});
           return store.dispatch(actions.saveExisting())
             .then(() => { // return of async actions
-              expect(store.getActions()).toEqual(expectedActions)
+              expect(store.getActions()).toEqual(expectedActions);
             });
         });
       });

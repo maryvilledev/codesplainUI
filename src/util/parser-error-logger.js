@@ -1,6 +1,6 @@
 const {
   NODE_ENV,
-  REACT_APP_ENABLE_PARSER_DEBUGGING
+  REACT_APP_ENABLE_PARSER_DEBUGGING,
 } = process.env;
 
 let errorFn;

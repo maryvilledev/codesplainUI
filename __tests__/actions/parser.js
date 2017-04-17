@@ -1,4 +1,4 @@
-import * as actions from '../../src/actions/parser'
+import * as actions from '../../src/actions/parser';
 
 describe('Actions: parser', () => {
   describe('LOAD_PARSER', () => {
@@ -6,9 +6,9 @@ describe('Actions: parser', () => {
       const parserURL = 'https://www.rickandmorty100years.com';
       const expected = {
         type: actions.LOAD_PARSER,
-        payload: parserURL
+        payload: parserURL,
       };
-      expect(actions.loadParser(parserURL)).toEqual(expect.objectContaining(expected))
-    })
-  })
-})
+      expect(actions.loadParser(parserURL)).toEqual(expect.objectContaining(expected));
+    });
+  });
+});

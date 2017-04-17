@@ -11,4 +11,4 @@ export const makeSaveEndpointUrl = (username, snippetId = '') => {
   }
   // Return a URL for POST requests
   return `${API_URL}/users/${username}/snippets`;
-}
+};

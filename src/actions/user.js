@@ -10,7 +10,7 @@ export const UPDATE_USER_SNIPPETS_FAILED = 'UPDATE_USER_SNIPPETS_FAILED';
 export const UPDATE_USER_SNIPPETS = 'UPDATE_USER_SNIPPETS';
 
 
-export const setUserSnippets = (snippetMeta) => ({
+export const setUserSnippets = snippetMeta => ({
   type: SET_USER_SNIPPETS,
   payload: snippetMeta,
 });
@@ -27,25 +27,23 @@ export const updateUserSnippetsFailed = () => ({
   type: UPDATE_USER_SNIPPETS_FAILED,
 });
 
-export const updateUserSnippets = () => {
-  return (dispatch) => {
+export const updateUserSnippets = () => (dispatch) => {
     // Load requisite cookies, return Promise if they aren't present
-    const token    = cookie.load('token');
-    const username = cookie.load('username');
+  const token = cookie.load('token');
+  const username = cookie.load('username');
 
     // Fetch the user's snippet meta data and save it
-    const headers = {
-      Accept: 'application/json',
-      Authorization: `token ${token}`,
-    };
-    dispatch(updateUserSnippetsStarted());
-    return axios.get(makeSaveEndpointUrl(username), { headers })
+  const headers = {
+    Accept: 'application/json',
+    Authorization: `token ${token}`,
+  };
+  dispatch(updateUserSnippetsStarted());
+  return axios.get(makeSaveEndpointUrl(username), { headers })
       .then(
-        res => {
+        (res) => {
           dispatch(setUserSnippets(res.data));
           dispatch(updateUserSnippetsSucceeded());
         },
-        err => dispatch(updateUserSnippetsFailed())
+        err => dispatch(updateUserSnippetsFailed()),
       );
-  };
 };

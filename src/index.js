@@ -5,12 +5,12 @@ import { Provider } from 'react-redux';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import {
   createHistory,
-  useBeforeUnload
+  useBeforeUnload,
 } from 'history';
 import {
   Router,
   Route,
-  useRouterHistory
+  useRouterHistory,
 } from 'react-router';
 
 import App from './containers/App';
@@ -22,11 +22,11 @@ import configureStore from './store/configureStore';
 injectTapEventPlugin();
 
 const store = configureStore();
-const history = useRouterHistory(useBeforeUnload(createHistory))()
+const history = useRouterHistory(useBeforeUnload(createHistory))();
 
 history.listenBeforeUnload(() => {
   if (store.getState().app.hasUnsavedChanges) {
-    return 'Are you sure you want to leave this page?'
+    return 'Are you sure you want to leave this page?';
   }
 });
 
@@ -42,5 +42,5 @@ ReactDOM.render(
       </Router>
     </Provider>
   </MuiThemeProvider>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );

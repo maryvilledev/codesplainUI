@@ -1,10 +1,10 @@
 import * as utils from '../../src/util/annotations';
 
 const annotations = {
-  '1': 'Rick Sanchez',
-  '2': 'Morty Smith',
-  '3': 'Beth Smith',
-  '4': 'Summer Smith',
+  1: 'Rick Sanchez',
+  2: 'Morty Smith',
+  3: 'Beth Smith',
+  4: 'Summer Smith',
   // No Jerry
 };
 

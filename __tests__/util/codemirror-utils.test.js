@@ -1,10 +1,10 @@
 import * as codemirrorUtils from '../../src/util/codemirror-utils';
 
-const lineText = "Wubba lubba dub dub!";
+const lineText = 'Wubba lubba dub dub!';
 
 const mockPosFromIndexReturnVals = [
-  { line: 0, ch: 0, },
-  { line: 0, ch: 20, },
+  { line: 0, ch: 0 },
+  { line: 0, ch: 20 },
 ];
 
 // Mock posFromIndex to be used by codemirrorUtils.styleRegion()
@@ -44,7 +44,7 @@ describe('util: codemirror-utils', () => {
         { line, ch: lineText.length },
         { css },
       ];
-      codemirrorUtils.styleLine(codeMirror, line, css)
+      codemirrorUtils.styleLine(codeMirror, line, css);
       expect(codeMirror.markText).toBeCalledWith(...expectedArgs);
     });
   });

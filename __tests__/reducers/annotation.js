@@ -6,7 +6,7 @@ describe('Reducer: Annotation', () => {
     const initial = {
       isDisplayingAnnotation: false,
       lineAnnotated: {},
-    }
+    };
     expect(reducer(undefined, {})).toEqual(initialState);
   });
 
@@ -17,24 +17,24 @@ describe('Reducer: Annotation', () => {
     };
     const action = {
       type: actions.OPEN_ANNOTATION_PANEL,
-      payload: lineAnnotated
-    }
+      payload: lineAnnotated,
+    };
     const expected = {
       ...initialState,
       isDisplayingAnnotation: true,
-      lineAnnotated: action.payload
-    }
-    expect(reducer(undefined, action)).toEqual(expected)
+      lineAnnotated: action.payload,
+    };
+    expect(reducer(undefined, action)).toEqual(expected);
   });
 
   it('should handle CLOSE_ANNOTATION_PANEL', () => {
     const action = {
-      type: actions.CLOSE_ANNOTATION_PANEL
+      type: actions.CLOSE_ANNOTATION_PANEL,
     };
     const expected = {
       ...initialState,
       isDisplayingAnnotation: false,
-      lineAnnotated: {}
+      lineAnnotated: {},
     };
     expect(reducer(undefined, action)).toEqual(expected);
   });

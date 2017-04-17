@@ -1,7 +1,6 @@
 import * as actions from '../../src/actions/annotation';
 
 describe('Actions: Annotation', () => {
-
   describe('OPEN_ANNOTATION_PANEL', () => {
     it('creates an action to open the annotation panel', () => {
       const snippetInformation = {
