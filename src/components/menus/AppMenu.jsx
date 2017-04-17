@@ -9,6 +9,8 @@ import {
 } from 'material-ui';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
+import SnippetList from './SnippetList';
+
 const styles = {
   avatar: {
     marginBottom: '13px',
@@ -30,9 +32,9 @@ const getUserAvatar = () => {
 
 /*
 <AppMenu /> renders as a white vertical ellipse ⋮ . When clicked it expands to
-display a "Sign out" option, that when clicked invoked the 'onSignOut' prop.
+display a "Sign out" option, that when clicked invokes the 'onSignOut' prop.
 */
-const AppMenu = ({ onSignOut }) => (
+const AppMenu = ({ onSignOut, snippetTitles, onTitleClicked }) => (
   <div>
     <IconMenu
       iconButtonElement={
@@ -47,6 +49,10 @@ const AppMenu = ({ onSignOut }) => (
         primaryText="Sign out"
         onClick={onSignOut}
       />
+      <SnippetList
+        titles={snippetTitles}
+        onClick={onTitleClicked}
+      />
     </IconMenu>
     {getUserAvatar()}
   </div>
@@ -54,6 +60,8 @@ const AppMenu = ({ onSignOut }) => (
 
 AppMenu.proptypes = {
   onSignOut: PropTypes.func.isRequired,
+  snippetTitles: PropTypes.string.isRequired,
+  onTitleClicked: PropTypes.func.isRequired,
 };
 
 export default AppMenu;

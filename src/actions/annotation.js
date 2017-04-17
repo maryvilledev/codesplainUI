@@ -1,9 +1,9 @@
 export const OPEN_ANNOTATION_PANEL = 'OPEN_ANNOTATION_PANEL';
 export const CLOSE_ANNOTATION_PANEL = 'CLOSE_ANNOTATION_PANEL';
 
-export const openAnnotationPanel = (snippetInformation) => ({
+export const openAnnotationPanel = (annotatedLine) => ({
   type: OPEN_ANNOTATION_PANEL,
-  payload: snippetInformation,
+  payload: annotatedLine,
 });
 
 export const closeAnnotationPanel = () => ({

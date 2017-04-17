@@ -10,10 +10,14 @@ import {
   saveNew,
   saveExisting,
   setSnippetContents,
+  setSnippetKey,
   setSnippetLanguage,
   setSnippetTitle,
   toggleEditState,
 } from '../actions/app';
+import {
+  updateUserSnippets,
+} from '../actions/user';
 import {
   loadParser,
 } from '../actions/parser';
@@ -148,14 +152,19 @@ export class SnippetArea extends React.Component {
       return dispatch(saveExisting())
         .then(() => {
           this.showSnackbar('Codesplaination Saved!');
+          dispatch(updateUserSnippets());
         }, () => {
           this.showSnackbar('Failed to save - an error occurred');
         });
     }
     return dispatch(saveNew())
-      .then((snippetTitle) => {
-        router.push(`/${username}/${snippetTitle}`);
+      .then((snippetKey) => {
+        // Redirect the user to the snippet's page
+        router.push(`/${username}/${snippetKey}`);
+        // Update the snippet's key
+        dispatch(setSnippetKey(snippetKey))
         this.showSnackbar('Codesplaination Saved!');
+        dispatch(updateUserSnippets());
       }, () => {
         this.showSnackbar('Failed to save - an error occurred');
       });
@@ -183,14 +192,18 @@ export class SnippetArea extends React.Component {
 
     // Save the snippet
     return dispatch(saveNew())
-      .then((snippetTitle) => {
-        router.push(`/${username}/${snippetTitle}`);
+      .then((snippetKey) => {
+        // Redirect the user to the snippet's page
+        router.push(`/${username}/${snippetKey}`);
+        // Update the snippet's key
+        dispatch(setSnippetKey(snippetKey))
         this.showSnackbar('Codesplaination Saved!');
         const permissions = {
           canRead: true,
           canEdit: true,
-        } //All permission, this is now her file.
+        } // Grant all permissions, this is now her file.
         dispatch(setPermissions(permissions));
+        dispatch(updateUserSnippets());
       }, () => {
         this.showSnackbar('Failed to save - an error occurred');
       });
@@ -273,7 +286,7 @@ const mapStateToProps = state => ({
   filters: state.app.filters,
   snippetLanguage: state.app.snippetLanguage,
   openLine: (state.annotation.isDisplayingAnnotation
-    ? state.annotation.snippetInformation.lineNumber
+    ? state.annotation.lineAnnotated.lineNumber
     : undefined),
   readOnly: state.app.readOnly,
   snippet: state.app.snippet,

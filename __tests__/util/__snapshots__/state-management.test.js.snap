@@ -1,0 +1,5 @@
+exports[`util: state-management defaultStateValues matches snapshot 1`] = `
+Object {
+  "snippetLanguage": "python3",
+}
+`;

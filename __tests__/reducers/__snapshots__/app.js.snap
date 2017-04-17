@@ -1,0 +1,13 @@
+exports[`Reducer: App initialState matches snapshot 1`] = `
+Object {
+  "AST": Object {},
+  "annotations": Object {},
+  "filters": Object {},
+  "hasUnsavedChanges": false,
+  "readOnly": false,
+  "snippet": "",
+  "snippetKey": "",
+  "snippetLanguage": "python3",
+  "snippetTitle": "",
+}
+`;

@@ -6,6 +6,12 @@ import thunk from 'redux-thunk';
 import * as actions from '../../src/actions/app';
 
 describe('Actions: App', () => {
+  describe('SET_SNIPPET_KEY', () => {
+    it('creates correct action object', () => {
+      const key = 'szechuan sauce';
+      expect(actions.setSnippetKey(key)).toMatchSnapshot();
+    });
+  });
   describe('SET_SNIPPET_CONTENTS', () => {
     it('creates an action to set the snippet contents', () => {
       const snippet = 'Show me what you got';
@@ -45,6 +51,11 @@ describe('Actions: App', () => {
   describe('SELECT_ALL_FILTERS', () => {
     it('matches snapshot', () => {
       expect(actions.selectAllFilters()).toMatchSnapshot();
+    });
+  });
+  describe('RESET_STATE', () => {
+    it('matches snapshot', () => {
+      expect(actions.resetState()).toMatchSnapshot();
     });
   });
   describe('SET_AST', () => {

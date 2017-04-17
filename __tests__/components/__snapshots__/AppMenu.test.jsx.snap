@@ -51,6 +51,7 @@ exports[`<AppMenu /> snapshot tests matches snapshot of when user is logged in 1
       insetChildren={false}
       onClick={[Function]}
       primaryText="Sign out" />
+    <SnippetList />
   </IconMenu>
   <Avatar
     size={30}
@@ -117,6 +118,7 @@ exports[`<AppMenu /> snapshot tests matches snapshot of when user is not logged 
       insetChildren={false}
       onClick={[Function]}
       primaryText="Sign out" />
+    <SnippetList />
   </IconMenu>
 </div>
 `;

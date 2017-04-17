@@ -4,8 +4,21 @@ Object {
 }
 `;
 
+exports[`Actions: App RESET_STATE matches snapshot 1`] = `
+Object {
+  "type": "RESET_STATE",
+}
+`;
+
 exports[`Actions: App SELECT_ALL_FILTERS matches snapshot 1`] = `
 Object {
   "type": "SELECT_ALL_FILTERS",
+}
+`;
+
+exports[`Actions: App SET_SNIPPET_KEY creates correct action object 1`] = `
+Object {
+  "payload": "szechuan sauce",
+  "type": "SET_SNIPPET_KEY",
 }
 `;

@@ -22,11 +22,11 @@ class AnnotationPanel extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     const {
-      snippetInformation: {
+      lineAnnotated: {
         lineNumber
       },
     } = this.props
-    if (lineNumber !== nextProps.snippetInformation.lineNumber) {
+    if (lineNumber !== nextProps.lineAnnotated.lineNumber) {
       this.setState({
         isEditing: nextProps.annotation.length === 0,
       });
@@ -48,7 +48,11 @@ class AnnotationPanel extends React.Component {
     const {
       annotation,
       closeAnnotation,
-      snippetInformation: {
+      getNextAnnotation,
+      getPreviousAnnotation,
+      hasNextAnnotation,
+      hasPrevAnnotation,
+      lineAnnotated: {
         lineNumber,
         lineText,
       },
@@ -70,19 +74,26 @@ class AnnotationPanel extends React.Component {
             annotation={annotation}
             closeAnnotation={closeAnnotation}
             editAnnotation={this.toggleEditState}
+            getNextAnnotation={getNextAnnotation}
+            getPreviousAnnotation={getPreviousAnnotation}
+            hasPrevAnnotation={hasPrevAnnotation}
+            hasNextAnnotation={hasNextAnnotation}
           />
         }
       </div>
     );
   }
-
 }
 
 AnnotationPanel.propTypes = {
   annotation: PropTypes.string.isRequired,
   closeAnnotation: PropTypes.func.isRequired,
   saveAnnotation: PropTypes.func.isRequired,
-  snippetInformation: PropTypes.shape({
+  getNextAnnotation: PropTypes.func.isRequired,
+  getPreviousAnnotation: PropTypes.func.isRequired,
+  hasNextAnnotation: PropTypes.bool.isRequired,
+  hasPrevAnnotation: PropTypes.bool.isRequired,
+  lineAnnotated: PropTypes.shape({
     lineNumber: PropTypes.number,
     lineText: PropTypes.string,
   }).isRequired,

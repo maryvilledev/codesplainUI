@@ -3,7 +3,7 @@ import { shallow, mount } from 'enzyme';
 import { Annotations } from '../../src/containers/Annotations';
 
 const mockAnnotation = "They're just robots.";
-const mockSnippetInformation = {
+const mocklineAnnotated = {
   lineNumber: 2,
   lineText: 'Galactic Imperial',
 };
@@ -14,28 +14,18 @@ describe('<Annotations />', () => {
   const wrapper = shallow(
     <Annotations
       annotation={mockAnnotation}
-      isDisplayingAnnotation={true}
-      readOnly={true}
-      snippetInformation={mockSnippetInformation}
       dispatch={mockDispatch}
+      isDisplayingAnnotation={true}
+      lineAnnotated={mocklineAnnotated}
+      readOnly={true}
       router={mockRouter}
+      snippetKey=""
+      snippetLanguage="python3"
     />
   );
 
   beforeEach(() => {
     mockDispatch.mockReset();
-  });
-
-  it('saves the annotation on handleSaveAnnotation', () => {
-    const annotation = "They're bureaucrats!";
-    const expected = {
-      annotation,
-      ...mockSnippetInformation
-    };
-    wrapper.instance().handleSaveAnnotation(annotation);
-
-    const { payload } = mockDispatch.mock.calls[0][0];
-    expect(payload).toEqual(expected);
   });
 
   it('closes the annotation panel on handleCloseAnnotation', () => {

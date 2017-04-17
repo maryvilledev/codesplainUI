@@ -4,13 +4,20 @@ import { CardText } from 'material-ui/Card';
 import { withRouter } from 'react-router';
 
 import {
+  openAnnotationPanel,
   closeAnnotationPanel,
 } from '../actions/annotation';
 import {
   saveAnnotation,
   saveExisting,
 } from '../actions/app';
-
+import {
+  getAnnotatedLines,
+  getNextAnnotation,
+  getPreviousAnnotation,
+  hasNextAnnotation,
+  hasPreviousAnnotation,
+} from '../util/annotations';
 import AnnotationPanel from '../components/AnnotationPanel';
 
 export class Annotations extends React.Component {
@@ -18,9 +25,27 @@ export class Annotations extends React.Component {
     super(props);
     this.state = {
       displayStatus: 'none',
+      hasPrevAnnotation: false,
+      hasNextAnnotation: false,
     };
     this.handleCloseAnnotation = this.handleCloseAnnotation.bind(this);
     this.handleSaveAnnotation = this.handleSaveAnnotation.bind(this);
+    this.getPreviousAnnotation = this.getPreviousAnnotation.bind(this);
+    this.getNextAnnotation = this.getNextAnnotation.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const {
+      annotations,
+      lineAnnotated: {
+        lineNumber,
+      },
+    } = nextProps;
+    const nextAnnotatedLines = getAnnotatedLines(annotations);
+    this.setState({
+      hasNextAnnotation: hasNextAnnotation(nextAnnotatedLines, lineNumber),
+      hasPrevAnnotation: hasPreviousAnnotation(nextAnnotatedLines, lineNumber),
+    });
   }
 
   handleCloseAnnotation() {
@@ -31,25 +56,76 @@ export class Annotations extends React.Component {
   handleSaveAnnotation(annotation) {
     const {
       dispatch,
-      snippetInformation
+      lineAnnotated,
+      snippetKey
     } = this.props;
 
     const annotationData = {
       annotation,
-      ...snippetInformation,
+      ...lineAnnotated,
     };
 
     dispatch(saveAnnotation(annotationData));
-    dispatch(saveExisting());
+    // Save the snippet only if this snippet has already been saved.
+    if (snippetKey) {
+      dispatch(saveExisting());
+    }
+  }
+
+  getPreviousAnnotation() {
+    const {
+      lineAnnotated: {
+        lineNumber: currentLineNumber,
+      },
+      annotations,
+      dispatch,
+    } = this.props;
+
+    // Get the annotated lines
+    const previous = getPreviousAnnotation(annotations, currentLineNumber);
+    if (!previous) {
+      return;
+    }
+    const toDisplay = {
+      lineNumber: previous.lineNumber,
+      lineText: previous.lineText,
+    };
+    dispatch(openAnnotationPanel(toDisplay));
+  }
+
+  getNextAnnotation() {
+    const {
+      lineAnnotated: {
+        lineNumber: currentLineNumber,
+      },
+      annotations,
+      dispatch,
+    } = this.props;
+
+    // Get the annotated lines
+    const next = getNextAnnotation(annotations, currentLineNumber);
+    if (!next) {
+      return;
+    }
+    const toDisplay = {
+      lineNumber: next.lineNumber,
+      lineText: next.lineText,
+    };
+    dispatch(openAnnotationPanel(toDisplay));
   }
 
   render() {
     const {
       annotation,
       isDisplayingAnnotation,
+      lineAnnotated,
       readOnly,
-      snippetInformation,
     } = this.props;
+
+    const {
+      hasNextAnnotation,
+      hasPrevAnnotation,
+    } = this.state;
 
     if (!isDisplayingAnnotation) {
       const prompt = readOnly ?
@@ -62,9 +138,13 @@ export class Annotations extends React.Component {
     return (
       <AnnotationPanel
         annotation={annotation}
-        snippetInformation={snippetInformation}
+        lineAnnotated={lineAnnotated}
         saveAnnotation={this.handleSaveAnnotation}
         closeAnnotation={this.handleCloseAnnotation}
+        getNextAnnotation={this.getNextAnnotation}
+        getPreviousAnnotation={this.getPreviousAnnotation}
+        hasPrevAnnotation={hasPrevAnnotation}
+        hasNextAnnotation={hasNextAnnotation}
       />
     );
   }
@@ -74,28 +154,38 @@ Annotations.propTypes = {
   annotation: PropTypes.string.isRequired,
   isDisplayingAnnotation: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
-  snippetInformation: PropTypes.shape({
+  lineAnnotated: PropTypes.shape({
     lineNumber: PropTypes.number,
     lineText: PropTypes.string,
   }).isRequired,
+  snippetKey: PropTypes.string.isRequired,
+  snippetLanguage: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const {
-    isDisplayingAnnotation,
-    snippetInformation: {
-      lineNumber,
+    annotation: {
+      isDisplayingAnnotation,
+      lineAnnotated,
     },
-  } = state.annotation;
+    app: {
+      annotations,
+      readOnly,
+      snippetKey,
+      snippetLanguage,
+    },
+  } = state;
+  const { lineNumber } = lineAnnotated;
   // Check that
-  const annotation = isDisplayingAnnotation ? (state.app.annotations[lineNumber] && state.app.annotations[lineNumber].annotation) || '' : '';
+  const annotation = (isDisplayingAnnotation && annotations[lineNumber] && annotations[lineNumber].annotation) || '';
   return {
-    isDisplayingAnnotation,
-    readOnly: state.app.readOnly,
-    snippetLanguage: state.app.snippetLanguage,
-    snippetInformation: state.annotation.snippetInformation,
     annotation,
-    appState: state.app,
+    annotations,
+    isDisplayingAnnotation,
+    lineAnnotated,
+    readOnly,
+    snippetKey,
+    snippetLanguage,
   };
 };
 

@@ -11,10 +11,11 @@ import { setPermissions } from '../actions/permissions';
 import Annotations from './Annotations';
 import FilterArea from './FilterArea';
 import SnippetArea from './SnippetArea';
+import ReferenceArea from '../components/ReferenceArea';
 
+import { makeSaveEndpointUrl } from '../util/requests';
 import { removeDeprecatedFiltersFromState } from '../util/rules';
-
-const API_URL = process.env.REACT_APP_API_URL;
+import { setDefaults } from '../util/state-management';
 
 const styles = {
   snippetAreaSection: {
@@ -35,11 +36,11 @@ export class AppBody extends React.Component {
       router,
     } = this.props;
     const {
-      id,
+      id: snippetKey,
       username,
     } = router.params;
 
-    if (!username && !id) {
+    if (!username && !snippetKey) {
       // This is a new snippet for the current user, enable all permissions
       const permissions = {
         canRead: true,
@@ -63,8 +64,7 @@ export class AppBody extends React.Component {
         'Authorization': token,
       }
     }
-
-    axios.get(`${API_URL}/users/${username}/snippets/${id}`, config)
+    axios.get(makeSaveEndpointUrl(username, snippetKey), config)
       .then(res => {
         const permissions = {
           canRead: true,
@@ -72,9 +72,26 @@ export class AppBody extends React.Component {
           canEdit: (username === cookie.load('username')),
         };
         dispatch(setPermissions(permissions));
-        dispatch(restoreState(removeDeprecatedFiltersFromState(res.data)));
-        router.push(`/${username}/${id}`)
-      }, () => {
+
+        // Normalize the app state received from S3
+        const appState = setDefaults(removeDeprecatedFiltersFromState(res.data));
+        // Snippet may not have a S3 key value saved; set it to the URL's id
+        // param if the state object is lacking it
+        if (!appState.snippetKey) {
+          appState.snippetKey = snippetKey;
+        }
+        // Restore the application's state
+        dispatch(restoreState(appState));
+
+        // Reroute if not at the 'correct' location
+        // So /:username/snippets/:id -> /:username/:id
+        const nextRoute = `/${username}/${encodeURIComponent(snippetKey)}`;
+        if (router.location.pathname !== nextRoute) {
+          router.push(nextRoute);
+        }
+      }, (err) => {
+        console.log(err);
+        console.log(err.config);
         // Failed to get the snippet, either bad URL or unauthorized
         router.push('/');
       });
@@ -103,6 +120,9 @@ export class AppBody extends React.Component {
               <Annotations />
             </Card>
           </div>
+        </div>
+        <div className='row'>
+          <ReferenceArea />
         </div>
       </div>
     );

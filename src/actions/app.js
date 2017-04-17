@@ -3,6 +3,7 @@ import cookie from 'react-cookie';
 
 import { makeSaveEndpointUrl } from '../util/requests';
 
+export const RESET_STATE = 'RESET_STATE';
 export const EDIT_ANNOTATION = 'EDIT_ANNOTATION';
 export const PARSE_SNIPPET = 'PARSE_SNIPPET';
 export const RESET_RULE_FILTERS = 'RESET_RULE_FILTERS';
@@ -18,6 +19,20 @@ export const SET_SNIPPET_CONTENTS = 'SET_SNIPPET_CONTENTS';
 export const SET_SNIPPET_LANGUAGE = 'SET_SNIPPET_LANGUAGE';
 export const SET_SNIPPET_TITLE = 'SET_SNIPPET_TITLE';
 export const TOGGLE_EDITING_STATE = 'TOGGLE_EDITING_STATE';
+export const SAVE_STATE = 'SAVE_STATE';
+export const SAVE_STATE_STARTED = 'SAVE_STATE_STARTED';
+export const SAVE_STATE_SUCCEEDED = 'SAVE_STATE_SUCCEEDED';
+export const SAVE_STATE_FAILED = 'SAVE_STATE_FAILED';
+export const SET_SNIPPET_KEY = 'SET_SNIPPET_KEY';
+
+export const setSnippetKey = (key) => ({
+  type: SET_SNIPPET_KEY,
+  payload: key,
+})
+
+export const resetState = () => ({
+  type: RESET_STATE,
+});
 
 export const setSnippetContents = (snippet) => ({
   type: SET_SNIPPET_CONTENTS,
@@ -123,7 +138,7 @@ export const saveExisting = () => {
 
     // Get the app state to save (and the snippet title to save to)
     const appState = getState().app;
-    const { snippetTitle: title } = appState;
+    const { snippetKey: key } = appState;
 
     // Construct the necessary request objects
     const reqBody = JSON.stringify(appState);
@@ -134,7 +149,7 @@ export const saveExisting = () => {
     };
     dispatch(saveStarted());
     // Update the snippet
-    return axios.put(makeSaveEndpointUrl(username, title), reqBody, reqHeaders)
+    return axios.put(makeSaveEndpointUrl(username, key), reqBody, reqHeaders)
       .then(() => {
         dispatch(saveSucceeded());
       }, () => {

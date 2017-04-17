@@ -1,13 +1,10 @@
-import { getRuleCount } from '../util/rules.js';
 import { LOAD_PARSER } from '../actions/parser';
 import { PARSE_SNIPPET } from '../actions/app';
-
-const API_URL = process.env.REACT_APP_API_URL;
+import onError from '../util/parser-error-logger.js';
+import { getRuleCount, rules } from '../util/rules.js';
 
 let parser = null;
 let parserCache = {};
-
-const onError = (err) => {console.error(err);}
 
 self.onmessage = ({ data : action }) => {
   switch (action.type) {

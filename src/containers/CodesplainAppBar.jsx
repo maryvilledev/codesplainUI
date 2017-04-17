@@ -1,14 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import AppBar from 'material-ui/AppBar';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
 import { withRouter } from 'react-router';
 import cookie from 'react-cookie';
+import { updateUserSnippets } from '../actions/user';
 
+import { resetState } from '../actions/app';
+import { closeAnnotationPanel } from '../actions/annotation';
 import LoginButton from '../components/buttons/LoginButton'
 import AppMenu from '../components/menus/AppMenu';
 
-const CLIENT_ID = process.env.REACT_APP_CLIENT_ID
-const GITHUB_URL = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&scope=read:org`
+const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
+const GITHUB_URL = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&scope=read:org`;
 
 const styles = {
   title: {
@@ -27,10 +32,21 @@ export class CodesplainAppBar extends React.Component {
     super(props);
     this.state = {
       isLoggedIn: cookie.load('token') !== undefined,
+      isDialogOpen: false,
     }
+    this.handleConfirmNavigation = this.handleConfirmNavigation.bind(this);
+    this.handleDialogClose = this.handleDialogClose.bind(this);
     this.handleSignOut = this.handleSignOut.bind(this);
+    this.handleSnippetSelected = this.handleSnippetSelected.bind(this);
+    this.onLoginClick = this.onLoginClick.bind(this);
+    this.handleTitleTouchTap = this.handleTitleTouchTap.bind(this);
     this.onLoginClick = this.onLoginClick.bind(this);
     this.redirectToHomePage = this.redirectToHomePage.bind(this);
+  }
+
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch(updateUserSnippets())
   }
 
   handleSignOut() {
@@ -39,6 +55,13 @@ export class CodesplainAppBar extends React.Component {
     cookie.remove('userAvatarURL', { path: '/' });
     this.setState({ isLoggedIn: false });
     location.reload();
+  }
+
+  handleSnippetSelected(key) {
+    const username  = cookie.load('username');
+    window.location = `/${username}/${key}`;
+    const { router } = this.props;
+    router.push(`/${username}/${key}`)
   }
 
   onLoginClick() {
@@ -60,29 +83,96 @@ export class CodesplainAppBar extends React.Component {
     window.location = GITHUB_URL;
   }
 
+  handleTitleTouchTap() {
+    const { hasUnsavedChanges } = this.props;
+
+    if (hasUnsavedChanges) {
+      // Confirm navigation from user
+      this.setState({ isDialogOpen: true });
+    } else {
+      this.redirectToHomePage()
+    }
+  }
+
   redirectToHomePage() {
-    const { router } = this.props;
-    router.push('/');
+    const {
+      dispatch,
+      router,
+    } = this.props;
+
+    // Reset state
+    dispatch(resetState());
+    // Close the annotation panel
+    dispatch(closeAnnotationPanel());
+    // If the user is not already at the home page, redirect them to it
+    if (router.location.pathname !== '/') {
+      router.push('/');
+    }
+  }
+
+  handleDialogClose() {
+    this.setState({ isDialogOpen: false });
+  }
+
+  handleConfirmNavigation() {
+    // Close the dialog
+    this.handleDialogClose();
+    // Redirect the user to the home page
+    this.redirectToHomePage();
   }
 
   render() {
-    const rightElement = this.state.isLoggedIn ?
-      <AppMenu onSignOut={this.handleSignOut} /> :
-      <LoginButton onClick={this.onLoginClick}/>
-    return (
-      <AppBar
-        showMenuIconButton={false}
-        title="Codesplain"
-        style={styles.title}
-        onTitleTouchTap={this.redirectToHomePage}
-        iconElementRight={rightElement}
+    const actions = [
+      <FlatButton
+        label="Cancel"
+        secondary
+        onTouchTap={this.handleDialogClose}
+      />,
+      <FlatButton
+        label="Discard"
+        primary
+        onTouchTap={this.handleConfirmNavigation}
       />
+    ];
+
+    const { userSnippets } = this.props.userState;
+    const rightElement = this.state.isLoggedIn ?
+      <AppMenu
+        onSignOut={this.handleSignOut}
+        snippetTitles={userSnippets ? userSnippets : {}}
+        onTitleClicked={this.handleSnippetSelected}
+      />
+      :
+      <LoginButton
+        onClick={this.onLoginClick}
+      />;
+
+    return (
+      <div>
+        <AppBar
+          showMenuIconButton={false}
+          title="Codesplain"
+          style={styles.title}
+          onTitleTouchTap={this.handleTitleTouchTap}
+          iconElementRight={rightElement}
+        />
+        <Dialog
+          actions={actions}
+          modal={false}
+          open={this.state.isDialogOpen}
+          onRequestClose={this.handleDialogClose}
+        >
+          Discard unsaved changes?
+        </Dialog>
+      </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
+  hasUnsavedChanges: state.app.hasUnsavedChanges,
   appState: state.app,
+  userState: state.user,
 })
 
 export default withRouter(connect(mapStateToProps)(CodesplainAppBar));
