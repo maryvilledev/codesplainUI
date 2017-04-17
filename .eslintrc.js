@@ -41,5 +41,6 @@ module.exports = {
     ],
     "jsx-a11y/no-static-element-interactions": 0,
     "import/no-named-as-default": 0,
+    "no-param-reassign": 1,
   }
 };

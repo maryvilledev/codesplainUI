@@ -1,5 +1,15 @@
-import { rules, ignoredRules } from './rules.js';
-import _ from 'lodash';
+import { rules, ignoredRules } from './rules';
+
+/*
+Given a CodeMirror instance, styleRegion() will apply the specified css style to
+the given region of code. The code is treated as a single string, and characters
+in that string must be identified by their index (as opposed to row/col). Both
+start and end are inclusive.
+*/
+export function styleRegion(codeMirror, start, end, css) {
+  if (end < start) throw new Error('end must be greater than start');
+  codeMirror.markText(codeMirror.posFromIndex(start), codeMirror.posFromIndex(end), { css });
+}
 
 /*
 Recursive function for highlighting code in a CodeMirror. highlight() is an
@@ -40,16 +50,6 @@ export function highlightNode(codeMirror, node, filters, parentColor) {
 }
 
 /*
-Given a CodeMirror instance, styleRegion() will apply the specified css style to
-the given region of code. The code is treated as a single string, and characters
-in that string must be identified by their index (as opposed to row/col). Both
-start and end are inclusive.
-*/
-export function styleRegion(codeMirror, start, end, css) {
-  if (end < start) throw new Error('end must be greater than start');
-  codeMirror.markText(codeMirror.posFromIndex(start), codeMirror.posFromIndex(end), { css });
-}
-/*
 Given a CodeMirror instance styleLine() will apply the specified css style to the
 specified line of code in the editor. The first line is considered line 0, not 1.
 */
@@ -82,9 +82,9 @@ const parserCodeMirrorModes = {
   python3: 'python',
 };
 
+/*
+Return the parser's corresponding CodeMirror mode if it exists in
+parserCodeMirrorModes; else return the parser
+*/
 export const getCodeMirrorMode = parserName =>
-  /*
-  Return the parser's corresponding CodeMirror mode if it exists in
-  parserCodeMirrorModes; else return the parser
-  */
    parserCodeMirrorModes[parserName] || parserName;

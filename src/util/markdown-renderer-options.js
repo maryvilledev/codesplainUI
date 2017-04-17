@@ -8,8 +8,8 @@ export default {
         return hljs.highlight(lang, str).value;
       }
       return hljs.highlightAuto(str).value;
-    } catch (err) {}
-
-    return ''; // use external default escaping
+    } catch (err) {
+      return ''; // use external default escaping
+    }
   },
 };

@@ -6,7 +6,8 @@ export const hasPreviousAnnotation = (annotatedLines, lineNumber) =>
 export const hasNextAnnotation = (annotatedLines, lineNumber) =>
   _.last(annotatedLines) === lineNumber;
 
-export const getAnnotatedLines = annotations => _.sortBy(_.keys(annotations).map(key => Number(key)));
+export const getAnnotatedLines = annotations =>
+  _.sortBy(_.keys(annotations).map(key => Number(key)));
 
 export const getPreviousAnnotation = (annotations, displayedLineNumber) => {
   const annotatedLines = getAnnotatedLines(annotations);

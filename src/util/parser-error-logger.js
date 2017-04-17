@@ -3,12 +3,10 @@ const {
   REACT_APP_ENABLE_PARSER_DEBUGGING,
 } = process.env;
 
-let errorFn;
+const isDebuggingEnabled =
+  NODE_ENV === 'development' && REACT_APP_ENABLE_PARSER_DEBUGGING === 'true';
 
-if (NODE_ENV === 'development' && REACT_APP_ENABLE_PARSER_DEBUGGING === 'true') {
-  errorFn = (err) => { console.error(err); };
-} else {
-  errorFn = () => {};
-}
+const errorFn =
+  isDebuggingEnabled ? (err) => { console.error(err); } : () => {};
 
 export default errorFn;
