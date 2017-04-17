@@ -35,9 +35,10 @@ module.exports = {
           "children",
           "dispatch",
           "history",
-          "styles"
+          "style"
         ]
       }
-    ]
+    ],
+    "jsx-a11y/no-static-element-interactions": 0,
   }
 };
