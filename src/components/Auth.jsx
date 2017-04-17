@@ -58,9 +58,6 @@ export class Auth extends React.Component {
 
     // Now get their username, and save other basic info to cookies
     const username = await this.fetchUserInfo(token);
-    if (!username) {
-      return;
-    }
   }
 
   // Returns access token if successful, otherwise returns undefined

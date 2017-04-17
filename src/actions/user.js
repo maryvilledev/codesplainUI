@@ -44,6 +44,6 @@ export const updateUserSnippets = () => (dispatch) => {
           dispatch(setUserSnippets(res.data));
           dispatch(updateUserSnippetsSucceeded());
         },
-        err => dispatch(updateUserSnippetsFailed()),
+        () => dispatch(updateUserSnippetsFailed()),
       );
 };
