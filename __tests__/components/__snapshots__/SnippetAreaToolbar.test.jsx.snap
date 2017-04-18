@@ -57,6 +57,7 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is no
         "verticalAlign": "middle",
       }
     } />
+  <OrgSelector />
   <SaveMenu
     canSave={true}
     enabled={true}
@@ -133,6 +134,7 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is re
         "verticalAlign": "middle",
       }
     } />
+  <OrgSelector />
   <SaveMenu
     canSave={true}
     enabled={true}
