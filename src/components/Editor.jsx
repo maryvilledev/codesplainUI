@@ -24,14 +24,15 @@ const baseCodeMirrorOptions = {
 // Options specific for edit mode should be set here
 const editModeOptions = {
   ...baseCodeMirrorOptions,
+  cursorBlinkRate: 500,
   readOnly: false,
 };
 
 // Options specific for annotation mode should be set here
 const annotationModeOptions = {
   ...baseCodeMirrorOptions,
-  readOnly: true,
   cursorBlinkRate: -1,
+  readOnly: true,
 };
 
 const makeMarker = () => {

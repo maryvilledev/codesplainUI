@@ -6,6 +6,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import LanguageSelector from '../../src/components/LanguageSelector';
 
 const defaultMockProps = {
+  disabled: false,
   language: 'python3',
   onChange: jest.fn(),
   style: {},
@@ -15,11 +16,36 @@ describe('<LanguageSelector />', () => {
   const muiTheme = getMuiTheme();
   const shallowWithContext = node => shallow(node, { context: { muiTheme } });
 
-  it('matches snapshot', () => {
-    const wrapper = shallowWithContext(
-      <LanguageSelector {...defaultMockProps} />,
-    );
-    expect(shallowToJson(wrapper)).toMatchSnapshot();
+  describe('snapshot tests', () => {
+    it('matches snapshot when it is not disabled', () => {
+      const wrapper = shallowWithContext(
+        <LanguageSelector {...defaultMockProps} />,
+      );
+      expect(shallowToJson(wrapper)).toMatchSnapshot();
+    });
+    it('matches snapshot when it is disabled', () => {
+      const wrapper = shallowWithContext(
+        <LanguageSelector
+          {...defaultMockProps}
+          disabled
+        />,
+      );
+      expect(shallowToJson(wrapper)).toMatchSnapshot();
+    });
+  });
+
+  describe('prop: disabled', () => {
+    it('is forwarded to SelectField', () => {
+      const disabled = false;
+      const wrapper = shallowWithContext(
+        <LanguageSelector
+          {...defaultMockProps}
+          disabled={disabled}
+        />,
+      );
+      const select = wrapper.find('SelectField');
+      expect(select.prop('disabled')).toEqual(disabled);
+    });
   });
 
   describe('prop: language', () => {

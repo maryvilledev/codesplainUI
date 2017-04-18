@@ -39,7 +39,6 @@ export class CodesplainAppBar extends Component {
     this.handleDialogClose = this.handleDialogClose.bind(this);
     this.handleSignOut = this.handleSignOut.bind(this);
     this.handleSnippetSelected = this.handleSnippetSelected.bind(this);
-    this.onLoginClick = this.onLoginClick.bind(this);
     this.handleTitleTouchTap = this.handleTitleTouchTap.bind(this);
     this.onLoginClick = this.onLoginClick.bind(this);
     this.redirectToHomePage = this.redirectToHomePage.bind(this);

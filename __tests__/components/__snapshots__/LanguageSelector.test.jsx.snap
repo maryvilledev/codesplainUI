@@ -1,4 +1,45 @@
-exports[`<LanguageSelector /> matches snapshot 1`] = `
+exports[`<LanguageSelector /> snapshot tests matches snapshot when it is disabled 1`] = `
+<SelectField
+  autoWidth={false}
+  disabled={true}
+  fullWidth={false}
+  id="languageSelector"
+  multiple={false}
+  onChange={[Function]}
+  style={Object {}}
+  value="python3">
+  <MenuItem
+    anchorOrigin={
+      Object {
+        "horizontal": "right",
+        "vertical": "top",
+      }
+    }
+    checked={false}
+    desktop={false}
+    disabled={false}
+    focusState="none"
+    insetChildren={false}
+    primaryText="Python 3"
+    value="python3" />
+  <MenuItem
+    anchorOrigin={
+      Object {
+        "horizontal": "right",
+        "vertical": "top",
+      }
+    }
+    checked={false}
+    desktop={false}
+    disabled={true}
+    focusState="none"
+    insetChildren={false}
+    primaryText="Java"
+    value="java" />
+</SelectField>
+`;
+
+exports[`<LanguageSelector /> snapshot tests matches snapshot when it is not disabled 1`] = `
 <SelectField
   autoWidth={false}
   disabled={false}
