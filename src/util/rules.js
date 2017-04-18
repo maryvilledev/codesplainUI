@@ -1,62 +1,69 @@
-import _ from 'lodash';
+import axios from 'axios';
+import { setRules, setIgnoredRules } from './codemirror-utils';
 
-/* Object mapping token types to pretty names and colors for display */
-export const rules = {
-  // Non-terminal rules
-  and_expr: { prettyName: 'And', color: '#F0E68C' },
-  argument: { prettyName: 'Arguments', color: '#EAF7AB' },
-  arith_expr: { prettyName: 'Arithmetic Expression', color: '#FFA500' },
-  augassign: { prettyName: 'Augmented Assignment', color: '#00ffff' },
-  break_stmt: { prettyName: 'Break Statement', color: '#00ffa0' },
-  classdef: { prettyName: 'Class Definitions', color: '#03C03C' },
-  comp_op: { prettyName: 'Comparison Operator', color: '#DAA520' },
-  dictorsetmaker: { prettyName: 'Dictionary', color: '#00FF7F' },
-  except_clause: { prettyName: 'Except Clauses', color: '#779ECB' },
-  expr: { prettyName: 'Expressions', color: '#F0ABF7' },
-  for_stmt: { prettyName: 'For Loops', color: '#F7ABAB' },
-  funcdef: { prettyName: 'Function Definitions', color: '#AEC6CF' },
-  if_stmt: { prettyName: 'If Statements', color: '#FFFF00' },
-  import_name: { prettyName: 'Import Statement', color: '#FF6666' },
-  integer: { prettyName: 'Integers', color: '#ABF7C6' },
-  number: { prettyName: 'Numbers', color: '#DEA5A4' },
-  parameters: { prettyName: 'Parameters', color: '#FFB347' },
-  pass_stmt: { prettyName: 'Pass Statements', color: '#FDFD96' },
-  return_stmt: { prettyName: 'Return Statement', color: '#EECCFF' },
-  str: { prettyName: 'Strings', color: '#CAABF7' },
-  try_stmt: { prettyName: 'Try Statements', color: '#CCCCFF' },
-  while_stmt: { prettyName: 'While Loops', color: '#F0E68C' },
-  // Terminal rules
-  '.TRUE': { prettyName: 'Boolean (True)', color: '#FF9933' },
-  '.FALSE': { prettyName: 'Boolean (False)', color: '#E67300' },
+const API_URL = process.env.REACT_APP_API_URL;
+
+const setAllRules = (allRules) => {
+  const { rules, ignoredRules } = allRules;
+  setRules(rules);
+  setIgnoredRules(ignoredRules);
+};
+let store;
+let currentLanguage = '';
+const mappingCache = {};
+
+// This will parse a csv into rows of columns
+export const parseCSV = csv => csv.split('\n')
+    .slice(1, -1)
+    .map(row => row.split(','));
+
+// Load csv and parse to rules and ignoredRules objects
+const loadRules = async (language) => {
+  const allRules = await axios.get(`${API_URL}/mappings/${language}`)
+    .then((res) => {
+      const csv = res.data;
+      const rows = parseCSV(csv);
+      const reducer = (map, row) => {
+        map[row[0]] = {
+          prettyName: row[2],
+          color: row[3],
+        };
+        return map;
+      };
+      const rules = rows.filter(row => row[1] === '1')
+        .reduce(reducer, {});
+      const ignoredRules = rows.filter(row => row[1] === '0')
+        .map(row => row[0]);
+      return { rules, ignoredRules };
+    });
+  return allRules;
 };
 
-/* Array of rules produced by parser, but ignored by the UI layer */
-export const ignoredRules = [
-  'atom',
-  'suite',
-  'file_input',
-  'simple_stmt',
-  'trailed_atom',
-  'trailer',
-  'comparison', // Don't ignore after outlines are added to highlighting
-  'testlist_comp',
-  'arglist',
-  'expr_stmt',
-  '.IF',
-  '.COLON',
-  '.NEWLINE',
-  '.INDENT',
-  '.NAME',
-  '.OPEN_PAREN',
-  '.STRING_LITERAL',
-  '.CLOSE_PAREN',
-  '.DEDENT',
-  '._EOF',
-  '.FOR',
-  '.IN',
-  '.DECIMAL_INTEGER',
-  '.COMMA',
-];
+
+// Listen for new parser languages
+const onStateChange = async () => {
+  const newLanguage = store.getState().parser.language;
+  let allRules;
+  if (currentLanguage === newLanguage) {
+    // No need to see this through, we already have the rules
+    return;
+  } else if (newLanguage in mappingCache) {
+    // We've seen this language before, load the rules from cache
+    allRules = mappingCache[newLanguage];
+  } else {
+    // This is a new language, get the mappings from the API and cache them
+    allRules = await loadRules(newLanguage);
+    mappingCache[newLanguage] = allRules;
+  }
+  currentLanguage = newLanguage;
+  setAllRules(allRules);
+};
+
+// Subscribe to store
+export const initRules = (newStore) => {
+  store = newStore;
+  store.subscribe(onStateChange); // This will be our listener
+};
 
 /*
 Given an AST getRuleCount() recursively populates the specified map with
@@ -71,29 +78,3 @@ export function getRuleCount(node, map) {
   }
   node.children.forEach(child => getRuleCount(child, map));
 }
-
-export const generateFilters = (prevFilters, ruleCounts) => {
-  const newFilters = {};
-  if (!ruleCounts || Object.keys(ruleCounts) === 0) {
-    return newFilters;
-  }
-  Object.keys(ruleCounts)
-    .filter(r => rules[r] !== undefined)
-    .forEach((r) => {
-      const selected = prevFilters[r] ? prevFilters[r].selected : false;
-      newFilters[r] = {
-        prettyTokenName: rules[r].prettyName,
-        count: ruleCounts[r],
-        selected,
-        color: rules[r].color,
-      };
-    });
-  return newFilters;
-};
-
-export const removeDeprecatedFilters = filters => _.omit(filters, ignoredRules);
-
-export const removeDeprecatedFiltersFromState = state => ({
-  ...state,
-  filters: removeDeprecatedFilters(state.filters),
-});

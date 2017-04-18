@@ -177,7 +177,6 @@ CodesplainAppBar.defaultProps = {
 };
 
 const mapStateToProps = (state) => {
-  console.log('state', state);
   const {
     app,
     user: {

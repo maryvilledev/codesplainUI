@@ -6,6 +6,7 @@ import thunk from 'redux-thunk';
 
 import workerMiddleware from '../middlewares/worker';
 import rootReducer from '../reducers';
+
 const createStoreWithMiddleware = applyMiddleware(
   workerMiddleware,
   thunk,

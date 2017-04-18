@@ -19,7 +19,25 @@ const codeMirror = {
   posFromIndex,
 };
 
+const mockAllRules = {
+  rules: {
+    str: { prettyName: 'String', color: '#FFFFFF' },
+    number: { prettyName: 'Number', color: '#FFFFFF' },
+  },
+  ignoredRules: [
+    'atom',
+    'arglist',
+    'file_input',
+  ],
+};
+
 describe('util: codemirror-utils', () => {
+  beforeEach(() => {
+    const { rules, ignoredRules } = mockAllRules;
+    codemirrorUtils.setRules(rules);
+    codemirrorUtils.setIgnoredRules(ignoredRules);
+  });
+
   afterEach(() => {
     codeMirror.markText.mockClear();
     codeMirror.getLine.mockClear();
@@ -70,6 +88,7 @@ describe('util: codemirror-utils', () => {
       codemirrorUtils.highlightNode(codeMirror, node, {}, '');
       expect(codeMirror.markText).not.toBeCalled();
     });
+
     it('should not call styleRegion for a node if its type is ignored', () => {
       const node = {
         type: 'suite',
@@ -85,10 +104,120 @@ describe('util: codemirror-utils', () => {
       const parser = 'NOT A REAL PARSER';
       expect(codemirrorUtils.getCodeMirrorMode(parser)).toEqual(parser);
     });
+
     it('should return the CodeMirror mode for a parser if it exists', () => {
       const parser = 'python3';
       const expected = 'python';
       expect(codemirrorUtils.getCodeMirrorMode(parser)).toEqual(expected);
+    });
+  });
+  describe('generateFilters()', () => {
+    it('should return {} is ruleCounts is undefined', () => {
+      const prevFilters = {};
+      const ruleCounts = undefined;
+      expect(codemirrorUtils.generateFilters(prevFilters, ruleCounts)).toEqual({});
+    });
+
+    it('should return {} is ruleCounts is empty', () => {
+      const prevFilters = {};
+      const ruleCounts = {};
+      expect(codemirrorUtils.generateFilters(prevFilters, ruleCounts)).toEqual({});
+    });
+
+    it('does not contain rules that are not in the rules data object', () => {
+      const prevFilters = {};
+      const ruleCounts = {
+        'Rick Sanchez': 1,
+        'Morty Smith': 2,
+        'Summer Smith': 3,
+        'Beth Smith': 4,
+        'Jerry Smith': 5,
+      };
+      expect(codemirrorUtils.generateFilters(prevFilters, ruleCounts)).toEqual({});
+    });
+
+    it('sets selected property to false if filter not in prevFilters', () => {
+      const prevFilters = {};
+      const ruleCounts = {
+        str: 1,
+      };
+      const newFilters = codemirrorUtils.generateFilters(prevFilters, ruleCounts);
+      expect(newFilters.str.selected).toEqual(false);
+    });
+
+    it('sets selected property to filter\'s value in prevFilters', () => {
+      const prevFilters = {
+        str: { selected: true },
+        number: { selected: false },
+      };
+      const ruleCounts = {
+        str: 1,
+        number: 2,
+      };
+      const newFilters = codemirrorUtils.generateFilters(prevFilters, ruleCounts);
+      expect(newFilters.str.selected).toEqual(true);
+      expect(newFilters.number.selected).toEqual(false);
+    });
+
+    it('sets the filter\'s count property from ruleCounts', () => {
+      const prevFilters = {
+        str: { selected: true },
+        number: { selected: false },
+      };
+      const ruleCounts = {
+        str: 1,
+        number: 2,
+      };
+      const newFilters = codemirrorUtils.generateFilters(prevFilters, ruleCounts);
+      expect(newFilters.str.count).toEqual(1);
+      expect(newFilters.number.count).toEqual(2);
+    });
+  });
+  describe('removeDeprecatedFilters', () => {
+    it('removes filters that are in ignoredRules', () => {
+      const filters = {
+        and_expr: {},
+        atom: {},
+        file_input: {},
+        comp_op: {},
+        classdef: {},
+        try_stmt: {},
+        arglist: {},
+      };
+      const expected = {
+        and_expr: {},
+        comp_op: {},
+        classdef: {},
+        try_stmt: {},
+      };
+      expect(codemirrorUtils.removeDeprecatedFilters(filters)).toEqual(expected);
+    });
+  });
+  describe('removeDeprecatedFiltersFromState', () => {
+    it('returns the updated state object', () => {
+      const filters = {
+        and_expr: {},
+        atom: {},
+        file_input: {},
+        comp_op: {},
+        classdef: {},
+        try_stmt: {},
+        arglist: {},
+      };
+      const state = {
+        snippetTitle: '',
+        filters,
+      };
+      const expected = {
+        ...state,
+        filters: {
+          and_expr: {},
+          comp_op: {},
+          classdef: {},
+          try_stmt: {},
+        },
+      };
+      expect(codemirrorUtils.removeDeprecatedFiltersFromState(state)).toEqual(expected);
     });
   });
 });

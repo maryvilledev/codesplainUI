@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 import * as actions from '../actions/app';
-import { generateFilters } from '../util/rules';
+import { generateFilters } from '../util/codemirror-utils';
 
 export const initialState = {
   annotations: {},

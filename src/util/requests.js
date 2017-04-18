@@ -13,4 +13,9 @@ export const makeSaveEndpointUrl = (username, snippetId = '') => {
   return `${API_URL}/users/${username}/snippets`;
 };
 
-export default makeSaveEndpointUrl;
+/*
+Construct the REST endpoint for obtaining the parser for the specified
+language.
+*/
+export const makeParserEndpointUrl = language =>
+  `${API_URL}/parsers/${language}`;

@@ -24,8 +24,6 @@ import Editor from '../components/Editor';
 import SnippetAreaToolbar from '../components/SnippetAreaToolbar';
 import CustomPropTypes from '../util/custom-prop-types';
 
-const API_URL = process.env.REACT_APP_API_URL;
-
 const styles = {
   snippetAreaCardText: {
     display: 'flex',
@@ -65,7 +63,7 @@ export class SnippetArea extends React.Component {
 
   componentDidMount() {
     const { dispatch, snippetLanguage } = this.props;
-    dispatch(loadParser(`${API_URL}/parsers/${snippetLanguage}`));
+    dispatch(loadParser(snippetLanguage));
   }
 
   showSnackbar(message) {
@@ -79,7 +77,7 @@ export class SnippetArea extends React.Component {
     const { dispatch, snippetLanguage: currentLanguage } = this.props;
     if (currentLanguage !== language) {
       dispatch(setSnippetLanguage(language));
-      dispatch(loadParser(`${API_URL}/parsers/${language}`));
+      dispatch(loadParser(language));
     }
   }
 
