@@ -2,7 +2,7 @@ import hljs from 'highlight.js';
 
 export default {
   langPrefix: 'hljs language-',
-  highlight(str, lang) {
+  highlight: (str, lang) => {
     try {
       if (lang && hljs.getLanguage(lang)) {
         return hljs.highlight(lang, str).value;

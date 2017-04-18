@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import RuleLabel from './RuleLabel';
 
-const makeListItems = (filters, onRuleSelected) =>
+const makeListItems = (filters, onRuleSelected) => (
   Object.keys(filters)
     .map((filterName) => {
       // Extract the filter information
@@ -21,7 +21,8 @@ const makeListItems = (filters, onRuleSelected) =>
           onClick={() => onRuleSelected(filterName)}
         />
       );
-    });
+    })
+);
 
 const RulesSelector = ({ filters, onRuleSelected }) => {
   const listItems = makeListItems(filters, onRuleSelected);
