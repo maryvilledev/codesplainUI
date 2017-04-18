@@ -1,7 +1,7 @@
 import * as actions from '../actions/parser';
 
 const initialState = {
-  parserURL: ''
+  language: ''
 }
 
 const parser = (state = initialState, action) => {
@@ -11,8 +11,8 @@ const parser = (state = initialState, action) => {
         //Missed the middleware somehow
         return state
       }
-      const parserURL = action.payload;
-      return {...state, parserURL}
+      const language = action.payload;
+      return {...state, language}
     }
     default: {
       return state

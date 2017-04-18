@@ -12,3 +12,11 @@ export const makeSaveEndpointUrl = (username, snippetId = '') => {
   // Return a URL for POST requests
   return `${API_URL}/users/${username}/snippets`;
 }
+
+/*
+Construct the REST endpoint for obtaining the parser for the specified
+language.
+*/
+export const makeParserEndpointUrl = (language) => (
+  `${API_URL}/parsers/${language}`
+)
