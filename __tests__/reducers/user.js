@@ -3,7 +3,10 @@ import reducer from '../../src/reducers/user';
 
 describe('Reducer: User', () => {
   it('shoud have initial state', () => {
-    const initial = {};
+    const initial = {
+      orgs: [],
+      selectedOrg: null
+    };
     expect(reducer(undefined, {})).toEqual(initial);
   });
 

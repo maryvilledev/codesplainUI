@@ -1,6 +1,11 @@
 import * as actions from '../actions/user';
 
-const user = (state = {}, action) => {
+const defaultState = {
+  orgs: [],
+  selectedOrg: null
+}
+
+const user = (state=defaultState, action) => {
   switch (action.type) {
     case actions.SET_USER_SNIPPETS: {
       return {
