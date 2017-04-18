@@ -3,10 +3,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+/* eslint-disable */
 import {
   createHistory,
   useBeforeUnload,
 } from 'history';
+/* eslint-enable */
 import {
   Router,
   Route,
@@ -28,6 +30,7 @@ history.listenBeforeUnload(() => {
   if (store.getState().app.hasUnsavedChanges) {
     return 'Are you sure you want to leave this page?';
   }
+  return undefined;
 });
 
 ReactDOM.render(
