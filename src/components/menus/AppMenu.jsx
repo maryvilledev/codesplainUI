@@ -15,20 +15,20 @@ const styles = {
   avatar: {
     marginBottom: '13px',
     marginRight: '8px',
-  }
-}
+  },
+};
 
 // Returns an <Avatar /> of the user's GitHub icon if the requisite cookie is
 // present, otherwise returns null.
 const getUserAvatar = () => {
   const avatarURL = cookie.load('userAvatarURL');
   return avatarURL ?
-      <Avatar
-        src={avatarURL}
-        size={30}
-        style={styles.avatar}
-      /> : null;
-}
+    <Avatar
+      src={avatarURL}
+      size={30}
+      style={styles.avatar}
+    /> : null;
+};
 
 /*
 <AppMenu /> renders as a white vertical ellipse ⋮ . When clicked it expands to
@@ -42,8 +42,8 @@ const AppMenu = ({ onSignOut, snippetTitles, onTitleClicked }) => (
           <MoreVertIcon color="white" />
         </IconButton>
       }
-      targetOrigin={{horizontal: 'right', vertical: 'top'}}
-      anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+      targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+      anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
     >
       <MenuItem
         primaryText="Sign out"
@@ -58,7 +58,7 @@ const AppMenu = ({ onSignOut, snippetTitles, onTitleClicked }) => (
   </div>
 );
 
-AppMenu.proptypes = {
+AppMenu.propTypes = {
   onSignOut: PropTypes.func.isRequired,
   snippetTitles: PropTypes.string.isRequired,
   onTitleClicked: PropTypes.func.isRequired,
