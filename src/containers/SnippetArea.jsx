@@ -132,7 +132,7 @@ export class SnippetArea extends React.Component {
 
     if (!snippetTitle) {
       this.setState({ titleErrorText: 'This field is required' });
-      this.showSnackbar('Please populate the title field before saving.');
+      this.showSnackbar('Please enter a snippet name.');
       return;
     }
     this.setState({ titleErrorText: '' });
