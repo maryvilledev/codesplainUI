@@ -57,7 +57,13 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is no
         "verticalAlign": "middle",
       }
     } />
-  <OrgSelector />
+  <OrgSelector
+    onChange={[Function]}
+    orgs={
+      Array [
+        "dane-johnson",
+      ]
+    } />
   <SaveMenu
     canSave={true}
     enabled={true}
@@ -134,7 +140,13 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is re
         "verticalAlign": "middle",
       }
     } />
-  <OrgSelector />
+  <OrgSelector
+    onChange={[Function]}
+    orgs={
+      Array [
+        "dane-johnson",
+      ]
+    } />
   <SaveMenu
     canSave={true}
     enabled={true}

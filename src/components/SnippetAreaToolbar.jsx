@@ -74,7 +74,10 @@ const SnippetAreaToolbar = (props) => {
         readOnly={readOnly}
         style={styles.buttons}
       />
-      <OrgSelector />
+      <OrgSelector
+        onChange={(val) => console.log(val)}
+        orgs={["dane-johnson"]}
+      />
       <SaveMenu
         canSave={canSave}
         enabled={saveEnabled}
