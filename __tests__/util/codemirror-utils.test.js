@@ -51,7 +51,6 @@ describe('util: codemirror-utils', () => {
 
   describe('styleAll()', () => {
     it('should call styleRegion with the correct args', () => {
-      const line = 0;
       const css = 'background-color: blue';
       const expectedArgs = [
         mockPosFromIndexReturnVals[0],

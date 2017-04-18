@@ -1,8 +1,8 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import { Annotations } from '../../src/containers/Annotations';
 
-const mockAnnotation = "They're just robots.";
+const mockAnnotation = 'They\'re just robots.';
 const mocklineAnnotated = {
   lineNumber: 2,
   lineText: 'Galactic Imperial',
@@ -15,13 +15,13 @@ describe('<Annotations />', () => {
     <Annotations
       annotation={mockAnnotation}
       dispatch={mockDispatch}
-      isDisplayingAnnotation={true}
+      isDisplayingAnnotation
       lineAnnotated={mocklineAnnotated}
-      readOnly={true}
+      readOnly
       router={mockRouter}
       snippetKey=""
       snippetLanguage="python3"
-    />
+    />,
   );
 
   beforeEach(() => {
@@ -31,5 +31,5 @@ describe('<Annotations />', () => {
   it('closes the annotation panel on handleCloseAnnotation', () => {
     wrapper.instance().handleCloseAnnotation();
     expect(mockDispatch.mock.calls[0]).toBeDefined();
-  })
+  });
 });

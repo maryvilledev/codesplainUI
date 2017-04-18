@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  mount,
-  render,
-  shallow,
-} from 'enzyme';
+import { shallow } from 'enzyme';
 
 import { FilterArea } from '../../src/containers/FilterArea';
 
@@ -27,12 +23,12 @@ describe('<FilterArea />', () => {
     <FilterArea
       filters={mockFilters}
       dispatch={mockDispatch}
-    />
-  )
+    />,
+  );
   it('toggles a filter on handleRuleSelected', () => {
     const filter = 'rick';
-    wrapper.instance().handleRuleSelected(filter)
+    wrapper.instance().handleRuleSelected(filter);
     const { payload } = mockDispatch.mock.calls[0][0];
-    expect(payload[filter]).toEqual(expect.objectContaining({selected: true}));
+    expect(payload[filter]).toEqual(expect.objectContaining({ selected: true }));
   });
 });

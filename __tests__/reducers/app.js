@@ -7,6 +7,7 @@ describe('Reducer: App', () => {
       expect(initialState).toMatchSnapshot();
     });
   });
+
   it('handles SET_SNIPPET_KEY', () => {
     const snippetKey = 'szechuan sauce';
     const action = {
@@ -18,6 +19,7 @@ describe('Reducer: App', () => {
     };
     expect(reducer({}, action)).toEqual(expected);
   });
+
   it('handles RESET_STATE', () => {
     const action = {
       type: actions.RESET_STATE,
@@ -28,6 +30,7 @@ describe('Reducer: App', () => {
     };
     expect(reducer(state, action)).toEqual(initialState);
   });
+
   it('handles SET_SNIPPET_CONTENTS', () => {
     const snippet = 'Show me what you got';
     const action = {
@@ -41,6 +44,7 @@ describe('Reducer: App', () => {
     };
     expect(reducer(undefined, action)).toEqual(expected);
   });
+
   it('handles TOGGLE_EDITING_STATE', () => {
     const action = {
       type: actions.TOGGLE_EDITING_STATE,
@@ -52,6 +56,7 @@ describe('Reducer: App', () => {
     };
     expect(reducer(undefined, action)).toEqual(expected);
   });
+
   it('handles SET_RULE_FILTERS', () => {
     const filters = {
       for_stmt: {
@@ -76,6 +81,7 @@ describe('Reducer: App', () => {
     };
     expect(reducer(undefined, action)).toEqual(expected);
   });
+
   it('handles RESET_RULE_FILTERS', () => {
     const filters = {
       for_stmt: {
@@ -108,6 +114,7 @@ describe('Reducer: App', () => {
     };
     expect(reducer({ filters }, action)).toEqual(expected);
   });
+
   it('handles SELECT_ALL_FILTERS', () => {
     const filters = {
       for_stmt: {
@@ -140,6 +147,7 @@ describe('Reducer: App', () => {
     };
     expect(reducer({ filters }, action)).toEqual(expected);
   });
+
   it('handles SET_AST', () => {
     const AST = {
       type: 'file_input',
@@ -162,6 +170,7 @@ describe('Reducer: App', () => {
     };
     expect(reducer(undefined, action)).toEqual(expected);
   });
+
   it('handles SAVE_ANNOTATION', () => {
     const annotationData = {
       annotation: 'You pass butter.',
@@ -181,6 +190,7 @@ describe('Reducer: App', () => {
     };
     expect(reducer(undefined, action)).toEqual(expected);
   });
+
   it('handles RESTORE_STATE', () => {
     const savedState = {
       snippet: '\t',
@@ -210,6 +220,7 @@ describe('Reducer: App', () => {
     };
     expect(reducer(undefined, action)).toEqual(expected);
   });
+
   it('handles SET_SNIPPET_TITLE', () => {
     const snippetTitle = 'Get Schwifty';
     const action = {
@@ -223,6 +234,7 @@ describe('Reducer: App', () => {
     };
     expect(reducer(undefined, action)).toEqual(expected);
   });
+
   it('handles SET_SNIPPET_LANGUAGE', () => {
     const snippetLanguage = 'Gromflomite';
     const action = {
@@ -236,6 +248,7 @@ describe('Reducer: App', () => {
     };
     expect(reducer(undefined, action)).toEqual(expected);
   });
+
   it('handles CLEAR_UNSAVED_CHANGES', () => {
     const action = {
       type: actions.CLEAR_UNSAVED_CHANGES,
@@ -246,6 +259,7 @@ describe('Reducer: App', () => {
     };
     expect(reducer(undefined, action)).toEqual(expected);
   });
+
   describe('PARSE_SNIPPET', () => {
     it('should return the state if the snippet has not been processed by the web worker', () => {
       const snippet = 'Grasssss tastes bad';
@@ -258,9 +272,9 @@ describe('Reducer: App', () => {
           snippet,
         },
       };
-      const expected = initialState;
       expect(reducer(undefined, action)).toEqual(initialState);
     });
+
     it('should set the AST and filters after parsing the snippet', () => {
       const AST = {
         type: 'file_input',
@@ -291,6 +305,7 @@ describe('Reducer: App', () => {
       expect(reducer(undefined, action)).toEqual(expected);
     });
   });
+
   it('handles SAVE_SUCCEEDED', () => {
     const state = {
       hasUnsavedChanges: true,
