@@ -21,7 +21,7 @@ const SnippetList = ({ titles, onClick }) => {
     <MenuItem
       primaryText="My Snippets"
       rightIcon={<ArrowDropRight />}
-      disabled={menuItems ? false : true}
+      disabled={!menuItems}
       menuItems={menuItems}
     />
   );
