@@ -5,6 +5,7 @@ import cookie from 'react-cookie';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
+import { openAnnotationPanel } from '../actions/annotation';
 import {
   parseSnippet,
   saveNew,
@@ -15,19 +16,9 @@ import {
   setSnippetTitle,
   toggleEditState,
 } from '../actions/app';
-import {
-  updateUserSnippets,
-} from '../actions/user';
-import {
-  loadParser,
-} from '../actions/parser';
-import {
-  setPermissions
-} from '../actions/permissions';
-import {
-  openAnnotationPanel,
-} from '../actions/annotation';
-
+import { loadParser } from '../actions/parser';
+import { setPermissions } from '../actions/permissions';
+import { updateUserSnippets } from '../actions/user';
 import ConfirmLockDialog from '../components/ConfirmLockDialog';
 import Editor from '../components/Editor';
 import SnippetAreaToolbar from '../components/SnippetAreaToolbar';
@@ -104,6 +95,9 @@ export class SnippetArea extends React.Component {
 
   handleTitleChanged(ev) {
     const snippetTitle = ev.target.value;
+    if (snippetTitle.length > 40) {
+      return;
+    }
     const { dispatch } = this.props;
     dispatch(setSnippetTitle(snippetTitle));
   }
