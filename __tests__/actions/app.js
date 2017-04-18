@@ -246,7 +246,7 @@ describe('Actions: App', () => {
             const request = moxios.requests.mostRecent();
             request.respondWith({
               status: 200,
-              response: { key, status: '200' },
+              response: { status: '200' },
             });
           });
           const expectedActions = [

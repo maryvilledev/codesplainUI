@@ -7,13 +7,13 @@ import LoginButton from '../../src/components/buttons/LoginButton';
 
 describe('<LoginButton />', () => {
   const muiTheme = getMuiTheme();
-  const shallowWithContext = (node) => shallow(node, { context: { muiTheme } });
+  const shallowWithContext = node => shallow(node, { context: { muiTheme } });
 
   it('matches snapshot', () => {
     const wrapper = shallowWithContext(
       <LoginButton
         href="dummy-link"
-      />
+      />,
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });

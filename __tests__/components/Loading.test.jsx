@@ -7,20 +7,20 @@ import Loading from '../../src/components/Loading';
 
 describe('<Loading />', () => {
   const muiTheme = getMuiTheme();
-  const shallowWithContext = (node) => shallow(node, { context: { muiTheme } });
+  const shallowWithContext = node => shallow(node, { context: { muiTheme } });
 
   it('matches snapshot', () => {
     const wrapper = shallowWithContext(
-      <Loading />
+      <Loading />,
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 
   describe('prop: text', () => {
     it('renders the text', () => {
-      const text = "Wubba lubba dub dub!";
+      const text = 'Wubba lubba dub dub!';
       const wrapper = shallowWithContext(
-        <Loading text={text} />
+        <Loading text={text} />,
       );
       expect(wrapper.find('p').text()).toEqual(text);
     });

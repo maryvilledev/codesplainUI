@@ -8,7 +8,7 @@ import AppMenu from '../../src/components/menus/AppMenu';
 
 describe('<AppMenu />', () => {
   const muiTheme = getMuiTheme();
-  const shallowWithContext = (node) => shallow(node, { context: { muiTheme } });
+  const shallowWithContext = node => shallow(node, { context: { muiTheme } });
 
   afterEach(() => {
     cookie.remove('userAvatarURL');
@@ -19,7 +19,7 @@ describe('<AppMenu />', () => {
       const wrapper = shallowWithContext(
         <AppMenu
           onSignOut={jest.fn()}
-        />
+        />,
       );
       expect(shallowToJson(wrapper)).toMatchSnapshot();
     });
@@ -29,7 +29,7 @@ describe('<AppMenu />', () => {
       const wrapper = shallowWithContext(
         <AppMenu
           onSignOut={jest.fn()}
-        />
+        />,
       );
       expect(shallowToJson(wrapper)).toMatchSnapshot();
     });
@@ -41,7 +41,7 @@ describe('<AppMenu />', () => {
       const wrapper = shallowWithContext(
         <AppMenu
           onSignOut={onSignOut}
-        />
+        />,
       );
       expect(wrapper.find('MenuItem').prop('onClick')).toEqual(onSignOut);
     });

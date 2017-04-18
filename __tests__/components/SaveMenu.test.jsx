@@ -2,21 +2,20 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import MenuItem from 'material-ui';
 
 import SaveMenu from '../../src/components/menus/SaveMenu';
 
 describe('<SaveMenu />', () => {
   const muiTheme = getMuiTheme();
-  const shallowWithContext = (node) => shallow(node, { context: { muiTheme } });
+  const shallowWithContext = node => shallow(node, { context: { muiTheme } });
 
   it('matches snapshot', () => {
     const wrapper = shallowWithContext(
       <SaveMenu
         onSaveClick={jest.fn()}
         onSaveAsClick={jest.fn()}
-        canSave={true}
-      />
+        canSave
+      />,
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
@@ -28,8 +27,8 @@ describe('<SaveMenu />', () => {
         <SaveMenu
           onSaveClick={onSaveClick}
           onSaveAsClick={jest.fn()}
-          canSave={true}
-        />
+          canSave
+        />,
       );
 
       // Have to use 'touchTap' as opposed to 'click' here, see
@@ -45,9 +44,9 @@ describe('<SaveMenu />', () => {
         <SaveMenu
           onSaveClick={jest.fn()}
           onSaveAsClick={jest.fn()}
-          canSave={true}
-        />
-      )
+          canSave
+        />,
+      );
       wrapper.find('TextField').simulate('change', {}, 'testing');
       expect(wrapper.instance().state.saveAsName).toBe('testing');
     });
@@ -58,12 +57,12 @@ describe('<SaveMenu />', () => {
         <SaveMenu
           onSaveClick={jest.fn()}
           onSaveAsClick={onSaveAsClick}
-          canSave={true}
-        />
+          canSave
+        />,
       );
       const title = 'test title';
       wrapper.instance().setState({ saveAsName: title });
-      const dialogButtons = shallowWithContext(wrapper.find('Dialog').prop('actions'))
+      const dialogButtons = shallowWithContext(wrapper.find('Dialog').prop('actions'));
       dialogButtons.find('[label="Save"]').simulate('touchTap');
       expect(onSaveAsClick.mock.calls[0][0]).toBe(title);
     });
@@ -74,10 +73,10 @@ describe('<SaveMenu />', () => {
         <SaveMenu
           onSaveClick={jest.fn()}
           onSaveAsClick={onSaveAsClick}
-          canSave={true}
-        />
+          canSave
+        />,
       );
-      const dialogButtons = shallowWithContext(wrapper.find('Dialog').prop('actions'))
+      const dialogButtons = shallowWithContext(wrapper.find('Dialog').prop('actions'));
       dialogButtons.find('[label="Cancel"]').simulate('touchTap');
       expect(onSaveAsClick.mock.calls.length).toBe(0);
     });

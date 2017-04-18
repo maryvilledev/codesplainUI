@@ -7,14 +7,14 @@ import Alert from '../../src/components/Alert';
 
 describe('<Alert />', () => {
   const muiTheme = getMuiTheme();
-  const shallowWithContext = (node) => shallow(node, { context: { muiTheme } });
+  const shallowWithContext = node => shallow(node, { context: { muiTheme } });
 
   it('matches snapshot', () => {
     const wrapper = shallowWithContext(
       <Alert
         onClose={jest.fn()}
         text="Wubba lubba dub dub!"
-      />
+      />,
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
@@ -26,7 +26,7 @@ describe('<Alert />', () => {
         <Alert
           onClose={onClose}
           text="Wubba lubba dub dub!"
-        />
+        />,
       );
       expect(wrapper.prop('onRequestClose')).toEqual(onClose);
     });

@@ -13,11 +13,11 @@ const defaultMockProps = {
 
 describe('<LanguageSelector />', () => {
   const muiTheme = getMuiTheme();
-  const shallowWithContext = (node) => shallow(node, { context: { muiTheme } });
+  const shallowWithContext = node => shallow(node, { context: { muiTheme } });
 
   it('matches snapshot', () => {
     const wrapper = shallowWithContext(
-      <LanguageSelector {...defaultMockProps}/>
+      <LanguageSelector {...defaultMockProps} />,
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
@@ -29,7 +29,7 @@ describe('<LanguageSelector />', () => {
         <LanguageSelector
           {...defaultMockProps}
           language={language}
-        />
+        />,
       );
       const select = wrapper.find('SelectField');
       expect(select.prop('value')).toEqual(language);
@@ -43,7 +43,7 @@ describe('<LanguageSelector />', () => {
         <LanguageSelector
           {...defaultMockProps}
           onChange={onChange}
-        />
+        />,
       );
       const select = wrapper.find('SelectField');
       expect(select.prop('onChange')).toEqual(onChange);
