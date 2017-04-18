@@ -151,6 +151,7 @@ export class SnippetArea extends React.Component {
         }, () => {
           this.showSnackbar('Failed to save - an error occurred');
         });
+      return;
     }
     dispatch(saveNew())
       .then((snippetKey) => {
