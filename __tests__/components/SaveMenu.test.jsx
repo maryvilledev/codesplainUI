@@ -5,19 +5,43 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import SaveMenu from '../../src/components/menus/SaveMenu';
 
+const defaultProps = {
+  canSave: true,
+  enabled: true,
+  onSaveClick: jest.fn(),
+  onSaveAsClick: jest.fn(),
+};
+
 describe('<SaveMenu />', () => {
   const muiTheme = getMuiTheme();
   const shallowWithContext = node => shallow(node, { context: { muiTheme } });
-
-  it('matches snapshot', () => {
-    const wrapper = shallowWithContext(
-      <SaveMenu
-        onSaveClick={jest.fn()}
-        onSaveAsClick={jest.fn()}
-        canSave
-      />,
-    );
-    expect(shallowToJson(wrapper)).toMatchSnapshot();
+  describe('snapshot tests', () => {
+    it('matches default snapshot', () => {
+      const wrapper = shallowWithContext(
+        <SaveMenu
+          {...defaultProps}
+        />,
+      );
+      expect(shallowToJson(wrapper)).toMatchSnapshot();
+    });
+    it('matches snapshot when saving is not enabled', () => {
+      const wrapper = shallowWithContext(
+        <SaveMenu
+          {...defaultProps}
+          enabled={false}
+        />,
+      );
+      expect(shallowToJson(wrapper)).toMatchSnapshot();
+    });
+    it('matches snapshot when user cannot save', () => {
+      const wrapper = shallowWithContext(
+        <SaveMenu
+          {...defaultProps}
+          canSave={false}
+        />,
+      );
+      expect(shallowToJson(wrapper)).toMatchSnapshot();
+    });
   });
 
   describe('prop: onSaveClick', () => {
@@ -25,9 +49,8 @@ describe('<SaveMenu />', () => {
       const onSaveClick = jest.fn();
       const wrapper = shallowWithContext(
         <SaveMenu
+          {...defaultProps}
           onSaveClick={onSaveClick}
-          onSaveAsClick={jest.fn()}
-          canSave
         />,
       );
 
@@ -41,11 +64,7 @@ describe('<SaveMenu />', () => {
   describe('the Save As dialog', () => {
     it('has a <TextField /> that updates the state when edited', () => {
       const wrapper = shallowWithContext(
-        <SaveMenu
-          onSaveClick={jest.fn()}
-          onSaveAsClick={jest.fn()}
-          canSave
-        />,
+        <SaveMenu {...defaultProps} />,
       );
       wrapper.find('TextField').simulate('change', {}, 'testing');
       expect(wrapper.instance().state.saveAsName).toBe('testing');
@@ -55,9 +74,8 @@ describe('<SaveMenu />', () => {
       const onSaveAsClick = jest.fn();
       const wrapper = shallowWithContext(
         <SaveMenu
-          onSaveClick={jest.fn()}
+          {...defaultProps}
           onSaveAsClick={onSaveAsClick}
-          canSave
         />,
       );
       const title = 'test title';
@@ -71,9 +89,8 @@ describe('<SaveMenu />', () => {
       const onSaveAsClick = jest.fn();
       const wrapper = shallowWithContext(
         <SaveMenu
-          onSaveClick={jest.fn()}
+          {...defaultProps}
           onSaveAsClick={onSaveAsClick}
-          canSave
         />,
       );
       const dialogButtons = shallowWithContext(wrapper.find('Dialog').prop('actions'));

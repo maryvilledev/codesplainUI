@@ -10,6 +10,7 @@ import {
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
 import SnippetList from './SnippetList';
+import CustomPropTypes from '../../util/custom-prop-types';
 
 const styles = {
   avatar: {
@@ -60,7 +61,7 @@ const AppMenu = ({ onSignOut, snippetTitles, onTitleClicked }) => (
 
 AppMenu.propTypes = {
   onSignOut: PropTypes.func.isRequired,
-  snippetTitles: PropTypes.string.isRequired,
+  snippetTitles: CustomPropTypes.snippets.isRequired,
   onTitleClicked: PropTypes.func.isRequired,
 };
 

@@ -141,7 +141,7 @@ export class CodesplainAppBar extends Component {
       (<AppMenu
         onSignOut={this.handleSignOut}
         onTitleClicked={this.handleSnippetSelected}
-        snippetTitles={userSnippets || {}}
+        snippetTitles={userSnippets}
       />)
       :
       <LoginButton onClick={this.onLoginClick} />;
@@ -170,10 +170,15 @@ export class CodesplainAppBar extends Component {
 
 CodesplainAppBar.propTypes = {
   hasUnsavedChanges: PropTypes.bool.isRequired,
-  userSnippets: CustomPropTypes.snippets.isRequired,
+  userSnippets: CustomPropTypes.snippets,
+};
+
+CodesplainAppBar.defaultProps = {
+  userSnippets: {},
 };
 
 const mapStateToProps = (state) => {
+  console.log('state', state);
   const {
     app,
     user: {

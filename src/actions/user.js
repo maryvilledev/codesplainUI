@@ -41,6 +41,10 @@ export const updateUserSnippets = () => (dispatch) => {
   return axios.get(makeSaveEndpointUrl(username), { headers })
       .then(
         (res) => {
+          // TODO: Don't execute the request if there is no username
+          if (typeof res.data === 'string') {
+            return;
+          }
           dispatch(setUserSnippets(res.data));
           dispatch(updateUserSnippetsSucceeded());
         },

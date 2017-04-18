@@ -14,6 +14,7 @@ describe('<Annotations />', () => {
   const wrapper = shallow(
     <Annotations
       annotation={mockAnnotation}
+      annotations={{}}
       dispatch={mockDispatch}
       isDisplayingAnnotation
       lineAnnotated={mocklineAnnotated}
