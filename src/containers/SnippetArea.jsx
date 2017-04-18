@@ -121,7 +121,7 @@ export class SnippetArea extends React.Component {
   }
 
   handleSave() {
-    // Make sure title is populated
+
     const {
       dispatch,
       router,
@@ -130,6 +130,7 @@ export class SnippetArea extends React.Component {
 
     const { id } = router.params;
 
+    // Make sure title is populated
     if (!snippetTitle) {
       this.setState({ titleErrorText: 'This field is required' });
       this.showSnackbar('Please enter a snippet name.');
