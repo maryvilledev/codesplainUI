@@ -1,14 +1,11 @@
 exports[`<OrgSelector /> matches snapshot 1`] = `
 <div>
-  <DropDownMenu
-    animated={true}
-    autoWidth={true}
+  <SelectField
+    autoWidth={false}
     disabled={true}
-    iconButton={<NavigationArrowDropDown />}
-    maxHeight={500}
+    fullWidth={false}
     multiple={false}
     onChange={[Function]}
-    openImmediately={false}
     value={0}>
     <MenuItem
       anchorOrigin={
@@ -38,6 +35,6 @@ exports[`<OrgSelector /> matches snapshot 1`] = `
       insetChildren={false}
       primaryText="international-counsel-of-ricks"
       value="international-counsel-of-ricks" />
-  </DropDownMenu>
+  </SelectField>
 </div>
 `;

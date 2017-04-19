@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import { DropDownMenu, MenuItem } from 'material-ui'
+import { SelectField, MenuItem } from 'material-ui'
 
 const isEmpty = (arr) => arr.length === 0
 
@@ -16,7 +16,7 @@ class OrgSelector extends React.Component {
     const { value, orgs, style } = this.props;
     return (
       <div>
-        <DropDownMenu
+        <SelectField
           value={value || 0}
           onChange={this.handleChange}
           style={style}
@@ -37,7 +37,7 @@ class OrgSelector extends React.Component {
               primaryText={org}
             />
           ))}
-        </DropDownMenu>
+        </SelectField>
       </div>
     );
   }
