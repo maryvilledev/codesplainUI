@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
-import OrgSelector from '../../src/components/menus/OrgSelector';
+import OrgSelector from '../../src/components/OrgSelector';
 
 const defaultProps = {
   onChange: jest.fn(),

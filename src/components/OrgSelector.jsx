@@ -14,10 +14,10 @@ class OrgSelector extends React.Component {
   }
   render() {
     const { value } = this.state;
-    const { orgs } = this.props;
+    const { orgs, style } = this.props;
     return (
       <div>
-        <DropDownMenu value={value} onChange={this.handleChange}>
+        <DropDownMenu value={value} onChange={this.handleChange} style={style}>
           {orgs.map((org) => (
             <MenuItem
               key={org}
@@ -34,6 +34,7 @@ class OrgSelector extends React.Component {
 OrgSelector.propTypes = {
   orgs: PropTypes.arrayOf(PropTypes.string).isRequired,
   onChange: PropTypes.func.isRequired,
+  style: PropTypes.object
 }
 
 export default OrgSelector;

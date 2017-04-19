@@ -6,7 +6,7 @@ import {
 import LanguageSelector from './LanguageSelector';
 import LockButton from './buttons/LockButton';
 import SaveMenu from './menus/SaveMenu';
-import OrgSelector from './menus/OrgSelector';
+import OrgSelector from './OrgSelector';
 
 const styles = {
   toolbar: {
@@ -77,6 +77,7 @@ const SnippetAreaToolbar = (props) => {
       <OrgSelector
         onChange={(val) => console.log(val)}
         orgs={["dane-johnson"]}
+        style={styles.toolbarField}
       />
       <SaveMenu
         canSave={canSave}

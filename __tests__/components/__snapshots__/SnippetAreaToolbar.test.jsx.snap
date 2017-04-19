@@ -63,6 +63,14 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is no
       Array [
         "dane-johnson",
       ]
+    }
+    style={
+      Object {
+        "flexBasis": "auto",
+        "flexGrow": "1",
+        "flexShrink": "1",
+        "verticalAlign": "middle",
+      }
     } />
   <SaveMenu
     canSave={true}
@@ -146,6 +154,14 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is re
       Array [
         "dane-johnson",
       ]
+    }
+    style={
+      Object {
+        "flexBasis": "auto",
+        "flexGrow": "1",
+        "flexShrink": "1",
+        "verticalAlign": "middle",
+      }
     } />
   <SaveMenu
     canSave={true}
