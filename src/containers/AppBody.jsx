@@ -49,7 +49,7 @@ export class AppBody extends React.Component {
       dispatch(switchOrg(username));
 
       // If they are a member of any organizations, add to list as well
-      // TODO
+      cookie.load('orgs').split(' ').forEach((org) => dispatch(addOrg(org)))
     }
 
     if (!username && !snippetKey) {

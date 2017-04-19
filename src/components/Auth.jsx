@@ -2,6 +2,7 @@ import React from 'react';
 import cookie from 'react-cookie';
 import axios from 'axios';
 import { withRouter } from 'react-router';
+import _ from 'lodash';
 
 import Loading from '../components/Loading';
 import Alert from '../components/Alert';
@@ -75,8 +76,9 @@ export class Auth extends React.Component {
     }
 
     // Code was accepted, so extract and save the token from the response
-    const { token } = res.data;
+    const { token, orgs } = res.data;
     cookie.save('token', token, { path: '/' });
+    cookie.save('orgs', _.join(orgs, ' '), { path: '/' });
     return token;
   }
 
