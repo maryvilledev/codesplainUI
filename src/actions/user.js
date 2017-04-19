@@ -91,6 +91,7 @@ export const fetchAccessToken = (authCode) => (dispatch) => {
 }
 
 export const fetchUserInfo = () => (dispatch, getState) => {
+  console.log('getState()', getState());
   const { token } = getState().user;
   const reqHeaders = {
     Accept: 'application/json',

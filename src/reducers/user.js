@@ -33,7 +33,6 @@ export default (state = initialState, action) => {
       };
     }
     case actions.CLEAR_USER_CREDENTIALS: {
-
       return {
         ...initialState
       };
