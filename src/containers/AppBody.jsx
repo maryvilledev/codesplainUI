@@ -7,6 +7,7 @@ import cookie from 'react-cookie';
 
 import { restoreState } from '../actions/app';
 import { setPermissions } from '../actions/permissions';
+import { addOrg, switchOrg } from '../actions/user'
 
 import Annotations from './Annotations';
 import FilterArea from './FilterArea';
@@ -40,6 +41,17 @@ export class AppBody extends React.Component {
       username,
     } = router.params;
 
+    // If the user is authenticated, add her Github to the orgs, and make it
+    // the selected value
+    if (cookie.load('token') && cookie.load('username')) {
+      const username = cookie.load('username');
+      dispatch(addOrg(username));
+      dispatch(switchOrg(username));
+
+      // If they are a member of any organizations, add to list as well
+      // TODO
+    }
+
     if (!username && !snippetKey) {
       // This is a new snippet for the current user, enable all permissions
       const permissions = {
@@ -64,6 +76,7 @@ export class AppBody extends React.Component {
         'Authorization': token,
       }
     }
+
     axios.get(makeSaveEndpointUrl(username, snippetKey), config)
       .then(res => {
         const permissions = {
@@ -83,7 +96,7 @@ export class AppBody extends React.Component {
         // Restore the application's state
         dispatch(restoreState(appState));
 
-        // Reroute if not at the 'correct' location
+        // Reroute if using legacy url
         // So /:username/snippets/:id -> /:username/:id
         const nextRoute = `/${username}/${encodeURIComponent(snippetKey)}`;
         if (router.location.pathname !== nextRoute) {
