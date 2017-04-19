@@ -18,7 +18,7 @@ import {
 } from '../actions/app';
 import { loadParser } from '../actions/parser';
 import { setPermissions } from '../actions/permissions';
-import { updateUserSnippets } from '../actions/user';
+import { updateUserSnippets, switchOrg } from '../actions/user';
 import ConfirmLockDialog from '../components/ConfirmLockDialog';
 import Editor from '../components/Editor';
 import SnippetAreaToolbar from '../components/SnippetAreaToolbar';
@@ -59,6 +59,7 @@ export class SnippetArea extends React.Component {
     this.handleSnippetChanged = this.handleSnippetChanged.bind(this);
     this.handleTitleChanged = this.handleTitleChanged.bind(this);
     this.handleToggleReadOnly = this.handleToggleReadOnly.bind(this);
+    this.handleOrgChanged = this.handleOrgChanged.bind(this);
     this.showSnackbar = this.showSnackbar.bind(this);
   }
 
@@ -205,6 +206,11 @@ export class SnippetArea extends React.Component {
       });
   }
 
+  handleOrgChanged(org) {
+    const { dispatch } = this.props;
+    dispatch(switchOrg(org));
+  }
+
   handleGutterClick(lineNumber, lineText) {
     const { dispatch } = this.props
     dispatch(openAnnotationPanel({lineNumber, lineText}))
@@ -221,6 +227,8 @@ export class SnippetArea extends React.Component {
       snippet,
       snippetLanguage,
       snippetTitle,
+      orgs,
+      selectedOrg
     } = this.props;
 
     const markedLines = Object.keys(annotations).map((key) => Number(key))
@@ -229,11 +237,14 @@ export class SnippetArea extends React.Component {
         <SnippetAreaToolbar
           canSave={permissions.canEdit}
           language={snippetLanguage}
+          orgs={orgs}
+          selectedOrg={selectedOrg}
           onLanguageChange={this.handleLanguageChanged}
           onLockClick={this.handleLock}
           onSaveAsClick={this.handleSaveAs}
           onSaveClick={this.handleSave}
           onTitleChange={this.handleTitleChanged}
+          onOrgChanged={this.handleOrgChanged}
           readOnly={readOnly}
           saveEnabled={(cookie.load('username') !== undefined)}
           title={snippetTitle}
@@ -289,6 +300,8 @@ const mapStateToProps = state => ({
   snippetTitle: state.app.snippetTitle,
   appState: state.app,
   permissions: state.permissions,
+  orgs: state.user.orgs,
+  selectedOrg: state.user.selectedOrg,
 });
 
 export default withRouter(connect(mapStateToProps)(SnippetArea));

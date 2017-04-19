@@ -61,7 +61,7 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is no
     onChange={[Function]}
     orgs={
       Array [
-        "dane-johnson",
+        "galactic-federation",
       ]
     }
     style={
@@ -71,7 +71,8 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is no
         "flexShrink": "1",
         "verticalAlign": "middle",
       }
-    } />
+    }
+    value="galactic-federation" />
   <SaveMenu
     canSave={true}
     enabled={true}
@@ -152,7 +153,7 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is re
     onChange={[Function]}
     orgs={
       Array [
-        "dane-johnson",
+        "galactic-federation",
       ]
     }
     style={
@@ -162,7 +163,8 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is re
         "flexShrink": "1",
         "verticalAlign": "middle",
       }
-    } />
+    }
+    value="galactic-federation" />
   <SaveMenu
     canSave={true}
     enabled={true}

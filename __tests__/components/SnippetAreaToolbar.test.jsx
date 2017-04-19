@@ -13,9 +13,12 @@ const defaultProps = {
   onSaveClick: jest.fn(),
   onSaveAsClick: jest.fn(),
   onTitleChange: jest.fn(),
+  onOrgChanged: jest.fn(),
   readOnly: false,
   saveEnabled: true,
   title: '',
+  orgs: ['galactic-federation'],
+  selectedOrg: 'galactic-federation',
 };
 
 describe('<SnippetAreaToolbar />', () => {

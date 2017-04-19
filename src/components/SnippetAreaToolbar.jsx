@@ -36,7 +36,7 @@ const styles = {
 
 /*
 https://www.w3schools.com/Css/css_navbar.asp
-Note that the Materual UI <Toolbar /> component does not work
+Note that the Material UI <Toolbar /> component does not work
 here, because it does not reflow correctly when the screen is resized.
 */
 const SnippetAreaToolbar = (props) => {
@@ -51,6 +51,8 @@ const SnippetAreaToolbar = (props) => {
     readOnly,
     saveEnabled,
     title,
+    orgs,
+    selectedOrg
   } = props;
 
   return (
@@ -76,7 +78,8 @@ const SnippetAreaToolbar = (props) => {
       />
       <OrgSelector
         onChange={(val) => console.log(val)}
-        orgs={["dane-johnson"]}
+        orgs={orgs}
+        value={selectedOrg}
         style={styles.toolbarField}
       />
       <SaveMenu
@@ -99,9 +102,12 @@ SnippetAreaToolbar.propTypes = {
   onSaveAsClick: PropTypes.func.isRequired,
   onSaveClick: PropTypes.func.isRequired,
   onTitleChange: PropTypes.func.isRequired,
+  onOrgChanged: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
   saveEnabled: PropTypes.bool.isRequired,
   title: PropTypes.string.isRequired,
+  orgs: PropTypes.array.isRequired,
+  selectedOrg: PropTypes.string
 }
 
 export default SnippetAreaToolbar;

@@ -3,13 +3,13 @@ exports[`<OrgSelector /> matches snapshot 1`] = `
   <DropDownMenu
     animated={true}
     autoWidth={true}
-    disabled={false}
+    disabled={true}
     iconButton={<NavigationArrowDropDown />}
     maxHeight={500}
     multiple={false}
     onChange={[Function]}
     openImmediately={false}
-    value="galactic-federation">
+    value={0}>
     <MenuItem
       anchorOrigin={
         Object {

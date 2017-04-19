@@ -29,6 +29,8 @@ const mockPermissions = {
 const mockSnippet = "print('Squanch ya later!')"
 const mockSnippetTitle = 'Squanchy AI'
 const mockOpenLine = 2
+const mockOrgs = ['galactic-federation']
+const mockSelectedOrg = 'galactic-federation'
 
 describe('<SnippetArea />', () => {
   beforeEach(() => {
@@ -45,6 +47,8 @@ describe('<SnippetArea />', () => {
       readOnly={true}
       snippetLanguage="python3"
       permissions={mockPermissions}
+      orgs={mockOrgs}
+      selectedOrg={mockSelectedOrg}
     />
   )
   it('updates the snippet on handleSnippetChanged', () => {
