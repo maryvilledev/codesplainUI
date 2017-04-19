@@ -3,6 +3,11 @@ import cookie from 'react-cookie';
 
 import { makeSaveEndpointUrl } from '../util/requests';
 
+// Util func to check for 'NoSuchKey' responses from S3
+const noSuchKey = (data) => (
+  typeof(data) === 'string' && data.includes('NoSuchKey')
+);
+
 export const SET_USER_SNIPPETS = 'SET_USER_SNIPPETS';
 export const UPDATE_USER_SNIPPETS_STARTED = 'UPDATE_USER_SNIPPETS_STARTED';
 export const UPDATE_USER_SNIPPETS_SUCCEEDED = 'UPDATE_USER_SNIPPETS_SUCCEEDED';
@@ -51,12 +56,18 @@ export const updateUserSnippets = () => {
     };
     dispatch(updateUserSnippetsStarted());
     return axios.get(makeSaveEndpointUrl(username), { headers })
-      .then(
-        res => {
-          dispatch(setUserSnippets(res.data));
-          dispatch(updateUserSnippetsSucceeded());
-        },
-        err => dispatch(updateUserSnippetsFailed())
-      );
+      .then(res => {
+        // Jump to catch block if the user has no index.json file:
+        if (noSuchKey(res.data)) {
+          throw new Error(`index.json does not exist for ${username}!`);
+        }
+
+        // Otherwise they have an index.json, so update their snippets
+        dispatch(setUserSnippets(res.data));
+        dispatch(updateUserSnippetsSucceeded());
+      })
+      .catch(err => {
+        dispatch(updateUserSnippetsFailed())
+      });
   };
 };

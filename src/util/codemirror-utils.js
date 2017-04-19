@@ -1,5 +1,15 @@
-import { rules, ignoredRules } from './rules.js';
 import _ from 'lodash'
+
+let rules;
+let ignoredRules;
+
+export const setRules = (newRules) => {
+  rules = newRules;
+}
+
+export const setIgnoredRules = (newIgnoredRules) => {
+  ignoredRules = newIgnoredRules;
+}
 
 /*
 Recursive function for highlighting code in a CodeMirror. highlight() is an
@@ -73,6 +83,11 @@ Given a CodeMirror instance, highlight() will use the specified AST and filters
 objects to apply highlighting to the code in the CodeMirror editor.
 */
 export async function highlight(codeMirror, AST, filters) {
+  if (!rules || !ignoredRules) {
+    // Possibly not done loading these. Hooray, an asynchronous spin-lock!
+    setTimeout(() => highlight(codeMirror, AST, filters), 100)
+    return;
+  }
   //Make this a first-class function
   const func = () => highlightNode(codeMirror, AST, filters, 'transparent');
   //Codemirror buffers its calls ahead of time, then performs them atomically
@@ -89,4 +104,34 @@ export const getCodeMirrorMode = (parserName) => {
   parserCodeMirrorModes; else return the parser
   */
   return parserCodeMirrorModes[parserName] || parserName;
+};
+
+export const generateFilters = (prevFilters, ruleCounts) => {
+  const newFilters = {};
+  if (!ruleCounts || Object.keys(ruleCounts) === 0) {
+    return newFilters;
+  }
+  Object.keys(ruleCounts)
+    .filter(r => rules[r] !== undefined)
+    .forEach(r => {
+      const selected = prevFilters[r] ? prevFilters[r].selected : false;
+      newFilters[r] = {
+        prettyTokenName: rules[r].prettyName,
+        count:           ruleCounts[r],
+        selected:        selected,
+        color:           rules[r].color,
+      }
+    });
+  return newFilters;
+}
+
+export const removeDeprecatedFilters = (filters) => {
+  return _.omit(filters, ignoredRules);
+}
+
+export const removeDeprecatedFiltersFromState = (state) => {
+  return {
+    ...state,
+    filters: removeDeprecatedFilters(state.filters),
+  };
 };

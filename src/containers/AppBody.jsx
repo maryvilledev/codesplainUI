@@ -15,7 +15,7 @@ import SnippetArea from './SnippetArea';
 import ReferenceArea from '../components/ReferenceArea';
 
 import { makeSaveEndpointUrl } from '../util/requests';
-import { removeDeprecatedFiltersFromState } from '../util/rules';
+import { removeDeprecatedFiltersFromState } from '../util/codemirror-utils';
 import { setDefaults } from '../util/state-management';
 
 const styles = {
