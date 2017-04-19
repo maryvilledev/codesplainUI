@@ -18,6 +18,7 @@ export const UPDATE_USER_SNIPPETS = 'UPDATE_USER_SNIPPETS';
 export const SAVE_USERNAME = 'SAVE_USERNAME';
 export const SAVE_ACCESS_TOKEN = 'SAVE_ACCESS_TOKEN';
 export const CLEAR_USER_CREDENTIALS = 'CLEAR_USER_CREDENTIALS';
+export const RESTORE_USER_CREDENTIALS = 'RESTORE_USER_CREDENTIALS';
 
 export const saveUsername = (username) => ({
   type: SAVE_USERNAME,
@@ -101,3 +102,11 @@ export const fetchUserInfo = () => (dispatch, getState) => {
     headers: reqHeaders,
   });
 };
+
+export const restoreUserCredentials = (token, username) => ({
+  type: RESTORE_USER_CREDENTIALS,
+  payload: {
+    token,
+    username,
+  },
+})

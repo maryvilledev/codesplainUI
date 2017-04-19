@@ -14,6 +14,12 @@ export default (state = initialState, action) => {
         userSnippets: action.payload,
       }
     }
+    case actions.RESTORE_USER_CREDENTIALS: {
+      return {
+        ...state,
+        ...action.payload,
+      }
+    }
     case actions.SAVE_USERNAME: {
       return {
         ...state,

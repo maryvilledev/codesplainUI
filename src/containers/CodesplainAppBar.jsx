@@ -58,9 +58,10 @@ export class CodesplainAppBar extends React.Component {
 
   handleSnippetSelected(key) {
     const username  = cookie.load('username');
+    console.log(username);
     window.location = `/${username}/${key}`;
-    const { router } = this.props;
-    router.push(`/${username}/${key}`)
+    // const { router } = this.props;
+    // router.push(`/${username}/${key}`)
   }
 
   onLoginClick() {

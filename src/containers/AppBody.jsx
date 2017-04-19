@@ -13,7 +13,8 @@ import {
   restoreState,
 } from '../actions/app';
 import { setPermissions } from '../actions/permissions';
-import { removeDeprecatedFiltersFromState } from '../util/rules';
+import { restoreUserCredentials } from '../actions/user';
+import { removeDeprecatedFiltersFromState } from '../util/codemirror-utils';
 import { setDefaults } from '../util/state-management';
 
 const styles = {
@@ -56,6 +57,8 @@ export class AppBody extends Component {
       }
       return;
     }
+
+    dispatch(restoreUserCredentials(cookie.load('token'), cookie.load('username')));
 
     dispatch(loadSnippet(snippetKey))
       .then(res => {
