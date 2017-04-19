@@ -51,7 +51,6 @@ export class Auth extends React.Component {
   componentDidMount() {
     // Extract the code provided by GitHub from the redirect query string
     const { code } = this.props.router.location.query;
-    // this.runLoginSequence(code);
     this.login(code);
   }
 
