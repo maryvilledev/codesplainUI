@@ -6,7 +6,7 @@ import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 import CustomPropTypes from '../../util/custom-prop-types';
 
 const makeMenuItems = _.memoize((userSnippets, onClick) => {
-  if (!Object.keys(userSnippets).length === 0) return null;
+  if (Object.keys(userSnippets).length === 0) return null;
   return Object.keys(userSnippets).map(key => (
     <MenuItem
       key={key}
@@ -16,13 +16,17 @@ const makeMenuItems = _.memoize((userSnippets, onClick) => {
   ));
 });
 
-const SnippetList = ({ titles, onClick }) => (
-  <MenuItem
-    primaryText="My Snippets"
-    rightIcon={<ArrowDropRight />}
-    menuItems={makeMenuItems(titles, onClick)}
-  />
-);
+const SnippetList = ({ titles, onClick }) => {
+  const menuItems = makeMenuItems(titles, onClick);
+  return (
+    <MenuItem
+      disabled={!menuItems}
+      menuItems={menuItems}
+      primaryText="My Snippets"
+      rightIcon={<ArrowDropRight />}
+    />
+  );
+};
 
 SnippetList.propTypes = {
   titles: CustomPropTypes.snippets.isRequired,
