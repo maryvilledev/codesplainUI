@@ -7,14 +7,18 @@ exports[`<CodesplainAppBar /> snapshot tests user is logged in 1`] = `
         onTitleClicked={[Function]}
         snippetTitles={Array []} />
     }
-    onTitleTouchTap={[Function]}
     showMenuIconButton={false}
-    style={
-      Object {
-        "cursor": "pointer",
-      }
+    title={
+      <span
+        onClick={[Function]}
+        style={
+          Object {
+            "cursor": "pointer",
+          }
+        }>
+        Codesplain
+      </span>
     }
-    title="Codesplain"
     zDepth={1} />
   <Dialog
     actions={
@@ -65,14 +69,18 @@ exports[`<CodesplainAppBar /> snapshot tests user is not logged in 1`] = `
       <LoginButton
         onClick={[Function]} />
     }
-    onTitleTouchTap={[Function]}
     showMenuIconButton={false}
-    style={
-      Object {
-        "cursor": "pointer",
-      }
+    title={
+      <span
+        onClick={[Function]}
+        style={
+          Object {
+            "cursor": "pointer",
+          }
+        }>
+        Codesplain
+      </span>
     }
-    title="Codesplain"
     zDepth={1} />
   <Dialog
     actions={
