@@ -48,6 +48,7 @@ const SnippetAreaToolbar = (props) => {
     onSaveAsClick,
     onSaveClick,
     onTitleChange,
+    onOrgChanged,
     readOnly,
     saveEnabled,
     title,
@@ -77,7 +78,7 @@ const SnippetAreaToolbar = (props) => {
         style={styles.buttons}
       />
       <OrgSelector
-        onChange={(val) => console.log(val)}
+        onChange={onOrgChanged}
         orgs={orgs}
         value={selectedOrg}
         style={styles.toolbarField}
