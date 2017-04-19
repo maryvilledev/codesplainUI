@@ -61,7 +61,7 @@ export class AppBody extends Component {
     dispatch(restoreUserCredentials(cookie.load('token'), cookie.load('username')));
 
     dispatch(loadSnippet(snippetKey))
-      .then(res => {
+      .then((res) => {
         // Normalize the app state received from S3
         const appState = setDefaults(removeDeprecatedFiltersFromState(res.data));
         // Snippet may not have a S3 key value saved; set it to the URL's id
