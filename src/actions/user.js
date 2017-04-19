@@ -11,6 +11,15 @@ export const UPDATE_USER_SNIPPETS = 'UPDATE_USER_SNIPPETS';
 export const ADD_ORG = 'ADD_ORG';
 export const SWITCH_ORG = 'SWITCH_ORG';
 
+export const addOrg = (org) => ({
+  type: ADD_ORG,
+  payload: org
+});
+
+export const switchOrg = (org) => ({
+  type: SWITCH_ORG,
+  payload: org
+});
 
 export const setUserSnippets = (snippetMeta) => ({
   type: SET_USER_SNIPPETS,
