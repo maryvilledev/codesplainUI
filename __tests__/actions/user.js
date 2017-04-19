@@ -9,7 +9,7 @@ describe('Actions: User', () => {
   describe('ADD_ORG', () => {
     it('creates an action to add an org', () => {
       const org = 'galactic-federation';
-      expected = {
+      const expected = {
         type: actions.ADD_ORG,
         payload: org
       };
@@ -19,7 +19,7 @@ describe('Actions: User', () => {
   describe('SWITCH_ORG', () => {
     it('creates an action to switch the org', () => {
       const org = 'galactic-federation';
-      expected = {
+      const expected = {
         type: actions.SWITCH_ORG,
         payload: org
       };
