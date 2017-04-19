@@ -1,5 +1,8 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 import { shallow, mount } from 'enzyme';
+import configureStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 import toJson, { shallowToJson } from 'enzyme-to-json';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import moxios from 'moxios'
@@ -8,8 +11,11 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
 
-import { Auth, errors } from '../../src/components/Auth';
+import { Auth, ConnectedAuth, errors } from '../../src/components/Auth';
 import Alert from '../../src/components/Alert';
+
+const middlewares = [thunk];
+const mockStore = configureStore(middlewares);
 
 describe('<Auth />', () => {
   const muiTheme = getMuiTheme();
@@ -40,8 +46,11 @@ describe('<Auth />', () => {
           query: 'badcode',
         },
       };
+      const store = mockStore({});
       const wrapper = mountWithContext(
-        <Auth router={mockRouter} />
+        <Provider store={store}>
+          <ConnectedAuth router={mockRouter} />
+        </Provider>
       );
       moxios.wait(() => {
         const request = moxios.requests.mostRecent();
@@ -62,8 +71,11 @@ describe('<Auth />', () => {
           query: 'badcode',
         },
       };
+      const store = mockStore({});
       const wrapper = mountWithContext(
-        <Auth router={mockRouter} />
+        <Provider store={store}>
+          <ConnectedAuth router={mockRouter} />
+        </Provider>
       );
       moxios.wait(() => {
         const request = moxios.requests.mostRecent();
