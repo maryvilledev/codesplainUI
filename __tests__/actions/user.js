@@ -7,13 +7,13 @@ import * as actions from '../../src/actions/user';
 
 describe('Actions: User', () => {
   describe('action creators', () => {
-    it('creates correct SAVE_ACCESS_TOKEN object', () => {
+    it('creates correct SAVE_USERNAME object', () => {
       const token = 'token';
       const expected = {
-        type: actions.SAVE_ACCESS_TOKEN,
+        type: actions.SAVE_USERNAME,
         payload: token,
       };
-      expect(actions.saveAccessToken(token)).toEqual(expected);
+      expect(actions.saveUsername(token)).toEqual(expected);
     });
     it('creates correct SAVE_ACCESS_TOKEN object', () => {
       const token = 'token';
