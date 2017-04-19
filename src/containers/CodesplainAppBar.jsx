@@ -1,12 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import AppBar from 'material-ui/AppBar';
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
+import {
+  AppBar,
+  Dialog,
+  FlatButton,
+} from 'material-ui';
 import { withRouter } from 'react-router';
 import cookie from 'react-cookie';
-import { updateUserSnippets } from '../actions/user';
 
+import { updateUserSnippets } from '../actions/user';
 import { resetState } from '../actions/app';
 import { closeAnnotationPanel } from '../actions/annotation';
 import LoginButton from '../components/buttons/LoginButton';
@@ -142,16 +144,21 @@ export class CodesplainAppBar extends Component {
         onTitleClicked={this.handleSnippetSelected}
         snippetTitles={userSnippets}
       />)
-      :
-      <LoginButton onClick={this.onLoginClick} />;
+      : <LoginButton onClick={this.onLoginClick} />;
+    const titleElement = (
+      <span
+        onClick={this.handleTitleTouchTap}
+        style={styles.title}
+      >
+        Codesplain
+      </span>
+    );
 
     return (
       <div>
         <AppBar
           showMenuIconButton={false}
-          title="Codesplain"
-          style={styles.title}
-          onTitleTouchTap={this.handleTitleTouchTap}
+          title={titleElement}
           iconElementRight={rightElement}
         />
         <Dialog
