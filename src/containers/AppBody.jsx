@@ -15,6 +15,7 @@ import {
 import { setPermissions } from '../actions/permissions';
 import { restoreUserCredentials } from '../actions/user';
 import { removeDeprecatedFiltersFromState } from '../util/codemirror-utils';
+import { sanitizeKey } from '../util/requests';
 import { setDefaults } from '../util/state-management';
 
 const styles = {
@@ -82,7 +83,7 @@ export class AppBody extends Component {
 
         // Reroute if not at the 'correct' location
         // So /:username/snippets/:id -> /:username/:id
-        const nextRoute = `/${username}/${encodeURIComponent(snippetKey)}`;
+        const nextRoute = `/${username}/${sanitizeKey(snippetKey)}`;
         if (router.location.pathname !== nextRoute) {
           router.push(nextRoute);
         }
