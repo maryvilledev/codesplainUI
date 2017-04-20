@@ -119,6 +119,13 @@ exports[`<SaveMenu /> snapshot tests matches default snapshot 1`] = `
       rows={1}
       type="text"
       underlineShow={true} />
+    <OrgSelector
+      onChange={[Function]}
+      orgs={
+        Array [
+          "galactic-federation",
+        ]
+      } />
   </Dialog>
 </span>
 `;
@@ -244,6 +251,13 @@ exports[`<SaveMenu /> snapshot tests matches snapshot when saving is not enabled
       rows={1}
       type="text"
       underlineShow={true} />
+    <OrgSelector
+      onChange={[Function]}
+      orgs={
+        Array [
+          "galactic-federation",
+        ]
+      } />
   </Dialog>
 </span>
 `;
@@ -369,6 +383,13 @@ exports[`<SaveMenu /> snapshot tests matches snapshot when user cannot save 1`] 
       rows={1}
       type="text"
       underlineShow={true} />
+    <OrgSelector
+      onChange={[Function]}
+      orgs={
+        Array [
+          "galactic-federation",
+        ]
+      } />
   </Dialog>
 </span>
 `;

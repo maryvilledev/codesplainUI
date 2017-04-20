@@ -6,7 +6,6 @@ import {
 import LanguageSelector from './LanguageSelector';
 import LockButton from './buttons/LockButton';
 import SaveMenu from './menus/SaveMenu';
-import OrgSelector from './OrgSelector';
 
 const styles = {
   toolbar: {
@@ -76,12 +75,6 @@ const SnippetAreaToolbar = (props) => {
         readOnly={readOnly}
         style={styles.buttons}
       />
-      <OrgSelector
-        onChange={onOrgChanged}
-        orgs={orgs}
-        value={selectedOrg}
-        style={styles.toolbarField}
-      />
       <SaveMenu
         canSave={canSave}
         enabled={saveEnabled}
@@ -89,6 +82,9 @@ const SnippetAreaToolbar = (props) => {
         onSaveAsClick={onSaveAsClick}
         onSaveClick={onSaveClick}
         style={styles.buttons}
+        orgs={orgs}
+        onOrgChanged={onOrgChanged}
+        selectedOrg={selectedOrg}
       />
     </div>
   );

@@ -56,28 +56,19 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is no
         "verticalAlign": "middle",
       }
     } />
-  <OrgSelector
-    onChange={[Function]}
+  <SaveMenu
+    canSave={true}
+    enabled={true}
+    id="saveMenu"
+    onOrgChanged={[Function]}
+    onSaveAsClick={[Function]}
+    onSaveClick={[Function]}
     orgs={
       Array [
         "galactic-federation",
       ]
     }
-    style={
-      Object {
-        "flexBasis": "auto",
-        "flexGrow": "1",
-        "flexShrink": "1",
-        "verticalAlign": "middle",
-      }
-    }
-    value="galactic-federation" />
-  <SaveMenu
-    canSave={true}
-    enabled={true}
-    id="saveMenu"
-    onSaveAsClick={[Function]}
-    onSaveClick={[Function]}
+    selectedOrg="galactic-federation"
     style={
       Object {
         "flexBasis": "auto",
@@ -147,28 +138,19 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is re
         "verticalAlign": "middle",
       }
     } />
-  <OrgSelector
-    onChange={[Function]}
+  <SaveMenu
+    canSave={true}
+    enabled={true}
+    id="saveMenu"
+    onOrgChanged={[Function]}
+    onSaveAsClick={[Function]}
+    onSaveClick={[Function]}
     orgs={
       Array [
         "galactic-federation",
       ]
     }
-    style={
-      Object {
-        "flexBasis": "auto",
-        "flexGrow": "1",
-        "flexShrink": "1",
-        "verticalAlign": "middle",
-      }
-    }
-    value="galactic-federation" />
-  <SaveMenu
-    canSave={true}
-    enabled={true}
-    id="saveMenu"
-    onSaveAsClick={[Function]}
-    onSaveClick={[Function]}
+    selectedOrg="galactic-federation"
     style={
       Object {
         "flexBasis": "auto",
