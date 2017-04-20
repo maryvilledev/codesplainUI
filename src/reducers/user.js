@@ -8,37 +8,37 @@ export const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case actions.SET_USER_SNIPPETS: {
-      return {
-        ...state,
-        userSnippets: action.payload,
-      }
-    }
-    case actions.RESTORE_USER_CREDENTIALS: {
-      return {
-        ...state,
-        ...action.payload,
-      }
-    }
-    case actions.SAVE_USERNAME: {
-      return {
-        ...state,
-        username: action.payload,
-      };
-    }
-    case actions.SAVE_ACCESS_TOKEN: {
-      return {
-        ...state,
-        token: action.payload,
-      };
-    }
-    case actions.CLEAR_USER_CREDENTIALS: {
-      return {
-        ...initialState
-      };
-    }
-    default: {
-      return state;
-    }
+  case actions.SET_USER_SNIPPETS: {
+    return {
+      ...state,
+      userSnippets: action.payload,
+    };
+  }
+  case actions.RESTORE_USER_CREDENTIALS: {
+    return {
+      ...state,
+      ...action.payload,
+    };
+  }
+  case actions.SAVE_USERNAME: {
+    return {
+      ...state,
+      username: action.payload,
+    };
+  }
+  case actions.SAVE_ACCESS_TOKEN: {
+    return {
+      ...state,
+      token: action.payload,
+    };
+  }
+  case actions.CLEAR_USER_CREDENTIALS: {
+    return {
+      ...initialState,
+    };
+  }
+  default: {
+    return state;
+  }
   }
 };

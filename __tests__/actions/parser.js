@@ -1,4 +1,4 @@
-import * as actions from '../../src/actions/parser'
+import * as actions from '../../src/actions/parser';
 
 describe('Actions: parser', () => {
   describe('LOAD_PARSER', () => {
@@ -6,9 +6,9 @@ describe('Actions: parser', () => {
       const language = 'squanchy';
       const expected = {
         type: actions.LOAD_PARSER,
-        payload: language
+        payload: language,
       };
-      expect(actions.loadParser(language)).toEqual(expect.objectContaining(expected))
-    })
-  })
-})
+      expect(actions.loadParser(language)).toEqual(expect.objectContaining(expected));
+    });
+  });
+});

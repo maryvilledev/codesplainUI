@@ -44,8 +44,8 @@ export class AppBody extends Component {
       // This is a new snippet for the current user, enable all permissions
       const permissions = {
         canRead: true,
-        canEdit: true
-      }
+        canEdit: true,
+      };
       dispatch(setPermissions(permissions));
 
       // Reload the state if returning from login.
@@ -74,7 +74,7 @@ export class AppBody extends Component {
 
         const permissions = {
           canRead: true,
-          //Currently, users may only edit a file they own
+          // Currently, users may only edit a file they own
           canEdit: (username === cookie.load('username')),
         };
         dispatch(setPermissions(permissions));
@@ -85,7 +85,7 @@ export class AppBody extends Component {
         if (router.location.pathname !== nextRoute) {
           router.push(nextRoute);
         }
-      }, (err) => {
+      }, () => {
         // Failed to get the snippet, either bad URL or unauthorized
         router.push('/');
       });
@@ -93,13 +93,13 @@ export class AppBody extends Component {
 
   render() {
     return (
-      <div className='container-fluid'>
-        <div className='row'>
-          <div className='col-lg-2'>
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-lg-2">
             <FilterArea />
           </div>
           <div
-            className='col-lg-5 col-md-7'
+            className="col-lg-5 col-md-7"
             style={styles.snippetAreaSection}
           >
             <Card
@@ -109,13 +109,13 @@ export class AppBody extends Component {
               <SnippetArea />
             </Card>
           </div>
-          <div className='col-lg-5 col-md-5'>
+          <div className="col-lg-5 col-md-5">
             <Card>
               <Annotations />
             </Card>
           </div>
         </div>
-        <div className='row'>
+        <div className="row">
           <ReferenceArea />
         </div>
       </div>

@@ -40,8 +40,8 @@ describe('util: rules', () => {
       const node = {
         type: nodeType,
         children: [
-          { type: nodeType, children: [], },
-          { type: nodeType, children: [], },
+          { type: nodeType, children: [] },
+          { type: nodeType, children: [] },
         ],
       };
       const ruleCounts = {};
@@ -51,15 +51,15 @@ describe('util: rules', () => {
   });
   describe('parseCSV()', () => {
     it('parses CSV to rows and columns', () => {
-      const csv =`NAME,ROLE,CATCHPHRASE,
+      const csv = `NAME,ROLE,CATCHPHRASE,
 Rick,Genius,Wubba Lubba Dub Dub
 Morty,Teenager,Aw Geez Rick
 `;
       const expected = [
-        ["Rick", "Genius", "Wubba Lubba Dub Dub"],
-        ["Morty", "Teenager", "Aw Geez Rick"]
+        ['Rick', 'Genius', 'Wubba Lubba Dub Dub'],
+        ['Morty', 'Teenager', 'Aw Geez Rick'],
       ];
-      expect(rules.parseCSV(csv)).toEqual(expected)
-    })
-  })
+      expect(rules.parseCSV(csv)).toEqual(expected);
+    });
+  });
 });

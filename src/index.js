@@ -3,20 +3,22 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+/* eslint-disable */
 import {
   createHistory,
-  useBeforeUnload
+  useBeforeUnload,
 } from 'history';
+/* eslint-enable */
 import {
   Router,
   Route,
-  useRouterHistory
+  useRouterHistory,
 } from 'react-router';
 
 import App from './containers/App';
 import Auth from './components/Auth';
 import configureStore from './store/configureStore';
-import { initRules } from './util/rules'
+import { initRules } from './util/rules';
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
@@ -24,12 +26,12 @@ injectTapEventPlugin();
 
 const store = configureStore();
 initRules(store);
-const history = useRouterHistory(useBeforeUnload(createHistory))()
-
+const history = useRouterHistory(useBeforeUnload(createHistory))();
 history.listenBeforeUnload(() => {
   if (store.getState().app.hasUnsavedChanges) {
-    return 'Are you sure you want to leave this page?'
+    return 'Are you sure you want to leave this page?';
   }
+  return undefined;
 });
 
 ReactDOM.render(
@@ -44,5 +46,5 @@ ReactDOM.render(
       </Router>
     </Provider>
   </MuiThemeProvider>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );

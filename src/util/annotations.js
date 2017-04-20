@@ -6,9 +6,8 @@ export const hasPreviousAnnotation = (annotatedLines, lineNumber) =>
 export const hasNextAnnotation = (annotatedLines, lineNumber) =>
   _.last(annotatedLines) === lineNumber;
 
-export const getAnnotatedLines = (annotations) => {
-  return _.sortBy(_.keys(annotations).map(key => Number(key)));
-};
+export const getAnnotatedLines = annotations =>
+  _.sortBy(_.keys(annotations).map(key => Number(key)));
 
 export const getPreviousAnnotation = (annotations, displayedLineNumber) => {
   const annotatedLines = getAnnotatedLines(annotations);
@@ -21,7 +20,7 @@ export const getPreviousAnnotation = (annotations, displayedLineNumber) => {
   // array and subtract one to get index of the previous annotation
   const index = _.sortedIndexOf(annotatedLines, displayedLineNumber) - 1;
   return annotations[annotatedLines[index]];
-}
+};
 
 export const getNextAnnotation = (annotations, displayedLineNumber) => {
   const annotatedLines = getAnnotatedLines(annotations);
@@ -34,4 +33,4 @@ export const getNextAnnotation = (annotations, displayedLineNumber) => {
   // array and add one to get index of the next annotation
   const index = _.sortedIndexOf(annotatedLines, displayedLineNumber) + 1;
   return annotations[annotatedLines[index]];
-}
+};

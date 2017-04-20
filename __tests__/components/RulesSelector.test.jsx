@@ -5,31 +5,31 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import RulesSelector from '../../src/components/RulesSelector';
 
-jest.mock('../../src/components/RuleLabel')
+jest.mock('../../src/components/RuleLabel');
 
 const mockFilters = {
-  'for_stmt': {
+  for_stmt: {
     prettyTokenName: 'For Loops',
     count: 1,
-    selected: false
+    selected: false,
   },
-  'atom': {
+  atom: {
     prettyTokenName: 'Atoms',
     count: 21,
-    selected: true
-  }
-}
+    selected: true,
+  },
+};
 
 describe('<RulesSelector />', () => {
   const muiTheme = getMuiTheme();
-  const shallowWithContext = (node) => shallow(node, { context: { muiTheme } });
+  const shallowWithContext = node => shallow(node, { context: { muiTheme } });
 
   it('matches snapshot', () => {
     const wrapper = shallowWithContext(
       <RulesSelector
         filters={mockFilters}
         onRuleSelected={jest.fn()}
-      />
+      />,
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
@@ -40,7 +40,7 @@ describe('<RulesSelector />', () => {
         <RulesSelector
           filters={mockFilters}
           onRuleSelected={jest.fn()}
-        />
+        />,
       );
       const listItems = wrapper.find('RuleLabel');
       expect(listItems.length).toEqual(Object.keys(mockFilters).length);

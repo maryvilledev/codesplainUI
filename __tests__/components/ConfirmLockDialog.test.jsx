@@ -12,14 +12,14 @@ const mockFunctionProps = {
 
 describe('<ConfirmLockDialog />', () => {
   const muiTheme = getMuiTheme();
-  const shallowWithContext = (node) => shallow(node, { context: { muiTheme } });
+  const shallowWithContext = node => shallow(node, { context: { muiTheme } });
 
   it('matches snapshot when it is open', () => {
     const wrapper = shallowWithContext(
       <ConfirmLockDialog
-        isOpen={true}
+        isOpen
         {...mockFunctionProps}
-      />
+      />,
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
@@ -29,7 +29,7 @@ describe('<ConfirmLockDialog />', () => {
       <ConfirmLockDialog
         isOpen={false}
         {...mockFunctionProps}
-      />
+      />,
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });

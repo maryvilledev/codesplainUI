@@ -11,20 +11,20 @@ Setting the 'isError' prop to true causes its background to be rendered as a
 crimson red.
 */
 const Alert = ({ onClose, text }) => (
-    <Dialog
-      actions={
-        <FlatButton
-          label="OK"
-          primary={true}
-          onTouchTap={onClose}
-        />
+  <Dialog
+    actions={
+      <FlatButton
+        label="OK"
+        primary
+        onTouchTap={onClose}
+      />
       }
-      modal={false}
-      open={true}
-      onRequestClose={onClose}
-    >
-      {text}
-    </Dialog>
+    modal={false}
+    open
+    onRequestClose={onClose}
+  >
+    {text}
+  </Dialog>
 );
 
 Alert.propTypes = {

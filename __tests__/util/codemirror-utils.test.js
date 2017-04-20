@@ -1,10 +1,10 @@
 import * as codemirrorUtils from '../../src/util/codemirror-utils';
 
-const lineText = "Wubba lubba dub dub!";
+const lineText = 'Wubba lubba dub dub!';
 
 const mockPosFromIndexReturnVals = [
-  { line: 0, ch: 0, },
-  { line: 0, ch: 20, },
+  { line: 0, ch: 0 },
+  { line: 0, ch: 20 },
 ];
 
 // Mock posFromIndex to be used by codemirrorUtils.styleRegion()
@@ -21,22 +21,23 @@ const codeMirror = {
 
 const mockAllRules = {
   rules: {
-    'str': {prettyName: "String", color: "#FFFFFF"},
-    'number': {prettyName: "Number", color: "#FFFFFF"}
+    str: { prettyName: 'String', color: '#FFFFFF' },
+    number: { prettyName: 'Number', color: '#FFFFFF' },
   },
   ignoredRules: [
     'atom',
     'arglist',
     'file_input',
-  ]
-}
+  ],
+};
 
 describe('util: codemirror-utils', () => {
   beforeEach(() => {
     const { rules, ignoredRules } = mockAllRules;
     codemirrorUtils.setRules(rules);
     codemirrorUtils.setIgnoredRules(ignoredRules);
-  })
+  });
+
   afterEach(() => {
     codeMirror.markText.mockClear();
     codeMirror.getLine.mockClear();
@@ -61,14 +62,13 @@ describe('util: codemirror-utils', () => {
         { line, ch: lineText.length },
         { css },
       ];
-      codemirrorUtils.styleLine(codeMirror, line, css)
+      codemirrorUtils.styleLine(codeMirror, line, css);
       expect(codeMirror.markText).toBeCalledWith(...expectedArgs);
     });
   });
 
   describe('styleAll()', () => {
     it('should call styleRegion with the correct args', () => {
-      const line = 0;
       const css = 'background-color: blue';
       const expectedArgs = [
         mockPosFromIndexReturnVals[0],
@@ -88,6 +88,7 @@ describe('util: codemirror-utils', () => {
       codemirrorUtils.highlightNode(codeMirror, node, {}, '');
       expect(codeMirror.markText).not.toBeCalled();
     });
+
     it('should not call styleRegion for a node if its type is ignored', () => {
       const node = {
         type: 'suite',
@@ -103,6 +104,7 @@ describe('util: codemirror-utils', () => {
       const parser = 'NOT A REAL PARSER';
       expect(codemirrorUtils.getCodeMirrorMode(parser)).toEqual(parser);
     });
+
     it('should return the CodeMirror mode for a parser if it exists', () => {
       const parser = 'python3';
       const expected = 'python';
@@ -115,11 +117,13 @@ describe('util: codemirror-utils', () => {
       const ruleCounts = undefined;
       expect(codemirrorUtils.generateFilters(prevFilters, ruleCounts)).toEqual({});
     });
+
     it('should return {} is ruleCounts is empty', () => {
       const prevFilters = {};
       const ruleCounts = {};
       expect(codemirrorUtils.generateFilters(prevFilters, ruleCounts)).toEqual({});
     });
+
     it('does not contain rules that are not in the rules data object', () => {
       const prevFilters = {};
       const ruleCounts = {
@@ -131,6 +135,7 @@ describe('util: codemirror-utils', () => {
       };
       expect(codemirrorUtils.generateFilters(prevFilters, ruleCounts)).toEqual({});
     });
+
     it('sets selected property to false if filter not in prevFilters', () => {
       const prevFilters = {};
       const ruleCounts = {
@@ -139,10 +144,11 @@ describe('util: codemirror-utils', () => {
       const newFilters = codemirrorUtils.generateFilters(prevFilters, ruleCounts);
       expect(newFilters.str.selected).toEqual(false);
     });
+
     it('sets selected property to filter\'s value in prevFilters', () => {
       const prevFilters = {
-        str: { selected: true, },
-        number: { selected: false, },
+        str: { selected: true },
+        number: { selected: false },
       };
       const ruleCounts = {
         str: 1,
@@ -152,10 +158,11 @@ describe('util: codemirror-utils', () => {
       expect(newFilters.str.selected).toEqual(true);
       expect(newFilters.number.selected).toEqual(false);
     });
+
     it('sets the filter\'s count property from ruleCounts', () => {
       const prevFilters = {
-        str: { selected: true, },
-        number: { selected: false, },
+        str: { selected: true },
+        number: { selected: false },
       };
       const ruleCounts = {
         str: 1,
@@ -169,33 +176,33 @@ describe('util: codemirror-utils', () => {
   describe('removeDeprecatedFilters', () => {
     it('removes filters that are in ignoredRules', () => {
       const filters = {
-        'and_expr': {},
-        'atom': {},
-        'file_input': {},
-        'comp_op': {},
-        'classdef': {},
-        'try_stmt': {},
-        'arglist': {},
+        and_expr: {},
+        atom: {},
+        file_input: {},
+        comp_op: {},
+        classdef: {},
+        try_stmt: {},
+        arglist: {},
       };
       const expected = {
-        'and_expr': {},
-        'comp_op': {},
-        'classdef': {},
-        'try_stmt': {},
-      }
+        and_expr: {},
+        comp_op: {},
+        classdef: {},
+        try_stmt: {},
+      };
       expect(codemirrorUtils.removeDeprecatedFilters(filters)).toEqual(expected);
     });
   });
   describe('removeDeprecatedFiltersFromState', () => {
     it('returns the updated state object', () => {
       const filters = {
-        'and_expr': {},
-        'atom': {},
-        'file_input': {},
-        'comp_op': {},
-        'classdef': {},
-        'try_stmt': {},
-        'arglist': {},
+        and_expr: {},
+        atom: {},
+        file_input: {},
+        comp_op: {},
+        classdef: {},
+        try_stmt: {},
+        arglist: {},
       };
       const state = {
         snippetTitle: '',
@@ -204,11 +211,11 @@ describe('util: codemirror-utils', () => {
       const expected = {
         ...state,
         filters: {
-          'and_expr': {},
-          'comp_op': {},
-          'classdef': {},
-          'try_stmt': {},
-        }
+          and_expr: {},
+          comp_op: {},
+          classdef: {},
+          try_stmt: {},
+        },
       };
       expect(codemirrorUtils.removeDeprecatedFiltersFromState(state)).toEqual(expected);
     });

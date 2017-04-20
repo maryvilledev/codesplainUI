@@ -6,9 +6,15 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import AppMenu from '../../src/components/menus/AppMenu';
 
+const defaultProps = {
+  onSignOut: jest.fn(),
+  onTitleClicked: jest.fn(),
+  snippetTitles: {},
+};
+
 describe('<AppMenu />', () => {
   const muiTheme = getMuiTheme();
-  const shallowWithContext = (node) => shallow(node, { context: { muiTheme } });
+  const shallowWithContext = node => shallow(node, { context: { muiTheme } });
 
   afterEach(() => {
     cookie.remove('userAvatarURL');
@@ -18,8 +24,8 @@ describe('<AppMenu />', () => {
     it('matches snapshot of when user is not logged in', () => {
       const wrapper = shallowWithContext(
         <AppMenu
-          onSignOut={jest.fn()}
-        />
+          {...defaultProps}
+        />,
       );
       expect(shallowToJson(wrapper)).toMatchSnapshot();
     });
@@ -27,9 +33,7 @@ describe('<AppMenu />', () => {
     it('matches snapshot of when user is logged in', () => {
       cookie.save('userAvatarURL', 'https://github.com/octocat.png');
       const wrapper = shallowWithContext(
-        <AppMenu
-          onSignOut={jest.fn()}
-        />
+        <AppMenu {...defaultProps} />,
       );
       expect(shallowToJson(wrapper)).toMatchSnapshot();
     });
@@ -40,8 +44,9 @@ describe('<AppMenu />', () => {
       const onSignOut = jest.fn();
       const wrapper = shallowWithContext(
         <AppMenu
+          {...defaultProps}
           onSignOut={onSignOut}
-        />
+        />,
       );
       expect(wrapper.find('MenuItem').prop('onClick')).toEqual(onSignOut);
     });

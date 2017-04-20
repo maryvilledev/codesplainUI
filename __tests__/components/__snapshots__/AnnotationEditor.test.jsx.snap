@@ -72,6 +72,7 @@ exports[`<AnnotationEditor /> matches snapshot 1`] = `
       } />
     <a
       href="http://commonmark.org/help"
+      rel="noopener noreferrer"
       style={
         Object {
           "flexBasis": "auto",

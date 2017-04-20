@@ -1,0 +1,6 @@
+exports[`Reducer: Annotation initialState should match snapshot 1`] = `
+Object {
+  "isDisplayingAnnotation": false,
+  "lineAnnotated": Object {},
+}
+`;

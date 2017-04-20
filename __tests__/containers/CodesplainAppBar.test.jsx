@@ -8,7 +8,7 @@ import { CodesplainAppBar } from '../../src/containers/CodesplainAppBar';
 
 describe('<CodesplainAppBar />', () => {
   const muiTheme = getMuiTheme();
-  const shallowWithContext = (node) => shallow(node, { context: { muiTheme } });
+  const shallowWithContext = node => shallow(node, { context: { muiTheme } });
 
   describe('snapshot tests', () => {
     const userState = {
@@ -20,18 +20,20 @@ describe('<CodesplainAppBar />', () => {
     it('user is not logged in', () => {
       const wrapper = shallowWithContext(
         <CodesplainAppBar
+          hasUnsavedChanges={false}
           userState={userState}
-        />
+        />,
       );
       expect(shallowToJson(wrapper)).toMatchSnapshot();
     });
 
     it('user is logged in', () => {
-      cookie.save('token', 'foobar')
+      cookie.save('token', 'foobar');
       const wrapper = shallowWithContext(
         <CodesplainAppBar
+          hasUnsavedChanges={false}
           userState={userState}
-        />
+        />,
       );
       expect(shallowToJson(wrapper)).toMatchSnapshot();
     });

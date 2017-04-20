@@ -18,11 +18,11 @@ const defaultProps = {
 
 describe('<Editor />', () => {
   const muiTheme = getMuiTheme();
-  const shallowWithContext = (node) => shallow(node, { context: { muiTheme } });
+  const shallowWithContext = node => shallow(node, { context: { muiTheme } });
 
   it('matches snapshot', () => {
     const wrapper = shallowWithContext(
-      <Editor {...defaultProps} />
+      <Editor {...defaultProps} />,
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
@@ -34,7 +34,7 @@ describe('<Editor />', () => {
         <Editor
           {...defaultProps}
           onChange={onChange}
-        />
+        />,
       );
       expect(wrapper.find('CodeMirror').prop('onChange')).toEqual(onChange);
     });
@@ -42,12 +42,12 @@ describe('<Editor />', () => {
 
   describe('prop: value', () => {
     it('forwarded to the CodeMirror instance', () => {
-      const snippetContents = "What up, my glib globs!";
+      const snippetContents = 'What up, my glib globs!';
       const wrapper = shallowWithContext(
         <Editor
           {...defaultProps}
           value={snippetContents}
-        />
+        />,
       );
       expect(wrapper.find('CodeMirror').prop('value')).toEqual(snippetContents);
     });

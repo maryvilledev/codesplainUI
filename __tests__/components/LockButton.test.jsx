@@ -7,14 +7,14 @@ import LockButton from '../../src/components/buttons/LockButton';
 
 describe('<LockButton />', () => {
   const muiTheme = getMuiTheme();
-  const shallowWithContext = (node) => shallow(node, { context: { muiTheme } });
+  const shallowWithContext = node => shallow(node, { context: { muiTheme } });
 
   it('matches snapshot of when the app is not in read-only mode', () => {
     const wrapper = shallowWithContext(
       <LockButton
         onClick={jest.fn()}
         readOnly={false}
-      />
+      />,
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
@@ -23,8 +23,8 @@ describe('<LockButton />', () => {
     const wrapper = shallowWithContext(
       <LockButton
         onClick={jest.fn()}
-        readOnly={true}
-      />
+        readOnly
+      />,
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
@@ -35,12 +35,12 @@ describe('<LockButton />', () => {
       const wrapper = shallowWithContext(
         <LockButton
           onClick={onClick}
-          readOnly={true}
-        />
+          readOnly
+        />,
       );
       const button = wrapper.find('IconButton');
       button.simulate('touchTap');
       expect(onClick).toHaveBeenCalled();
     });
   });
-})
+});

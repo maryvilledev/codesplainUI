@@ -2,23 +2,46 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import MenuItem from 'material-ui';
 
 import SaveMenu from '../../src/components/menus/SaveMenu';
 
+const defaultProps = {
+  canSave: true,
+  enabled: true,
+  onSaveClick: jest.fn(),
+  onSaveAsClick: jest.fn(),
+};
+
 describe('<SaveMenu />', () => {
   const muiTheme = getMuiTheme();
-  const shallowWithContext = (node) => shallow(node, { context: { muiTheme } });
-
-  it('matches snapshot', () => {
-    const wrapper = shallowWithContext(
-      <SaveMenu
-        onSaveClick={jest.fn()}
-        onSaveAsClick={jest.fn()}
-        canSave={true}
-      />
-    );
-    expect(shallowToJson(wrapper)).toMatchSnapshot();
+  const shallowWithContext = node => shallow(node, { context: { muiTheme } });
+  describe('snapshot tests', () => {
+    it('matches default snapshot', () => {
+      const wrapper = shallowWithContext(
+        <SaveMenu
+          {...defaultProps}
+        />,
+      );
+      expect(shallowToJson(wrapper)).toMatchSnapshot();
+    });
+    it('matches snapshot when saving is not enabled', () => {
+      const wrapper = shallowWithContext(
+        <SaveMenu
+          {...defaultProps}
+          enabled={false}
+        />,
+      );
+      expect(shallowToJson(wrapper)).toMatchSnapshot();
+    });
+    it('matches snapshot when user cannot save', () => {
+      const wrapper = shallowWithContext(
+        <SaveMenu
+          {...defaultProps}
+          canSave={false}
+        />,
+      );
+      expect(shallowToJson(wrapper)).toMatchSnapshot();
+    });
   });
 
   describe('prop: onSaveClick', () => {
@@ -26,10 +49,9 @@ describe('<SaveMenu />', () => {
       const onSaveClick = jest.fn();
       const wrapper = shallowWithContext(
         <SaveMenu
+          {...defaultProps}
           onSaveClick={onSaveClick}
-          onSaveAsClick={jest.fn()}
-          canSave={true}
-        />
+        />,
       );
 
       // Have to use 'touchTap' as opposed to 'click' here, see
@@ -42,12 +64,8 @@ describe('<SaveMenu />', () => {
   describe('the Save As dialog', () => {
     it('has a <TextField /> that updates the state when edited', () => {
       const wrapper = shallowWithContext(
-        <SaveMenu
-          onSaveClick={jest.fn()}
-          onSaveAsClick={jest.fn()}
-          canSave={true}
-        />
-      )
+        <SaveMenu {...defaultProps} />,
+      );
       wrapper.find('TextField').simulate('change', {}, 'testing');
       expect(wrapper.instance().state.saveAsName).toBe('testing');
     });
@@ -56,14 +74,13 @@ describe('<SaveMenu />', () => {
       const onSaveAsClick = jest.fn();
       const wrapper = shallowWithContext(
         <SaveMenu
-          onSaveClick={jest.fn()}
+          {...defaultProps}
           onSaveAsClick={onSaveAsClick}
-          canSave={true}
-        />
+        />,
       );
       const title = 'test title';
       wrapper.instance().setState({ saveAsName: title });
-      const dialogButtons = shallowWithContext(wrapper.find('Dialog').prop('actions'))
+      const dialogButtons = shallowWithContext(wrapper.find('Dialog').prop('actions'));
       dialogButtons.find('[label="Save"]').simulate('touchTap');
       expect(onSaveAsClick.mock.calls[0][0]).toBe(title);
     });
@@ -72,12 +89,11 @@ describe('<SaveMenu />', () => {
       const onSaveAsClick = jest.fn();
       const wrapper = shallowWithContext(
         <SaveMenu
-          onSaveClick={jest.fn()}
+          {...defaultProps}
           onSaveAsClick={onSaveAsClick}
-          canSave={true}
-        />
+        />,
       );
-      const dialogButtons = shallowWithContext(wrapper.find('Dialog').prop('actions'))
+      const dialogButtons = shallowWithContext(wrapper.find('Dialog').prop('actions'));
       dialogButtons.find('[label="Cancel"]').simulate('touchTap');
       expect(onSaveAsClick.mock.calls.length).toBe(0);
     });

@@ -20,18 +20,18 @@ const defaultProps = {
   },
   hasNextAnnotation: false,
   hasPrevAnnotation: false,
-}
+};
 
 describe('<AnnotationPanel />', () => {
   const muiTheme = getMuiTheme();
-  const shallowWithContext = (node) => shallow(node, { context: { muiTheme } });
+  const shallowWithContext = node => shallow(node, { context: { muiTheme } });
 
   describe('snapshot tests', () => {
     it('matches snapshot when no annotation is saved for a line', () => {
       const wrapper = shallowWithContext(
         <AnnotationPanel
           {...defaultProps}
-        />
+        />,
       );
       expect(shallowToJson(wrapper)).toMatchSnapshot();
     });
@@ -40,8 +40,8 @@ describe('<AnnotationPanel />', () => {
       const wrapper = shallowWithContext(
         <AnnotationPanel
           {...defaultProps}
-          annotation='Wubba lubba dub dub!'
-        />
+          annotation="Wubba lubba dub dub!"
+        />,
       );
       expect(shallowToJson(wrapper)).toMatchSnapshot();
     });
@@ -56,13 +56,13 @@ describe('<AnnotationPanel />', () => {
       const wrapper = shallowWithContext(
         <AnnotationPanel
           {...defaultProps}
-          annotation='some annotation'
+          annotation="some annotation"
           lineAnnotated={lineAnnotated}
-        />
+        />,
       );
       const lineSnippet = wrapper.find('LineSnippet');
-      expect(lineSnippet.prop('lineNumber')).toEqual(Number(lineAnnotated['lineNumber']) + 1);
-      expect(lineSnippet.prop('value')).toEqual(lineAnnotated['lineText']);
+      expect(lineSnippet.prop('lineNumber')).toEqual(Number(lineAnnotated.lineNumber) + 1);
+      expect(lineSnippet.prop('value')).toEqual(lineAnnotated.lineText);
     });
   });
 });

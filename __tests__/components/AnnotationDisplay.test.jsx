@@ -17,12 +17,12 @@ const defaultProps = {
 
 describe('<AnnotationDisplay />', () => {
   const muiTheme = getMuiTheme();
-  const shallowWithContext = (node) => shallow(node, { context: { muiTheme } });
+  const shallowWithContext = node => shallow(node, { context: { muiTheme } });
 
   describe('snapshots', () => {
     describe('when no annotations before/after current one exist', () => {
       it('matches snapshot', () => {
-        const wrapper = shallowWithContext(<AnnotationDisplay {...defaultProps}/>);
+        const wrapper = shallowWithContext(<AnnotationDisplay {...defaultProps} />);
         expect(shallowToJson(wrapper)).toMatchSnapshot();
       });
     });
@@ -32,32 +32,32 @@ describe('<AnnotationDisplay />', () => {
           <AnnotationDisplay
             {...defaultProps}
             hasNextAnnotation
-          />
+          />,
         );
         expect(shallowToJson(wrapper)).toMatchSnapshot();
       });
     });
     describe('when an annotation before current one exists', () => {
       it('matches snapshot', () => {
-         const wrapper = shallowWithContext(
-           <AnnotationDisplay
-             {...defaultProps}
-             hasPrevAnnotation
-           />
+        const wrapper = shallowWithContext(
+          <AnnotationDisplay
+            {...defaultProps}
+            hasPrevAnnotation
+          />,
          );
-         expect(shallowToJson(wrapper)).toMatchSnapshot();
-       });
+        expect(shallowToJson(wrapper)).toMatchSnapshot();
+      });
     });
     describe('when annotation exists before/after current one', () => {
       it('matches snapshot', () => {
-         const wrapper = shallowWithContext(
-           <AnnotationDisplay
-             {...defaultProps}
-             hasNextAnnotation
-             hasPrevAnnotation
-           />
+        const wrapper = shallowWithContext(
+          <AnnotationDisplay
+            {...defaultProps}
+            hasNextAnnotation
+            hasPrevAnnotation
+          />,
          );
-         expect(shallowToJson(wrapper)).toMatchSnapshot();
+        expect(shallowToJson(wrapper)).toMatchSnapshot();
       });
     });
   });
@@ -69,7 +69,7 @@ describe('<AnnotationDisplay />', () => {
         <AnnotationDisplay
           {...defaultProps}
           annotation={annotation}
-        />
+        />,
       );
       expect(wrapper.find('MarkdownRenderer').prop('markdown')).toEqual(annotation);
     });

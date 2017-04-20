@@ -14,12 +14,12 @@ const defaultMockProps = {
 
 describe('<LanguageSelector />', () => {
   const muiTheme = getMuiTheme();
-  const shallowWithContext = (node) => shallow(node, { context: { muiTheme } });
+  const shallowWithContext = node => shallow(node, { context: { muiTheme } });
 
   describe('snapshot tests', () => {
     it('matches snapshot when it is not disabled', () => {
       const wrapper = shallowWithContext(
-        <LanguageSelector {...defaultMockProps}/>
+        <LanguageSelector {...defaultMockProps} />,
       );
       expect(shallowToJson(wrapper)).toMatchSnapshot();
     });
@@ -28,7 +28,7 @@ describe('<LanguageSelector />', () => {
         <LanguageSelector
           {...defaultMockProps}
           disabled
-        />
+        />,
       );
       expect(shallowToJson(wrapper)).toMatchSnapshot();
     });
@@ -41,7 +41,7 @@ describe('<LanguageSelector />', () => {
         <LanguageSelector
           {...defaultMockProps}
           disabled={disabled}
-        />
+        />,
       );
       const select = wrapper.find('SelectField');
       expect(select.prop('disabled')).toEqual(disabled);
@@ -55,7 +55,7 @@ describe('<LanguageSelector />', () => {
         <LanguageSelector
           {...defaultMockProps}
           language={language}
-        />
+        />,
       );
       const select = wrapper.find('SelectField');
       expect(select.prop('value')).toEqual(language);
@@ -69,7 +69,7 @@ describe('<LanguageSelector />', () => {
         <LanguageSelector
           {...defaultMockProps}
           onChange={onChange}
-        />
+        />,
       );
       const select = wrapper.find('SelectField');
       expect(select.prop('onChange')).toEqual(onChange);

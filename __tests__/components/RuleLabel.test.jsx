@@ -7,7 +7,7 @@ import RuleLabel from '../../src/components/RuleLabel';
 
 describe('<RuleLabel />', () => {
   const muiTheme = getMuiTheme();
-  const shallowWithContext = (node) => shallow(node, { context: { muiTheme } });
+  const shallowWithContext = node => shallow(node, { context: { muiTheme } });
 
   describe('snapshot tests', () => {
     it('matches snapshot of when it is active', () => {
@@ -16,9 +16,9 @@ describe('<RuleLabel />', () => {
           color="#FF0000"
           rule="Example Rule"
           count={1}
-          isActive={true}
+          isActive
           onClick={jest.fn()}
-        />
+        />,
       );
       expect(shallowToJson(wrapper)).toMatchSnapshot();
     });
@@ -30,7 +30,7 @@ describe('<RuleLabel />', () => {
           count={1}
           isActive={false}
           onClick={jest.fn()}
-        />
+        />,
       );
       expect(shallowToJson(wrapper)).toMatchSnapshot();
     });
@@ -46,7 +46,7 @@ describe('<RuleLabel />', () => {
           count={1}
           isActive={false}
           onClick={jest.fn()}
-        />
+        />,
       );
       expect(wrapper.childAt(0).text()).toEqual(rule);
     });
@@ -61,7 +61,7 @@ describe('<RuleLabel />', () => {
         count={count}
         isActive={false}
         onClick={jest.fn()}
-      />
+      />,
     );
     expect(wrapper.find('span').text()).toBe(`(${count})`);
   });
@@ -76,7 +76,7 @@ describe('<RuleLabel />', () => {
           count={3}
           isActive={false}
           onClick={onClick}
-        />
+        />,
       );
       expect(wrapper.find('div').prop('onClick')).toEqual(onClick);
     });
@@ -90,7 +90,7 @@ describe('<RuleLabel />', () => {
           count={1}
           isActive={false}
           onClick={onClick}
-        />
+        />,
       );
       wrapper.simulate('click');
       expect(onClick).toHaveBeenCalled();

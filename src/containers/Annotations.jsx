@@ -11,6 +11,7 @@ import {
   saveAnnotation,
   saveExisting,
 } from '../actions/app';
+import AnnotationPanel from '../components/AnnotationPanel';
 import {
   getAnnotatedLines,
   getNextAnnotation,
@@ -18,15 +19,15 @@ import {
   hasNextAnnotation,
   hasPreviousAnnotation,
 } from '../util/annotations';
-import AnnotationPanel from '../components/AnnotationPanel';
+import CustomPropTypes from '../util/custom-prop-types';
 
 export class Annotations extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       displayStatus: 'none',
-      hasPrevAnnotation: false,
-      hasNextAnnotation: false,
+      hasPreceedingAnnotation: false,
+      hasProceedingAnnotation: false,
     };
     this.handleCloseAnnotation = this.handleCloseAnnotation.bind(this);
     this.handleSaveAnnotation = this.handleSaveAnnotation.bind(this);
@@ -43,33 +44,9 @@ export class Annotations extends React.Component {
     } = nextProps;
     const nextAnnotatedLines = getAnnotatedLines(annotations);
     this.setState({
-      hasNextAnnotation: hasNextAnnotation(nextAnnotatedLines, lineNumber),
-      hasPrevAnnotation: hasPreviousAnnotation(nextAnnotatedLines, lineNumber),
+      hasProceedingAnnotation: hasNextAnnotation(nextAnnotatedLines, lineNumber),
+      hasPreceedingAnnotation: hasPreviousAnnotation(nextAnnotatedLines, lineNumber),
     });
-  }
-
-  handleCloseAnnotation() {
-    const { dispatch } = this.props;
-    dispatch(closeAnnotationPanel());
-  }
-
-  handleSaveAnnotation(annotation) {
-    const {
-      dispatch,
-      lineAnnotated,
-      snippetKey
-    } = this.props;
-
-    const annotationData = {
-      annotation,
-      ...lineAnnotated,
-    };
-
-    dispatch(saveAnnotation(annotationData));
-    // Save the snippet only if this snippet has already been saved.
-    if (snippetKey) {
-      dispatch(saveExisting());
-    }
   }
 
   getPreviousAnnotation() {
@@ -114,6 +91,30 @@ export class Annotations extends React.Component {
     dispatch(openAnnotationPanel(toDisplay));
   }
 
+  handleCloseAnnotation() {
+    const { dispatch } = this.props;
+    dispatch(closeAnnotationPanel());
+  }
+
+  handleSaveAnnotation(annotation) {
+    const {
+      dispatch,
+      lineAnnotated,
+      snippetKey,
+    } = this.props;
+
+    const annotationData = {
+      annotation,
+      ...lineAnnotated,
+    };
+
+    dispatch(saveAnnotation(annotationData));
+    // Save the snippet only if this snippet has already been saved.
+    if (snippetKey) {
+      dispatch(saveExisting());
+    }
+  }
+
   render() {
     const {
       annotation,
@@ -123,8 +124,8 @@ export class Annotations extends React.Component {
     } = this.props;
 
     const {
-      hasNextAnnotation,
-      hasPrevAnnotation,
+      hasProceedingAnnotation,
+      hasPreceedingAnnotation,
     } = this.state;
 
     if (!isDisplayingAnnotation) {
@@ -143,8 +144,8 @@ export class Annotations extends React.Component {
         closeAnnotation={this.handleCloseAnnotation}
         getNextAnnotation={this.getNextAnnotation}
         getPreviousAnnotation={this.getPreviousAnnotation}
-        hasPrevAnnotation={hasPrevAnnotation}
-        hasNextAnnotation={hasNextAnnotation}
+        hasPrevAnnotation={hasPreceedingAnnotation}
+        hasNextAnnotation={hasProceedingAnnotation}
       />
     );
   }
@@ -152,17 +153,14 @@ export class Annotations extends React.Component {
 
 Annotations.propTypes = {
   annotation: PropTypes.string.isRequired,
+  annotations: CustomPropTypes.annotations.isRequired,
   isDisplayingAnnotation: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
-  lineAnnotated: PropTypes.shape({
-    lineNumber: PropTypes.number,
-    lineText: PropTypes.string,
-  }).isRequired,
+  lineAnnotated: CustomPropTypes.lineAnnotated.isRequired,
   snippetKey: PropTypes.string.isRequired,
-  snippetLanguage: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const {
     annotation: {
       isDisplayingAnnotation,
@@ -172,7 +170,6 @@ const mapStateToProps = state => {
       annotations,
       readOnly,
       snippetKey,
-      snippetLanguage,
     },
   } = state;
   const { lineNumber } = lineAnnotated;
@@ -185,7 +182,6 @@ const mapStateToProps = state => {
     lineAnnotated,
     readOnly,
     snippetKey,
-    snippetLanguage,
   };
 };
 

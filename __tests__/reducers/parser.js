@@ -3,21 +3,18 @@ import reducer from '../../src/reducers/parser';
 
 describe('Reducer: Parser', () => {
   it('should have initial state', () => {
-    const initial = {
-      language: ''
-    }
-    expect(reducer(undefined, {})).toEqual(initial)
-  })
+    expect(reducer(undefined, {})).toMatchSnapshot();
+  });
 
   it('should handle LOAD_PARSER', () => {
-    const language = 'squanchy'
+    const language = 'squanchy';
     const action = {
       type: actions.LOAD_PARSER,
-      payload: language
+      payload: language,
     };
     const expected = {
-      language
+      language,
     };
-    expect(reducer(undefined, action)).toEqual(expect.objectContaining(expected))
-  })
-})
+    expect(reducer(undefined, action)).toEqual(expect.objectContaining(expected));
+  });
+});

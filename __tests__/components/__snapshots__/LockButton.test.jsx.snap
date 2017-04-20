@@ -10,6 +10,7 @@ exports[`<LockButton /> matches snapshot of when the app is in read-only mode 1`
     disableTouchRipple={false}
     disabled={true}
     iconStyle={Object {}}
+    id="lockButton"
     label="Switch to edit mode"
     onTouchTap={[Function]}
     style={
@@ -36,6 +37,7 @@ exports[`<LockButton /> matches snapshot of when the app is not in read-only mod
     disableTouchRipple={false}
     disabled={false}
     iconStyle={Object {}}
+    id="lockButton"
     label="Switch to read-only mode"
     onTouchTap={[Function]}
     style={

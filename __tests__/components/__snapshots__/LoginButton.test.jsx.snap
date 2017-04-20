@@ -23,6 +23,7 @@ exports[`<LoginButton /> matches snapshot 1`] = `
   }
   labelPosition="after"
   labelStyle={Object {}}
+  onClick={[Function]}
   onKeyboardFocus={[Function]}
   onMouseEnter={[Function]}
   onMouseLeave={[Function]}
