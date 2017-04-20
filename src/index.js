@@ -17,6 +17,7 @@ import {
 
 import App from './containers/App';
 import Auth from './components/Auth';
+import NotFound from './components/NotFound';
 import configureStore from './store/configureStore';
 import { initRules } from './util/rules';
 
@@ -39,10 +40,12 @@ ReactDOM.render(
     <Provider store={store}>
       <Router history={history}>
         <Route path="/auth" component={Auth} />
+        <Route path="/404" component={NotFound} />
         <Route path="/" component={App} />
         {/* Leave this for legacy support */}
         <Route path="/(:username)/snippets/(:id)" component={App} />
         <Route path="/(:username)/(:id)" component={App} />
+        <Route path="*" component={NotFound} />
       </Router>
     </Provider>
   </MuiThemeProvider>,

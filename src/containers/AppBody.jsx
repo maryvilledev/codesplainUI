@@ -87,7 +87,7 @@ export class AppBody extends Component {
         }
       }, () => {
         // Failed to get the snippet, either bad URL or unauthorized
-        router.push('/');
+        router.push('/404');
       });
   }
 
