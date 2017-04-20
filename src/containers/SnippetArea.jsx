@@ -153,19 +153,20 @@ export class SnippetArea extends React.Component {
         }, () => {
           this.showSnackbar('Failed to save - an error occurred');
         });
-      return;
+    } else {
+      // Save a new snippet
+      dispatch(saveNew())
+        .then((snippetKey) => {
+          // Redirect the user to the snippet's page
+          router.push(`/${username}/${snippetKey}`);
+          // Update the snippet's key
+          dispatch(setSnippetKey(snippetKey));
+          this.showSnackbar('Codesplaination Saved!');
+          dispatch(updateUserSnippets());
+        }, () => {
+          this.showSnackbar('Failed to save - an error occurred');
+        });
     }
-    dispatch(saveNew())
-      .then((snippetKey) => {
-        // Redirect the user to the snippet's page
-        router.push(`/${username}/${snippetKey}`);
-        // Update the snippet's key
-        dispatch(setSnippetKey(snippetKey));
-        this.showSnackbar('Codesplaination Saved!');
-        dispatch(updateUserSnippets());
-      }, () => {
-        this.showSnackbar('Failed to save - an error occurred');
-      });
   }
 
   handleSaveAs(title) {
