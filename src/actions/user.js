@@ -6,8 +6,8 @@ import { makeSaveEndpointUrl } from '../util/requests';
 const API_URL = process.env.REACT_APP_API_URL;
 
 // Util func to check for 'NoSuchKey' responses from S3
-const noSuchKey = (data) => (
-  typeof(data) === 'string' && data.includes('NoSuchKey')
+const noSuchKey = data => (
+  typeof data === 'string' && data.includes('NoSuchKey')
 );
 
 export const SET_USER_SNIPPETS = 'SET_USER_SNIPPETS';
@@ -20,12 +20,12 @@ export const SAVE_ACCESS_TOKEN = 'SAVE_ACCESS_TOKEN';
 export const CLEAR_USER_CREDENTIALS = 'CLEAR_USER_CREDENTIALS';
 export const RESTORE_USER_CREDENTIALS = 'RESTORE_USER_CREDENTIALS';
 
-export const saveUsername = (username) => ({
+export const saveUsername = username => ({
   type: SAVE_USERNAME,
   payload: username,
 });
 
-export const saveAccessToken = (accessToken) => ({
+export const saveAccessToken = accessToken => ({
   type: SAVE_ACCESS_TOKEN,
   payload: accessToken,
 });
@@ -52,7 +52,7 @@ export const updateUserSnippetsFailed = () => ({
 });
 
 export const updateUserSnippets = () => (dispatch) => {
-    // Load requisite cookies, return Promise if they aren't present
+  // Load requisite cookies, return Promise if they aren't present
   const token = cookie.load('token');
   const username = cookie.load('username');
 
@@ -71,12 +71,12 @@ export const updateUserSnippets = () => (dispatch) => {
       dispatch(setUserSnippets(res.data));
       dispatch(updateUserSnippetsSucceeded());
     })
-    .catch((err) => {
-      dispatch(updateUserSnippetsFailed())
+    .catch(() => {
+      dispatch(updateUserSnippetsFailed());
     });
 };
 
-export const fetchAccessToken = (authCode) => (dispatch) => {
+export const fetchAccessToken = authCode => () => {
   const reqUrl = `${API_URL}/auth`;
   const reqBody = { code: authCode };
   return axios({
@@ -84,10 +84,9 @@ export const fetchAccessToken = (authCode) => (dispatch) => {
     url: reqUrl,
     data: reqBody,
   });
-}
+};
 
 export const fetchUserInfo = () => (dispatch, getState) => {
-  console.log('getState()', getState());
   const { token } = getState().user;
   const reqHeaders = {
     Accept: 'application/json',
@@ -106,4 +105,4 @@ export const restoreUserCredentials = (token, username) => ({
     token,
     username,
   },
-})
+});
