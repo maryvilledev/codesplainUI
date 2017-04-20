@@ -150,7 +150,7 @@ export class SnippetArea extends React.Component {
         .then(() => {
           this.showSnackbar('Codesplaination Saved!');
           dispatch(updateUserSnippets());
-        }, () => {
+        }).catch(() => {
           this.showSnackbar('Failed to save - an error occurred');
         });
     } else {
@@ -163,7 +163,7 @@ export class SnippetArea extends React.Component {
           dispatch(setSnippetKey(snippetKey));
           this.showSnackbar('Codesplaination Saved!');
           dispatch(updateUserSnippets());
-        }, () => {
+        }).catch(() => {
           this.showSnackbar('Failed to save - an error occurred');
         });
     }
