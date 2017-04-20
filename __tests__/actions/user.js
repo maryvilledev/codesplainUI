@@ -26,6 +26,30 @@ describe('Actions: User', () => {
       expect(actions.switchOrg(org)).toEqual(expected);
     });
   });
+  describe('action creators', () => {
+    it('creates correct SAVE_USERNAME object', () => {
+      const token = 'token';
+      const expected = {
+        type: actions.SAVE_USERNAME,
+        payload: token,
+      };
+      expect(actions.saveUsername(token)).toEqual(expected);
+    });
+    it('creates correct SAVE_ACCESS_TOKEN object', () => {
+      const token = 'token';
+      const expected = {
+        type: actions.SAVE_ACCESS_TOKEN,
+        payload: token,
+      };
+      expect(actions.saveAccessToken(token)).toEqual(expected);
+    });
+    it('creates correct CLEAR_USER_CREDENTIALS object', () => {
+      const expected = {
+        type: actions.CLEAR_USER_CREDENTIALS
+      };
+      expect(actions.clearUserCredentials()).toEqual(expected);
+    });
+  });
   describe('async actions', () => {
     const middlewares = [ thunk ];
     const mockStore   = configureMockStore(middlewares);

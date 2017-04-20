@@ -1,13 +1,52 @@
 import * as actions from '../../src/actions/user';
-import reducer from '../../src/reducers/user';
+import reducer, { initialState } from '../../src/reducers/user';
 
 describe('Reducer: User', () => {
-  it('shoud have initial state', () => {
+it('shoud have initial state', () => {
     const initial = {
-      orgs: [],
-      selectedOrg: null
-    };
+      "orgs": [],
+      "selectedOrg": null,
+      "token": "",
+      "userSnippets": {},
+      "username": ""}
     expect(reducer(undefined, {})).toEqual(initial);
+  });
+
+  it('handles SAVE_USERNAME', () => {
+    const username = 'username';
+    const action = {
+      type: actions.SAVE_USERNAME,
+      payload: username,
+    };
+    const expected = {
+      username,
+    };
+    expect(reducer({}, action)).toEqual(expected);
+  });
+
+  it('handles SAVE_ACCESS_TOKEN', () => {
+    const token = 'token';
+    const action = {
+      type: actions.SAVE_ACCESS_TOKEN,
+      payload: token,
+    };
+    const expected = {
+      token,
+    };
+    expect(reducer({}, action)).toEqual(expected);
+  });
+
+  it('handles CLEAR_USER_CREDENTIALS', () => {
+    const action = {
+      type: actions.CLEAR_USER_CREDENTIALS,
+    };
+    const state = {
+      ...initialState,
+      token: 'token',
+      username: 'username',
+      snippets: {},
+    };
+    expect(reducer(state, action)).toEqual(initialState);
   });
 
   it('should handle ADD_ORG', () => {

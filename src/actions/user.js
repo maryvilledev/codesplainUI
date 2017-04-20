@@ -3,6 +3,8 @@ import cookie from 'react-cookie';
 
 import { makeSaveEndpointUrl } from '../util/requests';
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 // Util func to check for 'NoSuchKey' responses from S3
 const noSuchKey = (data) => (
   typeof(data) === 'string' && data.includes('NoSuchKey')
@@ -15,6 +17,10 @@ export const UPDATE_USER_SNIPPETS_FAILED = 'UPDATE_USER_SNIPPETS_FAILED';
 export const UPDATE_USER_SNIPPETS = 'UPDATE_USER_SNIPPETS';
 export const ADD_ORG = 'ADD_ORG';
 export const SWITCH_ORG = 'SWITCH_ORG';
+export const SAVE_USERNAME = 'SAVE_USERNAME';
+export const SAVE_ACCESS_TOKEN = 'SAVE_ACCESS_TOKEN';
+export const CLEAR_USER_CREDENTIALS = 'CLEAR_USER_CREDENTIALS';
+export const RESTORE_USER_CREDENTIALS = 'RESTORE_USER_CREDENTIALS';
 
 export const addOrg = (org) => ({
   type: ADD_ORG,
@@ -24,6 +30,19 @@ export const addOrg = (org) => ({
 export const switchOrg = (org) => ({
   type: SWITCH_ORG,
   payload: org
+});
+export const saveUsername = (username) => ({
+  type: SAVE_USERNAME,
+  payload: username,
+});
+
+export const saveAccessToken = (accessToken) => ({
+  type: SAVE_ACCESS_TOKEN,
+  payload: accessToken,
+});
+
+export const clearUserCredentials = () => ({
+  type: CLEAR_USER_CREDENTIALS,
 });
 
 export const setUserSnippets = (snippetMeta) => ({
@@ -71,3 +90,35 @@ export const updateUserSnippets = () => {
       });
   };
 };
+
+export const fetchAccessToken = (authCode) => (dispatch) => {
+  const reqUrl = `${API_URL}/auth`;
+  const reqBody = { code: authCode };
+  return axios({
+    method: 'POST',
+    url: reqUrl,
+    data: reqBody,
+  });
+}
+
+export const fetchUserInfo = () => (dispatch, getState) => {
+  console.log('getState()', getState());
+  const { token } = getState().user;
+  const reqHeaders = {
+    Accept: 'application/json',
+    Authorization: `token ${token}`,
+  };
+  return axios({
+    method: 'GET',
+    url: 'https://api.github.com/user',
+    headers: reqHeaders,
+  });
+};
+
+export const restoreUserCredentials = (token, username) => ({
+  type: RESTORE_USER_CREDENTIALS,
+  payload: {
+    token,
+    username,
+  },
+})

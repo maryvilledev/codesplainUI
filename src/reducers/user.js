@@ -1,11 +1,14 @@
 import * as actions from '../actions/user';
 
-const defaultState = {
+export const initialState = {
   orgs: [],
-  selectedOrg: null
+  selectedOrg: null,
+  token: '',
+  username: '',
+  userSnippets: {},
 }
 
-const user = (state=defaultState, action) => {
+const user = (state=initialState, action) => {
   switch (action.type) {
     case actions.ADD_ORG: {
       const org = action.payload;
@@ -34,6 +37,31 @@ const user = (state=defaultState, action) => {
         ...state,
         userSnippets: action.payload,
       }
+    }
+    case actions.RESTORE_USER_CREDENTIALS: {
+      return {
+        ...state,
+        ...action.payload,
+      }
+    }
+    case actions.SAVE_USERNAME: {
+      return {
+        ...state,
+        username: action.payload,
+      };
+    }
+    case actions.SAVE_ACCESS_TOKEN: {
+      return {
+        ...state,
+        token: action.payload,
+      };
+    }
+    case actions.CLEAR_USER_CREDENTIALS: {
+      return {
+        ...initialState,
+        orgs: state.orgs,
+        selectedOrg: state.selectedOrg
+      };
     }
     default: {
       return state;

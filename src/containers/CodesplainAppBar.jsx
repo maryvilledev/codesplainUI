@@ -59,8 +59,6 @@ export class CodesplainAppBar extends React.Component {
   handleSnippetSelected(key) {
     const username  = cookie.load('username');
     window.location = `/${username}/${key}`;
-    const { router } = this.props;
-    router.push(`/${username}/${key}`)
   }
 
   onLoginClick() {
@@ -145,14 +143,20 @@ export class CodesplainAppBar extends React.Component {
       <LoginButton
         onClick={this.onLoginClick}
       />;
+    const titleElement = (
+      <span
+        onClick={this.handleTitleTouchTap}
+        style={styles.title}
+      >
+        Codesplain
+      </span>
+    );
 
     return (
       <div>
         <AppBar
           showMenuIconButton={false}
-          title="Codesplain"
-          style={styles.title}
-          onTitleTouchTap={this.handleTitleTouchTap}
+          title={titleElement}
           iconElementRight={rightElement}
         />
         <Dialog

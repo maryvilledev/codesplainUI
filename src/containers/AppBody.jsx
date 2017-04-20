@@ -1,20 +1,19 @@
-import axios from 'axios';
+import React, { Component } from 'react';
 import { Card } from 'material-ui';
-import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import cookie from 'react-cookie';
-
-import { restoreState } from '../actions/app';
-import { setPermissions } from '../actions/permissions';
-import { addOrg, switchOrg } from '../actions/user'
 
 import Annotations from './Annotations';
 import FilterArea from './FilterArea';
 import SnippetArea from './SnippetArea';
 import ReferenceArea from '../components/ReferenceArea';
-
-import { makeSaveEndpointUrl } from '../util/requests';
+import {
+  loadSnippet,
+  restoreState,
+} from '../actions/app';
+import { setPermissions } from '../actions/permissions';
+import { restoreUserCredentials, addOrg, switchOrg } from '../actions/user';
 import { removeDeprecatedFiltersFromState } from '../util/codemirror-utils';
 import { setDefaults } from '../util/state-management';
 
@@ -30,7 +29,7 @@ const styles = {
   },
 };
 
-export class AppBody extends React.Component {
+export class AppBody extends Component {
   componentDidMount() {
     const {
       dispatch,
@@ -67,25 +66,13 @@ export class AppBody extends React.Component {
         cookie.remove('signInRedirect', { path: '/' });
         dispatch(restoreState(signInState));
       }
-      return null;
+      return;
     }
 
-    const token = cookie.load('token');
-    const config = {
-      headers: {
-        'Authorization': token,
-      }
-    }
+    dispatch(restoreUserCredentials(cookie.load('token'), cookie.load('username')));
 
-    axios.get(makeSaveEndpointUrl(username, snippetKey), config)
-      .then(res => {
-        const permissions = {
-          canRead: true,
-          //Currently, users may only edit a file they own
-          canEdit: (username === cookie.load('username')),
-        };
-        dispatch(setPermissions(permissions));
-
+    dispatch(loadSnippet(snippetKey))
+      .then((res) => {
         // Normalize the app state received from S3
         const appState = setDefaults(removeDeprecatedFiltersFromState(res.data));
         // Snippet may not have a S3 key value saved; set it to the URL's id
@@ -96,6 +83,13 @@ export class AppBody extends React.Component {
         // Restore the application's state
         dispatch(restoreState(appState));
 
+        const permissions = {
+          canRead: true,
+          //Currently, users may only edit a file they own
+          canEdit: (username === cookie.load('username')),
+        };
+        dispatch(setPermissions(permissions));
+
         // Reroute if using legacy url
         // So /:username/snippets/:id -> /:username/:id
         const nextRoute = `/${username}/${encodeURIComponent(snippetKey)}`;
@@ -103,8 +97,6 @@ export class AppBody extends React.Component {
           router.push(nextRoute);
         }
       }, (err) => {
-        console.log(err);
-        console.log(err.config);
         // Failed to get the snippet, either bad URL or unauthorized
         router.push('/');
       });
