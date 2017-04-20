@@ -1,5 +1,8 @@
 const API_URL = process.env.REACT_APP_API_URL;
 
+// encodeURIComponent does not convert all URI-unfriendly characters, necessitating
+// and enhanced encoding function
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent#Return_value
 export const sanitizeKey = str => (
   encodeURIComponent(str)
     .replace(/[!'()*]/g, ch => `%${ch.charCodeAt(0).toString(16)}`)
