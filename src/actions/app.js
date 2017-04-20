@@ -153,3 +153,15 @@ export const saveExisting = () => (dispatch, getState) => {
         dispatch(saveFailed());
       });
 };
+
+export const loadSnippet = (snippetKey) => (dispatch, getState) => {
+  const { token, username } = getState().user;
+  const reqHeaders = {
+    Authorization: token,
+  };
+  return axios({
+    method: 'GET',
+    url: makeSaveEndpointUrl(username, snippetKey),
+    headers: reqHeaders,
+  });
+};
