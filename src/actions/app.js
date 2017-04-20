@@ -154,8 +154,8 @@ export const saveExisting = () => (dispatch, getState) => {
       });
 };
 
-export const loadSnippet = (snippetKey) => (dispatch, getState) => {
-  const { token, username } = getState().user;
+export const loadSnippet = (username, snippetKey) => (dispatch, getState) => {
+  const { token } = getState().user;
   const reqHeaders = {
     Authorization: token,
   };

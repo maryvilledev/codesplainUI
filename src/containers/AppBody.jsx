@@ -58,9 +58,10 @@ export class AppBody extends Component {
       return;
     }
 
+    // Restore the user's credentials into state
     dispatch(restoreUserCredentials(cookie.load('token'), cookie.load('username')));
 
-    dispatch(loadSnippet(snippetKey))
+    dispatch(loadSnippet(username, snippetKey))
       .then((res) => {
         // Normalize the app state received from S3
         const appState = setDefaults(removeDeprecatedFiltersFromState(res.data));
