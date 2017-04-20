@@ -126,6 +126,7 @@ export class SnippetArea extends React.Component {
       dispatch,
       router,
       snippetTitle,
+      selectedOrg,
     } = this.props;
 
     const { id } = router.params;
@@ -155,7 +156,7 @@ export class SnippetArea extends React.Component {
         });
     } else {
       // Save a new snippet
-      dispatch(saveNew())
+      dispatch(saveNew(selectedOrg))
         .then((snippetKey) => {
           // Redirect the user to the snippet's page
           router.push(`/${username}/${snippetKey}`);
@@ -185,12 +186,13 @@ export class SnippetArea extends React.Component {
     const {
       dispatch,
       router,
+      selectedOrg
     } = this.props;
     // Render the new title
     dispatch(setSnippetTitle(title));
 
     // Save the snippet
-    dispatch(saveNew())
+    dispatch(saveNew(selectedOrg))
       .then((snippetKey) => {
         // Redirect the user to the snippet's page
         router.push(`/${username}/${snippetKey}`);
