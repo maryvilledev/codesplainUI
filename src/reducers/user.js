@@ -12,7 +12,7 @@ const user = (state=initialState, action) => {
   switch (action.type) {
     case actions.ADD_ORG: {
       const org = action.payload;
-      if(state.orgs.includes(org)) {
+      if(state.orgs.indexOf(org) >= 0) {
         return state;
       } else {
         return {
@@ -23,7 +23,7 @@ const user = (state=initialState, action) => {
     }
     case actions.SWITCH_ORG: {
       const org = action.payload;
-      if (state.orgs.includes(org)) {
+      if (state.orgs.indexOf(org) >= 0) {
         return {
           ...state,
           selectedOrg: org
