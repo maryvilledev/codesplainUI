@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { FlatButton } from 'material-ui';
 
 import GitHubIcon from '../../../res/github-icon.png';
@@ -18,7 +18,7 @@ const styles = {
 const LoginButtonLabel = (
   <span style={styles.span}>
     <img
-      alt='GitHub Icon'
+      alt="GitHub Icon"
       src={GitHubIcon}
       style={styles.img}
       width="23"
@@ -39,5 +39,9 @@ const LoginButton = ({ onClick }) => (
     style={styles.button}
   />
 );
+
+LoginButton.propTypes = {
+  onClick: PropTypes.func.isRequired,
+};
 
 export default LoginButton;

@@ -23,12 +23,12 @@ const defaultProps = {
 
 describe('<SnippetAreaToolbar />', () => {
   const muiTheme = getMuiTheme();
-  const shallowWithContext = (node) => shallow(node, { context: { muiTheme } });
+  const shallowWithContext = node => shallow(node, { context: { muiTheme } });
 
   describe('snapshot tests', () => {
     it('matches snapshot of when it is not read-only', () => {
       const wrapper = shallowWithContext(
-        <SnippetAreaToolbar {...defaultProps} />
+        <SnippetAreaToolbar {...defaultProps} />,
       );
       expect(shallowToJson(wrapper)).toMatchSnapshot();
     });
@@ -37,8 +37,8 @@ describe('<SnippetAreaToolbar />', () => {
       const wrapper = shallowWithContext(
         <SnippetAreaToolbar
           {...defaultProps}
-          readOnly={true}
-        />
+          readOnly
+        />,
       );
       expect(shallowToJson(wrapper)).toMatchSnapshot();
     });
@@ -51,7 +51,7 @@ describe('<SnippetAreaToolbar />', () => {
         <SnippetAreaToolbar
           {...defaultProps}
           title={title}
-        />
+        />,
       );
       expect(wrapper.find('TextField[id="titleField"]').prop('value')).toEqual(title);
     });
@@ -64,7 +64,7 @@ describe('<SnippetAreaToolbar />', () => {
         <SnippetAreaToolbar
           {...defaultProps}
           onTitleChange={onTitleChange}
-        />
+        />,
       );
       const titleField = wrapper.find('[id="titleField"]');
       expect(titleField.prop('onChange')).toEqual(onTitleChange);
@@ -80,7 +80,7 @@ describe('<SnippetAreaToolbar />', () => {
         <SnippetAreaToolbar
           {...defaultProps}
           onLockClick={onLockClick}
-        />
+        />,
       );
       expect(wrapper.find('LockButton').prop('onClick')).toEqual(onLockClick);
     });
@@ -93,7 +93,7 @@ describe('<SnippetAreaToolbar />', () => {
         <SnippetAreaToolbar
           {...defaultProps}
           onSaveClick={onSaveClick}
-        />
+        />,
       );
       expect(wrapper.find('SaveMenu').prop('onSaveClick')).toBe(onSaveClick);
     });
@@ -106,7 +106,7 @@ describe('<SnippetAreaToolbar />', () => {
         <SnippetAreaToolbar
           {...defaultProps}
           onSaveAsClick={onSaveAsClick}
-        />
+        />,
       );
       expect(wrapper.find('SaveMenu').prop('onSaveAsClick')).toBe(onSaveAsClick);
     });

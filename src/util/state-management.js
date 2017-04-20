@@ -6,9 +6,7 @@ export const defaultStateValues = {
   snippetLanguage: 'python3',
 };
 
-export const setDefaults = (state) => {
-  return _.defaults(
-    {...state},
+export const setDefaults = state => _.defaults(
+    { ...state },
     defaultStateValues,
   );
-};

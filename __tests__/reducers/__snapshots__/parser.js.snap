@@ -1,0 +1,5 @@
+exports[`Reducer: Parser should have initial state 1`] = `
+Object {
+  "language": "",
+}
+`;

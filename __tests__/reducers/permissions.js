@@ -6,9 +6,9 @@ describe('Reducer: permissions', () => {
     const initial = {
       canRead: false,
       canEdit: false,
-    }
-    expect(reducer(undefined, {})).toEqual(initial)
-  })
+    };
+    expect(reducer(undefined, {})).toEqual(initial);
+  });
 
   it('should handle SET_PERMISSIONS', () => {
     const permissions = {
@@ -17,11 +17,11 @@ describe('Reducer: permissions', () => {
     };
     const action = {
       type: actions.SET_PERMISSIONS,
-      payload: permissions
+      payload: permissions,
     };
     const expected = {
-      ...permissions
+      ...permissions,
     };
-    expect(reducer(undefined, action)).toEqual(expected)
-  })
-})
+    expect(reducer(undefined, action)).toEqual(expected);
+  });
+});

@@ -8,29 +8,29 @@ import markdownRendererOptions from '../util/markdown-renderer-options';
 import markdownLogo from '../../res/markdown-logo.svg';
 
 const styles = {
-  'bottomContainer': {
+  bottomContainer: {
     display: 'flex',
-    'flexFlow': 'row wrap',
+    flexFlow: 'row wrap',
   },
-  'button': {
+  button: {
     flexFlow: 1,
     flexShrink: 1,
     flexBasis: 'auto',
   },
-  'markdownHintText': {
-    'color': '#d3d3d3',
+  markdownHintText: {
+    color: '#d3d3d3',
   },
-  'markdownIndicator': {
-    'paddingLeft': '1rem',
+  markdownIndicator: {
+    paddingLeft: '1rem',
     flexFlow: 1,
     flexShrink: 1,
     flexBasis: 'auto',
   },
-  'markdownLogo': {
+  markdownLogo: {
     width: '2rem',
     height: '1rem',
   },
-}
+};
 
 class AnnotationEditor extends React.Component {
   constructor(props) {
@@ -105,6 +105,7 @@ class AnnotationEditor extends React.Component {
             href="http://commonmark.org/help"
             style={styles.markdownIndicator}
             target="_blank"
+            rel="noopener noreferrer"
           >
             <img
               alt="Markdown Logo"

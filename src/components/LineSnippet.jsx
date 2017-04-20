@@ -18,7 +18,7 @@ class LineSnippet extends React.Component {
   render() {
     const {
       lineNumber,
-      value
+      value,
     } = this.props;
     const codeMirrorOptions = {
       ...baseOptions,

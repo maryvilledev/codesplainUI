@@ -46,7 +46,6 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is no
       }
     } />
   <LockButton
-    id="lockButton"
     onClick={[Function]}
     readOnly={false}
     style={
@@ -138,7 +137,6 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is re
       }
     } />
   <LockButton
-    id="lockButton"
     onClick={[Function]}
     readOnly={true}
     style={

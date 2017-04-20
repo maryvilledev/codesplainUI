@@ -25,21 +25,21 @@ export const SAVE_STATE_SUCCEEDED = 'SAVE_STATE_SUCCEEDED';
 export const SAVE_STATE_FAILED = 'SAVE_STATE_FAILED';
 export const SET_SNIPPET_KEY = 'SET_SNIPPET_KEY';
 
-export const setSnippetKey = (key) => ({
+export const setSnippetKey = key => ({
   type: SET_SNIPPET_KEY,
   payload: key,
-})
+});
 
 export const resetState = () => ({
   type: RESET_STATE,
 });
 
-export const setSnippetContents = (snippet) => ({
+export const setSnippetContents = snippet => ({
   type: SET_SNIPPET_CONTENTS,
   payload: snippet,
 });
 
-export const setRuleFilters = (filters) => ({
+export const setRuleFilters = filters => ({
   type: SET_RULE_FILTERS,
   payload: filters,
 });
@@ -52,7 +52,7 @@ export const resetFilters = () => ({
   type: RESET_RULE_FILTERS,
 });
 
-export const setAST = (AST) => ({
+export const setAST = AST => ({
   type: SET_AST,
   payload: AST,
 });
@@ -61,27 +61,27 @@ export const toggleEditState = () => ({
   type: TOGGLE_EDITING_STATE,
 });
 
-export const saveAnnotation = (annotationData) => ({
+export const saveAnnotation = annotationData => ({
   type: SAVE_ANNOTATION,
   payload: annotationData,
 });
 
-export const restoreState = (savedState) => ({
+export const restoreState = savedState => ({
   type: RESTORE_STATE,
   payload: savedState,
 });
 
-export const setSnippetTitle = (snippetTitle) => ({
+export const setSnippetTitle = snippetTitle => ({
   type: SET_SNIPPET_TITLE,
-  payload: snippetTitle
-})
-
-export const setSnippetLanguage = (snippetLanguage) => ({
-  type: SET_SNIPPET_LANGUAGE,
-  payload: snippetLanguage
+  payload: snippetTitle,
 });
 
-export const parseSnippet = (snippet) => ({
+export const setSnippetLanguage = snippetLanguage => ({
+  type: SET_SNIPPET_LANGUAGE,
+  payload: snippetLanguage,
+});
+
+export const parseSnippet = snippet => ({
   type: PARSE_SNIPPET,
   meta: {
     WebWorker: true,
@@ -103,22 +103,21 @@ export const saveFailed = () => ({
   type: SAVE_FAILED,
 });
 
-export const saveNew = () => {
-  return (dispatch, getState) => {
+export const saveNew = () => (dispatch, getState) => {
     // Load the token and username from cookie storage
-    const token = cookie.load('token');
-    const username = cookie.load('username');
+  const token = cookie.load('token');
+  const username = cookie.load('username');
 
     // Construct the necessary request objects
-    const reqBody = JSON.stringify(getState().app);
-    const reqHeaders = {
-      headers: {
-        Authorization: token,
-      },
-    };
-    dispatch(saveStarted());
+  const reqBody = JSON.stringify(getState().app);
+  const reqHeaders = {
+    headers: {
+      Authorization: token,
+    },
+  };
+  dispatch(saveStarted());
     // Save the new snippet
-    return axios.post(makeSaveEndpointUrl(username), reqBody, reqHeaders)
+  return axios.post(makeSaveEndpointUrl(username), reqBody, reqHeaders)
       .then((res) => {
         dispatch(saveSucceeded());
         // Return the key of the newly-saved snippet so that the browser
@@ -127,35 +126,32 @@ export const saveNew = () => {
       }, () => {
         dispatch(saveFailed());
       });
-  };
 };
 
-export const saveExisting = () => {
-  return (dispatch, getState) => {
+export const saveExisting = () => (dispatch, getState) => {
     // Load the token and username from cookie storage
-    const token = cookie.load('token');
-    const username = cookie.load('username');
+  const token = cookie.load('token');
+  const username = cookie.load('username');
 
     // Get the app state to save (and the snippet title to save to)
-    const appState = getState().app;
-    const { snippetKey: key } = appState;
+  const appState = getState().app;
+  const { snippetKey: key } = appState;
 
     // Construct the necessary request objects
-    const reqBody = JSON.stringify(appState);
-    const reqHeaders = {
-      headers: {
-        Authorization: token,
-      },
-    };
-    dispatch(saveStarted());
+  const reqBody = JSON.stringify(appState);
+  const reqHeaders = {
+    headers: {
+      Authorization: token,
+    },
+  };
+  dispatch(saveStarted());
     // Update the snippet
-    return axios.put(makeSaveEndpointUrl(username, key), reqBody, reqHeaders)
+  return axios.put(makeSaveEndpointUrl(username, key), reqBody, reqHeaders)
       .then(() => {
         dispatch(saveSucceeded());
       }, () => {
         dispatch(saveFailed());
       });
-  };
 };
 
 export const loadSnippet = (snippetKey) => (dispatch, getState) => {

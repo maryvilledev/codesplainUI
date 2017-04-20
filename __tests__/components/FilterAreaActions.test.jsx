@@ -7,14 +7,14 @@ import FilterAreaActions from '../../src/components/FilterAreaActions';
 
 describe('<FilterAreaActions />', () => {
   const muiTheme = getMuiTheme();
-  const shallowWithContext = (node) => shallow(node, { context: { muiTheme } });
+  const shallowWithContext = node => shallow(node, { context: { muiTheme } });
 
   it('matches snapshot of when the app is not in read-only mode', () => {
     const wrapper = shallowWithContext(
       <FilterAreaActions
         clearAll={jest.fn()}
         selectAll={jest.fn()}
-      />
+      />,
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
@@ -26,7 +26,7 @@ describe('<FilterAreaActions />', () => {
         <FilterAreaActions
           clearAll={clearAll}
           selectAll={jest.fn()}
-        />
+        />,
       );
       const button = wrapper.find('FlatButton[label="Clear All"]');
       button.simulate('touchTap');
@@ -40,7 +40,7 @@ describe('<FilterAreaActions />', () => {
         <FilterAreaActions
           clearAll={jest.fn()}
           selectAll={selectAll}
-        />
+        />,
       );
       const button = wrapper.find('FlatButton[label="Select All"]');
       button.simulate('touchTap');

@@ -32,7 +32,7 @@ const styles = {
     flexShrink: '1',
     verticalAlign: 'middle',
   },
-}
+};
 
 /*
 https://www.w3schools.com/Css/css_navbar.asp
@@ -72,7 +72,6 @@ const SnippetAreaToolbar = (props) => {
         style={styles.toolbarField}
       />
       <LockButton
-        id="lockButton"
         onClick={onLockClick}
         readOnly={readOnly}
         style={styles.buttons}
@@ -92,7 +91,7 @@ const SnippetAreaToolbar = (props) => {
         style={styles.buttons}
       />
     </div>
-  )
+  );
 };
 
 SnippetAreaToolbar.propTypes = {
@@ -109,6 +108,6 @@ SnippetAreaToolbar.propTypes = {
   title: PropTypes.string.isRequired,
   orgs: PropTypes.array.isRequired,
   selectedOrg: PropTypes.string
-}
+};
 
 export default SnippetAreaToolbar;

@@ -12,13 +12,13 @@ const mockFunctionProps = {
 
 describe('<AnnotationEditor />', () => {
   const muiTheme = getMuiTheme();
-  const shallowWithContext = (node) => shallow(node, { context: { muiTheme } });
+  const shallowWithContext = node => shallow(node, { context: { muiTheme } });
 
   it('matches snapshot', () => {
     const wrapper = shallowWithContext(
       <AnnotationEditor
         {...mockFunctionProps}
-      />
+      />,
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
@@ -28,7 +28,7 @@ describe('<AnnotationEditor />', () => {
       const wrapper = shallowWithContext(
         <AnnotationEditor
           {...mockFunctionProps}
-        />
+        />,
       );
       expect(wrapper.find('TextField').prop('value')).toEqual('');
     });
@@ -38,7 +38,7 @@ describe('<AnnotationEditor />', () => {
         <AnnotationEditor
           annotation={annotation}
           {...mockFunctionProps}
-        />
+        />,
       );
       expect(wrapper.find('TextField').prop('value')).toEqual(annotation);
     });
@@ -49,9 +49,9 @@ describe('<AnnotationEditor />', () => {
       const wrapper = shallowWithContext(
         <AnnotationEditor
           {...mockFunctionProps}
-        />
+        />,
       );
-      expect(wrapper.find('[label="Save"]').prop('disabled')).toBe(true)
+      expect(wrapper.find('[label="Save"]').prop('disabled')).toBe(true);
     });
     it('is enabled when the textfield is not empty', () => {
       const annotation = 'Wubba lubba dub dub!';
@@ -59,9 +59,9 @@ describe('<AnnotationEditor />', () => {
         <AnnotationEditor
           annotation={annotation}
           {...mockFunctionProps}
-        />
+        />,
       );
-      expect(wrapper.find('[label="Save"]').prop('disabled')).toBe(false)
+      expect(wrapper.find('[label="Save"]').prop('disabled')).toBe(false);
     });
   });
 });

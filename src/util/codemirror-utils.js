@@ -1,14 +1,29 @@
-import _ from 'lodash'
+import _ from 'lodash';
 
 let rules;
 let ignoredRules;
 
+const parserCodeMirrorModes = {
+  python3: 'python',
+};
+
 export const setRules = (newRules) => {
   rules = newRules;
-}
+};
 
 export const setIgnoredRules = (newIgnoredRules) => {
   ignoredRules = newIgnoredRules;
+};
+
+/*
+Given a CodeMirror instance, styleRegion() will apply the specified css style to
+the given region of code. The code is treated as a single string, and characters
+in that string must be identified by their index (as opposed to row/col). Both
+start and end are inclusive.
+*/
+export function styleRegion(codeMirror, start, end, css) {
+  if (end < start) throw new Error('end must be greater than start');
+  codeMirror.markText(codeMirror.posFromIndex(start), codeMirror.posFromIndex(end), { css });
 }
 
 /*
@@ -35,39 +50,23 @@ export function highlightNode(codeMirror, node, filters, parentColor) {
     }
 
     // Apply the background color CSS to this token
-    styleRegion(
-      codeMirror,
-      node.begin,
-      node.end,
-      `background-color: ${color};`
-    );
+    styleRegion(codeMirror, node.begin, node.end, `background-color: ${color};`);
   }
 
   // Highlight all children of this token
-  node.children.forEach(child => {
-    if (child === Object(child))
-      highlightNode(codeMirror, child, filters, color);
+  node.children.forEach((child) => {
+    if (_.isObject(child)) { highlightNode(codeMirror, child, filters, color); }
   });
 }
 
-/*
-Given a CodeMirror instance, styleRegion() will apply the specified css style to
-the given region of code. The code is treated as a single string, and characters
-in that string must be identified by their index (as opposed to row/col). Both
-start and end are inclusive.
-*/
-export function styleRegion(codeMirror, start, end, css) {
-  if (end < start) throw new Error('end must be greater than start');
-  codeMirror.markText(codeMirror.posFromIndex(start), codeMirror.posFromIndex(end), {css});
-}
 /*
 Given a CodeMirror instance styleLine() will apply the specified css style to the
 specified line of code in the editor. The first line is considered line 0, not 1.
 */
 export function styleLine(codeMirror, line, css) {
-    const lineStart = { line: line, ch: 0 };
-    const lineEnd = { line: line, ch: codeMirror.getLine(line).length };
-    codeMirror.markText(lineStart, lineEnd, {css: css});
+  const lineStart = { line, ch: 0 };
+  const lineEnd = { line, ch: codeMirror.getLine(line).length };
+  codeMirror.markText(lineStart, lineEnd, { css });
 }
 
 /*
@@ -85,26 +84,21 @@ objects to apply highlighting to the code in the CodeMirror editor.
 export async function highlight(codeMirror, AST, filters) {
   if (!rules || !ignoredRules) {
     // Possibly not done loading these. Hooray, an asynchronous spin-lock!
-    setTimeout(() => highlight(codeMirror, AST, filters), 100)
+    setTimeout(() => highlight(codeMirror, AST, filters), 100);
     return;
   }
-  //Make this a first-class function
+  // Make this a first-class function
   const func = () => highlightNode(codeMirror, AST, filters, 'transparent');
-  //Codemirror buffers its calls ahead of time, then performs them atomically
-  codeMirror.operation(func)
+  // Codemirror buffers its calls ahead of time, then performs them atomically
+  codeMirror.operation(func);
 }
 
-const parserCodeMirrorModes = {
-  python3: 'python',
-};
-
-export const getCodeMirrorMode = (parserName) => {
-  /*
-  Return the parser's corresponding CodeMirror mode if it exists in
-  parserCodeMirrorModes; else return the parser
-  */
-  return parserCodeMirrorModes[parserName] || parserName;
-};
+/*
+Return the parser's corresponding CodeMirror mode if it exists in
+parserCodeMirrorModes; else return the parser
+*/
+export const getCodeMirrorMode = parserName =>
+   parserCodeMirrorModes[parserName] || parserName;
 
 export const generateFilters = (prevFilters, ruleCounts) => {
   const newFilters = {};
@@ -113,25 +107,21 @@ export const generateFilters = (prevFilters, ruleCounts) => {
   }
   Object.keys(ruleCounts)
     .filter(r => rules[r] !== undefined)
-    .forEach(r => {
+    .forEach((r) => {
       const selected = prevFilters[r] ? prevFilters[r].selected : false;
       newFilters[r] = {
         prettyTokenName: rules[r].prettyName,
-        count:           ruleCounts[r],
-        selected:        selected,
-        color:           rules[r].color,
-      }
+        count: ruleCounts[r],
+        selected,
+        color: rules[r].color,
+      };
     });
   return newFilters;
-}
-
-export const removeDeprecatedFilters = (filters) => {
-  return _.omit(filters, ignoredRules);
-}
-
-export const removeDeprecatedFiltersFromState = (state) => {
-  return {
-    ...state,
-    filters: removeDeprecatedFilters(state.filters),
-  };
 };
+
+export const removeDeprecatedFilters = filters => _.omit(filters, ignoredRules);
+
+export const removeDeprecatedFiltersFromState = state => ({
+  ...state,
+  filters: removeDeprecatedFilters(state.filters),
+});

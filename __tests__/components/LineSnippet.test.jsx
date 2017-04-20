@@ -7,14 +7,14 @@ import LineSnippet from '../../src/components/LineSnippet';
 
 describe('<LanguageSelector />', () => {
   const muiTheme = getMuiTheme();
-  const shallowWithContext = (node) => shallow(node, { context: { muiTheme } });
+  const shallowWithContext = node => shallow(node, { context: { muiTheme } });
 
   it('matches snapshot', () => {
     const wrapper = shallowWithContext(
       <LineSnippet
         lineNumber={1}
         value={'foo bar baz'}
-      />
+      />,
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
@@ -26,7 +26,7 @@ describe('<LanguageSelector />', () => {
         <LineSnippet
           lineNumber={1}
           value={annotation}
-        />
+        />,
       );
       expect(wrapper.find('CodeMirror').prop('value')).toEqual(annotation);
     });
@@ -39,9 +39,9 @@ describe('<LanguageSelector />', () => {
         <LineSnippet
           lineNumber={lineNumber}
           value={annotation}
-        />
+        />,
       );
       expect(wrapper.find('CodeMirror').prop('options').firstLineNumber).toEqual(lineNumber);
     });
   });
-})
+});

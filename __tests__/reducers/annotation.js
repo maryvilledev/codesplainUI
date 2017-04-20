@@ -2,12 +2,10 @@ import * as actions from '../../src/actions/annotation';
 import reducer, { initialState } from '../../src/reducers/annotation';
 
 describe('Reducer: Annotation', () => {
-  it('should have initial state', () => {
-    const initial = {
-      isDisplayingAnnotation: false,
-      lineAnnotated: {},
-    }
-    expect(reducer(undefined, {})).toEqual(initialState);
+  describe('initialState', () => {
+    it('should match snapshot', () => {
+      expect(reducer(undefined, {})).toMatchSnapshot();
+    });
   });
 
   it('should handle OPEN_ANNOTATION_PANEL', () => {
@@ -17,24 +15,24 @@ describe('Reducer: Annotation', () => {
     };
     const action = {
       type: actions.OPEN_ANNOTATION_PANEL,
-      payload: lineAnnotated
-    }
+      payload: lineAnnotated,
+    };
     const expected = {
       ...initialState,
       isDisplayingAnnotation: true,
-      lineAnnotated: action.payload
-    }
-    expect(reducer(undefined, action)).toEqual(expected)
+      lineAnnotated: action.payload,
+    };
+    expect(reducer(undefined, action)).toEqual(expected);
   });
 
   it('should handle CLOSE_ANNOTATION_PANEL', () => {
     const action = {
-      type: actions.CLOSE_ANNOTATION_PANEL
+      type: actions.CLOSE_ANNOTATION_PANEL,
     };
     const expected = {
       ...initialState,
       isDisplayingAnnotation: false,
-      lineAnnotated: {}
+      lineAnnotated: {},
     };
     expect(reducer(undefined, action)).toEqual(expected);
   });

@@ -51,8 +51,8 @@ describe('Actions: User', () => {
     });
   });
   describe('async actions', () => {
-    const middlewares = [ thunk ];
-    const mockStore   = configureMockStore(middlewares);
+    const middlewares = [thunk];
+    const mockStore = configureMockStore(middlewares);
 
     beforeEach(() => {
       moxios.install();
@@ -71,18 +71,18 @@ describe('Actions: User', () => {
           request.respondWith({
             status: 200,
             response: {
-              'test_snippet_1': {
+              test_snippet_1: {
                 snippetName: 'Test Snippet 1',
-                language:    'Python 3',
-                lastEdited:  '2017-04-05T12:52:20.099Z',
-                'private':   true,
+                language: 'Python 3',
+                lastEdited: '2017-04-05T12:52:20.099Z',
+                private: true,
               },
-              'test_snippet_1': {
+              test_snippet_2: {
                 snippetName: 'Test Snippet 2',
-                language:    'Python 3',
-                lastEdited:  '2017-04-05T12:52:20.099Z',
-                'private':   true,
-              }
+                language: 'Python 3',
+                lastEdited: '2017-04-05T12:52:20.099Z',
+                private: true,
+              },
             },
           });
           cookie.save('token', '1234', { path: '/' });
@@ -124,13 +124,13 @@ describe('Actions: User', () => {
         const snippetMeta = [
           {
             snippetName: 'Test Snippet',
-            language:    'Python 3',
-            lastEdited:  '2017-04-05T12:52:20.099Z',
-            'private':   true,
-          }
+            language: 'Python 3',
+            lastEdited: '2017-04-05T12:52:20.099Z',
+            private: true,
+          },
         ];
         const expected = {
-          type:    actions.SET_USER_SNIPPETS,
+          type: actions.SET_USER_SNIPPETS,
           payload: snippetMeta,
         };
         expect(actions.setUserSnippets(snippetMeta)).toEqual(expected);

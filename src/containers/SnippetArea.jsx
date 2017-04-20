@@ -22,6 +22,7 @@ import { updateUserSnippets, switchOrg } from '../actions/user';
 import ConfirmLockDialog from '../components/ConfirmLockDialog';
 import Editor from '../components/Editor';
 import SnippetAreaToolbar from '../components/SnippetAreaToolbar';
+import CustomPropTypes from '../util/custom-prop-types';
 
 const styles = {
   snippetAreaCardText: {
@@ -31,12 +32,12 @@ const styles = {
   },
 };
 
-//Create an async function to fire the parseSnippet action
+// Create an async function to fire the parseSnippet action
 async function dispatchParseSnippet(snippet, dispatch) {
-  dispatch(parseSnippet(snippet))
+  dispatch(parseSnippet(snippet));
 }
-//Only fire the parse snippet action 400 millis after the last keydown
-const debouncedParseSnippetDispatch = _.debounce(dispatchParseSnippet, 400)
+// Only fire the parse snippet action 400 millis after the last keydown
+const debouncedParseSnippetDispatch = _.debounce(dispatchParseSnippet, 400);
 
 export class SnippetArea extends React.Component {
   constructor(props) {
@@ -63,14 +64,14 @@ export class SnippetArea extends React.Component {
 
   componentDidMount() {
     const { dispatch, snippetLanguage } = this.props;
-    dispatch(loadParser(snippetLanguage))
+    dispatch(loadParser(snippetLanguage));
   }
 
-  showSnackbar( message ) {
+  showSnackbar(message) {
     this.setState({
       showSnackbar: true,
-      snackbarMessage: message
-    })
+      snackbarMessage: message,
+    });
   }
 
   handleLanguageChanged(ev, key, language) {
@@ -88,7 +89,7 @@ export class SnippetArea extends React.Component {
     // Parsing should only be triggered if you add a non-whitespace char, or if
     // a whitespace was added in between non-WS chars (thus not being trimmed)
     if (snippet.trim() !== snippetContents.trim()) {
-      debouncedParseSnippetDispatch(snippetContents, dispatch)
+      debouncedParseSnippetDispatch(snippetContents, dispatch);
     }
   }
 
@@ -103,7 +104,7 @@ export class SnippetArea extends React.Component {
 
   handleLock() {
     this.setState({
-      lockDialogOpen: true
+      lockDialogOpen: true,
     });
   }
 
@@ -115,7 +116,7 @@ export class SnippetArea extends React.Component {
 
   handleCloseModal() {
     this.setState({
-      lockDialogOpen: false
+      lockDialogOpen: false,
     });
   }
 
@@ -145,20 +146,21 @@ export class SnippetArea extends React.Component {
     }
      // Update a pre-existing snippet
     if (id) {
-      return dispatch(saveExisting())
+      dispatch(saveExisting())
         .then(() => {
           this.showSnackbar('Codesplaination Saved!');
           dispatch(updateUserSnippets());
         }, () => {
           this.showSnackbar('Failed to save - an error occurred');
         });
+      return;
     }
-    return dispatch(saveNew())
+    dispatch(saveNew())
       .then((snippetKey) => {
         // Redirect the user to the snippet's page
         router.push(`/${username}/${snippetKey}`);
         // Update the snippet's key
-        dispatch(setSnippetKey(snippetKey))
+        dispatch(setSnippetKey(snippetKey));
         this.showSnackbar('Codesplaination Saved!');
         dispatch(updateUserSnippets());
       }, () => {
@@ -187,17 +189,17 @@ export class SnippetArea extends React.Component {
     dispatch(setSnippetTitle(title));
 
     // Save the snippet
-    return dispatch(saveNew())
+    dispatch(saveNew())
       .then((snippetKey) => {
         // Redirect the user to the snippet's page
         router.push(`/${username}/${snippetKey}`);
         // Update the snippet's key
-        dispatch(setSnippetKey(snippetKey))
+        dispatch(setSnippetKey(snippetKey));
         this.showSnackbar('Codesplaination Saved!');
         const permissions = {
           canRead: true,
           canEdit: true,
-        } // Grant all permissions, this is now her file.
+        }; // Grant all permissions, this is now her file.
         dispatch(setPermissions(permissions));
         dispatch(updateUserSnippets());
       }, () => {
@@ -211,8 +213,8 @@ export class SnippetArea extends React.Component {
   }
 
   handleGutterClick(lineNumber, lineText) {
-    const { dispatch } = this.props
-    dispatch(openAnnotationPanel({lineNumber, lineText}))
+    const { dispatch } = this.props;
+    dispatch(openAnnotationPanel({ lineNumber, lineText }));
   }
 
   render() {
@@ -230,7 +232,7 @@ export class SnippetArea extends React.Component {
       selectedOrg
     } = this.props;
 
-    const markedLines = Object.keys(annotations).map((key) => Number(key))
+    const markedLines = Object.keys(annotations).map(key => Number(key));
     return (
       <CardText style={styles.snippetAreaCardText}>
         <SnippetAreaToolbar
@@ -276,14 +278,18 @@ export class SnippetArea extends React.Component {
 }
 
 SnippetArea.propTypes = {
-  annotations: PropTypes.object.isRequired,
-  AST: PropTypes.object.isRequired,
-  filters: PropTypes.object.isRequired,
+  annotations: CustomPropTypes.annotations.isRequired,
+  filters: CustomPropTypes.filters.isRequired,
   openLine: PropTypes.number,
   readOnly: PropTypes.bool.isRequired,
   snippet: PropTypes.string.isRequired,
   snippetTitle: PropTypes.string.isRequired,
-  permissions: PropTypes.object.isRequired,
+  permissions: CustomPropTypes.permissions.isRequired,
+  snippetLanguage: PropTypes.string.isRequired,
+};
+
+SnippetArea.defaultProps = {
+  openLine: -1,
 };
 
 const mapStateToProps = state => ({
@@ -292,8 +298,7 @@ const mapStateToProps = state => ({
   filters: state.app.filters,
   snippetLanguage: state.app.snippetLanguage,
   openLine: (state.annotation.isDisplayingAnnotation
-    ? state.annotation.lineAnnotated.lineNumber
-    : undefined),
+    ? state.annotation.lineAnnotated.lineNumber : undefined),
   readOnly: state.app.readOnly,
   snippet: state.app.snippet,
   snippetTitle: state.app.snippetTitle,

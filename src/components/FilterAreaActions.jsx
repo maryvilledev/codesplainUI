@@ -8,9 +8,9 @@ const styles = {
   label: {
     fontSize: '12px',
   },
-}
+};
 
-const FilterAreaActions = ({clearAll, selectAll}) => (
+const FilterAreaActions = ({ clearAll, selectAll }) => (
   <CardActions>
     <FlatButton
       fullWidth

@@ -11,6 +11,6 @@ const reducer = combineReducers({
   parser,
   permissions,
   user,
-})
+});
 
-export default reducer
+export default reducer;

@@ -15,12 +15,13 @@ const styles = {
   },
 };
 
-const saveIconButton = (disabled) => (
+const saveIconButton = disabled => (
   <IconButton
-    title={disabled ? "Login to Save" : "Save Options"}
-    children={<SaveIcon />}
     disabled={disabled}
-  />
+    title={disabled ? 'Login to Save' : 'Save Options'}
+  >
+    <SaveIcon />
+  </IconButton>
 );
 
 class SaveMenu extends React.Component {
@@ -29,20 +30,25 @@ class SaveMenu extends React.Component {
     this.state = {
       saveAsName: '',
       showSaveAsDialog: false,
-    }
+    };
     this.getMenu = this.getMenu.bind(this);
     this.getSaveAsDialog = this.getSaveAsDialog.bind(this);
   }
 
   getMenu() {
+    const {
+      canSave,
+      enabled,
+      onSaveClick,
+    } = this.props;
     return (
       <IconMenu
         id="menu"
-        iconButtonElement={saveIconButton(!this.props.enabled)}
+        iconButtonElement={saveIconButton(!enabled)}
       >
         <MenuItem
-          onTouchTap={this.props.onSaveClick}
-          disabled={!this.props.canSave}
+          onTouchTap={onSaveClick}
+          disabled={!canSave}
           primaryText="Save"
         />
         <MenuItem
@@ -58,18 +64,18 @@ class SaveMenu extends React.Component {
       <Dialog
         actions={
           <span>
-          <FlatButton
-            label="Cancel"
-            onTouchTap={() => this.setState({ showSaveAsDialog: false })}
-          />
-          <FlatButton
-            primary={true}
-            label="Save"
-            onTouchTap={() => {
-              this.props.onSaveAsClick(this.state.saveAsName);
-              this.setState({ showSaveAsDialog: false });
-            }}
-          />
+            <FlatButton
+              label="Cancel"
+              onTouchTap={() => this.setState({ showSaveAsDialog: false })}
+            />
+            <FlatButton
+              primary
+              label="Save"
+              onTouchTap={() => {
+                this.props.onSaveAsClick(this.state.saveAsName);
+                this.setState({ showSaveAsDialog: false });
+              }}
+            />
           </span>
         }
         open={this.state.showSaveAsDialog}
@@ -94,9 +100,10 @@ class SaveMenu extends React.Component {
 }
 
 SaveMenu.propTypes = {
-  onSaveClick: PropTypes.func.isRequired,
-  onSaveAsClick: PropTypes.func.isRequired,
   canSave: PropTypes.bool.isRequired,
+  enabled: PropTypes.bool.isRequired,
+  onSaveAsClick: PropTypes.func.isRequired,
+  onSaveClick: PropTypes.func.isRequired,
 };
 
-export default SaveMenu
+export default SaveMenu;
