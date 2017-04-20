@@ -159,7 +159,7 @@ export class SnippetArea extends React.Component {
       dispatch(saveNew(selectedOrg))
         .then((snippetKey) => {
           // Redirect the user to the snippet's page
-          router.push(`/${username}/${snippetKey}`);
+          router.push(`/${selectedOrg}/${snippetKey}`);
           // Update the snippet's key
           dispatch(setSnippetKey(snippetKey));
           this.showSnackbar('Codesplaination Saved!');
@@ -195,7 +195,7 @@ export class SnippetArea extends React.Component {
     dispatch(saveNew(selectedOrg))
       .then((snippetKey) => {
         // Redirect the user to the snippet's page
-        router.push(`/${username}/${snippetKey}`);
+        router.push(`/${selectedOrg}/${snippetKey}`);
         // Update the snippet's key
         dispatch(setSnippetKey(snippetKey));
         this.showSnackbar('Codesplaination Saved!');
