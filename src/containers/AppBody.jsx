@@ -16,6 +16,21 @@ import { restoreUserCredentials } from '../actions/user';
 import { removeDeprecatedFiltersFromState } from '../util/codemirror-utils';
 import { setDefaults } from '../util/state-management';
 
+const styles = {
+  body: {
+    display: 'flex',
+    flexFlow: 'row wrap',
+    height: '100%',
+  },
+  rightSection: {
+    display: 'flex',
+    flexFlow: 'column wrap',
+    height: '100%',
+    flex: '1 0',
+    minWidth: '300px',
+  },
+};
+
 export class AppBody extends Component {
   componentDidMount() {
     const {
@@ -82,30 +97,14 @@ export class AppBody extends Component {
   render() {
     return (
       <div style={{ height: '85%' }}>
-        <div
-          style={{
-            display: 'flex',
-            flexFlow: 'row wrap',
-            height: '100%',
-          }}
-        >
+        <div style={styles.body}>
           <SnippetArea />
-          <div
-            style={{
-              display: 'flex',
-              flexFlow: 'column wrap',
-              height: '100%',
-              flex: '1 0',
-              minWidth: '300px',
-            }}
-          >
+          <div style={styles.rightSection}>
             <FilterArea />
             <Annotations />
           </div>
         </div>
-        <div>
-          <ReferenceArea />
-        </div>
+        <ReferenceArea />
       </div>
     );
   }
