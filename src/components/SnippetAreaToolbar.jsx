@@ -67,19 +67,21 @@ const SnippetAreaToolbar = (props) => {
         onChange={onLanguageChange}
         style={styles.toolbarField}
       />
-      <LockButton
-        onClick={onLockClick}
-        readOnly={readOnly}
-        style={styles.buttons}
-      />
-      <SaveMenu
-        canSave={canSave}
-        enabled={saveEnabled}
-        id="saveMenu"
-        onSaveAsClick={onSaveAsClick}
-        onSaveClick={onSaveClick}
-        style={styles.buttons}
-      />
+      <div>
+        <LockButton
+          onClick={onLockClick}
+          readOnly={readOnly}
+          style={styles.buttons}
+        />
+        <SaveMenu
+          canSave={canSave}
+          enabled={saveEnabled}
+          id="saveMenu"
+          onSaveAsClick={onSaveAsClick}
+          onSaveClick={onSaveClick}
+          style={styles.buttons}
+        />
+      </div>
     </div>
   );
 };
