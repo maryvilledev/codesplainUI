@@ -5,7 +5,7 @@ const API_URL = process.env.REACT_APP_API_URL;
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent#Return_value
 export const sanitizeKey = str => (
   encodeURIComponent(str)
-    .replace(/[!'()*]/g, ch => `%${ch.charCodeAt(0).toString(16)}`)
+    .replace(/[!'.()*]/g, ch => `%${ch.charCodeAt(0).toString(16)}`)
 );
 
 /* Construct the endpoint to make a REST request to. Only the username is

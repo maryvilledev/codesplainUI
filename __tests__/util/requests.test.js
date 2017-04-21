@@ -18,7 +18,7 @@ describe('util: requests', () => {
   });
   describe('sanitizeKey', () => {
     it('encodes characters that encodeURIComponent does not', () => {
-      const str = '!()*\'';
+      const str = './"!()*\'';
       const encoded = reqUtils.sanitizeKey(str);
       // Check that none of the characters in the original string appear in
       // the encoded string
