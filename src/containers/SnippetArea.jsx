@@ -1,5 +1,9 @@
 import _ from 'lodash';
-import { CardText, Snackbar } from 'material-ui';
+import {
+  Card,
+  CardText,
+  Snackbar,
+} from 'material-ui';
 import React, { PropTypes } from 'react';
 import cookie from 'react-cookie';
 import { connect } from 'react-redux';
@@ -25,9 +29,15 @@ import SnippetAreaToolbar from '../components/SnippetAreaToolbar';
 import CustomPropTypes from '../util/custom-prop-types';
 
 const styles = {
-  snippetAreaCardText: {
+  cardText: {
     display: 'flex',
     flexDirection: 'column',
+    height: 'inherit',
+  },
+  card: {
+    height: '100%',
+  },
+  cardContainer: {
     height: 'inherit',
   },
 };
@@ -120,7 +130,6 @@ export class SnippetArea extends React.Component {
   }
 
   handleSave() {
-
     const {
       dispatch,
       router,
@@ -226,42 +235,47 @@ export class SnippetArea extends React.Component {
 
     const markedLines = Object.keys(annotations).map(key => Number(key));
     return (
-      <CardText style={styles.snippetAreaCardText}>
-        <SnippetAreaToolbar
-          canSave={permissions.canEdit}
-          language={snippetLanguage}
-          onLanguageChange={this.handleLanguageChanged}
-          onLockClick={this.handleLock}
-          onSaveAsClick={this.handleSaveAs}
-          onSaveClick={this.handleSave}
-          onTitleChange={this.handleTitleChanged}
-          readOnly={readOnly}
-          saveEnabled={(cookie.load('username') !== undefined)}
-          title={snippetTitle}
-        />
-        <ConfirmLockDialog
-          accept={this.handleToggleReadOnly}
-          isOpen={this.state.lockDialogOpen}
-          reject={this.handleCloseModal}
-        />
-        <Editor
-          AST={AST}
-          filters={filters}
-          language={snippetLanguage}
-          markedLines={markedLines}
-          onChange={this.handleSnippetChanged}
-          onGutterClick={this.handleGutterClick}
-          openLine={openLine}
-          readOnly={readOnly}
-          value={snippet}
-        />
-        <Snackbar
-          autoHideDuration={3000}
-          message={this.state.snackbarMessage}
-          onRequestClose={() => this.setState({ showSnackbar: false })}
-          open={this.state.showSnackbar}
-        />
-      </CardText>
+      <Card
+        containerStyle={styles.cardContainer}
+        style={styles.card}
+      >
+        <CardText style={styles.cardText}>
+          <SnippetAreaToolbar
+            canSave={permissions.canEdit}
+            language={snippetLanguage}
+            onLanguageChange={this.handleLanguageChanged}
+            onLockClick={this.handleLock}
+            onSaveAsClick={this.handleSaveAs}
+            onSaveClick={this.handleSave}
+            onTitleChange={this.handleTitleChanged}
+            readOnly={readOnly}
+            saveEnabled={(cookie.load('username') !== undefined)}
+            title={snippetTitle}
+          />
+          <ConfirmLockDialog
+            accept={this.handleToggleReadOnly}
+            isOpen={this.state.lockDialogOpen}
+            reject={this.handleCloseModal}
+          />
+          <Editor
+            AST={AST}
+            filters={filters}
+            language={snippetLanguage}
+            markedLines={markedLines}
+            onChange={this.handleSnippetChanged}
+            onGutterClick={this.handleGutterClick}
+            openLine={openLine}
+            readOnly={readOnly}
+            value={snippet}
+          />
+          <Snackbar
+            autoHideDuration={3000}
+            message={this.state.snackbarMessage}
+            onRequestClose={() => this.setState({ showSnackbar: false })}
+            open={this.state.showSnackbar}
+          />
+        </CardText>
+      </Card>
     );
   }
 }

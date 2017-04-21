@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { CardText } from 'material-ui/Card';
+import { Card, CardText } from 'material-ui/Card';
 import { withRouter } from 'react-router';
 
 import {
@@ -133,20 +133,24 @@ export class Annotations extends React.Component {
         'Click on a line number to add an annotation or display one' :
         'Lock this snippet to add annotations';
       return (
-        <CardText>{prompt}</CardText>
+        <Card>
+          <CardText>{prompt}</CardText>
+        </Card>
       );
     }
     return (
-      <AnnotationPanel
-        annotation={annotation}
-        lineAnnotated={lineAnnotated}
-        saveAnnotation={this.handleSaveAnnotation}
-        closeAnnotation={this.handleCloseAnnotation}
-        getNextAnnotation={this.getNextAnnotation}
-        getPreviousAnnotation={this.getPreviousAnnotation}
-        hasPrevAnnotation={hasPreceedingAnnotation}
-        hasNextAnnotation={hasProceedingAnnotation}
-      />
+      <Card>
+        <AnnotationPanel
+          annotation={annotation}
+          lineAnnotated={lineAnnotated}
+          saveAnnotation={this.handleSaveAnnotation}
+          closeAnnotation={this.handleCloseAnnotation}
+          getNextAnnotation={this.getNextAnnotation}
+          getPreviousAnnotation={this.getPreviousAnnotation}
+          hasPrevAnnotation={hasPreceedingAnnotation}
+          hasNextAnnotation={hasProceedingAnnotation}
+        />
+      </Card>
     );
   }
 }

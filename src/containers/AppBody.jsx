@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Card } from 'material-ui';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import cookie from 'react-cookie';
@@ -20,12 +19,6 @@ import { setDefaults } from '../util/state-management';
 const styles = {
   snippetAreaSection: {
     height: '90vh',
-  },
-  snippetAreaSectionCard: {
-    height: '100%',
-  },
-  snippetAreaSectionCardContainer: {
-    height: 'inherit',
   },
 };
 
@@ -94,29 +87,19 @@ export class AppBody extends Component {
 
   render() {
     return (
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col-lg-2">
+      <div>
+        <div>
+          <div>
             <FilterArea />
           </div>
-          <div
-            className="col-lg-5 col-md-7"
-            style={styles.snippetAreaSection}
-          >
-            <Card
-              containerStyle={styles.snippetAreaSectionCardContainer}
-              style={styles.snippetAreaSectionCard}
-            >
-              <SnippetArea />
-            </Card>
+          <div style={styles.snippetAreaSection}>
+            <SnippetArea />
           </div>
-          <div className="col-lg-5 col-md-5">
-            <Card>
-              <Annotations />
-            </Card>
+          <div>
+            <Annotations />
           </div>
         </div>
-        <div className="row">
+        <div>
           <ReferenceArea />
         </div>
       </div>
