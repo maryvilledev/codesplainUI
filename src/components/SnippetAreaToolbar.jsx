@@ -11,25 +11,16 @@ const styles = {
   toolbar: {
     backgroundColor: 'transparent',
     display: 'flex',
-    flexBasis: 'auto',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    flexGrow: '1',
-    flexShrink: '0',
+    flex: '1 0 auto',
+    flexFlow: 'column wrap',
     margin: '0',
     padding: '0',
   },
   buttons: {
-    flexBasis: 'auto',
-    flexGrow: '1',
-    flexShrink: '1',
-    verticalAlign: 'middle',
+    flex: '1 1 auto',
   },
   toolbarField: {
-    flexBasis: 'auto',
-    flexGrow: '1',
-    flexShrink: '1',
-    verticalAlign: 'middle',
+    flex: '1 1 auto',
   },
 };
 
@@ -57,29 +48,38 @@ const SnippetAreaToolbar = (props) => {
       <TextField
         hintText="Snippet Name"
         id="titleField"
+        fullWidth
         onChange={onTitleChange}
-        style={styles.toolbarField}
         value={title}
       />
-      <LanguageSelector
-        disabled={readOnly}
-        language={language}
-        onChange={onLanguageChange}
-        style={styles.toolbarField}
-      />
-      <LockButton
-        onClick={onLockClick}
-        readOnly={readOnly}
-        style={styles.buttons}
-      />
-      <SaveMenu
-        canSave={canSave}
-        enabled={saveEnabled}
-        id="saveMenu"
-        onSaveAsClick={onSaveAsClick}
-        onSaveClick={onSaveClick}
-        style={styles.buttons}
-      />
+      <div
+        style={{
+          display: 'flex',
+          flexFlow: 'row wrap',
+        }}
+      >
+        <LanguageSelector
+          disabled={readOnly}
+          language={language}
+          onChange={onLanguageChange}
+          style={styles.toolbarField}
+        />
+        <div>
+          <LockButton
+            onClick={onLockClick}
+            readOnly={readOnly}
+            style={styles.buttons}
+          />
+          <SaveMenu
+            canSave={canSave}
+            enabled={saveEnabled}
+            id="saveMenu"
+            onSaveAsClick={onSaveAsClick}
+            onSaveClick={onSaveClick}
+            style={styles.buttons}
+          />
+        </div>
+      </div>
     </div>
   );
 };

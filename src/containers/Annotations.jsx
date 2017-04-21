@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { Card, CardText } from 'material-ui/Card';
+import { Card, CardHeader, CardText } from 'material-ui/Card';
 import { withRouter } from 'react-router';
 
 import {
@@ -140,12 +140,18 @@ export class Annotations extends React.Component {
         'Lock this snippet to add annotations';
       return (
         <Card style={styles.card}>
+          <CardHeader
+            title={<h2>Annotation</h2>}
+          />
           <CardText>{prompt}</CardText>
         </Card>
       );
     }
     return (
       <Card style={styles.card}>
+        <CardHeader
+          title={<h2>Annotation</h2>}
+        />
         <AnnotationPanel
           annotation={annotation}
           lineAnnotated={lineAnnotated}

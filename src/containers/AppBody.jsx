@@ -85,7 +85,7 @@ export class AppBody extends Component {
         <div
           style={{
             display: 'flex',
-            flexFlow: 'row',
+            flexFlow: 'row wrap',
             height: '100%',
           }}
         >
@@ -93,8 +93,10 @@ export class AppBody extends Component {
           <div
             style={{
               display: 'flex',
-              flexFlow: 'column',
+              flexFlow: 'column wrap',
               height: '100%',
+              flex: '1 0',
+              minWidth: '300px',
             }}
           >
             <FilterArea />

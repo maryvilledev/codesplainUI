@@ -19,9 +19,13 @@ import CustomPropTypes from '../util/custom-prop-types';
 export class FilterArea extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      isExpanded: false,
+    };
     this.handleRuleSelected = this.handleRuleSelected.bind(this);
     this.handleClearAllFilters = this.handleClearAllFilters.bind(this);
     this.handleSelectAllFilters = this.handleSelectAllFilters.bind(this);
+    this.handleExpandChange = this.handleExpandChange.bind(this);
   }
 
   handleRuleSelected(filterName) {
@@ -29,6 +33,10 @@ export class FilterArea extends React.Component {
     const newFilters = _.cloneDeep(filters);
     newFilters[filterName].selected = !newFilters[filterName].selected;
     dispatch(setRuleFilters(newFilters));
+  }
+
+  handleExpandChange(isExpanded) {
+    this.setState({ isExpanded });
   }
 
   handleClearAllFilters() {
@@ -43,15 +51,25 @@ export class FilterArea extends React.Component {
 
   render() {
     const { filters } = this.props;
-    const filterAreaActions = Object.keys(filters).length ?
+    const { isExpanded } = this.state;
+    const filterAreaActions = Object.keys(filters).length && isExpanded ?
       (<FilterAreaActions
         clearAll={this.handleClearAllFilters}
         selectAll={this.handleSelectAllFilters}
       />) : null;
     return (
-      <Card>
-        <CardTitle title="Filters" />
-        <CardText>
+      <Card
+        expanded={isExpanded}
+        onExpandChange={this.handleExpandChange}
+      >
+        <CardTitle
+          actAsExpander
+          title="Filters"
+          showExpandableButton
+        />
+        <CardText
+          expandable
+        >
           <RulesSelector
             filters={filters}
             onRuleSelected={this.handleRuleSelected}
