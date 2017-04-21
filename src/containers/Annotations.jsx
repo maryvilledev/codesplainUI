@@ -21,6 +21,12 @@ import {
 } from '../util/annotations';
 import CustomPropTypes from '../util/custom-prop-types';
 
+const styles = {
+  card: {
+    flex: '1 1 auto',
+  },
+};
+
 export class Annotations extends React.Component {
   constructor(props) {
     super(props);
@@ -133,13 +139,13 @@ export class Annotations extends React.Component {
         'Click on a line number to add an annotation or display one' :
         'Lock this snippet to add annotations';
       return (
-        <Card>
+        <Card style={styles.card}>
           <CardText>{prompt}</CardText>
         </Card>
       );
     }
     return (
-      <Card>
+      <Card style={styles.card}>
         <AnnotationPanel
           annotation={annotation}
           lineAnnotated={lineAnnotated}

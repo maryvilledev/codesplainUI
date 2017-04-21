@@ -36,6 +36,7 @@ const styles = {
   },
   card: {
     height: '100%',
+    flex: '1 1 auto',
   },
   cardContainer: {
     height: 'inherit',

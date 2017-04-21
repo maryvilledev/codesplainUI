@@ -1,3 +1,15 @@
+html {
+  height: 100%;
+}
+
+body {
+  height: inherit;
+}
+
+div#root {
+  height: inherit;
+}
+
 .cm-s-codesplain {
   flex-grow: 1;
   flex-shrink: 1;

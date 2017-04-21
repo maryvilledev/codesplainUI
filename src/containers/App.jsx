@@ -4,7 +4,7 @@ import AppBody from './AppBody';
 import CodesplainAppBar from './CodesplainAppBar';
 
 export const App = () => (
-  <div className="container-fluid">
+  <div style={{ height: 'inherit' }}>
     <CodesplainAppBar />
     <AppBody />
   </div>

@@ -16,12 +16,6 @@ import { restoreUserCredentials } from '../actions/user';
 import { removeDeprecatedFiltersFromState } from '../util/codemirror-utils';
 import { setDefaults } from '../util/state-management';
 
-const styles = {
-  snippetAreaSection: {
-    height: '90vh',
-  },
-};
-
 export class AppBody extends Component {
   componentDidMount() {
     const {
@@ -87,15 +81,23 @@ export class AppBody extends Component {
 
   render() {
     return (
-      <div>
-        <div>
-          <div>
+      <div style={{ height: '85%' }}>
+        <div
+          style={{
+            display: 'flex',
+            flexFlow: 'row',
+            height: '100%',
+          }}
+        >
+          <SnippetArea />
+          <div
+            style={{
+              display: 'flex',
+              flexFlow: 'column',
+              height: '100%',
+            }}
+          >
             <FilterArea />
-          </div>
-          <div style={styles.snippetAreaSection}>
-            <SnippetArea />
-          </div>
-          <div>
             <Annotations />
           </div>
         </div>
