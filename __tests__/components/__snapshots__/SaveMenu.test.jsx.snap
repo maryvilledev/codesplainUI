@@ -112,6 +112,7 @@ exports[`<SaveMenu /> snapshot tests matches default snapshot 1`] = `
     <TextField
       disabled={false}
       floatingLabelFixed={false}
+      floatingLabelText="Title"
       fullWidth={false}
       hintText="Enter new title"
       multiLine={false}
@@ -244,6 +245,7 @@ exports[`<SaveMenu /> snapshot tests matches snapshot when saving is not enabled
     <TextField
       disabled={false}
       floatingLabelFixed={false}
+      floatingLabelText="Title"
       fullWidth={false}
       hintText="Enter new title"
       multiLine={false}
@@ -376,6 +378,7 @@ exports[`<SaveMenu /> snapshot tests matches snapshot when user cannot save 1`] 
     <TextField
       disabled={false}
       floatingLabelFixed={false}
+      floatingLabelText="Title"
       fullWidth={false}
       hintText="Enter new title"
       multiLine={false}

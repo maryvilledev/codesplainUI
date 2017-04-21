@@ -3,6 +3,7 @@ exports[`<OrgSelector /> matches snapshot 1`] = `
   <SelectField
     autoWidth={false}
     disabled={true}
+    floatingLabelText="Role"
     fullWidth={false}
     multiple={false}
     onChange={[Function]}

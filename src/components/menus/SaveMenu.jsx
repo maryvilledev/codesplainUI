@@ -85,7 +85,7 @@ class SaveMenu extends React.Component {
         onRequestClose={() => this.setState({ showSaveAsDialog: false })}
       >
         <TextField
-          floatingLabelText = "Title"
+          floatingLabelText="Title"
           hintText="Enter new title"
           onChange={(ev, newVal) => this.setState({ saveAsName: newVal })}
         />

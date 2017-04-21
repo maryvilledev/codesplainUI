@@ -21,7 +21,7 @@ class OrgSelector extends React.Component {
           onChange={this.handleChange}
           style={style}
           disabled={!value}
-          floatingLabelText = 'Role'
+          floatingLabelText='Role'
           >
           {isEmpty(orgs) //No option to set default, so I'll populate with one
                          //instead
