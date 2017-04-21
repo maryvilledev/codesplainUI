@@ -28,6 +28,15 @@ export class FilterArea extends React.Component {
     this.handleExpandChange = this.handleExpandChange.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    const numberOfFilters = Object.keys(this.props.filters).length;
+    const numberOfNextFilters = Object.keys(nextProps.filters).length;
+    // Set isExpanded to false if there are no filters to display
+    if (numberOfFilters !== numberOfNextFilters && !numberOfNextFilters) {
+      this.setState({ isExpanded: false });
+    }
+  }
+
   handleRuleSelected(filterName) {
     const { dispatch, filters } = this.props;
     const newFilters = _.cloneDeep(filters);
@@ -52,7 +61,8 @@ export class FilterArea extends React.Component {
   render() {
     const { filters } = this.props;
     const { isExpanded } = this.state;
-    const filterAreaActions = Object.keys(filters).length && isExpanded ?
+    const doesHaveFilters = Boolean(Object.keys(filters).length);
+    const filterAreaActions = doesHaveFilters && isExpanded ?
       (<FilterAreaActions
         clearAll={this.handleClearAllFilters}
         selectAll={this.handleSelectAllFilters}
@@ -63,9 +73,9 @@ export class FilterArea extends React.Component {
         onExpandChange={this.handleExpandChange}
       >
         <CardTitle
-          actAsExpander
-          title="Filters"
-          showExpandableButton
+          actAsExpander={doesHaveFilters}
+          title={<h2>Filters</h2>}
+          showExpandableButton={doesHaveFilters}
         />
         <CardText
           expandable

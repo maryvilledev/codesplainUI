@@ -4,11 +4,8 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is no
     Object {
       "backgroundColor": "transparent",
       "display": "flex",
-      "flexBasis": "auto",
-      "flexDirection": "row",
-      "flexGrow": "1",
-      "flexShrink": "0",
-      "flexWrap": "wrap",
+      "flex": "1 0 auto",
+      "flexFlow": "column wrap",
       "margin": "0",
       "padding": "0",
     }
@@ -16,61 +13,52 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is no
   <TextField
     disabled={false}
     floatingLabelFixed={false}
-    fullWidth={false}
+    fullWidth={true}
     hintText="Snippet Name"
     id="titleField"
     multiLine={false}
     onChange={[Function]}
     rows={1}
-    style={
-      Object {
-        "flexBasis": "auto",
-        "flexGrow": "1",
-        "flexShrink": "1",
-        "verticalAlign": "middle",
-      }
-    }
     type="text"
     underlineShow={true}
     value="" />
-  <LanguageSelector
-    disabled={false}
-    language="python"
-    onChange={[Function]}
+  <div
     style={
       Object {
-        "flexBasis": "auto",
-        "flexGrow": "1",
-        "flexShrink": "1",
-        "verticalAlign": "middle",
+        "display": "flex",
+        "flexFlow": "row wrap",
       }
-    } />
-  <div>
-    <LockButton
-      onClick={[Function]}
-      readOnly={false}
+    }>
+    <LanguageSelector
+      disabled={false}
+      language="python"
+      onChange={[Function]}
       style={
         Object {
-          "flexBasis": "auto",
-          "flexGrow": "1",
-          "flexShrink": "1",
-          "verticalAlign": "middle",
+          "flex": "1 1 auto",
         }
       } />
-    <SaveMenu
-      canSave={true}
-      enabled={true}
-      id="saveMenu"
-      onSaveAsClick={[Function]}
-      onSaveClick={[Function]}
-      style={
-        Object {
-          "flexBasis": "auto",
-          "flexGrow": "1",
-          "flexShrink": "1",
-          "verticalAlign": "middle",
-        }
-      } />
+    <div>
+      <LockButton
+        onClick={[Function]}
+        readOnly={false}
+        style={
+          Object {
+            "flex": "1 1 auto",
+          }
+        } />
+      <SaveMenu
+        canSave={true}
+        enabled={true}
+        id="saveMenu"
+        onSaveAsClick={[Function]}
+        onSaveClick={[Function]}
+        style={
+          Object {
+            "flex": "1 1 auto",
+          }
+        } />
+    </div>
   </div>
 </div>
 `;
@@ -81,11 +69,8 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is re
     Object {
       "backgroundColor": "transparent",
       "display": "flex",
-      "flexBasis": "auto",
-      "flexDirection": "row",
-      "flexGrow": "1",
-      "flexShrink": "0",
-      "flexWrap": "wrap",
+      "flex": "1 0 auto",
+      "flexFlow": "column wrap",
       "margin": "0",
       "padding": "0",
     }
@@ -93,61 +78,52 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is re
   <TextField
     disabled={false}
     floatingLabelFixed={false}
-    fullWidth={false}
+    fullWidth={true}
     hintText="Snippet Name"
     id="titleField"
     multiLine={false}
     onChange={[Function]}
     rows={1}
-    style={
-      Object {
-        "flexBasis": "auto",
-        "flexGrow": "1",
-        "flexShrink": "1",
-        "verticalAlign": "middle",
-      }
-    }
     type="text"
     underlineShow={true}
     value="" />
-  <LanguageSelector
-    disabled={true}
-    language="python"
-    onChange={[Function]}
+  <div
     style={
       Object {
-        "flexBasis": "auto",
-        "flexGrow": "1",
-        "flexShrink": "1",
-        "verticalAlign": "middle",
+        "display": "flex",
+        "flexFlow": "row wrap",
       }
-    } />
-  <div>
-    <LockButton
-      onClick={[Function]}
-      readOnly={true}
+    }>
+    <LanguageSelector
+      disabled={true}
+      language="python"
+      onChange={[Function]}
       style={
         Object {
-          "flexBasis": "auto",
-          "flexGrow": "1",
-          "flexShrink": "1",
-          "verticalAlign": "middle",
+          "flex": "1 1 auto",
         }
       } />
-    <SaveMenu
-      canSave={true}
-      enabled={true}
-      id="saveMenu"
-      onSaveAsClick={[Function]}
-      onSaveClick={[Function]}
-      style={
-        Object {
-          "flexBasis": "auto",
-          "flexGrow": "1",
-          "flexShrink": "1",
-          "verticalAlign": "middle",
-        }
-      } />
+    <div>
+      <LockButton
+        onClick={[Function]}
+        readOnly={true}
+        style={
+          Object {
+            "flex": "1 1 auto",
+          }
+        } />
+      <SaveMenu
+        canSave={true}
+        enabled={true}
+        id="saveMenu"
+        onSaveAsClick={[Function]}
+        onSaveClick={[Function]}
+        style={
+          Object {
+            "flex": "1 1 auto",
+          }
+        } />
+    </div>
   </div>
 </div>
 `;
