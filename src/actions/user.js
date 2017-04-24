@@ -15,17 +15,28 @@ export const UPDATE_USER_SNIPPETS_STARTED = 'UPDATE_USER_SNIPPETS_STARTED';
 export const UPDATE_USER_SNIPPETS_SUCCEEDED = 'UPDATE_USER_SNIPPETS_SUCCEEDED';
 export const UPDATE_USER_SNIPPETS_FAILED = 'UPDATE_USER_SNIPPETS_FAILED';
 export const UPDATE_USER_SNIPPETS = 'UPDATE_USER_SNIPPETS';
+export const ADD_ORG = 'ADD_ORG';
+export const SWITCH_ORG = 'SWITCH_ORG';
 export const SAVE_USERNAME = 'SAVE_USERNAME';
 export const SAVE_ACCESS_TOKEN = 'SAVE_ACCESS_TOKEN';
 export const CLEAR_USER_CREDENTIALS = 'CLEAR_USER_CREDENTIALS';
 export const RESTORE_USER_CREDENTIALS = 'RESTORE_USER_CREDENTIALS';
 
-export const saveUsername = username => ({
+export const addOrg = (org) => ({
+  type: ADD_ORG,
+  payload: org
+});
+
+export const switchOrg = (org) => ({
+  type: SWITCH_ORG,
+  payload: org
+});
+export const saveUsername = (username) => ({
   type: SAVE_USERNAME,
   payload: username,
 });
 
-export const saveAccessToken = accessToken => ({
+export const saveAccessToken = (accessToken) => ({
   type: SAVE_ACCESS_TOKEN,
   payload: accessToken,
 });
@@ -76,7 +87,7 @@ export const updateUserSnippets = () => (dispatch) => {
     });
 };
 
-export const fetchAccessToken = authCode => () => {
+export const fetchAccessToken = (authCode) => (dispatch) => {
   const reqUrl = `${API_URL}/auth`;
   const reqBody = { code: authCode };
   return axios({
@@ -84,9 +95,10 @@ export const fetchAccessToken = authCode => () => {
     url: reqUrl,
     data: reqBody,
   });
-};
+}
 
 export const fetchUserInfo = () => (dispatch, getState) => {
+  console.log('getState()', getState());
   const { token } = getState().user;
   const reqHeaders = {
     Accept: 'application/json',

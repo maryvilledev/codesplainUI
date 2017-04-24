@@ -24,10 +24,13 @@ const mockFilters = {
 };
 const mockPermissions = {
   canRead: true,
-  canEdit: true,
-};
-const mockSnippet = 'print(\'Squanch ya later!\')';
-const mockSnippetTitle = 'Squanchy AI';
+  canEdit: true
+}
+const mockSnippet = "print('Squanch ya later!')"
+const mockSnippetTitle = 'Squanchy AI'
+const mockOpenLine = 2
+const mockOrgs = ['galactic-federation']
+const mockSelectedOrg = 'galactic-federation'
 
 describe('<SnippetArea />', () => {
   beforeEach(() => {
@@ -44,8 +47,10 @@ describe('<SnippetArea />', () => {
       readOnly
       snippetLanguage="python3"
       permissions={mockPermissions}
-    />,
-  );
+      orgs={mockOrgs}
+      selectedOrg={mockSelectedOrg}
+    />
+  )
   it('updates the snippet on handleSnippetChanged', () => {
     const snippet = 'print(\'Can I squanch in your room?\')';
     wrapper.instance().handleSnippetChanged(snippet);

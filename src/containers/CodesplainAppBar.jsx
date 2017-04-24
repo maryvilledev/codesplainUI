@@ -48,7 +48,15 @@ export class CodesplainAppBar extends Component {
 
   componentDidMount() {
     const { dispatch } = this.props;
-    dispatch(updateUserSnippets());
+    dispatch(updateUserSnippets())
+  }
+
+  handleSignOut() {
+    cookie.remove('token', { path: '/' });
+    cookie.remove('username', { path: '/' });
+    cookie.remove('userAvatarURL', { path: '/' });
+    this.setState({ isLoggedIn: false });
+    location.reload();
   }
 
   onLoginClick() {
@@ -68,14 +76,6 @@ export class CodesplainAppBar extends Component {
     // This does not use the router to route the user to Github because
     // router is used for routing within the application, not the entire web
     window.location = GITHUB_URL;
-  }
-
-  handleSignOut() {
-    cookie.remove('token', { path: '/' });
-    cookie.remove('username', { path: '/' });
-    cookie.remove('userAvatarURL', { path: '/' });
-    this.setState({ isLoggedIn: false });
-    location.reload();
   }
 
   handleSnippetSelected(key) {

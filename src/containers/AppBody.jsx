@@ -13,7 +13,7 @@ import {
   restoreState,
 } from '../actions/app';
 import { setPermissions } from '../actions/permissions';
-import { restoreUserCredentials } from '../actions/user';
+import { restoreUserCredentials, addOrg, switchOrg } from '../actions/user';
 import { removeDeprecatedFiltersFromState } from '../util/codemirror-utils';
 import { sanitizeKey } from '../util/requests';
 import { setDefaults } from '../util/state-management';
@@ -40,6 +40,17 @@ export class AppBody extends Component {
       id: snippetKey,
       username,
     } = router.params;
+
+    // If the user is authenticated, add her Github to the orgs, and make it
+    // the selected value
+    if (cookie.load('token') && cookie.load('username')) {
+      const username = cookie.load('username');
+      dispatch(addOrg(username));
+      dispatch(switchOrg(username));
+
+      // If they are a member of any organizations, add to list as well
+      cookie.load('orgs').split(' ').forEach((org) => dispatch(addOrg(org)))
+    }
 
     if (!username && !snippetKey) {
       // This is a new snippet for the current user, enable all permissions
@@ -81,7 +92,7 @@ export class AppBody extends Component {
         };
         dispatch(setPermissions(permissions));
 
-        // Reroute if not at the 'correct' location
+        // Reroute if using legacy url
         // So /:username/snippets/:id -> /:username/:id
         const nextRoute = `/${username}/${sanitizeKey(snippetKey)}`;
         if (router.location.pathname !== nextRoute) {

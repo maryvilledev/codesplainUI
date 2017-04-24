@@ -16,9 +16,9 @@ import {
   setSnippetTitle,
   toggleEditState,
 } from '../actions/app';
-import { updateUserSnippets } from '../actions/user';
 import { loadParser } from '../actions/parser';
 import { setPermissions } from '../actions/permissions';
+import { updateUserSnippets, switchOrg } from '../actions/user';
 import ConfirmLockDialog from '../components/ConfirmLockDialog';
 import Editor from '../components/Editor';
 import SnippetAreaToolbar from '../components/SnippetAreaToolbar';
@@ -58,6 +58,7 @@ export class SnippetArea extends React.Component {
     this.handleSnippetChanged = this.handleSnippetChanged.bind(this);
     this.handleTitleChanged = this.handleTitleChanged.bind(this);
     this.handleToggleReadOnly = this.handleToggleReadOnly.bind(this);
+    this.handleOrgChanged = this.handleOrgChanged.bind(this);
     this.showSnackbar = this.showSnackbar.bind(this);
   }
 
@@ -125,6 +126,7 @@ export class SnippetArea extends React.Component {
       dispatch,
       router,
       snippetTitle,
+      selectedOrg,
     } = this.props;
 
     const { id } = router.params;
@@ -149,22 +151,23 @@ export class SnippetArea extends React.Component {
         .then(() => {
           this.showSnackbar('Codesplaination Saved!');
           dispatch(updateUserSnippets());
-        }, () => {
+        }).catch(() => {
           this.showSnackbar('Failed to save - an error occurred');
         });
-      return;
+    } else {
+      // Save a new snippet
+      dispatch(saveNew(selectedOrg))
+        .then((snippetKey) => {
+          // Redirect the user to the snippet's page
+          router.push(`/${selectedOrg}/${snippetKey}`);
+          // Update the snippet's key
+          dispatch(setSnippetKey(snippetKey));
+          this.showSnackbar('Codesplaination Saved!');
+          dispatch(updateUserSnippets());
+        }).catch(() => {
+          this.showSnackbar('Failed to save - an error occurred');
+        });
     }
-    dispatch(saveNew())
-      .then((snippetKey) => {
-        // Redirect the user to the snippet's page
-        router.push(`/${username}/${snippetKey}`);
-        // Update the snippet's key
-        dispatch(setSnippetKey(snippetKey));
-        this.showSnackbar('Codesplaination Saved!');
-        dispatch(updateUserSnippets());
-      }, () => {
-        this.showSnackbar('Failed to save - an error occurred');
-      });
   }
 
   handleSaveAs(title) {
@@ -183,15 +186,16 @@ export class SnippetArea extends React.Component {
     const {
       dispatch,
       router,
+      selectedOrg
     } = this.props;
     // Render the new title
     dispatch(setSnippetTitle(title));
 
     // Save the snippet
-    dispatch(saveNew())
+    dispatch(saveNew(selectedOrg))
       .then((snippetKey) => {
         // Redirect the user to the snippet's page
-        router.push(`/${username}/${snippetKey}`);
+        router.push(`/${selectedOrg}/${snippetKey}`);
         // Update the snippet's key
         dispatch(setSnippetKey(snippetKey));
         this.showSnackbar('Codesplaination Saved!');
@@ -204,6 +208,11 @@ export class SnippetArea extends React.Component {
       }, () => {
         this.showSnackbar('Failed to save - an error occurred');
       });
+  }
+
+  handleOrgChanged(org) {
+    const { dispatch } = this.props;
+    dispatch(switchOrg(org));
   }
 
   handleGutterClick(lineNumber, lineText) {
@@ -222,6 +231,8 @@ export class SnippetArea extends React.Component {
       snippet,
       snippetLanguage,
       snippetTitle,
+      orgs,
+      selectedOrg
     } = this.props;
 
     const markedLines = Object.keys(annotations).map(key => Number(key));
@@ -230,11 +241,14 @@ export class SnippetArea extends React.Component {
         <SnippetAreaToolbar
           canSave={permissions.canEdit}
           language={snippetLanguage}
+          orgs={orgs}
+          selectedOrg={selectedOrg}
           onLanguageChange={this.handleLanguageChanged}
           onLockClick={this.handleLock}
           onSaveAsClick={this.handleSaveAs}
           onSaveClick={this.handleSave}
           onTitleChange={this.handleTitleChanged}
+          onOrgChanged={this.handleOrgChanged}
           readOnly={readOnly}
           saveEnabled={(cookie.load('username') !== undefined)}
           title={snippetTitle}
@@ -293,6 +307,8 @@ const mapStateToProps = state => ({
   snippetTitle: state.app.snippetTitle,
   appState: state.app,
   permissions: state.permissions,
+  orgs: state.user.orgs,
+  selectedOrg: state.user.selectedOrg,
 });
 
 export default withRouter(connect(mapStateToProps)(SnippetArea));

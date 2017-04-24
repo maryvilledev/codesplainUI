@@ -2,6 +2,7 @@ import React from 'react';
 import cookie from 'react-cookie';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import _ from 'lodash';
 
 import {
   fetchAccessToken,
@@ -58,9 +59,10 @@ export class Auth extends React.Component {
     const { dispatch } = this.props;
     dispatch(fetchAccessToken(authCode))
       .then((res) => {
-        const { token } = res.data;
+        const { token, orgs } = res.data;
         dispatch(saveAccessToken(token));
         cookie.save('token', token, { path: '/' });
+        cookie.save('orgs', _.join(orgs, ' '), { path: '/' });
       })
       .then(() => dispatch(fetchUserInfo()))
       .then((res) => {

@@ -6,6 +6,26 @@ import thunk from 'redux-thunk';
 import * as actions from '../../src/actions/user';
 
 describe('Actions: User', () => {
+  describe('ADD_ORG', () => {
+    it('creates an action to add an org', () => {
+      const org = 'galactic-federation';
+      const expected = {
+        type: actions.ADD_ORG,
+        payload: org
+      };
+      expect(actions.addOrg(org)).toEqual(expected);
+    });
+  });
+  describe('SWITCH_ORG', () => {
+    it('creates an action to switch the org', () => {
+      const org = 'galactic-federation';
+      const expected = {
+        type: actions.SWITCH_ORG,
+        payload: org
+      };
+      expect(actions.switchOrg(org)).toEqual(expected);
+    });
+  });
   describe('action creators', () => {
     it('creates correct SAVE_USERNAME object', () => {
       const token = 'token';

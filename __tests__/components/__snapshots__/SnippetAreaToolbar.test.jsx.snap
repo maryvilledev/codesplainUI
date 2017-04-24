@@ -61,8 +61,15 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is no
       canSave={true}
       enabled={true}
       id="saveMenu"
+      onOrgChanged={[Function]}
       onSaveAsClick={[Function]}
       onSaveClick={[Function]}
+      orgs={
+        Array [
+          "galactic-federation",
+        ]
+      }
+      selectedOrg="galactic-federation"
       style={
         Object {
           "flexBasis": "auto",
@@ -138,8 +145,15 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is re
       canSave={true}
       enabled={true}
       id="saveMenu"
+      onOrgChanged={[Function]}
       onSaveAsClick={[Function]}
       onSaveClick={[Function]}
+      orgs={
+        Array [
+          "galactic-federation",
+        ]
+      }
+      selectedOrg="galactic-federation"
       style={
         Object {
           "flexBasis": "auto",
