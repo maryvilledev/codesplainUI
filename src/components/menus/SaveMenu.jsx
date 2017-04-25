@@ -9,6 +9,8 @@ import {
 } from 'material-ui';
 import SaveIcon from 'material-ui/svg-icons/content/save';
 
+import OrgSelector from '../OrgSelector';
+
 const styles = {
   container: {
     height: '48px',
@@ -60,6 +62,7 @@ class SaveMenu extends React.Component {
   }
 
   getSaveAsDialog() {
+    const { orgs, selectedOrg, onOrgChanged } = this.props;
     return (
       <Dialog
         actions={
@@ -82,8 +85,14 @@ class SaveMenu extends React.Component {
         onRequestClose={() => this.setState({ showSaveAsDialog: false })}
       >
         <TextField
+          floatingLabelText="Title"
           hintText="Enter new title"
           onChange={(ev, newVal) => this.setState({ saveAsName: newVal })}
+        />
+        <OrgSelector
+          orgs={orgs}
+          value={selectedOrg}
+          onChange={onOrgChanged}
         />
       </Dialog>
     );

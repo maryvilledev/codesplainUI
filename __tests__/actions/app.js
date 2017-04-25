@@ -203,6 +203,7 @@ describe('Actions: App', () => {
     describe('saveNew()', () => {
       it('dispatches SAVE_SUCCEEDED if saved', () => {
         const key = 'gazorpazorp';
+        const org = 'rick-sanchez';
         moxios.wait(() => {
           const request = moxios.requests.mostRecent();
           request.respondWith({
@@ -215,13 +216,14 @@ describe('Actions: App', () => {
           { type: actions.SAVE_SUCCEEDED },
         ];
         const store = mockStore({});
-        return store.dispatch(actions.saveNew())
+        return store.dispatch(actions.saveNew(org))
           .then((returnVal) => { // return of async actions
             expect(store.getActions()).toEqual(expectedActions);
             expect(returnVal).toEqual(key);
           });
       });
       it('dispatches SAVE_FAILED if save failed', () => {
+        const org = 'rick-sanchez';
         moxios.wait(() => {
           const request = moxios.requests.mostRecent();
           request.respondWith({
@@ -233,7 +235,7 @@ describe('Actions: App', () => {
           { type: actions.SAVE_FAILED },
         ];
         const store = mockStore({});
-        return store.dispatch(actions.saveNew())
+        return store.dispatch(actions.saveNew(org))
           .then(() => { // return of async actions
             expect(store.getActions()).toEqual(expectedActions);
           });

@@ -1,7 +1,0 @@
-exports[`Reducer: User initialState should match snapshot 1`] = `
-Object {
-  "token": "",
-  "userSnippets": Object {},
-  "username": "",
-}
-`;
