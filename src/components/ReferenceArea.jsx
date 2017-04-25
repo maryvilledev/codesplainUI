@@ -29,7 +29,11 @@ const style = {
 
 const ReferenceArea = () => (
   <div style={style.paper}>
-    <a href="https://maryvilledevcenter.com/">
+    <a
+      href="https://maryvilledevcenter.com/"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
       <img
         src={mtIcon}
         alt="Maryville DevCenter Logo"
@@ -40,6 +44,8 @@ const ReferenceArea = () => (
       <div style={style.logoArea}>
         <a
           href="https://www.twitter.com/MaryvilleDev"
+          target="_blank"
+          rel="noopener noreferrer"
           style={style.link}
         >
           <img
@@ -50,6 +56,8 @@ const ReferenceArea = () => (
         </a>
         <a
           href="https://github.com/maryvilledev"
+          target="_blank"
+          rel="noopener noreferrer"
           style={style.link}
         >
           <img
@@ -61,6 +69,8 @@ const ReferenceArea = () => (
       </div>
       <a
         href="mailto:support@codesplain.io"
+        target="_blank"
+        rel="noopener noreferrer"
         style={style.link}
       >
           Contact Us
