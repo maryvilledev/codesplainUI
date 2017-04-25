@@ -14,6 +14,7 @@ import {
 } from '../actions/app';
 import { setPermissions } from '../actions/permissions';
 import { restoreUserCredentials } from '../actions/user';
+import NotFound from '../components/NotFound';
 import { removeDeprecatedFiltersFromState } from '../util/codemirror-utils';
 import { setDefaults } from '../util/state-management';
 
@@ -30,6 +31,12 @@ const styles = {
 };
 
 export class AppBody extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isValidSnippet: true,
+    };
+  }
   componentDidMount() {
     const {
       dispatch,
@@ -87,11 +94,17 @@ export class AppBody extends Component {
         }
       }, () => {
         // Failed to get the snippet, either bad URL or unauthorized
-        router.push('/404');
+        this.setState({
+          isValidSnippet: false,
+        });
       });
   }
 
   render() {
+    const { isValidSnippet } = this.state;
+    if (!isValidSnippet) {
+      return <NotFound />;
+    }
     return (
       <div className="container-fluid">
         <div className="row">

@@ -6,8 +6,6 @@ import {
   FlatButton,
 } from 'material-ui';
 
-import CodesplainAppBar from '../containers/CodesplainAppBar';
-
 const styles = {
   card: {
     marginLeft: 'auto',
@@ -18,24 +16,21 @@ const styles = {
 };
 
 const NotFound = () => (
-  <div>
-    <CodesplainAppBar />
-    <Card
-      style={styles.card}
-    >
-      <CardTitle
-        title="Resource not found"
+  <Card
+    style={styles.card}
+  >
+    <CardTitle
+      title="Resource not found"
+    />
+    <CardActions>
+      <FlatButton
+        fullWidth
+        label="Home"
+        onTouchTap={() => { window.location = '/'; }}
+        primary
       />
-      <CardActions>
-        <FlatButton
-          fullWidth
-          label="Home"
-          onTouchTap={() => { window.location = '/'; }}
-          primary
-        />
-      </CardActions>
-    </Card>
-  </div>
+    </CardActions>
+  </Card>
 );
 
 export default NotFound;
