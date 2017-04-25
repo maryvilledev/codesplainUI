@@ -9,7 +9,9 @@ exports[`<ReferenceArea /> matches snapshot 1`] = `
     }
   }>
   <a
-    href="https://maryvilledevcenter.com/">
+    href="https://maryvilledevcenter.com/"
+    rel="noopener noreferrer"
+    target="_blank">
     <img
       alt="Maryville DevCenter Logo"
       src="mt.png"
@@ -33,12 +35,14 @@ exports[`<ReferenceArea /> matches snapshot 1`] = `
       }>
       <a
         href="https://www.twitter.com/MaryvilleDev"
+        rel="noopener noreferrer"
         style={
           Object {
             "color": "#666666",
             "padding": "4px",
           }
-        }>
+        }
+        target="_blank">
         <img
           alt="Twitter Icon"
           src="twitter.png"
@@ -46,12 +50,14 @@ exports[`<ReferenceArea /> matches snapshot 1`] = `
       </a>
       <a
         href="https://github.com/maryvilledev"
+        rel="noopener noreferrer"
         style={
           Object {
             "color": "#666666",
             "padding": "4px",
           }
-        }>
+        }
+        target="_blank">
         <img
           alt="Github Icon"
           src="github-icon-blue.png"
@@ -60,12 +66,14 @@ exports[`<ReferenceArea /> matches snapshot 1`] = `
     </div>
     <a
       href="mailto:support@codesplain.io"
+      rel="noopener noreferrer"
       style={
         Object {
           "color": "#666666",
           "padding": "4px",
         }
-      }>
+      }
+      target="_blank">
       Contact Us
     </a>
   </div>

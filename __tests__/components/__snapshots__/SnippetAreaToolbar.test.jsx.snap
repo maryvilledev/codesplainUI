@@ -45,31 +45,40 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is no
         "verticalAlign": "middle",
       }
     } />
-  <LockButton
-    onClick={[Function]}
-    readOnly={false}
-    style={
-      Object {
-        "flexBasis": "auto",
-        "flexGrow": "1",
-        "flexShrink": "1",
-        "verticalAlign": "middle",
+  <div>
+    <LockButton
+      onClick={[Function]}
+      readOnly={false}
+      style={
+        Object {
+          "flexBasis": "auto",
+          "flexGrow": "1",
+          "flexShrink": "1",
+          "verticalAlign": "middle",
+        }
+      } />
+    <SaveMenu
+      canSave={true}
+      enabled={true}
+      id="saveMenu"
+      onOrgChanged={[Function]}
+      onSaveAsClick={[Function]}
+      onSaveClick={[Function]}
+      orgs={
+        Array [
+          "galactic-federation",
+        ]
       }
-    } />
-  <SaveMenu
-    canSave={true}
-    enabled={true}
-    id="saveMenu"
-    onSaveAsClick={[Function]}
-    onSaveClick={[Function]}
-    style={
-      Object {
-        "flexBasis": "auto",
-        "flexGrow": "1",
-        "flexShrink": "1",
-        "verticalAlign": "middle",
-      }
-    } />
+      selectedOrg="galactic-federation"
+      style={
+        Object {
+          "flexBasis": "auto",
+          "flexGrow": "1",
+          "flexShrink": "1",
+          "verticalAlign": "middle",
+        }
+      } />
+  </div>
 </div>
 `;
 
@@ -120,30 +129,39 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is re
         "verticalAlign": "middle",
       }
     } />
-  <LockButton
-    onClick={[Function]}
-    readOnly={true}
-    style={
-      Object {
-        "flexBasis": "auto",
-        "flexGrow": "1",
-        "flexShrink": "1",
-        "verticalAlign": "middle",
+  <div>
+    <LockButton
+      onClick={[Function]}
+      readOnly={true}
+      style={
+        Object {
+          "flexBasis": "auto",
+          "flexGrow": "1",
+          "flexShrink": "1",
+          "verticalAlign": "middle",
+        }
+      } />
+    <SaveMenu
+      canSave={true}
+      enabled={true}
+      id="saveMenu"
+      onOrgChanged={[Function]}
+      onSaveAsClick={[Function]}
+      onSaveClick={[Function]}
+      orgs={
+        Array [
+          "galactic-federation",
+        ]
       }
-    } />
-  <SaveMenu
-    canSave={true}
-    enabled={true}
-    id="saveMenu"
-    onSaveAsClick={[Function]}
-    onSaveClick={[Function]}
-    style={
-      Object {
-        "flexBasis": "auto",
-        "flexGrow": "1",
-        "flexShrink": "1",
-        "verticalAlign": "middle",
-      }
-    } />
+      selectedOrg="galactic-federation"
+      style={
+        Object {
+          "flexBasis": "auto",
+          "flexGrow": "1",
+          "flexShrink": "1",
+          "verticalAlign": "middle",
+        }
+      } />
+  </div>
 </div>
 `;

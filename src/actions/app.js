@@ -103,10 +103,9 @@ export const saveFailed = () => ({
   type: SAVE_FAILED,
 });
 
-export const saveNew = () => (dispatch, getState) => {
-    // Load the token and username from cookie storage
+export const saveNew = (org) => (dispatch, getState) => {
+  // Load the token from cookie storage
   const token = cookie.load('token');
-  const username = cookie.load('username');
 
     // Construct the necessary request objects
   const reqBody = JSON.stringify(getState().app);
@@ -117,7 +116,7 @@ export const saveNew = () => (dispatch, getState) => {
   };
   dispatch(saveStarted());
     // Save the new snippet
-  return axios.post(makeSaveEndpointUrl(username), reqBody, reqHeaders)
+  return axios.post(makeSaveEndpointUrl(org), reqBody, reqHeaders)
       .then((res) => {
         dispatch(saveSucceeded());
         // Return the key of the newly-saved snippet so that the browser
@@ -154,8 +153,8 @@ export const saveExisting = () => (dispatch, getState) => {
       });
 };
 
-export const loadSnippet = (snippetKey) => (dispatch, getState) => {
-  const { token, username } = getState().user;
+export const loadSnippet = (username, snippetKey) => (dispatch, getState) => {
+  const { token } = getState().user;
   const reqHeaders = {
     Authorization: token,
   };

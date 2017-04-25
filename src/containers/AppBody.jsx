@@ -13,9 +13,10 @@ import {
   restoreState,
 } from '../actions/app';
 import { setPermissions } from '../actions/permissions';
-import { restoreUserCredentials } from '../actions/user';
+import { restoreUserCredentials, addOrg, switchOrg } from '../actions/user';
 import NotFound from '../components/NotFound';
 import { removeDeprecatedFiltersFromState } from '../util/codemirror-utils';
+import { sanitizeKey } from '../util/requests';
 import { setDefaults } from '../util/state-management';
 
 const styles = {
@@ -47,6 +48,17 @@ export class AppBody extends Component {
       username,
     } = router.params;
 
+    // If the user is authenticated, add her Github to the orgs, and make it
+    // the selected value
+    if (cookie.load('token') && cookie.load('username')) {
+      const username = cookie.load('username');
+      dispatch(addOrg(username));
+      dispatch(switchOrg(username));
+
+      // If they are a member of any organizations, add to list as well
+      cookie.load('orgs').split(' ').forEach((org) => dispatch(addOrg(org)))
+    }
+
     if (!username && !snippetKey) {
       // This is a new snippet for the current user, enable all permissions
       const permissions = {
@@ -65,9 +77,10 @@ export class AppBody extends Component {
       return;
     }
 
+    // Restore the user's credentials into state
     dispatch(restoreUserCredentials(cookie.load('token'), cookie.load('username')));
 
-    dispatch(loadSnippet(snippetKey))
+    dispatch(loadSnippet(username, snippetKey))
       .then((res) => {
         // Normalize the app state received from S3
         const appState = setDefaults(removeDeprecatedFiltersFromState(res.data));
@@ -86,9 +99,9 @@ export class AppBody extends Component {
         };
         dispatch(setPermissions(permissions));
 
-        // Reroute if not at the 'correct' location
+        // Reroute if using legacy url
         // So /:username/snippets/:id -> /:username/:id
-        const nextRoute = `/${username}/${encodeURIComponent(snippetKey)}`;
+        const nextRoute = `/${username}/${sanitizeKey(snippetKey)}`;
         if (router.location.pathname !== nextRoute) {
           router.push(nextRoute);
         }

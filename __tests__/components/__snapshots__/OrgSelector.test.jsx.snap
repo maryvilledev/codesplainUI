@@ -1,0 +1,41 @@
+exports[`<OrgSelector /> matches snapshot 1`] = `
+<div>
+  <SelectField
+    autoWidth={false}
+    disabled={true}
+    floatingLabelText="Role"
+    fullWidth={false}
+    multiple={false}
+    onChange={[Function]}
+    value={0}>
+    <MenuItem
+      anchorOrigin={
+        Object {
+          "horizontal": "right",
+          "vertical": "top",
+        }
+      }
+      checked={false}
+      desktop={false}
+      disabled={false}
+      focusState="none"
+      insetChildren={false}
+      primaryText="galactic-federation"
+      value="galactic-federation" />
+    <MenuItem
+      anchorOrigin={
+        Object {
+          "horizontal": "right",
+          "vertical": "top",
+        }
+      }
+      checked={false}
+      desktop={false}
+      disabled={false}
+      focusState="none"
+      insetChildren={false}
+      primaryText="international-counsel-of-ricks"
+      value="international-counsel-of-ricks" />
+  </SelectField>
+</div>
+`;

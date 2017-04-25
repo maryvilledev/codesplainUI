@@ -10,6 +10,8 @@ const defaultProps = {
   enabled: true,
   onSaveClick: jest.fn(),
   onSaveAsClick: jest.fn(),
+  onOrgChanged: jest.fn(),
+  orgs: ['galactic-federation'],
 };
 
 describe('<SaveMenu />', () => {
