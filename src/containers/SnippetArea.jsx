@@ -121,7 +121,6 @@ export class SnippetArea extends React.Component {
   }
 
   handleSave() {
-
     const {
       dispatch,
       router,
@@ -186,7 +185,7 @@ export class SnippetArea extends React.Component {
     const {
       dispatch,
       router,
-      selectedOrg
+      selectedOrg,
     } = this.props;
     // Render the new title
     dispatch(setSnippetTitle(title));
@@ -232,7 +231,7 @@ export class SnippetArea extends React.Component {
       snippetLanguage,
       snippetTitle,
       orgs,
-      selectedOrg
+      selectedOrg,
     } = this.props;
 
     const markedLines = Object.keys(annotations).map(key => Number(key));
