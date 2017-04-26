@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { CardText, Snackbar } from 'material-ui';
+import { CardText } from 'material-ui';
 import React, { PropTypes } from 'react';
 import cookie from 'react-cookie';
 import { connect } from 'react-redux';
@@ -16,6 +16,7 @@ import {
   setSnippetTitle,
   toggleEditState,
 } from '../actions/app';
+import { addNotification } from '../actions/notifications';
 import { loadParser } from '../actions/parser';
 import { setPermissions } from '../actions/permissions';
 import { updateUserSnippets, switchOrg } from '../actions/user';
@@ -44,8 +45,6 @@ export class SnippetArea extends React.Component {
     super(props);
     this.state = {
       lockDialogOpen: false,
-      showSnackbar: false,
-      snackbarMessage: '',
       titleErrorText: '',
     };
 
@@ -59,19 +58,11 @@ export class SnippetArea extends React.Component {
     this.handleTitleChanged = this.handleTitleChanged.bind(this);
     this.handleToggleReadOnly = this.handleToggleReadOnly.bind(this);
     this.handleOrgChanged = this.handleOrgChanged.bind(this);
-    this.showSnackbar = this.showSnackbar.bind(this);
   }
 
   componentDidMount() {
     const { dispatch, snippetLanguage } = this.props;
     dispatch(loadParser(snippetLanguage));
-  }
-
-  showSnackbar(message) {
-    this.setState({
-      showSnackbar: true,
-      snackbarMessage: message,
-    });
   }
 
   handleLanguageChanged(ev, key, language) {
@@ -133,7 +124,7 @@ export class SnippetArea extends React.Component {
     // Make sure title is populated
     if (!snippetTitle) {
       this.setState({ titleErrorText: 'This field is required' });
-      this.showSnackbar('Please enter a Snippet Name.');
+      dispatch(addNotification('Please enter a Snippet Name'));
       return;
     }
     this.setState({ titleErrorText: '' });
@@ -141,17 +132,17 @@ export class SnippetArea extends React.Component {
     // Make sure user is signed in
     const username = cookie.load('username');
     if (!username) {
-      this.showSnackbar('Please login to save snippets.');
+      dispatch(addNotification('Please login to save snippets.'));
       return;
     }
      // Update a pre-existing snippet
     if (id) {
       dispatch(saveExisting())
         .then(() => {
-          this.showSnackbar('Codesplaination Saved!');
+          dispatch(addNotification('Codesplaination Saved!'));
           dispatch(updateUserSnippets());
         }).catch(() => {
-          this.showSnackbar('Failed to save - an error occurred');
+          dispatch(addNotification('Failed to save - an error occurred'));
         });
     } else {
       // Save a new snippet
@@ -161,10 +152,10 @@ export class SnippetArea extends React.Component {
           router.push(`/${selectedOrg}/${snippetKey}`);
           // Update the snippet's key
           dispatch(setSnippetKey(snippetKey));
-          this.showSnackbar('Codesplaination Saved!');
+          dispatch(addNotification('Codesplaination Saved!'));
           dispatch(updateUserSnippets());
         }).catch(() => {
-          this.showSnackbar('Failed to save - an error occurred');
+          dispatch(addNotification('Failed to save - an error occurred'));
         });
     }
   }
@@ -175,18 +166,19 @@ export class SnippetArea extends React.Component {
       return;
     }
 
-    // Make sure user is signed in
-    const username = cookie.load('username');
-    if (!username) {
-      this.showSnackbar('Please login to save snippets.');
-      return;
-    }
-
     const {
       dispatch,
       router,
       selectedOrg,
     } = this.props;
+
+    // Make sure user is signed in
+    const username = cookie.load('username');
+    if (!username) {
+      dispatch(addNotification('Please login to save snippets.'));
+      return;
+    }
+
     // Render the new title
     dispatch(setSnippetTitle(title));
 
@@ -197,7 +189,7 @@ export class SnippetArea extends React.Component {
         router.push(`/${selectedOrg}/${snippetKey}`);
         // Update the snippet's key
         dispatch(setSnippetKey(snippetKey));
-        this.showSnackbar('Codesplaination Saved!');
+        dispatch(addNotification('Codesplaination Saved!'));
         const permissions = {
           canRead: true,
           canEdit: true,
@@ -205,7 +197,7 @@ export class SnippetArea extends React.Component {
         dispatch(setPermissions(permissions));
         dispatch(updateUserSnippets());
       }, () => {
-        this.showSnackbar('Failed to save - an error occurred');
+        dispatch(addNotification('Failed to save - an error occurred'));
       });
   }
 
@@ -267,12 +259,6 @@ export class SnippetArea extends React.Component {
           openLine={openLine}
           readOnly={readOnly}
           value={snippet}
-        />
-        <Snackbar
-          autoHideDuration={3000}
-          message={this.state.snackbarMessage}
-          onRequestClose={() => this.setState({ showSnackbar: false })}
-          open={this.state.showSnackbar}
         />
       </CardText>
     );
