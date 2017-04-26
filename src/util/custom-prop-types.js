@@ -33,10 +33,13 @@ const snippetData = PropTypes.shape({
 
 const snippets = PropTypes.objectOf(snippetData);
 
+const orgs = PropTypes.arrayOf(PropTypes.string);
+
 export default {
   annotations,
   filters,
   lineAnnotated,
+  orgs,
   permissions,
   snippets,
 };

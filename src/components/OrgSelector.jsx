@@ -1,7 +1,9 @@
-import React, { PropTypes } from 'react'
-import { SelectField, MenuItem } from 'material-ui'
+import React, { PropTypes } from 'react';
+import { SelectField, MenuItem } from 'material-ui';
 
-const isEmpty = (arr) => arr.length === 0
+import CustomPropTypes from '../util/custom-prop-types';
+
+const isEmpty = arr => arr.length === 0;
 
 class OrgSelector extends React.Component {
   constructor(props) {
@@ -9,35 +11,38 @@ class OrgSelector extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
   handleChange(ev, tgt, value) {
-    const { onChange } = this.props
-    onChange(value)
+    const { onChange } = this.props;
+    onChange(value);
   }
   render() {
     const { value, orgs, style } = this.props;
+    let menuItems;
+    if (isEmpty(orgs)) {
+      menuItems = (
+        <MenuItem
+          value={null}
+          primaryText="Role"
+        />
+      );
+    } else {
+      menuItems = orgs.map(org => (
+        <MenuItem
+          key={org}
+          value={org}
+          primaryText={org}
+        />
+      ));
+    }
     return (
       <div>
         <SelectField
-          value={value || 0}
+          disabled={!value}
+          floatingLabelText="Role"
           onChange={this.handleChange}
           style={style}
-          disabled={!value}
-          floatingLabelText='Role'
-          >
-          {isEmpty(orgs) //No option to set default, so I'll populate with one
-                         //instead
-            ?
-            <MenuItem
-              value={0}
-              primaryText={"Role"}
-            />
-            :
-            orgs.map((org) => (
-            <MenuItem
-              key={org}
-              value={org}
-              primaryText={org}
-            />
-          ))}
+          value={value || null}
+        >
+          {menuItems}
         </SelectField>
       </div>
     );
@@ -45,10 +50,13 @@ class OrgSelector extends React.Component {
 }
 
 OrgSelector.propTypes = {
-  orgs: PropTypes.arrayOf(PropTypes.string).isRequired,
-  value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
-  style: PropTypes.object
-}
+  orgs: CustomPropTypes.orgs.isRequired,
+  value: PropTypes.string,
+};
+
+OrgSelector.defaultProps = {
+  value: '',
+};
 
 export default OrgSelector;
