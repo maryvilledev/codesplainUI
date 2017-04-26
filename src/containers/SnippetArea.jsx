@@ -226,6 +226,7 @@ export class SnippetArea extends React.Component {
       filters,
       openLine,
       permissions,
+      error,
       readOnly,
       snippet,
       snippetLanguage,
@@ -267,6 +268,7 @@ export class SnippetArea extends React.Component {
           openLine={openLine}
           readOnly={readOnly}
           value={snippet}
+          error={error}
         />
         <Snackbar
           autoHideDuration={3000}
@@ -287,6 +289,7 @@ SnippetArea.propTypes = {
   snippet: PropTypes.string.isRequired,
   snippetTitle: PropTypes.string.isRequired,
   permissions: CustomPropTypes.permissions.isRequired,
+  error: CustomPropTypes.error,
   snippetLanguage: PropTypes.string.isRequired,
   orgs: CustomPropTypes.orgs.isRequired,
   selectedOrg: PropTypes.string,
@@ -295,6 +298,7 @@ SnippetArea.propTypes = {
 SnippetArea.defaultProps = {
   openLine: -1,
   selectedOrg: '',
+  error: null,
 };
 
 const mapStateToProps = (state) => {
@@ -313,6 +317,9 @@ const mapStateToProps = (state) => {
       snippetTitle,
     },
     permissions,
+    parser: {
+      error,
+    },
     user: {
       orgs,
       selectedOrg,
@@ -328,6 +335,7 @@ const mapStateToProps = (state) => {
     snippet,
     snippetTitle,
     permissions,
+    error,
     orgs,
     selectedOrg,
   };
