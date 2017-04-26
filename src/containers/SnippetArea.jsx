@@ -129,10 +129,7 @@ export class SnippetArea extends React.Component {
     if (id) {
       dispatch(saveExisting())
         .then(() => {
-          dispatch(addNotification('Codesplaination Saved!'));
           dispatch(updateUserSnippets());
-        }).catch(() => {
-          dispatch(addNotification('Failed to save - an error occurred'));
         });
     } else {
       // Save a new snippet
@@ -142,10 +139,7 @@ export class SnippetArea extends React.Component {
           router.push(`/${selectedOrg}/${snippetKey}`);
           // Update the snippet's key
           dispatch(setSnippetKey(snippetKey));
-          dispatch(addNotification('Codesplaination Saved!'));
           dispatch(updateUserSnippets());
-        }).catch(() => {
-          dispatch(addNotification('Failed to save - an error occurred'));
         });
     }
   }
@@ -172,15 +166,12 @@ export class SnippetArea extends React.Component {
         router.push(`/${selectedOrg}/${snippetKey}`);
         // Update the snippet's key
         dispatch(setSnippetKey(snippetKey));
-        dispatch(addNotification('Codesplaination Saved!'));
         const permissions = {
           canRead: true,
           canEdit: true,
         }; // Grant all permissions, this is now her file.
         dispatch(setPermissions(permissions));
         dispatch(updateUserSnippets());
-      }, () => {
-        dispatch(addNotification('Failed to save - an error occurred'));
       });
   }
 

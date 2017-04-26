@@ -1,6 +1,6 @@
 import axios from 'axios';
-import cookie from 'react-cookie';
 
+import { addNotification, closeNotification } from './notifications';
 import { makeSaveEndpointUrl } from '../util/requests';
 
 export const RESET_STATE = 'RESET_STATE';
@@ -91,49 +91,51 @@ export const parseSnippet = snippet => ({
   },
 });
 
-export const saveStarted = () => ({
-  type: SAVE_STARTED,
-});
-
 export const saveSucceeded = () => ({
   type: SAVE_SUCCEEDED,
 });
 
-export const saveFailed = () => ({
-  type: SAVE_FAILED,
-});
-
-export const saveNew = (org) => (dispatch, getState) => {
+export const saveNew = org => (dispatch, getState) => {
   // Load the token from cookie storage
-  const token = cookie.load('token');
-
-    // Construct the necessary request objects
-  const reqBody = JSON.stringify(getState().app);
+  const {
+    app: appState,
+    user: { token },
+  } = getState();
+  // Construct the necessary request objects
+  const reqBody = JSON.stringify(appState);
   const reqHeaders = {
     headers: {
       Authorization: token,
     },
   };
-  dispatch(saveStarted());
+  dispatch(addNotification('Saving...'));
     // Save the new snippet
   return axios.post(makeSaveEndpointUrl(org), reqBody, reqHeaders)
       .then((res) => {
+        // Remove the 'saving...' notification
+        dispatch(closeNotification());
+        // Give user feedback that saving succeeded
+        dispatch(addNotification('Codesplaination Saved!'));
+        // Clear the hasUnsavedChanges flag
         dispatch(saveSucceeded());
         // Return the key of the newly-saved snippet so that the browser
         // location can be updated
         return res.data.key;
       }, () => {
-        dispatch(saveFailed());
+        // Give user feedback that saving failed
+        dispatch(addNotification('Failed to save snippet; please try again'));
       });
 };
 
 export const saveExisting = () => (dispatch, getState) => {
-    // Load the token and username from cookie storage
-  const token = cookie.load('token');
-  const username = cookie.load('username');
-
     // Get the app state to save (and the snippet title to save to)
-  const appState = getState().app;
+  const {
+    app: appState,
+    user: {
+      token,
+      username,
+    },
+  } = getState();
   const { snippetKey: key } = appState;
 
     // Construct the necessary request objects
@@ -143,13 +145,19 @@ export const saveExisting = () => (dispatch, getState) => {
       Authorization: token,
     },
   };
-  dispatch(saveStarted());
+  dispatch(addNotification('Saving...'));
     // Update the snippet
   return axios.put(makeSaveEndpointUrl(username, key), reqBody, reqHeaders)
       .then(() => {
+        // Remove the 'saving...' notification
+        dispatch(closeNotification());
+        // Give user feedback that saving succeeded
+        dispatch(addNotification('Codesplaination Saved!'));
+        // Clear the hasUnsavedChanges flag
         dispatch(saveSucceeded());
       }, () => {
-        dispatch(saveFailed());
+        // Give user feedback that saving failed
+        dispatch(addNotification('Failed to save snippet; please try again'));
       });
 };
 
