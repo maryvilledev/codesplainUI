@@ -14,7 +14,7 @@ self.onmessage = ({ data: action }) => {
   case PARSE_SNIPPET: {
     if (!parser) break;
     const { snippet } = action.payload;
-    const AST = parser(snippet, onError);
+    const AST = parser(snippet, (err) => onError(err, self.postMessage));
     const ruleCounts = {}; getRuleCount(AST, ruleCounts);
     self.postMessage({
       type: action.type,
