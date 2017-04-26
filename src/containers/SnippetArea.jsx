@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import { CardText } from 'material-ui';
 import React, { PropTypes } from 'react';
-import cookie from 'react-cookie';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
@@ -45,7 +44,6 @@ export class SnippetArea extends React.Component {
     super(props);
     this.state = {
       lockDialogOpen: false,
-      titleErrorText: '',
     };
 
     this.handleCloseModal = this.handleCloseModal.bind(this);
@@ -123,18 +121,10 @@ export class SnippetArea extends React.Component {
 
     // Make sure title is populated
     if (!snippetTitle) {
-      this.setState({ titleErrorText: 'This field is required' });
       dispatch(addNotification('Please enter a Snippet Name'));
       return;
     }
-    this.setState({ titleErrorText: '' });
 
-    // Make sure user is signed in
-    const username = cookie.load('username');
-    if (!username) {
-      dispatch(addNotification('Please login to save snippets.'));
-      return;
-    }
      // Update a pre-existing snippet
     if (id) {
       dispatch(saveExisting())
@@ -171,13 +161,6 @@ export class SnippetArea extends React.Component {
       router,
       selectedOrg,
     } = this.props;
-
-    // Make sure user is signed in
-    const username = cookie.load('username');
-    if (!username) {
-      dispatch(addNotification('Please login to save snippets.'));
-      return;
-    }
 
     // Render the new title
     dispatch(setSnippetTitle(title));
@@ -217,13 +200,14 @@ export class SnippetArea extends React.Component {
       AST,
       filters,
       openLine,
+      orgs,
       permissions,
       readOnly,
+      selectedOrg,
       snippet,
       snippetLanguage,
       snippetTitle,
-      orgs,
-      selectedOrg,
+      username,
     } = this.props;
 
     const markedLines = Object.keys(annotations).map(key => Number(key));
@@ -232,16 +216,16 @@ export class SnippetArea extends React.Component {
         <SnippetAreaToolbar
           canSave={permissions.canEdit}
           language={snippetLanguage}
-          orgs={orgs}
-          selectedOrg={selectedOrg}
           onLanguageChange={this.handleLanguageChanged}
           onLockClick={this.handleLock}
+          onOrgChanged={this.handleOrgChanged}
           onSaveAsClick={this.handleSaveAs}
           onSaveClick={this.handleSave}
           onTitleChange={this.handleTitleChanged}
-          onOrgChanged={this.handleOrgChanged}
+          orgs={orgs}
           readOnly={readOnly}
-          saveEnabled={(cookie.load('username') !== undefined)}
+          saveEnabled={Boolean(username)}
+          selectedOrg={selectedOrg}
           title={snippetTitle}
         />
         <ConfirmLockDialog
@@ -276,11 +260,13 @@ SnippetArea.propTypes = {
   snippetLanguage: PropTypes.string.isRequired,
   orgs: CustomPropTypes.orgs.isRequired,
   selectedOrg: PropTypes.string,
+  username: PropTypes.string,
 };
 
 SnippetArea.defaultProps = {
   openLine: -1,
   selectedOrg: '',
+  username: '',
 };
 
 const mapStateToProps = (state) => {
@@ -302,6 +288,7 @@ const mapStateToProps = (state) => {
     user: {
       orgs,
       selectedOrg,
+      username,
     },
   } = state;
   return {
@@ -316,6 +303,7 @@ const mapStateToProps = (state) => {
     permissions,
     orgs,
     selectedOrg,
+    username,
   };
 };
 

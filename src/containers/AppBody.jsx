@@ -44,12 +44,12 @@ export class AppBody extends Component {
     // If the user is authenticated, add her Github to the orgs, and make it
     // the selected value
     if (cookie.load('token') && cookie.load('username')) {
-      const username = cookie.load('username');
-      dispatch(addOrg(username));
-      dispatch(switchOrg(username));
+      const savedUsername = cookie.load('username');
+      dispatch(addOrg(savedUsername));
+      dispatch(switchOrg(savedUsername));
 
       // If they are a member of any organizations, add to list as well
-      cookie.load('orgs').split(' ').forEach((org) => dispatch(addOrg(org)))
+      cookie.load('orgs').split().forEach(org => dispatch(addOrg(org)));
     }
 
     if (!username && !snippetKey) {
