@@ -14,21 +14,25 @@ import CustomPropTypes from '../../util/custom-prop-types';
 
 const styles = {
   avatar: {
-    marginBottom: '13px',
-    marginRight: '8px',
+    marginBottom: '1rem',
+    marginRight: '1rem',
   },
 };
 
 // Returns an <Avatar /> of the user's GitHub icon if the requisite cookie is
 // present, otherwise returns null.
-const getUserAvatar = () => {
+const makeAppMenuIcon = () => {
   const avatarURL = cookie.load('userAvatarURL');
-  return avatarURL ?
-    <Avatar
-      src={avatarURL}
-      size={30}
-      style={styles.avatar}
-    /> : null;
+  if (avatarURL) {
+    return (
+      <Avatar
+        size={30}
+        src={avatarURL}
+        style={styles.avatar}
+      />
+    );
+  }
+  return <MoreVertIcon color="white" />;
 };
 
 /*
@@ -38,31 +42,26 @@ display a "Sign out" option, that when clicked invokes the 'onSignOut' prop.
 const AppMenu = ({ onSignOut, snippetTitles, onTitleClicked }) => (
   <div>
     <IconMenu
-      iconButtonElement={
-        <IconButton>
-          <MoreVertIcon color="white" />
-        </IconButton>
-      }
+      iconButtonElement={<IconButton>{makeAppMenuIcon()}</IconButton>}
       targetOrigin={{ horizontal: 'right', vertical: 'top' }}
       anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
     >
-      <MenuItem
-        primaryText="Sign out"
-        onClick={onSignOut}
-      />
       <SnippetList
-        titles={snippetTitles}
         onClick={onTitleClicked}
+        titles={snippetTitles}
+      />
+      <MenuItem
+        onClick={onSignOut}
+        primaryText="Sign out"
       />
     </IconMenu>
-    {getUserAvatar()}
   </div>
 );
 
 AppMenu.propTypes = {
   onSignOut: PropTypes.func.isRequired,
-  snippetTitles: CustomPropTypes.snippets.isRequired,
   onTitleClicked: PropTypes.func.isRequired,
+  snippetTitles: CustomPropTypes.snippets.isRequired,
 };
 
 export default AppMenu;
