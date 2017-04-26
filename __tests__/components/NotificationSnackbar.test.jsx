@@ -40,4 +40,43 @@ describe('<NotificationSnackbar />', () => {
       });
     });
   });
+
+  describe('prop: displaying', () => {
+    it('is forwarded to the Snackbar\'s open prop', () => {
+      const wrapper = shallowWithContext(
+        <NotificationSnackbar
+          {...defaultProps}
+        />,
+      );
+      const { displaying } = defaultProps;
+      const snackbar = wrapper.find('Snackbar');
+      expect(snackbar.prop('open')).toEqual(displaying);
+    });
+  });
+
+  describe('prop: notification', () => {
+    it('is forwarded to the Snackbar\'s message prop', () => {
+      const wrapper = shallowWithContext(
+        <NotificationSnackbar
+          {...defaultProps}
+        />,
+      );
+      const { notification } = defaultProps;
+      const snackbar = wrapper.find('Snackbar');
+      expect(snackbar.prop('message')).toEqual(notification);
+    });
+  });
+
+  describe('prop: onRequestClose', () => {
+    it('is forwarded to the Snackbar\'s onRequestClose prop', () => {
+      const wrapper = shallowWithContext(
+        <NotificationSnackbar
+          {...defaultProps}
+        />,
+      );
+      const { onRequestClose } = defaultProps;
+      const snackbar = wrapper.find('Snackbar');
+      expect(snackbar.prop('onRequestClose')).toEqual(onRequestClose);
+    });
+  });
 });
