@@ -121,7 +121,6 @@ export class SnippetArea extends React.Component {
   }
 
   handleSave() {
-
     const {
       dispatch,
       router,
@@ -186,7 +185,7 @@ export class SnippetArea extends React.Component {
     const {
       dispatch,
       router,
-      selectedOrg
+      selectedOrg,
     } = this.props;
     // Render the new title
     dispatch(setSnippetTitle(title));
@@ -232,7 +231,7 @@ export class SnippetArea extends React.Component {
       snippetLanguage,
       snippetTitle,
       orgs,
-      selectedOrg
+      selectedOrg,
     } = this.props;
 
     const markedLines = Object.keys(annotations).map(key => Number(key));
@@ -289,26 +288,49 @@ SnippetArea.propTypes = {
   snippetTitle: PropTypes.string.isRequired,
   permissions: CustomPropTypes.permissions.isRequired,
   snippetLanguage: PropTypes.string.isRequired,
+  orgs: CustomPropTypes.orgs.isRequired,
+  selectedOrg: PropTypes.string,
 };
 
 SnippetArea.defaultProps = {
   openLine: -1,
+  selectedOrg: '',
 };
 
-const mapStateToProps = state => ({
-  annotations: state.app.annotations,
-  AST: state.app.AST,
-  filters: state.app.filters,
-  snippetLanguage: state.app.snippetLanguage,
-  openLine: (state.annotation.isDisplayingAnnotation
-    ? state.annotation.lineAnnotated.lineNumber : undefined),
-  readOnly: state.app.readOnly,
-  snippet: state.app.snippet,
-  snippetTitle: state.app.snippetTitle,
-  appState: state.app,
-  permissions: state.permissions,
-  orgs: state.user.orgs,
-  selectedOrg: state.user.selectedOrg,
-});
+const mapStateToProps = (state) => {
+  const {
+    annotation: {
+      isDisplayingAnnotation,
+      lineAnnotated,
+    },
+    app: {
+      annotations,
+      AST,
+      filters,
+      snippetLanguage,
+      readOnly,
+      snippet,
+      snippetTitle,
+    },
+    permissions,
+    user: {
+      orgs,
+      selectedOrg,
+    },
+  } = state;
+  return {
+    annotations,
+    AST,
+    filters,
+    snippetLanguage,
+    openLine: (isDisplayingAnnotation ? lineAnnotated.lineNumber : undefined),
+    readOnly,
+    snippet,
+    snippetTitle,
+    permissions,
+    orgs,
+    selectedOrg,
+  };
+};
 
 export default withRouter(connect(mapStateToProps)(SnippetArea));
