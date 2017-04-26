@@ -10,6 +10,7 @@ import {
 import SaveIcon from 'material-ui/svg-icons/content/save';
 
 import OrgSelector from '../OrgSelector';
+import CustomPropTypes from '../../util/custom-prop-types';
 
 const styles = {
   container: {
@@ -62,7 +63,11 @@ class SaveMenu extends React.Component {
   }
 
   getSaveAsDialog() {
-    const { orgs, selectedOrg, onOrgChanged } = this.props;
+    const {
+      onOrgChanged,
+      orgs,
+      selectedOrg,
+    } = this.props;
     return (
       <Dialog
         actions={
@@ -111,8 +116,15 @@ class SaveMenu extends React.Component {
 SaveMenu.propTypes = {
   canSave: PropTypes.bool.isRequired,
   enabled: PropTypes.bool.isRequired,
+  onOrgChanged: PropTypes.func.isRequired,
   onSaveAsClick: PropTypes.func.isRequired,
   onSaveClick: PropTypes.func.isRequired,
+  orgs: CustomPropTypes.orgs.isRequired,
+  selectedOrg: PropTypes.string,
+};
+
+SaveMenu.defaultProps = {
+  selectedOrg: '',
 };
 
 export default SaveMenu;

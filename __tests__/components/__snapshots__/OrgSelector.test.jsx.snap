@@ -7,7 +7,7 @@ exports[`<OrgSelector /> matches snapshot 1`] = `
     fullWidth={false}
     multiple={false}
     onChange={[Function]}
-    value={0}>
+    value={null}>
     <MenuItem
       anchorOrigin={
         Object {
