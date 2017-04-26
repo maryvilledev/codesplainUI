@@ -126,7 +126,8 @@ exports[`<SaveMenu /> snapshot tests matches default snapshot 1`] = `
         Array [
           "galactic-federation",
         ]
-      } />
+      }
+      value="" />
   </Dialog>
 </span>
 `;
@@ -259,7 +260,8 @@ exports[`<SaveMenu /> snapshot tests matches snapshot when saving is not enabled
         Array [
           "galactic-federation",
         ]
-      } />
+      }
+      value="" />
   </Dialog>
 </span>
 `;
@@ -392,7 +394,8 @@ exports[`<SaveMenu /> snapshot tests matches snapshot when user cannot save 1`] 
         Array [
           "galactic-federation",
         ]
-      } />
+      }
+      value="" />
   </Dialog>
 </span>
 `;

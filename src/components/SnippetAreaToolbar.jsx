@@ -6,6 +6,7 @@ import {
 import LanguageSelector from './LanguageSelector';
 import LockButton from './buttons/LockButton';
 import SaveMenu from './menus/SaveMenu';
+import CustomPropTypes from '../util/custom-prop-types';
 
 const styles = {
   toolbar: {
@@ -52,7 +53,7 @@ const SnippetAreaToolbar = (props) => {
     saveEnabled,
     title,
     orgs,
-    selectedOrg
+    selectedOrg,
   } = props;
 
   return (
@@ -104,8 +105,12 @@ SnippetAreaToolbar.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   saveEnabled: PropTypes.bool.isRequired,
   title: PropTypes.string.isRequired,
-  orgs: PropTypes.array.isRequired,
-  selectedOrg: PropTypes.string
+  orgs: CustomPropTypes.orgs.isRequired,
+  selectedOrg: PropTypes.string,
+};
+
+SnippetAreaToolbar.defaultProps = {
+  selectedOrg: '',
 };
 
 export default SnippetAreaToolbar;
