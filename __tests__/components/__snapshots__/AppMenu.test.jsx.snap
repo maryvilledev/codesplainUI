@@ -9,15 +9,24 @@ exports[`<AppMenu /> snapshot tests matches snapshot of when user is logged in 1
     }
     animated={true}
     iconButtonElement={
-      <IconButton
-        disableTouchRipple={false}
-        disabled={false}
-        iconStyle={Object {}}
-        tooltipPosition="bottom-center"
-        touch={false}>
-        <NavigationMoreVert
+      <div>
+        <Avatar
+          size={30}
+          src="https://github.com/octocat.png"
+          style={
+            Object {
+              "marginBottom": "1rem",
+            }
+          } />
+        <NavigationArrowDropDown
           color="white" />
-      </IconButton>
+      </div>
+    }
+    iconStyle={
+      Object {
+        "display": "flex",
+        "flexFlow": "row nowrap",
+      }
     }
     multiple={false}
     onItemTouchTap={[Function]}
@@ -37,6 +46,9 @@ exports[`<AppMenu /> snapshot tests matches snapshot of when user is logged in 1
     }
     touchTapCloseDelay={200}
     useLayerForClickAway={false}>
+    <SnippetList
+      onClick={[Function]}
+      titles={Object {}} />
     <MenuItem
       anchorOrigin={
         Object {
@@ -51,19 +63,7 @@ exports[`<AppMenu /> snapshot tests matches snapshot of when user is logged in 1
       insetChildren={false}
       onClick={[Function]}
       primaryText="Sign out" />
-    <SnippetList
-      onClick={[Function]}
-      titles={Object {}} />
   </IconMenu>
-  <Avatar
-    size={30}
-    src="https://github.com/octocat.png"
-    style={
-      Object {
-        "marginBottom": "13px",
-        "marginRight": "8px",
-      }
-    } />
 </div>
 `;
 
@@ -78,15 +78,14 @@ exports[`<AppMenu /> snapshot tests matches snapshot of when user is not logged 
     }
     animated={true}
     iconButtonElement={
-      <IconButton
-        disableTouchRipple={false}
-        disabled={false}
-        iconStyle={Object {}}
-        tooltipPosition="bottom-center"
-        touch={false}>
-        <NavigationMoreVert
-          color="white" />
-      </IconButton>
+      <NavigationMoreVert
+        color="white" />
+    }
+    iconStyle={
+      Object {
+        "display": "flex",
+        "flexFlow": "row nowrap",
+      }
     }
     multiple={false}
     onItemTouchTap={[Function]}
@@ -106,6 +105,9 @@ exports[`<AppMenu /> snapshot tests matches snapshot of when user is not logged 
     }
     touchTapCloseDelay={200}
     useLayerForClickAway={false}>
+    <SnippetList
+      onClick={[Function]}
+      titles={Object {}} />
     <MenuItem
       anchorOrigin={
         Object {
@@ -120,9 +122,6 @@ exports[`<AppMenu /> snapshot tests matches snapshot of when user is not logged 
       insetChildren={false}
       onClick={[Function]}
       primaryText="Sign out" />
-    <SnippetList
-      onClick={[Function]}
-      titles={Object {}} />
   </IconMenu>
 </div>
 `;

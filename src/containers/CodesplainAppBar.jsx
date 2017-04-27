@@ -19,6 +19,9 @@ const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 const GITHUB_URL = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&scope=read:org`;
 
 const styles = {
+  rightElement: {
+    marginTop: '16px',
+  },
   title: {
     cursor: 'pointer',
   },
@@ -48,15 +51,7 @@ export class CodesplainAppBar extends Component {
 
   componentDidMount() {
     const { dispatch } = this.props;
-    dispatch(updateUserSnippets())
-  }
-
-  handleSignOut() {
-    cookie.remove('token', { path: '/' });
-    cookie.remove('username', { path: '/' });
-    cookie.remove('userAvatarURL', { path: '/' });
-    this.setState({ isLoggedIn: false });
-    location.reload();
+    dispatch(updateUserSnippets());
   }
 
   onLoginClick() {
@@ -76,6 +71,14 @@ export class CodesplainAppBar extends Component {
     // This does not use the router to route the user to Github because
     // router is used for routing within the application, not the entire web
     window.location = GITHUB_URL;
+  }
+
+  handleSignOut() {
+    cookie.remove('token', { path: '/' });
+    cookie.remove('username', { path: '/' });
+    cookie.remove('userAvatarURL', { path: '/' });
+    this.setState({ isLoggedIn: false });
+    location.reload();
   }
 
   handleSnippetSelected(key) {
@@ -160,6 +163,7 @@ export class CodesplainAppBar extends Component {
           showMenuIconButton={false}
           title={titleElement}
           iconElementRight={rightElement}
+          iconStyleRight={styles.rightElement}
         />
         <Dialog
           actions={actions}
