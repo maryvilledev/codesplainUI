@@ -109,9 +109,7 @@ class Editor extends React.Component {
     }
     if (errors) {
       errors.forEach((error) => {
-        let end = error.end ? error.end : value.length;
-        if (end < error.begin) end = error.begin;
-        this.markError(error.begin, end);
+        this.markError(error.begin, error.end);
       });
     }
   }
