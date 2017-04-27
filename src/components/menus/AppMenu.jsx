@@ -25,11 +25,14 @@ const makeAppMenuIcon = () => {
   const avatarURL = cookie.load('userAvatarURL');
   if (avatarURL) {
     return (
-      <Avatar
-        size={30}
-        src={avatarURL}
-        style={styles.avatar}
-      />
+      <div>
+        <Avatar
+          size={30}
+          src={avatarURL}
+          style={styles.avatar}
+        />
+        <MoreVertIcon color="white" />
+      </div>
     );
   }
   return <MoreVertIcon color="white" />;
@@ -42,9 +45,13 @@ display a "Sign out" option, that when clicked invokes the 'onSignOut' prop.
 const AppMenu = ({ onSignOut, snippetTitles, onTitleClicked }) => (
   <div>
     <IconMenu
-      iconButtonElement={<IconButton>{makeAppMenuIcon()}</IconButton>}
+      iconButtonElement={makeAppMenuIcon()}
       targetOrigin={{ horizontal: 'right', vertical: 'top' }}
       anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+      iconStyle={{
+        display: 'flex',
+        flexFlow: 'row nowrap',
+      }}
     >
       <SnippetList
         onClick={onTitleClicked}
