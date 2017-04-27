@@ -74,7 +74,7 @@ const ReferenceArea = () => (
         style={style.link}
       >
           Contact Us
-        </a>
+      </a>
     </div>
   </div>
 );

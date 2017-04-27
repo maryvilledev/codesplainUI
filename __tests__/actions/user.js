@@ -11,7 +11,7 @@ describe('Actions: User', () => {
       const org = 'galactic-federation';
       const expected = {
         type: actions.ADD_ORG,
-        payload: org
+        payload: org,
       };
       expect(actions.addOrg(org)).toEqual(expected);
     });
@@ -21,7 +21,7 @@ describe('Actions: User', () => {
       const org = 'galactic-federation';
       const expected = {
         type: actions.SWITCH_ORG,
-        payload: org
+        payload: org,
       };
       expect(actions.switchOrg(org)).toEqual(expected);
     });
@@ -45,7 +45,7 @@ describe('Actions: User', () => {
     });
     it('creates correct CLEAR_USER_CREDENTIALS object', () => {
       const expected = {
-        type: actions.CLEAR_USER_CREDENTIALS
+        type: actions.CLEAR_USER_CREDENTIALS,
       };
       expect(actions.clearUserCredentials()).toEqual(expected);
     });

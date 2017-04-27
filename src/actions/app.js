@@ -103,7 +103,7 @@ export const saveFailed = () => ({
   type: SAVE_FAILED,
 });
 
-export const saveNew = (org) => (dispatch, getState) => {
+export const saveNew = org => (dispatch, getState) => {
   // Load the token from cookie storage
   const token = cookie.load('token');
 

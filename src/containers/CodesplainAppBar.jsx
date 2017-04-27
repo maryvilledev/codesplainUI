@@ -48,7 +48,7 @@ export class CodesplainAppBar extends Component {
 
   componentDidMount() {
     const { dispatch } = this.props;
-    dispatch(updateUserSnippets())
+    dispatch(updateUserSnippets());
   }
 
   handleSignOut() {

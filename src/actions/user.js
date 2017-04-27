@@ -22,21 +22,21 @@ export const SAVE_ACCESS_TOKEN = 'SAVE_ACCESS_TOKEN';
 export const CLEAR_USER_CREDENTIALS = 'CLEAR_USER_CREDENTIALS';
 export const RESTORE_USER_CREDENTIALS = 'RESTORE_USER_CREDENTIALS';
 
-export const addOrg = (org) => ({
+export const addOrg = org => ({
   type: ADD_ORG,
-  payload: org
+  payload: org,
 });
 
-export const switchOrg = (org) => ({
+export const switchOrg = org => ({
   type: SWITCH_ORG,
-  payload: org
+  payload: org,
 });
-export const saveUsername = (username) => ({
+export const saveUsername = username => ({
   type: SAVE_USERNAME,
   payload: username,
 });
 
-export const saveAccessToken = (accessToken) => ({
+export const saveAccessToken = accessToken => ({
   type: SAVE_ACCESS_TOKEN,
   payload: accessToken,
 });
@@ -87,7 +87,7 @@ export const updateUserSnippets = () => (dispatch) => {
     });
 };
 
-export const fetchAccessToken = (authCode) => (dispatch) => {
+export const fetchAccessToken = authCode => (dispatch) => {
   const reqUrl = `${API_URL}/auth`;
   const reqBody = { code: authCode };
   return axios({
@@ -95,7 +95,7 @@ export const fetchAccessToken = (authCode) => (dispatch) => {
     url: reqUrl,
     data: reqBody,
   });
-}
+};
 
 export const fetchUserInfo = () => (dispatch, getState) => {
   console.log('getState()', getState());

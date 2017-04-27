@@ -70,15 +70,15 @@ class AnnotationPanel extends React.Component {
             closeAnnotation={closeAnnotation}
             saveAnnotation={this.handleSaveAnnotation}
           /> :
-          <AnnotationDisplay
-            annotation={annotation}
-            closeAnnotation={closeAnnotation}
-            editAnnotation={this.toggleEditState}
-            getNextAnnotation={getNextAnnotation}
-            getPreviousAnnotation={getPreviousAnnotation}
-            hasPrevAnnotation={hasPrevAnnotation}
-            hasNextAnnotation={hasNextAnnotation}
-          />
+            <AnnotationDisplay
+              annotation={annotation}
+              closeAnnotation={closeAnnotation}
+              editAnnotation={this.toggleEditState}
+              getNextAnnotation={getNextAnnotation}
+              getPreviousAnnotation={getPreviousAnnotation}
+              hasPrevAnnotation={hasPrevAnnotation}
+              hasNextAnnotation={hasNextAnnotation}
+            />
         }
       </div>
     );
