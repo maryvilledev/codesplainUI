@@ -31,12 +31,14 @@ const snippetData = PropTypes.shape({
   snippetTitle: PropTypes.string,
 });
 
-const error = PropTypes.shape({
-  type: PropTypes.string,
-  begin: PropTypes.number,
-  end: PropTypes.NaN,
-  msg: PropTypes.string,
-});
+const error = PropTypes.arrayOf(
+  PropTypes.shape({
+    type: PropTypes.string,
+    begin: PropTypes.number,
+    end: PropTypes.NaN,
+    msg: PropTypes.string,
+  }),
+);
 
 const snippets = PropTypes.objectOf(snippetData);
 

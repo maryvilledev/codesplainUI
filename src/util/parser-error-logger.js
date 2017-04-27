@@ -1,4 +1,4 @@
-import { setError } from '../actions/parser';
+import { addError } from '../actions/parser';
 
 const {
   NODE_ENV,
@@ -13,7 +13,7 @@ const errorFn = (err, dispatch) => {
   if (debuggingIsEnabled) console.log(err);
 
   // Cause red underlining of the error's range
-  dispatch(setError(err));
+  dispatch(addError(err));
 };
 
 export default errorFn;

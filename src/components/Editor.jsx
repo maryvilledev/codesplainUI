@@ -82,7 +82,7 @@ class Editor extends React.Component {
       AST,
       filters,
       value,
-      error,
+      errors,
     } = this.props;
     const {
       newAST,
@@ -107,10 +107,12 @@ class Editor extends React.Component {
     if ((newAST || newFilters) && value) {
       highlight(codeMirrorInst, AST, filters);
     }
-    if (error) {
-      let end = error.end ? error.end : value.length;
-      if (end > error.begin) end = error.begin;
-      this.markError(error.begin, error.end ? error.end : value.length);
+    if (errors) {
+      errors.forEach((error) => {
+        let end = error.end ? error.end : value.length;
+        if (end < error.begin) end = error.begin;
+        this.markError(error.begin, end);
+      });
     }
   }
 
@@ -142,7 +144,6 @@ class Editor extends React.Component {
   }
 
   markError(startIdx, stopIdx) {
-    console.log(`marking error from ${startIdx} to ${stopIdx}`)
     // http://stackoverflow.com/questions/39432258/how-to-create-a-wavy-underline-on-mutilline-text-with-css
     const css = `
       background-image:
@@ -158,7 +159,6 @@ class Editor extends React.Component {
   }
 
   clearErrors() {
-    console.log('clearing errors');
     const css = `
       background-image: none;
     `;
@@ -198,11 +198,12 @@ Editor.propTypes = {
   openLine: PropTypes.number,
   readOnly: PropTypes.bool.isRequired,
   value: PropTypes.string.isRequired,
-  error: CustomPropTypes.error.isRequired,
+  errors: CustomPropTypes.errors,
 };
 
 Editor.defaultProps = {
   openLine: -1,
+  errors: [],
 };
 
 export default Editor;
