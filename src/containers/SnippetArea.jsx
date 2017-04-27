@@ -193,6 +193,7 @@ export class SnippetArea extends React.Component {
       openLine,
       orgs,
       permissions,
+      errors,
       readOnly,
       selectedOrg,
       snippet,
@@ -234,6 +235,7 @@ export class SnippetArea extends React.Component {
           openLine={openLine}
           readOnly={readOnly}
           value={snippet}
+          errors={errors}
         />
       </CardText>
     );
@@ -248,6 +250,7 @@ SnippetArea.propTypes = {
   snippet: PropTypes.string.isRequired,
   snippetTitle: PropTypes.string.isRequired,
   permissions: CustomPropTypes.permissions.isRequired,
+  errors: CustomPropTypes.errors,
   snippetLanguage: PropTypes.string.isRequired,
   orgs: CustomPropTypes.orgs.isRequired,
   selectedOrg: PropTypes.string,
@@ -257,6 +260,7 @@ SnippetArea.propTypes = {
 SnippetArea.defaultProps = {
   openLine: -1,
   selectedOrg: '',
+  errors: [],
   username: '',
 };
 
@@ -276,6 +280,9 @@ const mapStateToProps = (state) => {
       snippetTitle,
     },
     permissions,
+    parser: {
+      errors,
+    },
     user: {
       orgs,
       selectedOrg,
@@ -292,6 +299,7 @@ const mapStateToProps = (state) => {
     snippet,
     snippetTitle,
     permissions,
+    errors,
     orgs,
     selectedOrg,
     username,

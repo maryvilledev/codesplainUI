@@ -9,6 +9,7 @@ import {
   highlight,
   styleLine,
   styleAll,
+  styleRegion,
 } from '../util/codemirror-utils';
 import CustomPropTypes from '../util/custom-prop-types';
 import '../styles/codesplain.css';
@@ -55,6 +56,8 @@ class Editor extends React.Component {
     this.handleGutterClick = this.handleGutterClick.bind(this);
     this.emphasizeLine = this.emphasizeLine.bind(this);
     this.deEmphasize = this.deEmphasize.bind(this);
+    this.markError = this.markError.bind(this);
+    this.clearErrors = this.clearErrors.bind(this);
   }
 
   componentDidMount() {
@@ -79,6 +82,7 @@ class Editor extends React.Component {
       AST,
       filters,
       value,
+      errors,
     } = this.props;
     const {
       newAST,
@@ -96,11 +100,17 @@ class Editor extends React.Component {
       codeMirrorInst.setGutterMarker(Number(lineNumber), 'annotations', makeMarker());
     });
     this.deEmphasize();
+    this.clearErrors();
     if (openLine !== -1) {
       this.emphasizeLine(openLine);
     }
     if ((newAST || newFilters) && value) {
       highlight(codeMirrorInst, AST, filters);
+    }
+    if (errors) {
+      errors.forEach((error) => {
+        this.markError(error.begin, error.end);
+      });
     }
   }
 
@@ -128,6 +138,28 @@ class Editor extends React.Component {
   // If a line has been previously emphasized, this will de-emphasise it.
   deEmphasize() {
     const css = 'font-weight: normal; opacity: 1.0;';
+    styleAll(this.codeMirror.getCodeMirror(), css);
+  }
+
+  markError(startIdx, stopIdx) {
+    // http://stackoverflow.com/questions/39432258/how-to-create-a-wavy-underline-on-mutilline-text-with-css
+    const css = `
+      background-image:
+        linear-gradient(45deg, transparent 65%, red 80%, transparent 90%),
+        linear-gradient(135deg, transparent 5%, red 15%, transparent 25%),
+        linear-gradient(135deg, transparent 45%, red 55%, transparent 65%),
+        linear-gradient(45deg, transparent 25%, red 35%, transparent 50%);
+      background-size: 8px 2px;
+      background-position: 0 95%;
+      background-repeat: repeat-x;
+    `;
+    styleRegion(this.codeMirror.getCodeMirror(), startIdx, stopIdx, css);
+  }
+
+  clearErrors() {
+    const css = `
+      background-image: none;
+    `;
     styleAll(this.codeMirror.getCodeMirror(), css);
   }
 
@@ -164,10 +196,12 @@ Editor.propTypes = {
   openLine: PropTypes.number,
   readOnly: PropTypes.bool.isRequired,
   value: PropTypes.string.isRequired,
+  errors: CustomPropTypes.errors,
 };
 
 Editor.defaultProps = {
   openLine: -1,
+  errors: [],
 };
 
 export default Editor;
