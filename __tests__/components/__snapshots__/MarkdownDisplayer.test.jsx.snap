@@ -1,0 +1,20 @@
+exports[`<MarkdownDisplayer /> snapshots matches snapshot matches snapshot 1`] = `
+<Card
+  expandable={false}
+  expanded={null}
+  initiallyExpanded={false}
+  style={
+    Object {
+      "padding": "0.5rem",
+    }
+  }>
+  <MarkdownRenderer
+    markdown=""
+    options={
+      Object {
+        "highlight": [Function],
+        "langPrefix": "hljs language-",
+      }
+    } />
+</Card>
+`;

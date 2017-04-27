@@ -63,7 +63,7 @@ describe('<AnnotationDisplay />', () => {
   });
 
   describe('prop: annotation', () => {
-    it('is rendered into a MarkdownRenderer', () => {
+    it('is forwarded to MarkdownDisplayer', () => {
       const annotation = 'Wubba lubba dub dub!';
       const wrapper = shallowWithContext(
         <AnnotationDisplay
@@ -71,7 +71,7 @@ describe('<AnnotationDisplay />', () => {
           annotation={annotation}
         />,
       );
-      expect(wrapper.find('MarkdownRenderer').prop('markdown')).toEqual(annotation);
+      expect(wrapper.find('MarkdownDisplayer').prop('annotation')).toEqual(annotation);
     });
   });
 });
