@@ -141,7 +141,8 @@ export class CodesplainAppBar extends Component {
     ];
 
     const { userSnippets } = this.props;
-    const rightElement = this.state.isLoggedIn ?
+    const { isDialogOpen, isLoggedIn } = this.state;
+    const rightElement = isLoggedIn ?
       (<AppMenu
         onSignOut={this.handleSignOut}
         onTitleClicked={this.handleSnippetSelected}
@@ -163,12 +164,12 @@ export class CodesplainAppBar extends Component {
           showMenuIconButton={false}
           title={titleElement}
           iconElementRight={rightElement}
-          iconStyleRight={styles.rightElement}
+          iconStyleRight={isLoggedIn ? styles.rightElement : {}}
         />
         <Dialog
           actions={actions}
           modal={false}
-          open={this.state.isDialogOpen}
+          open={isDialogOpen}
           onRequestClose={this.handleDialogClose}
         >
           Discard unsaved changes?
