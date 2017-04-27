@@ -3,10 +3,10 @@ import cookie from 'react-cookie';
 
 import {
   Avatar,
-  IconButton,
   IconMenu,
   MenuItem,
 } from 'material-ui';
+import ArrowDropDown from 'material-ui/svg-icons/navigation/arrow-drop-down';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
 import SnippetList from './SnippetList';
@@ -15,7 +15,10 @@ import CustomPropTypes from '../../util/custom-prop-types';
 const styles = {
   avatar: {
     marginBottom: '1rem',
-    marginRight: '1rem',
+  },
+  iconButtonElement: {
+    display: 'flex',
+    flexFlow: 'row nowrap',
   },
 };
 
@@ -31,7 +34,7 @@ const makeAppMenuIcon = () => {
           src={avatarURL}
           style={styles.avatar}
         />
-        <MoreVertIcon color="white" />
+        <ArrowDropDown color="white" />
       </div>
     );
   }
@@ -48,10 +51,7 @@ const AppMenu = ({ onSignOut, snippetTitles, onTitleClicked }) => (
       iconButtonElement={makeAppMenuIcon()}
       targetOrigin={{ horizontal: 'right', vertical: 'top' }}
       anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-      iconStyle={{
-        display: 'flex',
-        flexFlow: 'row nowrap',
-      }}
+      iconStyle={styles.iconButtonElement}
     >
       <SnippetList
         onClick={onTitleClicked}

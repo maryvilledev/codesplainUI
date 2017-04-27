@@ -19,6 +19,9 @@ const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 const GITHUB_URL = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&scope=read:org`;
 
 const styles = {
+  rightElement: {
+    marginTop: '16px',
+  },
   title: {
     cursor: 'pointer',
   },
@@ -160,6 +163,7 @@ export class CodesplainAppBar extends Component {
           showMenuIconButton={false}
           title={titleElement}
           iconElementRight={rightElement}
+          iconStyleRight={styles.rightElement}
         />
         <Dialog
           actions={actions}

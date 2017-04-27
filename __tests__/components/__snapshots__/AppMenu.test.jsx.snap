@@ -9,22 +9,24 @@ exports[`<AppMenu /> snapshot tests matches snapshot of when user is logged in 1
     }
     animated={true}
     iconButtonElement={
-      <IconButton
-        disableTouchRipple={false}
-        disabled={false}
-        iconStyle={Object {}}
-        tooltipPosition="bottom-center"
-        touch={false}>
+      <div>
         <Avatar
           size={30}
           src="https://github.com/octocat.png"
           style={
             Object {
               "marginBottom": "1rem",
-              "marginRight": "1rem",
             }
           } />
-      </IconButton>
+        <NavigationArrowDropDown
+          color="white" />
+      </div>
+    }
+    iconStyle={
+      Object {
+        "display": "flex",
+        "flexFlow": "row nowrap",
+      }
     }
     multiple={false}
     onItemTouchTap={[Function]}
@@ -76,15 +78,14 @@ exports[`<AppMenu /> snapshot tests matches snapshot of when user is not logged 
     }
     animated={true}
     iconButtonElement={
-      <IconButton
-        disableTouchRipple={false}
-        disabled={false}
-        iconStyle={Object {}}
-        tooltipPosition="bottom-center"
-        touch={false}>
-        <NavigationMoreVert
-          color="white" />
-      </IconButton>
+      <NavigationMoreVert
+        color="white" />
+    }
+    iconStyle={
+      Object {
+        "display": "flex",
+        "flexFlow": "row nowrap",
+      }
     }
     multiple={false}
     onItemTouchTap={[Function]}
