@@ -74,11 +74,7 @@ exports[`<CodesplainAppBar /> snapshot tests user is not logged in 1`] = `
       <LoginButton
         onClick={[Function]} />
     }
-    iconStyleRight={
-      Object {
-        "marginTop": "16px",
-      }
-    }
+    iconStyleRight={Object {}}
     showMenuIconButton={false}
     title={
       <span
