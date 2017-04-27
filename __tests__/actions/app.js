@@ -1,5 +1,4 @@
 import moxios from 'moxios';
-import cookie from 'react-cookie';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
@@ -162,14 +161,6 @@ describe('Actions: App', () => {
       expect(actions.parseSnippet(snippet)).toEqual(expected);
     });
   });
-  describe('SAVE_STARTED', () => {
-    it('creates the correct action object', () => {
-      const expected = {
-        type: actions.SAVE_STARTED,
-      };
-      expect(actions.saveStarted()).toEqual(expected);
-    });
-  });
   describe('SAVE_SUCCEEDED', () => {
     it('creates the correct action object', () => {
       const expected = {
@@ -178,26 +169,14 @@ describe('Actions: App', () => {
       expect(actions.saveSucceeded()).toEqual(expected);
     });
   });
-  describe('SAVE_FAILED', () => {
-    it('creates the correct action object', () => {
-      const expected = {
-        type: actions.SAVE_FAILED,
-      };
-      expect(actions.saveFailed()).toEqual(expected);
-    });
-  });
   describe('async actions', () => {
     const middlewares = [thunk];
     const mockStore = configureMockStore(middlewares);
 
     beforeEach(() => {
-      cookie.save('token', 'rick');
-      cookie.save('username', 'morty');
       moxios.install();
     });
     afterEach(() => {
-      cookie.remove('token');
-      cookie.remove('username');
       moxios.uninstall();
     });
     describe('saveNew()', () => {
@@ -211,14 +190,13 @@ describe('Actions: App', () => {
             response: { key, status: '200' },
           });
         });
-        const expectedActions = [
-          { type: actions.SAVE_STARTED },
-          { type: actions.SAVE_SUCCEEDED },
-        ];
-        const store = mockStore({});
+        const store = mockStore({
+          app: {},
+          user: { token: '' },
+        });
         return store.dispatch(actions.saveNew(org))
           .then((returnVal) => { // return of async actions
-            expect(store.getActions()).toEqual(expectedActions);
+            expect(store.getActions()).toMatchSnapshot();
             expect(returnVal).toEqual(key);
           });
       });
@@ -230,14 +208,13 @@ describe('Actions: App', () => {
             status: 400,
           });
         });
-        const expectedActions = [
-          { type: actions.SAVE_STARTED },
-          { type: actions.SAVE_FAILED },
-        ];
-        const store = mockStore({});
+        const store = mockStore({
+          app: {},
+          user: { token: '' },
+        });
         return store.dispatch(actions.saveNew(org))
           .then(() => { // return of async actions
-            expect(store.getActions()).toEqual(expectedActions);
+            expect(store.getActions()).toMatchSnapshot();
           });
       });
     });
@@ -251,14 +228,13 @@ describe('Actions: App', () => {
               response: { status: '200' },
             });
           });
-          const expectedActions = [
-            { type: actions.SAVE_STARTED },
-            { type: actions.SAVE_SUCCEEDED },
-          ];
-          const store = mockStore({ snippetTitle: 'foo' });
+          const store = mockStore({
+            app: {},
+            user: { token: '', username: '' },
+          });
           return store.dispatch(actions.saveExisting())
             .then(() => { // return of async actions
-              expect(store.getActions()).toEqual(expectedActions);
+              expect(store.getActions()).toMatchSnapshot();
             });
         });
         it('dispatches SAVE_FAILED if save failed', () => {
@@ -268,14 +244,13 @@ describe('Actions: App', () => {
               status: 400,
             });
           });
-          const expectedActions = [
-            { type: actions.SAVE_STARTED },
-            { type: actions.SAVE_FAILED },
-          ];
-          const store = mockStore({});
+          const store = mockStore({
+            app: {},
+            user: { token: '', username: '' },
+          });
           return store.dispatch(actions.saveExisting())
             .then(() => { // return of async actions
-              expect(store.getActions()).toEqual(expectedActions);
+              expect(store.getActions()).toMatchSnapshot();
             });
         });
       });

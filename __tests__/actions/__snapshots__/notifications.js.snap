@@ -1,0 +1,12 @@
+exports[`Actions: notifications: addNotification creates correct action object 1`] = `
+Object {
+  "payload": "Wubba lubba dub dub!",
+  "type": "ADD_NOTIFICATION",
+}
+`;
+
+exports[`Actions: notifications: closeNotification creates correct action object 1`] = `
+Object {
+  "type": "CLOSE_NOTIFICATION",
+}
+`;
