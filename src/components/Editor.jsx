@@ -44,7 +44,7 @@ const makeMarker = () => {
 };
 
 const pushValueToCodeMirror = _.once((value, codeMirrorInst) => {
-  if (!codeMirrorInst.getValue() && !value) {
+  if (!codeMirrorInst.getValue() && value) {
     codeMirrorInst.setValue(value);
   }
 });
