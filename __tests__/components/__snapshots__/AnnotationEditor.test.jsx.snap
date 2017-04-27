@@ -11,6 +11,11 @@ exports[`<AnnotationEditor /> matches snapshot 1`] = `
         disabled={false}
         floatingLabelFixed={false}
         fullWidth={true}
+        hintStyle={
+          Object {
+            "top": "1rem",
+          }
+        }
         hintText="Enter your annotation here"
         multiLine={true}
         name="annotationEditor"

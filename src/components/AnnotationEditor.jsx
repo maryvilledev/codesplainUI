@@ -17,6 +17,9 @@ const styles = {
     flexShrink: 1,
     flexBasis: 'auto',
   },
+  hintText: {
+    top: '1rem',
+  },
   markdownHintText: {
     color: '#d3d3d3',
   },
@@ -70,6 +73,7 @@ class AnnotationEditor extends React.Component {
             <TextField
               autoFocus
               fullWidth
+              hintStyle={styles.hintText}
               hintText="Enter your annotation here"
               multiLine
               name="annotationEditor"
