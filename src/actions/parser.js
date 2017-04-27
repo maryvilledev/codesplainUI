@@ -1,6 +1,6 @@
 export const LOAD_PARSER = 'LOAD_PARSER';
-export const SET_ERROR = 'SET_ERROR';
-export const SET_NO_ERROR = 'SET_NO_ERROR';
+export const ADD_ERROR = 'ADD_ERROR';
+export const CLEAR_ERRORS = 'CLEAR_ERRORS';
 
 export const loadParser = language => ({
   type: LOAD_PARSER,
@@ -10,11 +10,11 @@ export const loadParser = language => ({
   payload: language,
 });
 
-export const setError = error => ({
-  type: SET_ERROR,
+export const addError = error => ({
+  type: ADD_ERROR,
   payload: error,
 });
 
-export const setNoError = () => ({
-  type: SET_NO_ERROR,
+export const clearErrors = () => ({
+  type: CLEAR_ERRORS,
 });

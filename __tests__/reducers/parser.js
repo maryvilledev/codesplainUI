@@ -18,7 +18,7 @@ describe('Reducer: Parser', () => {
     expect(reducer(undefined, action)).toEqual(expect.objectContaining(expected));
   });
 
-  it('should handle SET_ERROR', () => {
+  it('should handle ADD_ERROR', () => {
     const error = {
       type: 'syntaxError',
       begin: 5,
@@ -26,20 +26,20 @@ describe('Reducer: Parser', () => {
       msg: 'blahblahblah',
     };
     const action = {
-      type: actions.SET_ERROR,
+      type: actions.ADD_ERROR,
       payload: error,
     };
-    const expected = { error };
+    const expected = { errors: [error] };
     expect(reducer(undefined, action)).toEqual(expect.objectContaining(expected));
   });
 
-  it('should handle SET_NO_ERROR', () => {
+  it('should handle CLEAR_ERRORS', () => {
     const error = null;
     const action = {
-      type: actions.SET_ERROR,
+      type: actions.CLEAR_ERRORS,
       payload: error,
     };
-    const expected = { error };
+    const expected = { errors: [] };
     expect(reducer(undefined, action)).toEqual(expect.objectContaining(expected));
   });
 });

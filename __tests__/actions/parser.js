@@ -11,8 +11,8 @@ describe('Actions: parser', () => {
       expect(actions.loadParser(language)).toEqual(expect.objectContaining(expected));
     });
   });
-  describe('SET_ERROR', () => {
-    it('creates an action to set an error', () => {
+  describe('ADD_ERROR', () => {
+    it('creates an action to add an error', () => {
       const error = {
         type: 'syntaxError',
         begin: 5,
@@ -20,17 +20,17 @@ describe('Actions: parser', () => {
         msg: 'blahblahblah',
       };
       const expected = {
-        type: actions.SET_ERROR,
+        type: actions.ADD_ERROR,
         payload: error,
       };
-      expect(actions.setError(error)).toEqual(expected);
+      expect(actions.addError(error)).toEqual(expected);
     });
-    describe('SET_NO_ERROR', () => {
-      it('creates an action to remove errors from state', () => {
+    describe('CLEAR_ERRORS', () => {
+      it('creates an action to remove all errors from state', () => {
         const expected = {
-          type: actions.SET_NO_ERROR,
+          type: actions.CLEAR_ERRORS,
         };
-        expect(actions.setNoError()).toEqual(expected);
+        expect(actions.clearErrors()).toEqual(expected);
       });
     });
   });
