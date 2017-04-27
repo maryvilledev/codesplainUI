@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import ReactTooltip from 'react-tooltip';
 import {
   IconButton,
   IconMenu,
@@ -19,12 +20,21 @@ const styles = {
 };
 
 const saveIconButton = disabled => (
-  <IconButton
-    disabled={disabled}
-    title={disabled ? 'Login to Save' : 'Save Options'}
-  >
-    <SaveIcon />
-  </IconButton>
+  <span>
+    <div
+      data-tip
+      data-for="save-tip"
+    >
+      <IconButton
+        disabled={disabled}
+      >
+        <SaveIcon />
+      </IconButton>
+    </div>
+    <ReactTooltip id="save-tip" effect="solid">
+      {disabled ? 'Login to Save' : 'Save Options'}
+    </ReactTooltip>
+  </span>
 );
 
 class SaveMenu extends React.Component {
