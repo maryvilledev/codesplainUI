@@ -289,7 +289,7 @@ SnippetArea.propTypes = {
   snippet: PropTypes.string.isRequired,
   snippetTitle: PropTypes.string.isRequired,
   permissions: CustomPropTypes.permissions.isRequired,
-  error: CustomPropTypes.error,
+  errors: CustomPropTypes.errors,
   snippetLanguage: PropTypes.string.isRequired,
   orgs: CustomPropTypes.orgs.isRequired,
   selectedOrg: PropTypes.string,
@@ -298,7 +298,7 @@ SnippetArea.propTypes = {
 SnippetArea.defaultProps = {
   openLine: -1,
   selectedOrg: '',
-  error: null,
+  errors: [],
 };
 
 const mapStateToProps = (state) => {
