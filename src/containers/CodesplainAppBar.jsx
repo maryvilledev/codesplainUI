@@ -74,10 +74,12 @@ export class CodesplainAppBar extends Component {
   }
 
   handleSignOut() {
+    const { router } = this.props;
     cookie.remove('token', { path: '/' });
     cookie.remove('username', { path: '/' });
     cookie.remove('userAvatarURL', { path: '/' });
     this.setState({ isLoggedIn: false });
+    router.push('/');
     location.reload();
   }
 
