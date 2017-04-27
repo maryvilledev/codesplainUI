@@ -18,6 +18,9 @@ const styles = {
     flex: '0 1 auto',
     justifyContent: 'flex-end',
   },
+  cancelButton: {
+    marginRight: '0.2rem',
+  },
 };
 
 const AnnotationDisplay = (props) => {
@@ -35,11 +38,12 @@ const AnnotationDisplay = (props) => {
     <div>
       <MarkdownDisplayer annotation={annotation} />
       <div style={styles.actionRow}>
-        <div>
+        <div style={styles.actionButtons}>
           <RaisedButton
             label="Close"
             onTouchTap={closeAnnotation}
             secondary
+            style={styles.cancelButton}
           />
           <RaisedButton
             label="Edit"

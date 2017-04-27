@@ -19,7 +19,12 @@ exports[`<AnnotationDisplay /> snapshots when an annotation after current one ex
         labelPosition="after"
         onTouchTap={[Function]}
         primary={false}
-        secondary={true} />
+        secondary={true}
+        style={
+          Object {
+            "marginRight": "0.2rem",
+          }
+        } />
       <RaisedButton
         disabled={false}
         fullWidth={false}
@@ -85,7 +90,12 @@ exports[`<AnnotationDisplay /> snapshots when an annotation before current one e
         labelPosition="after"
         onTouchTap={[Function]}
         primary={false}
-        secondary={true} />
+        secondary={true}
+        style={
+          Object {
+            "marginRight": "0.2rem",
+          }
+        } />
       <RaisedButton
         disabled={false}
         fullWidth={false}
@@ -151,7 +161,12 @@ exports[`<AnnotationDisplay /> snapshots when annotation exists before/after cur
         labelPosition="after"
         onTouchTap={[Function]}
         primary={false}
-        secondary={true} />
+        secondary={true}
+        style={
+          Object {
+            "marginRight": "0.2rem",
+          }
+        } />
       <RaisedButton
         disabled={false}
         fullWidth={false}
@@ -217,7 +232,12 @@ exports[`<AnnotationDisplay /> snapshots when no annotations before/after curren
         labelPosition="after"
         onTouchTap={[Function]}
         primary={false}
-        secondary={true} />
+        secondary={true}
+        style={
+          Object {
+            "marginRight": "0.2rem",
+          }
+        } />
       <RaisedButton
         disabled={false}
         fullWidth={false}

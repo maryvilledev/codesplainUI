@@ -53,6 +53,7 @@ exports[`<AnnotationEditor /> matches snapshot 1`] = `
           "flexBasis": "auto",
           "flexFlow": 1,
           "flexShrink": 1,
+          "marginRight": "0.2rem",
         }
       } />
     <RaisedButton
