@@ -69,7 +69,6 @@ class AnnotationEditor extends React.Component {
           >
             <TextField
               autoFocus
-              floatingLabelText="Annotation"
               fullWidth
               hintText="Enter your annotation here"
               multiLine
@@ -103,9 +102,9 @@ class AnnotationEditor extends React.Component {
           />
           <a
             href="http://commonmark.org/help"
+            rel="noopener noreferrer"
             style={styles.markdownIndicator}
             target="_blank"
-            rel="noopener noreferrer"
           >
             <img
               alt="Markdown Logo"

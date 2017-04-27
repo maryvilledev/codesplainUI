@@ -10,7 +10,6 @@ exports[`<AnnotationEditor /> matches snapshot 1`] = `
         autoFocus={true}
         disabled={false}
         floatingLabelFixed={false}
-        floatingLabelText="Annotation"
         fullWidth={true}
         hintText="Enter your annotation here"
         multiLine={true}
