@@ -11,6 +11,7 @@ const styles = {
   bottomContainer: {
     display: 'flex',
     flexFlow: 'row wrap',
+    alignItems: 'center',
   },
   button: {
     flexFlow: 1,
