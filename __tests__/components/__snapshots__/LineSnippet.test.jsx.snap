@@ -1,15 +1,24 @@
 exports[`<LanguageSelector /> matches snapshot 1`] = `
-<CodeMirror
-  options={
-    Object {
-      "cursorBlinkRate": -1,
-      "firstLineNumber": 1,
-      "lineNumbers": true,
-      "lineWrapping": true,
-      "readOnly": true,
-      "theme": "codesplain",
-    }
-  }
-  preserveScrollPosition={false}
-  value="foo bar baz" />
+<div>
+  <Paper
+    circle={false}
+    rounded={true}
+    transitionEnabled={true}
+    zDepth={1}>
+    <CodeMirror
+      options={
+        Object {
+          "cursorBlinkRate": -1,
+          "firstLineNumber": 1,
+          "lineNumbers": true,
+          "lineWrapping": true,
+          "readOnly": true,
+          "theme": "codesplain",
+        }
+      }
+      preserveScrollPosition={false}
+      value="foo bar baz" />
+  </Paper>
+  <br />
+</div>
 `;

@@ -1,0 +1,6 @@
+exports[`Reducer: notifications:  initialState matches snapshot 1`] = `
+Object {
+  "displaying": false,
+  "notifications": Array [],
+}
+`;

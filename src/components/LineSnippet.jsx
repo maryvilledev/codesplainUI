@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import CodeMirror from 'react-codemirror';
+import Paper from 'material-ui/Paper';
 
 // Base options for CodeMirror instances for a LineSnippet
 const baseOptions = {
@@ -25,11 +26,16 @@ class LineSnippet extends React.Component {
       firstLineNumber: lineNumber,
     };
     return (
-      <CodeMirror
-        ref={(cm) => { this.codeMirror = cm; }}
-        value={value}
-        options={codeMirrorOptions}
-      />
+      <div>
+        <Paper>
+          <CodeMirror
+            ref={(cm) => { this.codeMirror = cm; }}
+            value={value}
+            options={codeMirrorOptions}
+          />
+        </Paper>
+        <br />
+      </div>
     );
   }
 }

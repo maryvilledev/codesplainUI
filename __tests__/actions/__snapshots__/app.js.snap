@@ -22,3 +22,35 @@ Object {
   "type": "SET_SNIPPET_KEY",
 }
 `;
+
+exports[`Actions: App async actions saveNew() dispatches SAVE_FAILED if save failed 1`] = `
+Array [
+  Object {
+    "payload": "Saving...",
+    "type": "ADD_NOTIFICATION",
+  },
+  Object {
+    "payload": "Failed to save snippet; please try again",
+    "type": "ADD_NOTIFICATION",
+  },
+]
+`;
+
+exports[`Actions: App async actions saveNew() dispatches SAVE_SUCCEEDED if saved 1`] = `
+Array [
+  Object {
+    "payload": "Saving...",
+    "type": "ADD_NOTIFICATION",
+  },
+  Object {
+    "type": "CLOSE_NOTIFICATION",
+  },
+  Object {
+    "payload": "Codesplaination Saved!",
+    "type": "ADD_NOTIFICATION",
+  },
+  Object {
+    "type": "SAVE_SUCCEEDED",
+  },
+]
+`;
