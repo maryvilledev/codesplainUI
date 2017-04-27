@@ -2,11 +2,13 @@ import React from 'react';
 
 import AppBody from './AppBody';
 import CodesplainAppBar from './CodesplainAppBar';
+import NotificationSnackbar from '../components/NotificationSnackbar';
 
 export const App = () => (
   <div style={{ height: 'inherit' }}>
     <CodesplainAppBar />
     <AppBody />
+    <NotificationSnackbar />
   </div>
 );
 

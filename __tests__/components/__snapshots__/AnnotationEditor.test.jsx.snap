@@ -10,8 +10,12 @@ exports[`<AnnotationEditor /> matches snapshot 1`] = `
         autoFocus={true}
         disabled={false}
         floatingLabelFixed={false}
-        floatingLabelText="Annotation"
         fullWidth={true}
+        hintStyle={
+          Object {
+            "top": "1rem",
+          }
+        }
         hintText="Enter your annotation here"
         multiLine={true}
         name="annotationEditor"
@@ -23,21 +27,17 @@ exports[`<AnnotationEditor /> matches snapshot 1`] = `
     </Tab>
     <Tab
       label="Preview">
-      <MarkdownRenderer
-        markdown=""
-        options={
-          Object {
-            "highlight": [Function],
-            "langPrefix": "hljs language-",
-          }
-        } />
+      <MarkdownDisplayer
+        annotation="" />
     </Tab>
   </Tabs>
   <div
     style={
       Object {
+        "alignItems": "center",
         "display": "flex",
         "flexFlow": "row wrap",
+        "marginTop": "0.5rem",
       }
     }>
     <RaisedButton
@@ -53,6 +53,7 @@ exports[`<AnnotationEditor /> matches snapshot 1`] = `
           "flexBasis": "auto",
           "flexFlow": 1,
           "flexShrink": 1,
+          "marginRight": "0.2rem",
         }
       } />
     <RaisedButton

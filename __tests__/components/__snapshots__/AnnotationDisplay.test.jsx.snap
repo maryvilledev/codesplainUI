@@ -1,13 +1,7 @@
 exports[`<AnnotationDisplay /> snapshots when an annotation after current one exists matches snapshot 1`] = `
 <div>
-  <MarkdownRenderer
-    markdown=""
-    options={
-      Object {
-        "highlight": [Function],
-        "langPrefix": "hljs language-",
-      }
-    } />
+  <MarkdownDisplayer
+    annotation="" />
   <div
     style={
       Object {
@@ -25,7 +19,12 @@ exports[`<AnnotationDisplay /> snapshots when an annotation after current one ex
         labelPosition="after"
         onTouchTap={[Function]}
         primary={false}
-        secondary={true} />
+        secondary={true}
+        style={
+          Object {
+            "marginRight": "0.2rem",
+          }
+        } />
       <RaisedButton
         disabled={false}
         fullWidth={false}
@@ -72,14 +71,8 @@ exports[`<AnnotationDisplay /> snapshots when an annotation after current one ex
 
 exports[`<AnnotationDisplay /> snapshots when an annotation before current one exists matches snapshot 1`] = `
 <div>
-  <MarkdownRenderer
-    markdown=""
-    options={
-      Object {
-        "highlight": [Function],
-        "langPrefix": "hljs language-",
-      }
-    } />
+  <MarkdownDisplayer
+    annotation="" />
   <div
     style={
       Object {
@@ -97,7 +90,12 @@ exports[`<AnnotationDisplay /> snapshots when an annotation before current one e
         labelPosition="after"
         onTouchTap={[Function]}
         primary={false}
-        secondary={true} />
+        secondary={true}
+        style={
+          Object {
+            "marginRight": "0.2rem",
+          }
+        } />
       <RaisedButton
         disabled={false}
         fullWidth={false}
@@ -144,14 +142,8 @@ exports[`<AnnotationDisplay /> snapshots when an annotation before current one e
 
 exports[`<AnnotationDisplay /> snapshots when annotation exists before/after current one matches snapshot 1`] = `
 <div>
-  <MarkdownRenderer
-    markdown=""
-    options={
-      Object {
-        "highlight": [Function],
-        "langPrefix": "hljs language-",
-      }
-    } />
+  <MarkdownDisplayer
+    annotation="" />
   <div
     style={
       Object {
@@ -169,7 +161,12 @@ exports[`<AnnotationDisplay /> snapshots when annotation exists before/after cur
         labelPosition="after"
         onTouchTap={[Function]}
         primary={false}
-        secondary={true} />
+        secondary={true}
+        style={
+          Object {
+            "marginRight": "0.2rem",
+          }
+        } />
       <RaisedButton
         disabled={false}
         fullWidth={false}
@@ -216,14 +213,8 @@ exports[`<AnnotationDisplay /> snapshots when annotation exists before/after cur
 
 exports[`<AnnotationDisplay /> snapshots when no annotations before/after current one exist matches snapshot 1`] = `
 <div>
-  <MarkdownRenderer
-    markdown=""
-    options={
-      Object {
-        "highlight": [Function],
-        "langPrefix": "hljs language-",
-      }
-    } />
+  <MarkdownDisplayer
+    annotation="" />
   <div
     style={
       Object {
@@ -241,7 +232,12 @@ exports[`<AnnotationDisplay /> snapshots when no annotations before/after curren
         labelPosition="after"
         onTouchTap={[Function]}
         primary={false}
-        secondary={true} />
+        secondary={true}
+        style={
+          Object {
+            "marginRight": "0.2rem",
+          }
+        } />
       <RaisedButton
         disabled={false}
         fullWidth={false}

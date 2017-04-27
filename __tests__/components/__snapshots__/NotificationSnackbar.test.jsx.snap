@@ -1,0 +1,17 @@
+exports[`<NotificationSnackbar /> snapshots mapDispatchToProps matches snapshot 1`] = `undefined`;
+
+exports[`<NotificationSnackbar /> snapshots matches when it is displayed 1`] = `
+<Snackbar
+  autoHideDuration={5000}
+  message="Grasssssss tastes baddd"
+  onRequestClose={[Function]}
+  open={true} />
+`;
+
+exports[`<NotificationSnackbar /> snapshots matches when it is not displayed 1`] = `
+<Snackbar
+  autoHideDuration={5000}
+  message="Grasssssss tastes baddd"
+  onRequestClose={[Function]}
+  open={false} />
+`;

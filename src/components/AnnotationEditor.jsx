@@ -1,21 +1,31 @@
 import React, { PropTypes } from 'react';
-import MarkdownRenderer from 'react-markdown-renderer';
 import { Tab, Tabs } from 'material-ui/Tabs';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
-import markdownRendererOptions from '../util/markdown-renderer-options';
+import MarkdownDisplayer from './MarkdownDisplayer';
 import markdownLogo from '../../res/markdown-logo.svg';
 
 const styles = {
   bottomContainer: {
     display: 'flex',
     flexFlow: 'row wrap',
+    alignItems: 'center',
+    marginTop: '0.5rem',
   },
   button: {
     flexFlow: 1,
     flexShrink: 1,
     flexBasis: 'auto',
+  },
+  cancelButton: {
+    flexFlow: 1,
+    flexShrink: 1,
+    flexBasis: 'auto',
+    marginRight: '0.2rem',
+  },
+  hintText: {
+    top: '1rem',
   },
   markdownHintText: {
     color: '#d3d3d3',
@@ -60,6 +70,7 @@ class AnnotationEditor extends React.Component {
   }
 
   render() {
+    const { annotation } = this.state;
     return (
       <div>
         <Tabs>
@@ -69,22 +80,19 @@ class AnnotationEditor extends React.Component {
           >
             <TextField
               autoFocus
-              floatingLabelText="Annotation"
               fullWidth
+              hintStyle={styles.hintText}
               hintText="Enter your annotation here"
               multiLine
               name="annotationEditor"
               onChange={this.onAnnotationChange}
               ref={(textField) => { this.textField = textField; }}
               rows={4}
-              value={this.state.annotation}
+              value={annotation}
             />
           </Tab>
           <Tab label="Preview">
-            <MarkdownRenderer
-              markdown={this.state.annotation}
-              options={markdownRendererOptions}
-            />
+            <MarkdownDisplayer annotation={annotation} />
           </Tab>
         </Tabs>
         <div style={styles.bottomContainer}>
@@ -92,10 +100,10 @@ class AnnotationEditor extends React.Component {
             label="Cancel"
             onTouchTap={this.clearAnnotation}
             secondary
-            style={styles.button}
+            style={styles.cancelButton}
           />
           <RaisedButton
-            disabled={!this.state.annotation}
+            disabled={!annotation}
             label="Save"
             onTouchTap={this.saveAnnotation}
             primary
@@ -103,9 +111,9 @@ class AnnotationEditor extends React.Component {
           />
           <a
             href="http://commonmark.org/help"
+            rel="noopener noreferrer"
             style={styles.markdownIndicator}
             target="_blank"
-            rel="noopener noreferrer"
           >
             <img
               alt="Markdown Logo"

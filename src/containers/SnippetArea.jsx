@@ -1,11 +1,9 @@
+import React, { PropTypes } from 'react';
 import _ from 'lodash';
 import {
   Card,
   CardText,
-  Snackbar,
 } from 'material-ui';
-import React, { PropTypes } from 'react';
-import cookie from 'react-cookie';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
@@ -20,6 +18,7 @@ import {
   setSnippetTitle,
   toggleEditState,
 } from '../actions/app';
+import { addNotification } from '../actions/notifications';
 import { loadParser } from '../actions/parser';
 import { setPermissions } from '../actions/permissions';
 import { updateUserSnippets, switchOrg } from '../actions/user';
@@ -55,9 +54,6 @@ export class SnippetArea extends React.Component {
     super(props);
     this.state = {
       lockDialogOpen: false,
-      showSnackbar: false,
-      snackbarMessage: '',
-      titleErrorText: '',
     };
 
     this.handleCloseModal = this.handleCloseModal.bind(this);
@@ -70,19 +66,11 @@ export class SnippetArea extends React.Component {
     this.handleTitleChanged = this.handleTitleChanged.bind(this);
     this.handleToggleReadOnly = this.handleToggleReadOnly.bind(this);
     this.handleOrgChanged = this.handleOrgChanged.bind(this);
-    this.showSnackbar = this.showSnackbar.bind(this);
   }
 
   componentDidMount() {
     const { dispatch, snippetLanguage } = this.props;
     dispatch(loadParser(snippetLanguage));
-  }
-
-  showSnackbar(message) {
-    this.setState({
-      showSnackbar: true,
-      snackbarMessage: message,
-    });
   }
 
   handleLanguageChanged(ev, key, language) {
@@ -143,26 +131,15 @@ export class SnippetArea extends React.Component {
 
     // Make sure title is populated
     if (!snippetTitle) {
-      this.setState({ titleErrorText: 'This field is required' });
-      this.showSnackbar('Please enter a Snippet Name.');
+      dispatch(addNotification('Please enter a Snippet Name'));
       return;
     }
-    this.setState({ titleErrorText: '' });
 
-    // Make sure user is signed in
-    const username = cookie.load('username');
-    if (!username) {
-      this.showSnackbar('Please login to save snippets.');
-      return;
-    }
      // Update a pre-existing snippet
     if (id) {
       dispatch(saveExisting())
         .then(() => {
-          this.showSnackbar('Codesplaination Saved!');
           dispatch(updateUserSnippets());
-        }).catch(() => {
-          this.showSnackbar('Failed to save - an error occurred');
         });
     } else {
       // Save a new snippet
@@ -172,10 +149,7 @@ export class SnippetArea extends React.Component {
           router.push(`/${selectedOrg}/${snippetKey}`);
           // Update the snippet's key
           dispatch(setSnippetKey(snippetKey));
-          this.showSnackbar('Codesplaination Saved!');
           dispatch(updateUserSnippets());
-        }).catch(() => {
-          this.showSnackbar('Failed to save - an error occurred');
         });
     }
   }
@@ -186,18 +160,12 @@ export class SnippetArea extends React.Component {
       return;
     }
 
-    // Make sure user is signed in
-    const username = cookie.load('username');
-    if (!username) {
-      this.showSnackbar('Please login to save snippets.');
-      return;
-    }
-
     const {
       dispatch,
       router,
       selectedOrg,
     } = this.props;
+
     // Render the new title
     dispatch(setSnippetTitle(title));
 
@@ -208,15 +176,12 @@ export class SnippetArea extends React.Component {
         router.push(`/${selectedOrg}/${snippetKey}`);
         // Update the snippet's key
         dispatch(setSnippetKey(snippetKey));
-        this.showSnackbar('Codesplaination Saved!');
         const permissions = {
           canRead: true,
           canEdit: true,
         }; // Grant all permissions, this is now her file.
         dispatch(setPermissions(permissions));
         dispatch(updateUserSnippets());
-      }, () => {
-        this.showSnackbar('Failed to save - an error occurred');
       });
   }
 
@@ -236,13 +201,14 @@ export class SnippetArea extends React.Component {
       AST,
       filters,
       openLine,
+      orgs,
       permissions,
       readOnly,
+      selectedOrg,
       snippet,
       snippetLanguage,
       snippetTitle,
-      orgs,
-      selectedOrg,
+      username,
     } = this.props;
 
     const markedLines = Object.keys(annotations).map(key => Number(key));
@@ -263,7 +229,7 @@ export class SnippetArea extends React.Component {
             onTitleChange={this.handleTitleChanged}
             orgs={orgs}
             readOnly={readOnly}
-            saveEnabled={(cookie.load('username') !== undefined)}
+            saveEnabled={Boolean(username)}
             selectedOrg={selectedOrg}
             title={snippetTitle}
           />
@@ -283,12 +249,6 @@ export class SnippetArea extends React.Component {
             readOnly={readOnly}
             value={snippet}
           />
-          <Snackbar
-            autoHideDuration={3000}
-            message={this.state.snackbarMessage}
-            onRequestClose={() => this.setState({ showSnackbar: false })}
-            open={this.state.showSnackbar}
-          />
         </CardText>
       </Card>
     );
@@ -306,11 +266,13 @@ SnippetArea.propTypes = {
   snippetLanguage: PropTypes.string.isRequired,
   orgs: CustomPropTypes.orgs.isRequired,
   selectedOrg: PropTypes.string,
+  username: PropTypes.string,
 };
 
 SnippetArea.defaultProps = {
   openLine: -1,
   selectedOrg: '',
+  username: '',
 };
 
 const mapStateToProps = (state) => {
@@ -332,6 +294,7 @@ const mapStateToProps = (state) => {
     user: {
       orgs,
       selectedOrg,
+      username,
     },
   } = state;
   return {
@@ -346,6 +309,7 @@ const mapStateToProps = (state) => {
     permissions,
     orgs,
     selectedOrg,
+    username,
   };
 };
 
