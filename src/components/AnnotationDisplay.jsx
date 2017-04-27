@@ -1,11 +1,10 @@
 import React, { PropTypes } from 'react';
-import MarkdownRenderer from 'react-markdown-renderer';
 import RaisedButton from 'material-ui/RaisedButton';
 import IconButton from 'material-ui/IconButton';
 import Previous from 'material-ui/svg-icons/navigation/arrow-back';
 import Next from 'material-ui/svg-icons/navigation/arrow-forward';
 
-import markdownRendererOptions from '../util/markdown-renderer-options';
+import MarkdownDisplayer from './MarkdownDisplayer';
 
 const styles = {
   actionRow: {
@@ -34,10 +33,7 @@ const AnnotationDisplay = (props) => {
 
   return (
     <div>
-      <MarkdownRenderer
-        markdown={annotation}
-        options={markdownRendererOptions}
-      />
+      <MarkdownDisplayer annotation={annotation} />
       <div style={styles.actionRow}>
         <div>
           <RaisedButton

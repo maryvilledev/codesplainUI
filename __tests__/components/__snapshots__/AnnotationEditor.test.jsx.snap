@@ -27,14 +27,8 @@ exports[`<AnnotationEditor /> matches snapshot 1`] = `
     </Tab>
     <Tab
       label="Preview">
-      <MarkdownRenderer
-        markdown=""
-        options={
-          Object {
-            "highlight": [Function],
-            "langPrefix": "hljs language-",
-          }
-        } />
+      <MarkdownDisplayer
+        annotation="" />
     </Tab>
   </Tabs>
   <div
@@ -43,6 +37,7 @@ exports[`<AnnotationEditor /> matches snapshot 1`] = `
         "alignItems": "center",
         "display": "flex",
         "flexFlow": "row wrap",
+        "marginTop": "0.5rem",
       }
     }>
     <RaisedButton

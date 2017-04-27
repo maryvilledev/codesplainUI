@@ -1,10 +1,9 @@
 import React, { PropTypes } from 'react';
-import MarkdownRenderer from 'react-markdown-renderer';
 import { Tab, Tabs } from 'material-ui/Tabs';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
-import markdownRendererOptions from '../util/markdown-renderer-options';
+import MarkdownDisplayer from './MarkdownDisplayer';
 import markdownLogo from '../../res/markdown-logo.svg';
 
 const styles = {
@@ -12,6 +11,7 @@ const styles = {
     display: 'flex',
     flexFlow: 'row wrap',
     alignItems: 'center',
+    marginTop: '0.5rem',
   },
   button: {
     flexFlow: 1,
@@ -64,6 +64,7 @@ class AnnotationEditor extends React.Component {
   }
 
   render() {
+    const { annotation } = this.state;
     return (
       <div>
         <Tabs>
@@ -81,14 +82,11 @@ class AnnotationEditor extends React.Component {
               onChange={this.onAnnotationChange}
               ref={(textField) => { this.textField = textField; }}
               rows={4}
-              value={this.state.annotation}
+              value={annotation}
             />
           </Tab>
           <Tab label="Preview">
-            <MarkdownRenderer
-              markdown={this.state.annotation}
-              options={markdownRendererOptions}
-            />
+            <MarkdownDisplayer annotation={annotation} />
           </Tab>
         </Tabs>
         <div style={styles.bottomContainer}>
@@ -99,7 +97,7 @@ class AnnotationEditor extends React.Component {
             style={styles.button}
           />
           <RaisedButton
-            disabled={!this.state.annotation}
+            disabled={!annotation}
             label="Save"
             onTouchTap={this.saveAnnotation}
             primary
