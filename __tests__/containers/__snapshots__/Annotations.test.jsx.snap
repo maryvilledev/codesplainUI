@@ -1,0 +1,30 @@
+exports[`<Annotations /> mapDispatchToProps matches snapshot 1`] = `[Function]`;
+
+exports[`<Annotations /> snapshots matches when snippet is locked and an annotation is displayed 1`] = `
+<AnnotationPanel
+  annotation="annotation"
+  closeAnnotation={[Function]}
+  getNextAnnotation={[Function]}
+  getPreviousAnnotation={[Function]}
+  hasNextAnnotation={false}
+  hasPrevAnnotation={false}
+  lineAnnotated={
+    Object {
+      "lineNumber": 1,
+      "lineText": "line of code",
+    }
+  }
+  saveAnnotation={[Function]} />
+`;
+
+exports[`<Annotations /> snapshots matches when snippet is locked and no annotation is displayed 1`] = `
+<CardText>
+  Click on a line number to add an annotation or display one
+</CardText>
+`;
+
+exports[`<Annotations /> snapshots matches when snippet is not locked 1`] = `
+<CardText>
+  Lock this snippet to add annotations
+</CardText>
+`;

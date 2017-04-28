@@ -29,7 +29,6 @@ export class Annotations extends React.Component {
       hasPreceedingAnnotation: false,
       hasProceedingAnnotation: false,
     };
-    this.handleCloseAnnotation = this.handleCloseAnnotation.bind(this);
     this.handleSaveAnnotation = this.handleSaveAnnotation.bind(this);
     this.getPreviousAnnotation = this.getPreviousAnnotation.bind(this);
     this.getNextAnnotation = this.getNextAnnotation.bind(this);
@@ -55,7 +54,7 @@ export class Annotations extends React.Component {
         lineNumber: currentLineNumber,
       },
       annotations,
-      dispatch,
+      displayAnnotationPanel,
     } = this.props;
 
     // Get the annotated lines
@@ -67,7 +66,7 @@ export class Annotations extends React.Component {
       lineNumber: previous.lineNumber,
       lineText: previous.lineText,
     };
-    dispatch(openAnnotationPanel(toDisplay));
+    displayAnnotationPanel(toDisplay);
   }
 
   getNextAnnotation() {
@@ -76,7 +75,7 @@ export class Annotations extends React.Component {
         lineNumber: currentLineNumber,
       },
       annotations,
-      dispatch,
+      displayAnnotationPanel,
     } = this.props;
 
     // Get the annotated lines
@@ -88,18 +87,14 @@ export class Annotations extends React.Component {
       lineNumber: next.lineNumber,
       lineText: next.lineText,
     };
-    dispatch(openAnnotationPanel(toDisplay));
-  }
-
-  handleCloseAnnotation() {
-    const { dispatch } = this.props;
-    dispatch(closeAnnotationPanel());
+    displayAnnotationPanel(toDisplay);
   }
 
   handleSaveAnnotation(annotation) {
     const {
-      dispatch,
       lineAnnotated,
+      saveAnnotationToState,
+      saveExistingSnippet,
       snippetKey,
     } = this.props;
 
@@ -108,10 +103,10 @@ export class Annotations extends React.Component {
       ...lineAnnotated,
     };
 
-    dispatch(saveAnnotation(annotationData));
+    saveAnnotationToState(annotationData);
     // Save the snippet only if this snippet has already been saved.
     if (snippetKey) {
-      dispatch(saveExisting());
+      saveExistingSnippet();
     }
   }
 
@@ -119,6 +114,7 @@ export class Annotations extends React.Component {
     const {
       annotation,
       isDisplayingAnnotation,
+      hideAnnotationPanel,
       lineAnnotated,
       readOnly,
     } = this.props;
@@ -141,7 +137,7 @@ export class Annotations extends React.Component {
         annotation={annotation}
         lineAnnotated={lineAnnotated}
         saveAnnotation={this.handleSaveAnnotation}
-        closeAnnotation={this.handleCloseAnnotation}
+        closeAnnotation={hideAnnotationPanel}
         getNextAnnotation={this.getNextAnnotation}
         getPreviousAnnotation={this.getPreviousAnnotation}
         hasPrevAnnotation={hasPreceedingAnnotation}
@@ -154,9 +150,13 @@ export class Annotations extends React.Component {
 Annotations.propTypes = {
   annotation: PropTypes.string.isRequired,
   annotations: CustomPropTypes.annotations.isRequired,
+  displayAnnotationPanel: PropTypes.func.isRequired,
+  hideAnnotationPanel: PropTypes.func.isRequired,
   isDisplayingAnnotation: PropTypes.bool.isRequired,
-  readOnly: PropTypes.bool.isRequired,
   lineAnnotated: CustomPropTypes.lineAnnotated.isRequired,
+  readOnly: PropTypes.bool.isRequired,
+  saveAnnotationToState: PropTypes.func.isRequired,
+  saveExistingSnippet: PropTypes.func.isRequired,
   snippetKey: PropTypes.string.isRequired,
 };
 
@@ -185,4 +185,19 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default withRouter(connect(mapStateToProps)(Annotations));
+export const mapDispatchToProps = dispatch => ({
+  displayAnnotationPanel: (toDisplay) => {
+    dispatch(openAnnotationPanel(toDisplay));
+  },
+  hideAnnotationPanel: () => {
+    dispatch(closeAnnotationPanel());
+  },
+  saveAnnotationToState: (annotation) => {
+    dispatch(saveAnnotation(annotation));
+  },
+  saveExistingSnippet: () => {
+    dispatch(saveExisting());
+  },
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Annotations));
