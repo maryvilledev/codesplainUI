@@ -12,25 +12,51 @@ const styles = {
   buttonContainer: {
     height: '48px',
   },
+  inlineBlock: {
+    display: 'inline-block',
+  },
 };
 
 const LockButton = ({ onClick, readOnly }) => {
   const lockIcon = readOnly ? <Lock /> : <LockOpen />;
-  const toolTipText = readOnly ? 'Switching back to edit mode not supported yet' : 'Click to lock the snippet (this will prevent further changes.)';
+
+  // These should be left as spans with breaks, or the tool
+  // tip's positioning will sometimes be off
+  const toolTipText = readOnly ?
+    (<span>
+      Switching back to edit mode
+      <br />
+      not supported yet
+    </span>)
+    :
+    (<span>
+      Click to lock the snippet
+      <br />
+      (this will prevent further changes.)
+    </span>);
+
   return (
     <span style={styles.buttonContainer}>
-      <IconButton
-        id="lockButton"
-        disabled={readOnly}
+      <div
+        style={styles.inlineBlock}
         data-tip
         data-for="lock-tip"
-        label={`Switch to ${readOnly ? 'edit' : 'read-only'} mode`}
-        onTouchTap={onClick}
-        style={styles.button}
       >
-        {lockIcon}
-      </IconButton>
-      <ReactTooltip id="lock-tip" effect="solid">
+        <IconButton
+          id="lockButton"
+          disabled={readOnly}
+          label={`Switch to ${readOnly ? 'edit' : 'read-only'} mode`}
+          onTouchTap={onClick}
+          style={styles.button}
+        >
+          {lockIcon}
+        </IconButton>
+      </div>
+      <ReactTooltip
+        id="lock-tip"
+        effect="solid"
+        place="bottom"
+      >
         {toolTipText}
       </ReactTooltip>
     </span>

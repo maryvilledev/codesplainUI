@@ -17,25 +17,16 @@ const styles = {
   container: {
     height: '48px',
   },
+  inlineBlock: {
+    display: 'inline-block',
+  },
 };
 
 const saveIconButton = disabled => (
-  <span>
-    <div
-      data-tip
-      data-for="save-tip"
-    >
-      <IconButton
-        disabled={disabled}
-      >
-        <SaveIcon />
-      </IconButton>
-    </div>
-    <ReactTooltip id="save-tip" effect="solid">
-      {disabled ? 'Login to Save' : 'Save Options'}
-    </ReactTooltip>
-  </span>
-);
+  <IconButton disabled={disabled}>
+    <SaveIcon />
+  </IconButton>
+)
 
 class SaveMenu extends React.Component {
   constructor(props) {
@@ -54,21 +45,41 @@ class SaveMenu extends React.Component {
       enabled,
       onSaveClick,
     } = this.props;
+
+    // These should be strings, not spans, or the tool tip's
+    // positioning will sometimes be off
+    const toolTipText = enabled ? 'Save Options' : 'Login to Save';
+
     return (
-      <IconMenu
-        id="menu"
-        iconButtonElement={saveIconButton(!enabled)}
-      >
-        <MenuItem
-          onTouchTap={onSaveClick}
-          disabled={!canSave}
-          primaryText="Save"
-        />
-        <MenuItem
-          onTouchTap={() => this.setState({ showSaveAsDialog: true })}
-          primaryText="Save As"
-        />
-      </IconMenu>
+      <span>
+        <div
+          style={styles.inlineBlock}
+          data-tip
+          data-for="save-tip"
+        >
+          <IconMenu
+            id="menu"
+            iconButtonElement={saveIconButton(!enabled)}
+          >
+            <MenuItem
+              onTouchTap={onSaveClick}
+              disabled={!canSave}
+              primaryText="Save"
+            />
+            <MenuItem
+              onTouchTap={() => this.setState({ showSaveAsDialog: true })}
+              primaryText="Save As"
+            />
+          </IconMenu>
+        </div>
+        <ReactTooltip
+          id="save-tip"
+          effect="solid"
+          place="bottom"
+        >
+          {toolTipText}
+        </ReactTooltip>
+      </span>
     );
   }
 
