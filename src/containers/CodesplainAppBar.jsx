@@ -50,8 +50,8 @@ export class CodesplainAppBar extends Component {
   }
 
   componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch(updateUserSnippets());
+    const { fetchUserSnippets } = this.props;
+    fetchUserSnippets();
   }
 
   onLoginClick() {
@@ -103,14 +103,15 @@ export class CodesplainAppBar extends Component {
 
   redirectToHomePage() {
     const {
-      dispatch,
+      hideAnnotationPanel,
+      resetAppState,
       router,
     } = this.props;
 
     // Reset state
-    dispatch(resetState());
+    resetAppState();
     // Close the annotation panel
-    dispatch(closeAnnotationPanel());
+    hideAnnotationPanel();
     // If the user is not already at the home page, redirect them to it
     if (router.location.pathname !== '/') {
       router.push('/');
@@ -182,13 +183,22 @@ export class CodesplainAppBar extends Component {
 }
 
 CodesplainAppBar.propTypes = {
+  fetchUserSnippets: PropTypes.func.isRequired,
   hasUnsavedChanges: PropTypes.bool.isRequired,
+  hideAnnotationPanel: PropTypes.func.isRequired,
+  resetAppState: PropTypes.func.isRequired,
   userSnippets: CustomPropTypes.snippets,
 };
 
 CodesplainAppBar.defaultProps = {
   userSnippets: {},
 };
+
+export const mapDispatchToProps = dispatch => ({
+  fetchUserSnippets: () => { dispatch(updateUserSnippets()); },
+  hideAnnotationPanel: () => { dispatch(closeAnnotationPanel()); },
+  resetAppState: () => { dispatch(resetState()); },
+});
 
 const mapStateToProps = (state) => {
   const {
@@ -204,4 +214,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default withRouter(connect(mapStateToProps)(CodesplainAppBar));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CodesplainAppBar));
