@@ -1,4 +1,4 @@
-exports[`<CodesplainAppBar /> mapDispatchToProps matches snapshot 1`] = `[Function]`;
+exports[`<CodesplainAppBar /> snapshot tests mapDispatchToProps matches snapshot 1`] = `[Function]`;
 
 exports[`<CodesplainAppBar /> snapshot tests user is logged in 1`] = `
 <div>

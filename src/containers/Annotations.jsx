@@ -4,8 +4,8 @@ import { CardText } from 'material-ui/Card';
 import { withRouter } from 'react-router';
 
 import {
-  openAnnotationPanel,
   closeAnnotationPanel,
+  openAnnotationPanel,
 } from '../actions/annotation';
 import {
   saveAnnotation,
@@ -29,9 +29,9 @@ export class Annotations extends React.Component {
       hasPreceedingAnnotation: false,
       hasProceedingAnnotation: false,
     };
-    this.handleSaveAnnotation = this.handleSaveAnnotation.bind(this);
-    this.getPreviousAnnotation = this.getPreviousAnnotation.bind(this);
     this.getNextAnnotation = this.getNextAnnotation.bind(this);
+    this.getPreviousAnnotation = this.getPreviousAnnotation.bind(this);
+    this.handleSaveAnnotation = this.handleSaveAnnotation.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -113,15 +113,15 @@ export class Annotations extends React.Component {
   render() {
     const {
       annotation,
-      isDisplayingAnnotation,
       hideAnnotationPanel,
+      isDisplayingAnnotation,
       lineAnnotated,
       readOnly,
     } = this.props;
 
     const {
-      hasProceedingAnnotation,
       hasPreceedingAnnotation,
+      hasProceedingAnnotation,
     } = this.state;
 
     if (!isDisplayingAnnotation) {
@@ -135,13 +135,13 @@ export class Annotations extends React.Component {
     return (
       <AnnotationPanel
         annotation={annotation}
-        lineAnnotated={lineAnnotated}
-        saveAnnotation={this.handleSaveAnnotation}
         closeAnnotation={hideAnnotationPanel}
         getNextAnnotation={this.getNextAnnotation}
         getPreviousAnnotation={this.getPreviousAnnotation}
-        hasPrevAnnotation={hasPreceedingAnnotation}
         hasNextAnnotation={hasProceedingAnnotation}
+        hasPrevAnnotation={hasPreceedingAnnotation}
+        lineAnnotated={lineAnnotated}
+        saveAnnotation={this.handleSaveAnnotation}
       />
     );
   }

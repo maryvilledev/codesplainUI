@@ -22,6 +22,16 @@ const setup = (props = {}) => (
 );
 
 describe('<CodesplainAppBar />', () => {
+  afterEach(() => {
+    const {
+      fetchUserSnippets,
+      hideAnnotationPanel,
+      resetAppState,
+    } = defaultProps;
+    resetAppState.mockClear();
+    hideAnnotationPanel.mockClear();
+    fetchUserSnippets.mockClear();
+  });
   describe('snapshot tests', () => {
     afterEach(() => {
       cookie.remove('token');
@@ -37,11 +47,11 @@ describe('<CodesplainAppBar />', () => {
       const wrapper = setup();
       expect(shallowToJson(wrapper)).toMatchSnapshot();
     });
-  });
 
-  describe('mapDispatchToProps', () => {
-    it('matches snapshot', () => {
-      expect(mapDispatchToProps).toMatchSnapshot();
+    describe('mapDispatchToProps', () => {
+      it('matches snapshot', () => {
+        expect(mapDispatchToProps).toMatchSnapshot();
+      });
     });
   });
 });

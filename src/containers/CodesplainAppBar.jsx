@@ -214,4 +214,9 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CodesplainAppBar));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  )(CodesplainAppBar),
+);
