@@ -1,0 +1,45 @@
+exports[`<FilterArea /> snapshots mapDispatchToProps matches snapshot 1`] = `[Function]`;
+
+exports[`<FilterArea /> snapshots matches when there are filters 1`] = `
+<Card
+  expandable={false}
+  expanded={null}
+  initiallyExpanded={false}>
+  <CardTitle
+    title="Filters" />
+  <CardText>
+    <RulesSelector
+      filters={
+        Object {
+          "morty": Object {
+            "prettyTokenName": "Morty Smith",
+            "selected": false,
+          },
+          "rick": Object {
+            "prettyTokenName": "Rick Sanchez",
+            "selected": false,
+          },
+        }
+      }
+      onRuleSelected={[Function]} />
+  </CardText>
+  <FilterAreaActions
+    clearAll={[Function]}
+    selectAll={[Function]} />
+</Card>
+`;
+
+exports[`<FilterArea /> snapshots matches when there are no filters 1`] = `
+<Card
+  expandable={false}
+  expanded={null}
+  initiallyExpanded={false}>
+  <CardTitle
+    title="Filters" />
+  <CardText>
+    <RulesSelector
+      filters={Object {}}
+      onRuleSelected={[Function]} />
+  </CardText>
+</Card>
+`;
