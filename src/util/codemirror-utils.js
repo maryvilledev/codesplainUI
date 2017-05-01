@@ -5,6 +5,7 @@ let ignoredRules;
 
 const parserCodeMirrorModes = {
   python3: 'python',
+  java8: 'java',
 };
 
 export const setRules = (newRules) => {
