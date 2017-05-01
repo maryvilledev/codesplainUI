@@ -8,6 +8,18 @@ describe('Reducer: User', () => {
     });
   });
 
+  it('handles ADD_ORGANIZATIONS', () => {
+    const orgs = ['Galactic Federation', 'Council Of Ricks'];
+    const state = {
+      orgs: [],
+    };
+    const expected = {
+      ...state,
+      orgs,
+    };
+    expect(reducer(state, actions.addOrganizations(orgs))).toEqual(expected);
+  });
+
   it('handles SAVE_USERNAME', () => {
     const username = 'username';
     const action = {

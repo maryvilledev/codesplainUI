@@ -20,6 +20,12 @@ const user = (state = initialState, action) => {
       orgs: state.orgs.slice().concat(org),
     };
   }
+  case actions.ADD_ORGANIZATIONS: {
+    return {
+      ...state,
+      orgs: action.payload,
+    };
+  }
   case actions.SWITCH_ORG: {
     const org = action.payload;
     if (state.orgs.indexOf(org) !== -1) {

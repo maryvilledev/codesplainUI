@@ -14,6 +14,7 @@ export const UPDATE_USER_SNIPPETS_STARTED = 'UPDATE_USER_SNIPPETS_STARTED';
 export const UPDATE_USER_SNIPPETS_SUCCEEDED = 'UPDATE_USER_SNIPPETS_SUCCEEDED';
 export const UPDATE_USER_SNIPPETS_FAILED = 'UPDATE_USER_SNIPPETS_FAILED';
 export const UPDATE_USER_SNIPPETS = 'UPDATE_USER_SNIPPETS';
+export const ADD_ORGANIZATIONS = 'ADD_ORGANIZATIONS';
 export const ADD_ORG = 'ADD_ORG';
 export const SWITCH_ORG = 'SWITCH_ORG';
 export const SAVE_USERNAME = 'SAVE_USERNAME';
@@ -24,6 +25,11 @@ export const RESTORE_USER_CREDENTIALS = 'RESTORE_USER_CREDENTIALS';
 export const addOrg = org => ({
   type: ADD_ORG,
   payload: org,
+});
+
+export const addOrganizations = organizations => ({
+  type: ADD_ORGANIZATIONS,
+  payload: organizations,
 });
 
 export const switchOrg = org => ({

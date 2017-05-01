@@ -16,6 +16,16 @@ describe('Actions: User', () => {
       expect(actions.addOrg(org)).toEqual(expected);
     });
   });
+  describe('ADD_ORGANIZATIONS', () => {
+    it('creates correct action object', () => {
+      const organizations = ['Galactic Federation', 'Council Of Ricks'];
+      const expected = {
+        type: actions.ADD_ORGANIZATIONS,
+        payload: organizations,
+      };
+      expect(actions.addOrganizations(organizations)).toEqual(expected);
+    });
+  });
   describe('SWITCH_ORG', () => {
     it('creates an action to switch the org', () => {
       const org = 'galactic-federation';
