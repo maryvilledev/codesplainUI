@@ -77,6 +77,7 @@ export class CodesplainAppBar extends Component {
     const { router } = this.props;
     cookie.remove('token', { path: '/' });
     cookie.remove('username', { path: '/' });
+    cookie.remove('orgs', { path: '/' });
     cookie.remove('userAvatarURL', { path: '/' });
     this.setState({ isLoggedIn: false });
     router.push('/');
