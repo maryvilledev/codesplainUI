@@ -10,6 +10,7 @@ import cookie from 'react-cookie';
 
 import {
   addOrganizations,
+  fetchOrgsSnippets,
   restoreUserCredentials,
   switchOrg,
   updateUserSnippets,
@@ -62,11 +63,12 @@ export class CodesplainAppBar extends Component {
       // Exit if user isn't signed in
       return;
     }
-    const savedOrganizations = cookie.load('orgs').split();
+    const savedOrganizations = cookie.load('orgs').split('%20');
     dispatch(restoreUserCredentials(token, username));
     dispatch(addOrganizations([username].concat(savedOrganizations)));
     dispatch(switchOrg(username));
     dispatch(updateUserSnippets());
+    dispatch(fetchOrgsSnippets());
   }
 
   onLoginClick() {

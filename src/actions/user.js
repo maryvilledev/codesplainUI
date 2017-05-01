@@ -1,4 +1,5 @@
 import axios from 'axios';
+import _ from 'lodash';
 
 import { makeSaveEndpointUrl } from '../util/requests';
 
@@ -93,6 +94,27 @@ export const updateUserSnippets = () => (dispatch, getState) => {
     .catch(() => {
       dispatch(updateUserSnippetsFailed());
     });
+};
+
+export const fetchOrgsSnippets = () => (dispatch, getState) => {
+  const {
+    token,
+    username,
+    orgs,
+  } = getState().user;
+  const headers = {
+    Authorization: `token ${token}`,
+  };
+  // Remove the username from the org list
+  const orgRequests = _.without(orgs, username)
+    .map(org => axios.get(makeSaveEndpointUrl(org), { headers }));
+  console.log('orgRequests', orgRequests);
+  axios.all(orgRequests)
+    .then(responses => (
+      responses.reduce((orgSnippets, response) => {
+        console.log('response', response);
+      }, {})
+    ));
 };
 
 export const fetchAccessToken = authCode => () => {

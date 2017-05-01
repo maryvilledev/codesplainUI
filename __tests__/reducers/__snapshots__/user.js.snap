@@ -1,5 +1,6 @@
 exports[`Reducer: User initialState matches snapshot 1`] = `
 Object {
+  "orgSnippets": Object {},
   "orgs": Array [],
   "selectedOrg": null,
   "token": "",

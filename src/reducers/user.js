@@ -8,6 +8,7 @@ export const initialState = {
   token: '',
   username: '',
   userSnippets: {},
+  orgSnippets: {},
 };
 
 const user = (state = initialState, action) => {
