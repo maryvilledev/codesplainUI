@@ -69,7 +69,6 @@ export const updateUserSnippets = () => (dispatch, getState) => {
       username,
     },
   } = getState();
-
   // Fetch the user's snippet meta data and save it
   const headers = {
     Accept: 'application/json',

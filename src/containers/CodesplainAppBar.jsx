@@ -8,7 +8,11 @@ import {
 import { withRouter } from 'react-router';
 import cookie from 'react-cookie';
 
-import { updateUserSnippets } from '../actions/user';
+import {
+  saveAccessToken,
+  saveUsername,
+  updateUserSnippets,
+} from '../actions/user';
 import { resetState } from '../actions/app';
 import { closeAnnotationPanel } from '../actions/annotation';
 import LoginButton from '../components/buttons/LoginButton';
@@ -51,6 +55,10 @@ export class CodesplainAppBar extends Component {
 
   componentDidMount() {
     const { dispatch } = this.props;
+    const token = cookie.load('token');
+    const username = cookie.load('username');
+    dispatch(saveAccessToken(token));
+    dispatch(saveUsername(username));
     dispatch(updateUserSnippets());
   }
 
