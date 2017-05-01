@@ -63,8 +63,8 @@ export class Auth extends React.Component {
         dispatch(saveAccessToken(token));
         cookie.save('token', token, { path: '/' });
         cookie.save('orgs', _.join(orgs, ' '), { path: '/' });
+        return dispatch(fetchUserInfo());
       })
-      .then(() => dispatch(fetchUserInfo()))
       .then((res) => {
         const { login: username, avatar_url: userAvatarURL } = res.data;
         dispatch(saveUsername(username));
