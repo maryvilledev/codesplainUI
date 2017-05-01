@@ -11,7 +11,7 @@ describe('Actions: User', () => {
       const org = 'galactic-federation';
       const expected = {
         type: actions.ADD_ORG,
-        payload: org
+        payload: org,
       };
       expect(actions.addOrg(org)).toEqual(expected);
     });
@@ -21,7 +21,7 @@ describe('Actions: User', () => {
       const org = 'galactic-federation';
       const expected = {
         type: actions.SWITCH_ORG,
-        payload: org
+        payload: org,
       };
       expect(actions.switchOrg(org)).toEqual(expected);
     });
@@ -45,7 +45,7 @@ describe('Actions: User', () => {
     });
     it('creates correct CLEAR_USER_CREDENTIALS object', () => {
       const expected = {
-        type: actions.CLEAR_USER_CREDENTIALS
+        type: actions.CLEAR_USER_CREDENTIALS,
       };
       expect(actions.clearUserCredentials()).toEqual(expected);
     });
@@ -85,14 +85,12 @@ describe('Actions: User', () => {
               },
             },
           });
-          cookie.save('token', '1234', { path: '/' });
-          cookie.save('username', 'foo', { path: '/' });
           const expectedActions = [
             { type: actions.UPDATE_USER_SNIPPETS },
             { type: actions.UPDATE_USER_SNIPPETS_STARTED },
             { type: actions.UPDATE_USER_SNIPPETS_SUCCEEDED },
           ];
-          const store = mockStore({});
+          const store = mockStore({ user: { token: '1234', username: 'foo' } });
           return store.dispatch(actions.updateUserSnippets())
             .then(() => { // return of async actions
               expect(store.getActions()).toEqual(expectedActions);
@@ -106,13 +104,11 @@ describe('Actions: User', () => {
             status: 400,
           });
         });
-        cookie.save('token', '1234', { path: '/' });
-        cookie.save('username', 'foo', { path: '/' });
         const expectedActions = [
           { type: actions.UPDATE_USER_SNIPPETS_STARTED },
           { type: actions.UPDATE_USER_SNIPPETS_FAILED },
         ];
-        const store = mockStore({});
+        const store = mockStore({ user: { token: '1234', username: 'foo' } });
         return store.dispatch(actions.updateUserSnippets())
           .catch(() => {
             expect(store.getActions()).toEqual(expectedActions);

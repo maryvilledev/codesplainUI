@@ -1,5 +1,4 @@
 import axios from 'axios';
-import cookie from 'react-cookie';
 
 import { makeSaveEndpointUrl } from '../util/requests';
 
@@ -62,10 +61,14 @@ export const updateUserSnippetsFailed = () => ({
   type: UPDATE_USER_SNIPPETS_FAILED,
 });
 
-export const updateUserSnippets = () => (dispatch) => {
+export const updateUserSnippets = () => (dispatch, getState) => {
   // Load requisite cookies, return Promise if they aren't present
-  const token = cookie.load('token');
-  const username = cookie.load('username');
+  const {
+    user: {
+      token,
+      username,
+    },
+  } = getState();
 
   // Fetch the user's snippet meta data and save it
   const headers = {
