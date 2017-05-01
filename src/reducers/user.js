@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 import * as actions from '../actions/user';
 
 export const initialState = {
@@ -11,19 +13,15 @@ export const initialState = {
 const user = (state = initialState, action) => {
   switch (action.type) {
   case actions.ADD_ORG: {
-    const org = action.payload;
-    if (state.orgs.indexOf(org) >= 0) {
-      return state;
-    }
     return {
       ...state,
-      orgs: state.orgs.slice().concat(org),
+      orgs: _.union(state.orgs, [action.payload]),
     };
   }
   case actions.ADD_ORGANIZATIONS: {
     return {
       ...state,
-      orgs: action.payload,
+      orgs: _.union(state.orgs, action.payload),
     };
   }
   case actions.SWITCH_ORG: {

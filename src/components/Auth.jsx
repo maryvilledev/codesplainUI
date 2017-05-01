@@ -5,9 +5,10 @@ import { withRouter } from 'react-router';
 import _ from 'lodash';
 
 import {
+  addOrganizations,
   fetchAccessToken,
-  saveAccessToken,
   fetchUserInfo,
+  saveAccessToken,
   saveUsername,
 } from '../actions/user';
 import Loading from '../components/Loading';
@@ -62,6 +63,7 @@ export class Auth extends React.Component {
         const { token, orgs } = res.data;
         dispatch(saveAccessToken(token));
         cookie.save('token', token, { path: '/' });
+        dispatch(addOrganizations(_.uniq(orgs)));
         cookie.save('orgs', _.join(orgs, ' '), { path: '/' });
         return dispatch(fetchUserInfo());
       })

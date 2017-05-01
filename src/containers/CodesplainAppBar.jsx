@@ -9,8 +9,9 @@ import { withRouter } from 'react-router';
 import cookie from 'react-cookie';
 
 import {
-  saveAccessToken,
-  saveUsername,
+  addOrganizations,
+  restoreUserCredentials,
+  switchOrg,
   updateUserSnippets,
 } from '../actions/user';
 import { resetState } from '../actions/app';
@@ -57,8 +58,14 @@ export class CodesplainAppBar extends Component {
     const { dispatch } = this.props;
     const token = cookie.load('token');
     const username = cookie.load('username');
-    dispatch(saveAccessToken(token));
-    dispatch(saveUsername(username));
+    if (!token || !username) {
+      // Exit if user isn't signed in
+      return;
+    }
+    const savedOrganizations = cookie.load('orgs').split();
+    dispatch(restoreUserCredentials(token, username));
+    dispatch(addOrganizations([username].concat(savedOrganizations)));
+    dispatch(switchOrg(username));
     dispatch(updateUserSnippets());
   }
 

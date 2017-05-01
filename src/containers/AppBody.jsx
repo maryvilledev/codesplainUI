@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Card } from 'material-ui';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
@@ -13,7 +13,6 @@ import {
   restoreState,
 } from '../actions/app';
 import { setPermissions } from '../actions/permissions';
-import { restoreUserCredentials, addOrg, switchOrg } from '../actions/user';
 import NotFound from '../components/NotFound';
 import { removeDeprecatedFiltersFromState } from '../util/codemirror-utils';
 import { sanitizeKey } from '../util/requests';
@@ -42,24 +41,14 @@ export class AppBody extends Component {
     const {
       dispatch,
       router,
+      username,
     } = this.props;
     const {
       id: snippetKey,
-      username,
+      username: snippetOwner,
     } = router.params;
 
-    // If the user is authenticated, add her Github to the orgs, and make it
-    // the selected value
-    if (cookie.load('token') && cookie.load('username')) {
-      const savedUsername = cookie.load('username');
-      dispatch(addOrg(savedUsername));
-      dispatch(switchOrg(savedUsername));
-
-      // If they are a member of any organizations, add to list as well
-      cookie.load('orgs').split().forEach(org => dispatch(addOrg(org)));
-    }
-
-    if (!username && !snippetKey) {
+    if (!snippetOwner && !snippetKey) {
       // This is a new snippet for the current user, enable all permissions
       const permissions = {
         canRead: true,
@@ -77,10 +66,7 @@ export class AppBody extends Component {
       return;
     }
 
-    // Restore the user's credentials into state
-    dispatch(restoreUserCredentials(cookie.load('token'), cookie.load('username')));
-
-    dispatch(loadSnippet(username, snippetKey))
+    dispatch(loadSnippet(snippetOwner, snippetKey))
       .then((res) => {
         // Normalize the app state received from S3
         const appState = setDefaults(removeDeprecatedFiltersFromState(res.data));
@@ -94,14 +80,14 @@ export class AppBody extends Component {
 
         const permissions = {
           canRead: true,
-          // Currently, users may only edit a file they own
-          canEdit: (username === cookie.load('username')),
+          // Only the owner of a snippet may edit it.
+          canEdit: (snippetOwner === username),
         };
         dispatch(setPermissions(permissions));
 
         // Reroute if using legacy url
         // So /:username/snippets/:id -> /:username/:id
-        const nextRoute = `/${username}/${sanitizeKey(snippetKey)}`;
+        const nextRoute = `/${snippetOwner}/${sanitizeKey(snippetKey)}`;
         if (router.location.pathname !== nextRoute) {
           router.push(nextRoute);
         }
@@ -149,4 +135,23 @@ export class AppBody extends Component {
   }
 }
 
-export default withRouter(connect()(AppBody));
+AppBody.propTypes = {
+  username: PropTypes.string,
+};
+
+AppBody.defaultProps = {
+  username: '',
+};
+
+const mapStateToProps = (state) => {
+  const {
+    user: {
+      username,
+    },
+  } = state;
+  return {
+    username,
+  };
+};
+
+export default withRouter(connect(mapStateToProps)(AppBody));
