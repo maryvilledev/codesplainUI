@@ -56,7 +56,7 @@ export class AppBody extends Component {
       dispatch(switchOrg(savedUsername));
 
       // If they are a member of any organizations, add to list as well
-      cookie.load('orgs').split().forEach(org => dispatch(addOrg(org)));
+      cookie.load('orgs').split(' ').forEach(org => dispatch(addOrg(org)));
     }
 
     if (!username && !snippetKey) {
