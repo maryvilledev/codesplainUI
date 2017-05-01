@@ -31,11 +31,11 @@ exports[`<LanguageSelector /> snapshot tests matches snapshot when it is disable
     }
     checked={false}
     desktop={false}
-    disabled={true}
+    disabled={false}
     focusState="none"
     insetChildren={false}
     primaryText="Java"
-    value="java" />
+    value="java8" />
 </SelectField>
 `;
 
@@ -72,10 +72,10 @@ exports[`<LanguageSelector /> snapshot tests matches snapshot when it is not dis
     }
     checked={false}
     desktop={false}
-    disabled={true}
+    disabled={false}
     focusState="none"
     insetChildren={false}
     primaryText="Java"
-    value="java" />
+    value="java8" />
 </SelectField>
 `;

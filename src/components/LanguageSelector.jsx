@@ -21,7 +21,7 @@ const LanguageSelector = (props) => {
       value={language}
     >
       <MenuItem value="python3" primaryText="Python 3" />
-      <MenuItem value="java" primaryText="Java" disabled />
+      <MenuItem value="java8" primaryText="Java" />
     </SelectField>
   );
 };
