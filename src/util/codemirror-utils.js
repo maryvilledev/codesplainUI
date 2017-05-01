@@ -35,7 +35,11 @@ export function highlightNode(codeMirror, node, filters, parentColor) {
 
   // If we aren't ignoring this token...
   if (ignoredRules.indexOf(node.type) === -1) {
-    const rule = rules[node.type]; // Get the rule obj for this rule
+    // Node's type is the last element of the node's tags property
+    const type = node.tags[node.tags.length - 1];
+
+    // Get the rule obj for this rule
+    const rule = rules[type];
     if (!rule) {
       return; // Remove this return and the highlighting will sometimes fail
     }
@@ -45,7 +49,7 @@ export function highlightNode(codeMirror, node, filters, parentColor) {
     }
 
     // If this token's filter is not selected
-    if (!filters[node.type] || !filters[node.type].selected) {
+    if (!filters[type] || !filters[type].selected) {
       color = parentColor;
     }
 
