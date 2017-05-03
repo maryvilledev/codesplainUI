@@ -83,7 +83,7 @@ describe('util: codemirror-utils', () => {
   describe('highlightNode()', () => {
     it('should not call styleRegion if a rule is not ignored or valid', () => {
       const node = {
-        type: 'Blips and Chitz',
+        tags: ['Blips and Chitz'],
       };
       codemirrorUtils.highlightNode(codeMirror, node, {}, '');
       expect(codeMirror.markText).not.toBeCalled();
@@ -91,11 +91,26 @@ describe('util: codemirror-utils', () => {
 
     it('should not call styleRegion for a node if its type is ignored', () => {
       const node = {
-        type: 'suite',
+        tags: ['suite'],
         children: [],
       };
       codemirrorUtils.highlightNode(codeMirror, node, {}, 'blue');
       expect(codeMirror.markText).not.toBeCalled();
+    });
+
+    it('should call styleRegion for a node if its type is not ignored', () => {
+      const node = {
+        tags: ['suite'],
+        children: [],
+      };
+      codemirrorUtils.setRules({
+        'suite': {
+          color: '#ffffff',
+          prettyName: 'Suite',
+        },
+      });
+      codemirrorUtils.highlightNode(codeMirror, node, {}, 'blue');
+      expect(codeMirror.markText).toBeCalled();
     });
   });
 
