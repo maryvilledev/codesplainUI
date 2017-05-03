@@ -19,6 +19,5 @@ exports[`<LanguageSelector /> matches snapshot 1`] = `
       preserveScrollPosition={false}
       value="foo bar baz" />
   </Paper>
-  <br />
 </div>
 `;

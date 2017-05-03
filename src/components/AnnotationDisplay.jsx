@@ -36,9 +36,29 @@ const AnnotationDisplay = (props) => {
 
   return (
     <div>
+      <div style={styles.actionRow}>
+        <IconButton
+          disabled={hasPrevAnnotation}
+          id="previous-annotation"
+          onTouchTap={getPreviousAnnotation}
+          tooltip="Previous Annotation"
+          touch
+        >
+          <Previous />
+        </IconButton>
+        <IconButton
+          disabled={hasNextAnnotation}
+          id="next-annotation"
+          onTouchTap={getNextAnnotation}
+          tooltip="Next Annotation"
+          touch
+        >
+          <Next />
+        </IconButton>
+      </div>
       <MarkdownDisplayer annotation={annotation} />
       <div style={styles.actionRow}>
-        <div style={styles.actionButtons}>
+        <div>
           <RaisedButton
             label="Close"
             onTouchTap={closeAnnotation}
@@ -50,26 +70,6 @@ const AnnotationDisplay = (props) => {
             onTouchTap={editAnnotation}
             primary
           />
-        </div>
-        <div style={styles.annotationViewButtons}>
-          <IconButton
-            disabled={hasPrevAnnotation}
-            id="previous-annotation"
-            onTouchTap={getPreviousAnnotation}
-            tooltip="Previous Annotation"
-            touch
-          >
-            <Previous />
-          </IconButton>
-          <IconButton
-            disabled={hasNextAnnotation}
-            id="next-annotation"
-            onTouchTap={getNextAnnotation}
-            tooltip="Next Annotation"
-            touch
-          >
-            <Next />
-          </IconButton>
         </div>
       </div>
     </div>
