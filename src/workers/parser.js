@@ -1,4 +1,4 @@
-import { LOAD_PARSER } from '../actions/parser';
+import { LOAD_PARSER, clearErrors } from '../actions/parser';
 import { PARSE_SNIPPET } from '../actions/app';
 import onError from '../util/parser-error-logger.js';
 import { getRuleCount, rules } from '../util/rules.js';
@@ -14,7 +14,8 @@ self.onmessage = ({ data: action }) => {
   case PARSE_SNIPPET: {
     if (!parser) break;
     const { snippet } = action.payload;
-    const AST = parser(snippet, onError);
+    self.postMessage(clearErrors());
+    const AST = parser(snippet, (err) => onError(err, self.postMessage));
     const ruleCounts = {}; getRuleCount(AST, ruleCounts);
     self.postMessage({
       type: action.type,

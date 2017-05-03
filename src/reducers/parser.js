@@ -2,6 +2,7 @@ import * as actions from '../actions/parser';
 
 const initialState = {
   language: '',
+  errors: [],
 };
 
 const parser = (state = initialState, action) => {
@@ -13,6 +14,19 @@ const parser = (state = initialState, action) => {
     }
     const language = action.payload;
     return { ...state, language };
+  }
+  case actions.ADD_ERROR: {
+    const errors = state.errors.concat(action.payload);
+    return {
+      ...state,
+      errors,
+    };
+  }
+  case actions.CLEAR_ERRORS: {
+    return {
+      ...state,
+      errors: [],
+    };
   }
   default: {
     return state;

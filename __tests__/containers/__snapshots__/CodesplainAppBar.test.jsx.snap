@@ -7,6 +7,11 @@ exports[`<CodesplainAppBar /> snapshot tests user is logged in 1`] = `
         onTitleClicked={[Function]}
         snippetTitles={Object {}} />
     }
+    iconStyleRight={
+      Object {
+        "marginTop": "16px",
+      }
+    }
     showMenuIconButton={false}
     title={
       <span
@@ -69,6 +74,7 @@ exports[`<CodesplainAppBar /> snapshot tests user is not logged in 1`] = `
       <LoginButton
         onClick={[Function]} />
     }
+    iconStyleRight={Object {}}
     showMenuIconButton={false}
     title={
       <span

@@ -4,24 +4,45 @@ exports[`<LockButton /> matches snapshot of when the app is in read-only mode 1`
     Object {
       "height": "48px",
     }
-  }
-  title="Switching back to edit mode not supported yet">
-  <IconButton
-    disableTouchRipple={false}
-    disabled={true}
-    iconStyle={Object {}}
-    id="lockButton"
-    label="Switch to edit mode"
-    onTouchTap={[Function]}
+  }>
+  <div
+    data-for="lock-tip"
+    data-tip={true}
     style={
       Object {
-        "zIndex": 5,
+        "display": "inline-block",
       }
-    }
-    tooltipPosition="bottom-center"
-    touch={false}>
-    <ActionLock />
-  </IconButton>
+    }>
+    <IconButton
+      disableTouchRipple={false}
+      disabled={true}
+      iconStyle={Object {}}
+      id="lockButton"
+      label="Switch to edit mode"
+      onTouchTap={[Function]}
+      style={
+        Object {
+          "zIndex": 5,
+        }
+      }
+      tooltipPosition="bottom-center"
+      touch={false}>
+      <ActionLock />
+    </IconButton>
+  </div>
+  <ReactTooltip
+    effect="solid"
+    id="lock-tip"
+    insecure={true}
+    place="bottom"
+    resizeHide={true}
+    wrapper="div">
+    <span>
+      Switching back to edit mode
+      <br />
+      not supported yet
+    </span>
+  </ReactTooltip>
 </span>
 `;
 
@@ -31,23 +52,44 @@ exports[`<LockButton /> matches snapshot of when the app is not in read-only mod
     Object {
       "height": "48px",
     }
-  }
-  title="Click to lock the snippet (this will prevent further changes.)">
-  <IconButton
-    disableTouchRipple={false}
-    disabled={false}
-    iconStyle={Object {}}
-    id="lockButton"
-    label="Switch to read-only mode"
-    onTouchTap={[Function]}
+  }>
+  <div
+    data-for="lock-tip"
+    data-tip={true}
     style={
       Object {
-        "zIndex": 5,
+        "display": "inline-block",
       }
-    }
-    tooltipPosition="bottom-center"
-    touch={false}>
-    <ActionLockOpen />
-  </IconButton>
+    }>
+    <IconButton
+      disableTouchRipple={false}
+      disabled={false}
+      iconStyle={Object {}}
+      id="lockButton"
+      label="Switch to read-only mode"
+      onTouchTap={[Function]}
+      style={
+        Object {
+          "zIndex": 5,
+        }
+      }
+      tooltipPosition="bottom-center"
+      touch={false}>
+      <ActionLockOpen />
+    </IconButton>
+  </div>
+  <ReactTooltip
+    effect="solid"
+    id="lock-tip"
+    insecure={true}
+    place="bottom"
+    resizeHide={true}
+    wrapper="div">
+    <span>
+      Click to lock the snippet
+      <br />
+      (this will prevent further changes.)
+    </span>
+  </ReactTooltip>
 </span>
 `;

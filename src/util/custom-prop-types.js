@@ -31,6 +31,15 @@ const snippetData = PropTypes.shape({
   snippetTitle: PropTypes.string,
 });
 
+const errors = PropTypes.arrayOf(
+  PropTypes.shape({
+    type: PropTypes.string,
+    begin: PropTypes.number,
+    end: PropTypes.NaN,
+    msg: PropTypes.string,
+  }),
+);
+
 const snippets = PropTypes.objectOf(snippetData);
 
 const orgs = PropTypes.arrayOf(PropTypes.string);
@@ -42,4 +51,5 @@ export default {
   orgs,
   permissions,
   snippets,
+  errors,
 };

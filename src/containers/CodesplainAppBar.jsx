@@ -19,6 +19,9 @@ const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 const GITHUB_URL = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&scope=read:org`;
 
 const styles = {
+  rightElement: {
+    marginTop: '16px',
+  },
   title: {
     cursor: 'pointer',
   },
@@ -48,15 +51,7 @@ export class CodesplainAppBar extends Component {
 
   componentDidMount() {
     const { dispatch } = this.props;
-    dispatch(updateUserSnippets())
-  }
-
-  handleSignOut() {
-    cookie.remove('token', { path: '/' });
-    cookie.remove('username', { path: '/' });
-    cookie.remove('userAvatarURL', { path: '/' });
-    this.setState({ isLoggedIn: false });
-    location.reload();
+    dispatch(updateUserSnippets());
   }
 
   onLoginClick() {
@@ -76,6 +71,17 @@ export class CodesplainAppBar extends Component {
     // This does not use the router to route the user to Github because
     // router is used for routing within the application, not the entire web
     window.location = GITHUB_URL;
+  }
+
+  handleSignOut() {
+    const { router } = this.props;
+    cookie.remove('token', { path: '/' });
+    cookie.remove('username', { path: '/' });
+    cookie.remove('orgs', { path: '/' });
+    cookie.remove('userAvatarURL', { path: '/' });
+    this.setState({ isLoggedIn: false });
+    router.push('/');
+    location.reload();
   }
 
   handleSnippetSelected(key) {
@@ -138,7 +144,8 @@ export class CodesplainAppBar extends Component {
     ];
 
     const { userSnippets } = this.props;
-    const rightElement = this.state.isLoggedIn ?
+    const { isDialogOpen, isLoggedIn } = this.state;
+    const rightElement = isLoggedIn ?
       (<AppMenu
         onSignOut={this.handleSignOut}
         onTitleClicked={this.handleSnippetSelected}
@@ -160,11 +167,12 @@ export class CodesplainAppBar extends Component {
           showMenuIconButton={false}
           title={titleElement}
           iconElementRight={rightElement}
+          iconStyleRight={isLoggedIn ? styles.rightElement : {}}
         />
         <Dialog
           actions={actions}
           modal={false}
-          open={this.state.isDialogOpen}
+          open={isDialogOpen}
           onRequestClose={this.handleDialogClose}
         >
           Discard unsaved changes?
