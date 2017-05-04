@@ -3,6 +3,10 @@ import React, { PropTypes } from 'react';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 
+const contentStyle = {
+  width: '40%',
+};
+
 const ConfirmLockDialog = ({ accept, isOpen, reject }) => {
   const actionButtons = [
     <FlatButton
@@ -21,6 +25,7 @@ const ConfirmLockDialog = ({ accept, isOpen, reject }) => {
       actions={actionButtons}
       modal
       open={isOpen}
+      contentStyle={contentStyle}
       title="Are you sure you want to lock editing?"
     >
       Note that you will not be able to revert back to edit mode
