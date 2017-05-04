@@ -41,16 +41,9 @@ export class AppBody extends Component {
   }
 
   componentDidMount() {
-    const {
-      dispatch,
-      router,
-    } = this.props;
-    const {
-      id: snippetKey,
-      username,
-    } = router.params;
+    const { dispatch } = this.props;
 
-    // If the user is authenticated, add her Github to the orgs, and make it
+    // If the user is authenticated, add their Github to the orgs, and make it
     // the selected value
     if (cookie.load('token') && cookie.load('username')) {
       const savedUsername = cookie.load('username');
@@ -61,6 +54,29 @@ export class AppBody extends Component {
       cookie.load('orgs').split(' ').forEach(org => dispatch(addOrg(org)));
     }
 
+    this.loadSnippet();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // Reload snippet if URL changes. Assume it is valid, and
+    // if it is not, the call to loadSnippet will handle it.
+    if (this.state.pathname !== nextProps.router.location.pathname) {
+      this.setState({ isValidSnippet: true });
+      this.loadSnippet();
+    }
+  }
+
+  loadSnippet() {
+    const {
+      dispatch,
+      router,
+    } = this.props;
+    const {
+      id: snippetKey,
+      username,
+    } = router.params;
+
+    this.setState({ pathname: router.location.pathname });
     if (!username && !snippetKey) {
       // This is a new snippet for the current user, enable all permissions
       const permissions = {
@@ -81,19 +97,6 @@ export class AppBody extends Component {
 
     // Restore the user's credentials into state
     dispatch(restoreUserCredentials(cookie.load('token'), cookie.load('username')));
-
-    this.loadSnippet();
-  }
-
-  loadSnippet() {
-    const {
-      dispatch,
-      router,
-    } = this.props;
-    const {
-      id: snippetKey,
-      username,
-    } = router.params;
 
     dispatch(loadSnippet(username, snippetKey))
       .then((res) => {
