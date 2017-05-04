@@ -14,7 +14,7 @@ describe('util: rules', () => {
     it('sets uninitialized key values to 1', () => {
       const nodeType = 'gromflomite';
       const node = {
-        type: nodeType,
+        tags: [nodeType],
         children: [],
       };
       const ruleCounts = {};
@@ -26,7 +26,7 @@ describe('util: rules', () => {
     it('adds 1 if key value has been initialized', () => {
       const nodeType = 'gromflomite';
       const node = {
-        type: nodeType,
+        tags: [nodeType],
         children: [],
       };
       const ruleCounts = {
@@ -38,10 +38,10 @@ describe('util: rules', () => {
     it('recursively applied to the children', () => {
       const nodeType = 'gromflomite';
       const node = {
-        type: nodeType,
+        tags: [nodeType],
         children: [
-          { type: nodeType, children: [] },
-          { type: nodeType, children: [] },
+          { tags: [nodeType], children: [] },
+          { tags: [nodeType], children: [] },
         ],
       };
       const ruleCounts = {};
