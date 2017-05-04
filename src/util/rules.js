@@ -1,4 +1,5 @@
 import axios from 'axios';
+import _ from 'lodash';
 import { setRules, setIgnoredRules } from './codemirror-utils';
 
 const API_URL = process.env.REACT_APP_API_URL;
@@ -70,11 +71,12 @@ Given an AST getRuleCount() recursively populates the specified map with
 each token type's occurence count in the AST.
 */
 export function getRuleCount(node, map) {
-  if (node.type === undefined) return;
-  if (map[node.type] === undefined) {
-    map[node.type] = 1;
+  const type = _.last(node.tags)
+  if (type === undefined) return;
+  if (map[type] === undefined) {
+    map[type] = 1;
   } else {
-    map[node.type] += 1;
+    map[type] += 1;
   }
   node.children.forEach(child => getRuleCount(child, map));
 }
