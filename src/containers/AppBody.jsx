@@ -37,7 +37,9 @@ export class AppBody extends Component {
     this.state = {
       isValidSnippet: true,
     };
+    this.loadSnippet = this.loadSnippet.bind(this);
   }
+
   componentDidMount() {
     const {
       dispatch,
@@ -79,6 +81,19 @@ export class AppBody extends Component {
 
     // Restore the user's credentials into state
     dispatch(restoreUserCredentials(cookie.load('token'), cookie.load('username')));
+
+    this.loadSnippet();
+  }
+
+  loadSnippet() {
+    const {
+      dispatch,
+      router,
+    } = this.props;
+    const {
+      id: snippetKey,
+      username,
+    } = router.params;
 
     dispatch(loadSnippet(username, snippetKey))
       .then((res) => {
