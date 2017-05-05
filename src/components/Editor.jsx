@@ -166,7 +166,11 @@ class Editor extends React.Component {
   }
 
   handleCursorActivity() {
-    console.log('Cursor activity OMG!')
+    const codeMirror = this.codeMirror.getCodeMirror();
+
+    // Always highlight when the cursor moves
+    const { filters, AST } = this.props;
+    highlight(codeMirror, AST, filters);
   }
 
   // Need to use bound class method to have an event listener on the ref.
