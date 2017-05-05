@@ -32,8 +32,10 @@ exported wrapper func for this, and starts the recursion.
 */
 export function highlightNode(codeMirror, node, filters, parentColor) {
   let color = parentColor;
-  // Node's type is the last element of the node's tags property
-  const type = _.last(node.tags);
+  // Node's type is the last element of the node's tags property,
+  // if AST was made with tagging parser. Otherwise, if it was made with
+  // the legacy parser, it is the type property.
+  const type = node.type ? node.type : _.last(node.tags);
 
   // If we aren't ignoring this token...
   if (ignoredRules.indexOf(type) === -1) {
