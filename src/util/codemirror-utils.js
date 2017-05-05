@@ -64,6 +64,19 @@ export function highlightNode(codeMirror, node, filters, parentColor) {
   });
 }
 
+export function highlightSelection(codeMirror) {
+  // Make the background color of a selected region transparent, so users
+  // can see the text they have selected.
+  if (codeMirror.somethingSelected()) {
+    const css = 'background: transparent;';
+    codeMirror.markText(
+      codeMirror.getCursor('from'),
+      codeMirror.getCursor('to'),
+      { css },
+    );
+  }
+}
+
 /*
 Given a CodeMirror instance styleLine() will apply the specified css style to the
 specified line of code in the editor. The first line is considered line 0, not 1.
@@ -93,7 +106,10 @@ export async function highlight(codeMirror, AST, filters) {
     return;
   }
   // Make this a first-class function
-  const func = () => highlightNode(codeMirror, AST, filters, 'transparent');
+  const func = () => {
+    highlightNode(codeMirror, AST, filters, 'transparent');
+    highlightSelection(codeMirror);
+  };
   // Codemirror buffers its calls ahead of time, then performs them atomically
   codeMirror.operation(func);
 }
