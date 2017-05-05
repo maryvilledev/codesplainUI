@@ -58,6 +58,8 @@ class Editor extends React.Component {
     this.deEmphasize = this.deEmphasize.bind(this);
     this.markError = this.markError.bind(this);
     this.clearErrors = this.clearErrors.bind(this);
+    this.handleCursorActivity = this.handleCursorActivity.bind(this);
+    this.codeMirrorRef = this.codeMirrorRef.bind(this);
   }
 
   componentDidMount() {
@@ -163,6 +165,17 @@ class Editor extends React.Component {
     styleAll(this.codeMirror.getCodeMirror(), css);
   }
 
+  handleCursorActivity() {
+    console.log('Cursor activity OMG!')
+  }
+
+  // Need to use bound class method to have an event listener on the ref.
+  // https://facebook.github.io/react/docs/refs-and-the-dom.html#caveats
+  codeMirrorRef(cm) {
+    this.codeMirror = cm;
+    cm.getCodeMirror().on('cursorActivity', this.handleCursorActivity);
+  }
+
   render() {
     const {
       language,
@@ -180,7 +193,7 @@ class Editor extends React.Component {
       <CodeMirror
         onChange={onChange}
         options={codeMirrorOptions}
-        ref={(cm) => { this.codeMirror = cm; }}
+        ref={this.codeMirrorRef}
         value={value}
       />
     );
