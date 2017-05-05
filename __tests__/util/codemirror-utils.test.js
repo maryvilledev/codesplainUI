@@ -80,7 +80,41 @@ describe('util: codemirror-utils', () => {
     });
   });
 
-  describe('highlightNode()', () => {
+  describe('highlightNode() with parser v0.5 (and below) ASTs', () => {
+    it('should not call styleRegion if a rule is not ignored or valid', () => {
+      const node = {
+        type: 'Blips and Chitz',
+      };
+      codemirrorUtils.highlightNode(codeMirror, node, {}, '');
+      expect(codeMirror.markText).not.toBeCalled();
+    });
+
+    it('should not call styleRegion for a node if its type is ignored', () => {
+      const node = {
+        type: 'suite',
+        children: [],
+      };
+      codemirrorUtils.highlightNode(codeMirror, node, {}, 'blue');
+      expect(codeMirror.markText).not.toBeCalled();
+    });
+
+    it('should call styleRegion for a node if its type is not ignored', () => {
+      const node = {
+        type: 'suite',
+        children: [],
+      };
+      codemirrorUtils.setRules({
+        suite: {
+          color: '#ffffff',
+          prettyName: 'Suite',
+        },
+      });
+      codemirrorUtils.highlightNode(codeMirror, node, {}, 'blue');
+      expect(codeMirror.markText).toBeCalled();
+    });
+  });
+
+  describe('highlightNode() with parser v0.6.0 (and above) ASTs', () => {
     it('should not call styleRegion if a rule is not ignored or valid', () => {
       const node = {
         tags: ['Blips and Chitz'],
@@ -104,7 +138,7 @@ describe('util: codemirror-utils', () => {
         children: [],
       };
       codemirrorUtils.setRules({
-        'suite': {
+        suite: {
           color: '#ffffff',
           prettyName: 'Suite',
         },
@@ -126,6 +160,7 @@ describe('util: codemirror-utils', () => {
       expect(codemirrorUtils.getCodeMirrorMode(parser)).toEqual(expected);
     });
   });
+
   describe('generateFilters()', () => {
     it('should return {} is ruleCounts is undefined', () => {
       const prevFilters = {};
