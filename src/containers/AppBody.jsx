@@ -12,7 +12,7 @@ import {
   loadSnippet,
   restoreState,
 } from '../actions/app';
-import { setPermissions } from '../actions/permissions';
+import { setPermissions, setAuthor } from '../actions/permissions';
 import { restoreUserCredentials, addOrg, switchOrg } from '../actions/user';
 import NotFound from '../components/NotFound';
 import { removeDeprecatedFiltersFromState } from '../util/codemirror-utils';
@@ -77,6 +77,9 @@ export class AppBody extends Component {
     } = router.params;
 
     this.setState({ pathname: router.location.pathname });
+    if (username) {
+      dispatch(setAuthor(username));
+    }
     if (!username && !snippetKey) {
       // This is a new snippet for the current user, enable all permissions
       const permissions = {
