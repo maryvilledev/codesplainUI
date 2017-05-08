@@ -118,7 +118,7 @@ export const fetchSnippetLists = () => (dispatch, getState) => {
     headers,
   })
     .then(({ data }) => {
-      console.log('data', data);
+      dispatch(setSnippetLists(data));
     });
 };
 
