@@ -6,18 +6,13 @@ import thunk from 'redux-thunk';
 import * as actions from '../../src/actions/user';
 
 describe('Actions: User', () => {
-  describe('ADD_ORG', () => {
-    it('creates an action to add an org', () => {
+  describe('action creators', () => {
+    it('creates correct ADD_ORG object', () => {
       const org = 'galactic-federation';
-      const expected = {
-        type: actions.ADD_ORG,
-        payload: org,
-      };
-      expect(actions.addOrg(org)).toEqual(expected);
+      expect(actions.addOrg(org)).toMatchSnapshot();
     });
-  });
-  describe('ADD_ORGANIZATIONS', () => {
-    it('creates correct action object', () => {
+
+    it('creates correct ADD_ORGANIZATIONS object', () => {
       const organizations = ['Galactic Federation', 'Council Of Ricks'];
       const expected = {
         type: actions.ADD_ORGANIZATIONS,
@@ -25,41 +20,32 @@ describe('Actions: User', () => {
       };
       expect(actions.addOrganizations(organizations)).toEqual(expected);
     });
-  });
-  describe('SWITCH_ORG', () => {
-    it('creates an action to switch the org', () => {
+
+    it('creates correct SWITCH_ORG object', () => {
       const org = 'galactic-federation';
-      const expected = {
-        type: actions.SWITCH_ORG,
-        payload: org,
-      };
-      expect(actions.switchOrg(org)).toEqual(expected);
+      expect(actions.switchOrg(org)).toMatchSnapshot();
     });
-  });
-  describe('action creators', () => {
+
     it('creates correct SAVE_USERNAME object', () => {
       const token = 'token';
-      const expected = {
-        type: actions.SAVE_USERNAME,
-        payload: token,
-      };
-      expect(actions.saveUsername(token)).toEqual(expected);
+      expect(actions.saveUsername(token)).toMatchSnapshot();
     });
+
     it('creates correct SAVE_ACCESS_TOKEN object', () => {
       const token = 'token';
-      const expected = {
-        type: actions.SAVE_ACCESS_TOKEN,
-        payload: token,
-      };
-      expect(actions.saveAccessToken(token)).toEqual(expected);
+      expect(actions.saveAccessToken(token)).toMatchSnapshot();
     });
+
     it('creates correct CLEAR_USER_CREDENTIALS object', () => {
-      const expected = {
-        type: actions.CLEAR_USER_CREDENTIALS,
-      };
-      expect(actions.clearUserCredentials()).toEqual(expected);
+      expect(actions.clearUserCredentials()).toMatchSnapshot();
+    });
+
+    it('creates correct SET_SNIPPET_LISTS object', () => {
+      const snippetLists = ['list', 'of', 'snippets'];
+      expect(actions.setSnippetLists(snippetLists)).toMatchSnapshot();
     });
   });
+
   describe('async actions', () => {
     const middlewares = [thunk];
     const mockStore = configureMockStore(middlewares);
@@ -67,6 +53,7 @@ describe('Actions: User', () => {
     beforeEach(() => {
       moxios.install();
     });
+
     afterEach(() => {
       cookie.remove('token');
       cookie.remove('username');
@@ -107,6 +94,7 @@ describe('Actions: User', () => {
             });
         });
       });
+
       it('dispatches UPDATE_USER_SNIPPETS_FAILED if unsuccessful', () => {
         moxios.wait(() => {
           const request = moxios.requests.mostRecent();
@@ -125,6 +113,7 @@ describe('Actions: User', () => {
           });
       });
     });
+
     describe('SET_USER_SNIPPETS', () => {
       it('creates an action to save meta data about user`s snippets', () => {
         const snippetMeta = [

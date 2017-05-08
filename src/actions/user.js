@@ -9,18 +9,19 @@ const noSuchKey = data => (
   typeof data === 'string' && data.includes('NoSuchKey')
 );
 
-export const SET_USER_SNIPPETS = 'SET_USER_SNIPPETS';
-export const UPDATE_USER_SNIPPETS_STARTED = 'UPDATE_USER_SNIPPETS_STARTED';
-export const UPDATE_USER_SNIPPETS_SUCCEEDED = 'UPDATE_USER_SNIPPETS_SUCCEEDED';
-export const UPDATE_USER_SNIPPETS_FAILED = 'UPDATE_USER_SNIPPETS_FAILED';
-export const UPDATE_USER_SNIPPETS = 'UPDATE_USER_SNIPPETS';
-export const ADD_ORGANIZATIONS = 'ADD_ORGANIZATIONS';
 export const ADD_ORG = 'ADD_ORG';
-export const SWITCH_ORG = 'SWITCH_ORG';
-export const SAVE_USERNAME = 'SAVE_USERNAME';
-export const SAVE_ACCESS_TOKEN = 'SAVE_ACCESS_TOKEN';
+export const ADD_ORGANIZATIONS = 'ADD_ORGANIZATIONS';
 export const CLEAR_USER_CREDENTIALS = 'CLEAR_USER_CREDENTIALS';
 export const RESTORE_USER_CREDENTIALS = 'RESTORE_USER_CREDENTIALS';
+export const SAVE_ACCESS_TOKEN = 'SAVE_ACCESS_TOKEN';
+export const SAVE_USERNAME = 'SAVE_USERNAME';
+export const SET_USER_SNIPPETS = 'SET_USER_SNIPPETS';
+export const SET_SNIPPET_LISTS = 'SET_SNIPPET_LISTS';
+export const SWITCH_ORG = 'SWITCH_ORG';
+export const UPDATE_USER_SNIPPETS = 'UPDATE_USER_SNIPPETS';
+export const UPDATE_USER_SNIPPETS_FAILED = 'UPDATE_USER_SNIPPETS_FAILED';
+export const UPDATE_USER_SNIPPETS_STARTED = 'UPDATE_USER_SNIPPETS_STARTED';
+export const UPDATE_USER_SNIPPETS_SUCCEEDED = 'UPDATE_USER_SNIPPETS_SUCCEEDED';
 
 export const addOrg = org => ({
   type: ADD_ORG,
@@ -36,6 +37,7 @@ export const switchOrg = org => ({
   type: SWITCH_ORG,
   payload: org,
 });
+
 export const saveUsername = username => ({
   type: SAVE_USERNAME,
   payload: username,
@@ -53,6 +55,11 @@ export const clearUserCredentials = () => ({
 export const setUserSnippets = snippetMeta => ({
   type: SET_USER_SNIPPETS,
   payload: snippetMeta,
+});
+
+export const setSnippetLists = snippetLists => ({
+  type: SET_SNIPPET_LISTS,
+  payload: snippetLists,
 });
 
 export const updateUserSnippetsStarted = () => ({
@@ -95,7 +102,7 @@ export const updateUserSnippets = () => (dispatch, getState) => {
     });
 };
 
-export const fetchOrgsSnippets = () => (dispatch, getState) => {
+export const fetchSnippetLists = () => (dispatch, getState) => {
   const {
     token,
     orgs,

@@ -1,0 +1,44 @@
+exports[`Actions: User action creators creates correct ADD_ORG object 1`] = `
+Object {
+  "payload": "galactic-federation",
+  "type": "ADD_ORG",
+}
+`;
+
+exports[`Actions: User action creators creates correct CLEAR_USER_CREDENTIALS object 1`] = `
+Object {
+  "type": "CLEAR_USER_CREDENTIALS",
+}
+`;
+
+exports[`Actions: User action creators creates correct SAVE_ACCESS_TOKEN object 1`] = `
+Object {
+  "payload": "token",
+  "type": "SAVE_ACCESS_TOKEN",
+}
+`;
+
+exports[`Actions: User action creators creates correct SAVE_USERNAME object 1`] = `
+Object {
+  "payload": "token",
+  "type": "SAVE_USERNAME",
+}
+`;
+
+exports[`Actions: User action creators creates correct SET_SNIPPET_LISTS object 1`] = `
+Object {
+  "payload": Array [
+    "list",
+    "of",
+    "snippets",
+  ],
+  "type": "SET_SNIPPET_LISTS",
+}
+`;
+
+exports[`Actions: User action creators creates correct SWITCH_ORG object 1`] = `
+Object {
+  "payload": "galactic-federation",
+  "type": "SWITCH_ORG",
+}
+`;
