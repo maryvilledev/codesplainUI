@@ -164,7 +164,7 @@ export class CodesplainAppBar extends Component {
       (<AppMenu
         onSignOut={this.handleSignOut}
         onTitleClicked={this.handleSnippetSelected}
-        snippetTitles={userSnippets}
+        userSnippets={userSnippets}
       />)
       : <LoginButton onClick={this.onLoginClick} />;
     const titleElement = (

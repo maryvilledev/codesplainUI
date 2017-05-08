@@ -6,7 +6,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import SnippetList from '../../src/components/menus/SnippetList';
 
 const defaultProps = {
-  titles: {},
+  snippetsList: {},
   onClick: jest.fn(),
 };
 
@@ -27,7 +27,7 @@ describe('<SnippetList />', () => {
       const wrapper = shallowWithContext(
         <SnippetList
           {...defaultProps}
-          titles={{
+          snippetsList={{
             foo: { snippetTitle: 'bar' },
             baz: { snippetTitle: 'qux' },
           }}

@@ -1,21 +1,3 @@
-exports[`<SnippetList /> matches snapshot 1`] = `
-<MenuItem
-  anchorOrigin={
-    Object {
-      "horizontal": "right",
-      "vertical": "top",
-    }
-  }
-  checked={false}
-  desktop={false}
-  disabled={true}
-  focusState="none"
-  insetChildren={false}
-  menuItems={null}
-  primaryText="My Snippets"
-  rightIcon={<NavigationArrowDropRight />} />
-`;
-
 exports[`<SnippetList /> snapshot tests matches when no snippets are passed 1`] = `
 <MenuItem
   anchorOrigin={
@@ -61,7 +43,7 @@ exports[`<SnippetList /> snapshot tests matches when snippets are passed 1`] = `
         disabled={false}
         focusState="none"
         insetChildren={false}
-        onClick={[Function]}
+        onTouchTap={[Function]}
         primaryText="bar" />,
       <MenuItem
         anchorOrigin={
@@ -75,7 +57,7 @@ exports[`<SnippetList /> snapshot tests matches when snippets are passed 1`] = `
         disabled={false}
         focusState="none"
         insetChildren={false}
-        onClick={[Function]}
+        onTouchTap={[Function]}
         primaryText="qux" />,
     ]
   }
