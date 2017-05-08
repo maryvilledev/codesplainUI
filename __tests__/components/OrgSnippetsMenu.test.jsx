@@ -3,36 +3,38 @@ import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
-import SnippetList from '../../src/components/menus/SnippetList';
+import OrgSnippetsMenu from '../../src/components/menus/OrgSnippetsMenu';
 
 const defaultProps = {
   onClick: jest.fn(),
-  primaryText: '',
-  snippetsList: {},
+  orgSnippets: {},
 };
 
-describe('<SnippetList />', () => {
+describe('<OrgSnippetsMenu />', () => {
   const muiTheme = getMuiTheme();
   const shallowWithContext = node => shallow(node, { context: { muiTheme } });
 
   describe('snapshot tests', () => {
     it('matches when no snippets are passed', () => {
       const wrapper = shallowWithContext(
-        <SnippetList
+        <OrgSnippetsMenu
           {...defaultProps}
         />,
       );
       expect(shallowToJson(wrapper)).toMatchSnapshot();
     });
     it('matches when snippets are passed', () => {
-      const snippetsList = {
-        foo: { snippetTitle: 'bar' },
-        baz: { snippetTitle: 'qux' },
+      const orgSnippets = {
+        org1: {
+          foo: { snippetTitle: 'bar' },
+          baz: { snippetTitle: 'qux' },
+        },
+        org2: {},
       };
       const wrapper = shallowWithContext(
-        <SnippetList
+        <OrgSnippetsMenu
           {...defaultProps}
-          snippetsList={snippetsList}
+          orgSnippets={orgSnippets}
         />,
       );
       expect(shallowToJson(wrapper)).toMatchSnapshot();
