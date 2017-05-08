@@ -6,6 +6,7 @@ describe('Reducer: permissions', () => {
     const initial = {
       canRead: false,
       canEdit: false,
+      author: '',
     };
     expect(reducer(undefined, {})).toEqual(initial);
   });
@@ -19,9 +20,18 @@ describe('Reducer: permissions', () => {
       type: actions.SET_PERMISSIONS,
       payload: permissions,
     };
-    const expected = {
+    const expected = expect.objectContaining({
       ...permissions,
+    });
+    expect(reducer(undefined, action)).toEqual(expected);
+  });
+  it('should handle SET_AUTHOR', () => {
+    const author = 'phoenixperson';
+    const action = {
+      type: actions.SET_AUTHOR,
+      payload: author,
     };
+    const expected = expect.objectContaining({ author });
     expect(reducer(undefined, action)).toEqual(expected);
   });
 });
