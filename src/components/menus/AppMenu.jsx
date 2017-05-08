@@ -20,6 +20,9 @@ const styles = {
     display: 'flex',
     flexFlow: 'row nowrap',
   },
+  iconMenu: {
+    cursor: 'pointer',
+  },
 };
 
 // Returns an <Avatar /> of the user's GitHub icon if the requisite cookie is
@@ -48,6 +51,7 @@ display a "Sign out" option, that when clicked invokes the 'onSignOut' prop.
 const AppMenu = ({ onSignOut, snippetTitles, onTitleClicked }) => (
   <div>
     <IconMenu
+      style={styles.iconMenu}
       iconButtonElement={makeAppMenuIcon()}
       targetOrigin={{ horizontal: 'right', vertical: 'top' }}
       anchorOrigin={{ horizontal: 'right', vertical: 'top' }}

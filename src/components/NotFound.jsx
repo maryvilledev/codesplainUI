@@ -5,6 +5,7 @@ import {
   CardTitle,
   FlatButton,
 } from 'material-ui';
+import { withRouter } from 'react-router';
 
 const styles = {
   card: {
@@ -15,7 +16,7 @@ const styles = {
   },
 };
 
-const NotFound = () => (
+const NotFound = ({ router }) => (
   <Card
     style={styles.card}
   >
@@ -26,11 +27,11 @@ const NotFound = () => (
       <FlatButton
         fullWidth
         label="Home"
-        onTouchTap={() => { window.location = '/'; }}
+        onTouchTap={() => router.push('/')}
         primary
       />
     </CardActions>
   </Card>
 );
 
-export default NotFound;
+export default withRouter(NotFound);
