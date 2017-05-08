@@ -14,7 +14,6 @@ import { closeAnnotationPanel } from '../actions/annotation';
 import LoginButton from '../components/buttons/LoginButton';
 import AppMenu from '../components/menus/AppMenu';
 import CustomPropTypes from '../util/custom-prop-types';
-import AuthorIcon from '../components/AuthorIcon';
 
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 const GITHUB_URL = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&scope=read:org`;
@@ -144,18 +143,15 @@ export class CodesplainAppBar extends Component {
       />,
     ];
 
-    const { userSnippets, author } = this.props;
+    const { userSnippets } = this.props;
     const { isDialogOpen, isLoggedIn } = this.state;
-    let rightElement = isLoggedIn ?
+    const rightElement = isLoggedIn ?
       (<AppMenu
         onSignOut={this.handleSignOut}
         onTitleClicked={this.handleSnippetSelected}
         snippetTitles={userSnippets}
       />)
-      : (<LoginButton
-        onClick={this.onLoginClick}
-      />);
-    rightElement = <span>{rightElement}<AuthorIcon author={author} /></span>;
+      : <LoginButton onClick={this.onLoginClick} />;
     const titleElement = (
       <span
         onClick={this.handleTitleTouchTap}
@@ -189,7 +185,6 @@ export class CodesplainAppBar extends Component {
 CodesplainAppBar.propTypes = {
   hasUnsavedChanges: PropTypes.bool.isRequired,
   userSnippets: CustomPropTypes.snippets,
-  author: PropTypes.string.isRequired,
 };
 
 CodesplainAppBar.defaultProps = {
@@ -207,7 +202,6 @@ const mapStateToProps = (state) => {
     hasUnsavedChanges: app.hasUnsavedChanges,
     appState: app,
     userSnippets,
-    author: app.snippetKey.split('/')[0],
   };
 };
 
