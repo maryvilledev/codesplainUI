@@ -42,14 +42,17 @@ const errors = PropTypes.arrayOf(
 
 const snippets = PropTypes.objectOf(snippetData);
 
+const orgSnippets = PropTypes.objectOf(snippets);
+
 const orgs = PropTypes.arrayOf(PropTypes.string);
 
 export default {
   annotations,
+  errors,
   filters,
   lineAnnotated,
   orgs,
+  orgSnippets,
   permissions,
   snippets,
-  errors,
 };
