@@ -1,8 +1,8 @@
 import React from 'react';
 
-import AppBody from './AppBody';
-import CodesplainAppBar from './CodesplainAppBar';
-import NotificationSnackbar from '../components/NotificationSnackbar';
+import AppBody from '../containers/AppBody';
+import CodesplainAppBar from '../containers/CodesplainAppBar';
+import NotificationSnackbar from './NotificationSnackbar';
 
 export const App = () => (
   <div className="container-fluid">
