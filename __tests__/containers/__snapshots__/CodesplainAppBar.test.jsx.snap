@@ -3,6 +3,7 @@ exports[`<CodesplainAppBar /> snapshot tests user is logged in 1`] = `
   <AppBar
     iconElementRight={
       <AppMenu
+        author="phoenixperson"
         onSignOut={[Function]}
         onTitleClicked={[Function]}
         snippetTitles={Object {}} />
@@ -72,6 +73,7 @@ exports[`<CodesplainAppBar /> snapshot tests user is not logged in 1`] = `
   <AppBar
     iconElementRight={
       <LoginButton
+        author="phoenixperson"
         onClick={[Function]} />
     }
     iconStyleRight={Object {}}

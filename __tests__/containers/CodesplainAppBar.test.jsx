@@ -6,6 +6,8 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import { CodesplainAppBar } from '../../src/containers/CodesplainAppBar';
 
+const mockAuthor = 'phoenixperson';
+
 describe('<CodesplainAppBar />', () => {
   const muiTheme = getMuiTheme();
   const shallowWithContext = node => shallow(node, { context: { muiTheme } });
@@ -22,6 +24,7 @@ describe('<CodesplainAppBar />', () => {
         <CodesplainAppBar
           hasUnsavedChanges={false}
           userState={userState}
+          author={mockAuthor}
         />,
       );
       expect(shallowToJson(wrapper)).toMatchSnapshot();
@@ -33,6 +36,7 @@ describe('<CodesplainAppBar />', () => {
         <CodesplainAppBar
           hasUnsavedChanges={false}
           userState={userState}
+          author={mockAuthor}
         />,
       );
       expect(shallowToJson(wrapper)).toMatchSnapshot();

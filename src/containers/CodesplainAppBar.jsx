@@ -143,15 +143,19 @@ export class CodesplainAppBar extends Component {
       />,
     ];
 
-    const { userSnippets } = this.props;
+    const { userSnippets, author } = this.props;
     const { isDialogOpen, isLoggedIn } = this.state;
     const rightElement = isLoggedIn ?
       (<AppMenu
         onSignOut={this.handleSignOut}
         onTitleClicked={this.handleSnippetSelected}
         snippetTitles={userSnippets}
+        author={author}
       />)
-      : <LoginButton onClick={this.onLoginClick} />;
+      : (<LoginButton
+        onClick={this.onLoginClick}
+        author={author}
+      />);
     const titleElement = (
       <span
         onClick={this.handleTitleTouchTap}
@@ -185,6 +189,7 @@ export class CodesplainAppBar extends Component {
 CodesplainAppBar.propTypes = {
   hasUnsavedChanges: PropTypes.bool.isRequired,
   userSnippets: CustomPropTypes.snippets,
+  author: PropTypes.string.isRequired,
 };
 
 CodesplainAppBar.defaultProps = {
@@ -202,6 +207,7 @@ const mapStateToProps = (state) => {
     hasUnsavedChanges: app.hasUnsavedChanges,
     appState: app,
     userSnippets,
+    author: app.snippetKey.split('/')[0],
   };
 };
 
