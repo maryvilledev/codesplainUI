@@ -48,7 +48,7 @@ const makeAppMenuIcon = () => {
 <AppMenu /> renders as a white vertical ellipse ⋮ . When clicked it expands to
 display a "Sign out" option, that when clicked invokes the 'onSignOut' prop.
 */
-const AppMenu = ({ onSignOut, onTitleClicked, userSnippets }) => (
+const AppMenu = ({ onSignOut, onSnippetSelected, userSnippets }) => (
   <div>
     <IconMenu
       anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
@@ -58,7 +58,7 @@ const AppMenu = ({ onSignOut, onTitleClicked, userSnippets }) => (
       targetOrigin={{ horizontal: 'right', vertical: 'top' }}
     >
       <SnippetList
-        onClick={onTitleClicked}
+        onClick={onSnippetSelected}
         primaryText="My Snippets"
         snippetsList={userSnippets}
       />
@@ -72,7 +72,7 @@ const AppMenu = ({ onSignOut, onTitleClicked, userSnippets }) => (
 
 AppMenu.propTypes = {
   onSignOut: PropTypes.func.isRequired,
-  onTitleClicked: PropTypes.func.isRequired,
+  onSnippetSelected: PropTypes.func.isRequired,
   userSnippets: CustomPropTypes.snippets.isRequired,
 };
 

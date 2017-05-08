@@ -163,7 +163,7 @@ export class CodesplainAppBar extends Component {
     const rightElement = isLoggedIn ?
       (<AppMenu
         onSignOut={this.handleSignOut}
-        onTitleClicked={this.handleSnippetSelected}
+        onSnippetSelected={this.handleSnippetSelected}
         userSnippets={userSnippets}
       />)
       : <LoginButton onClick={this.onLoginClick} />;
