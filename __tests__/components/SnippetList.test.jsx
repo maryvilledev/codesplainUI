@@ -6,8 +6,9 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import SnippetList from '../../src/components/menus/SnippetList';
 
 const defaultProps = {
-  snippetsList: {},
   onClick: jest.fn(),
+  primaryText: '',
+  snippetsList: {},
 };
 
 describe('<SnippetList />', () => {

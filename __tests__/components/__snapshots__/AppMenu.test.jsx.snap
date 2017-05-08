@@ -53,6 +53,7 @@ exports[`<AppMenu /> snapshot tests matches snapshot of when user is logged in 1
     useLayerForClickAway={false}>
     <SnippetList
       onClick={[Function]}
+      primaryText="My Snippets"
       snippetsList={Object {}} />
     <MenuItem
       anchorOrigin={
@@ -117,6 +118,7 @@ exports[`<AppMenu /> snapshot tests matches snapshot of when user is not logged 
     useLayerForClickAway={false}>
     <SnippetList
       onClick={[Function]}
+      primaryText="My Snippets"
       snippetsList={Object {}} />
     <MenuItem
       anchorOrigin={

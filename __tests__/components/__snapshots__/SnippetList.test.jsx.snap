@@ -12,7 +12,7 @@ exports[`<SnippetList /> snapshot tests matches when no snippets are passed 1`] 
   focusState="none"
   insetChildren={false}
   menuItems={null}
-  primaryText="My Snippets"
+  primaryText=""
   rightIcon={<NavigationArrowDropRight />} />
 `;
 
@@ -61,6 +61,6 @@ exports[`<SnippetList /> snapshot tests matches when snippets are passed 1`] = `
         primaryText="qux" />,
     ]
   }
-  primaryText="My Snippets"
+  primaryText=""
   rightIcon={<NavigationArrowDropRight />} />
 `;
