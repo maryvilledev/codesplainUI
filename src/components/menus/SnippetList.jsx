@@ -1,25 +1,24 @@
 import React, { PropTypes } from 'react';
-import _ from 'lodash';
 import { MenuItem } from 'material-ui';
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 
 import CustomPropTypes from '../../util/custom-prop-types';
 
-const makeMenuItems = _.memoize((snippetsList, onClick) => {
+const makeMenuItems = (snippetOwner, snippetsList, onClick) => {
   if (Object.keys(snippetsList).length === 0) {
     return null;
   }
-  return Object.keys(snippetsList).map(key => (
+  return Object.keys(snippetsList).map(snippetKey => (
     <MenuItem
-      key={key}
-      onTouchTap={() => onClick(key)}
-      primaryText={snippetsList[key].snippetTitle}
+      key={snippetKey}
+      onTouchTap={() => onClick(snippetOwner, snippetKey)}
+      primaryText={snippetsList[snippetKey].snippetTitle}
     />
   ));
-});
+};
 
-const SnippetList = ({ onClick, primaryText, snippetsList }) => {
-  const menuItems = makeMenuItems(snippetsList, onClick);
+const SnippetList = ({ onClick, snippetOwner, primaryText, snippetsList }) => {
+  const menuItems = makeMenuItems(snippetOwner, snippetsList, onClick);
   return (
     <MenuItem
       disabled={!menuItems}
@@ -34,6 +33,7 @@ SnippetList.propTypes = {
   onClick: PropTypes.func.isRequired,
   primaryText: PropTypes.string.isRequired,
   snippetsList: CustomPropTypes.snippets.isRequired,
+  snippetOwner: PropTypes.string.isRequired,
 };
 
 export default SnippetList;

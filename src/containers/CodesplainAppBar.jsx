@@ -99,11 +99,10 @@ export class CodesplainAppBar extends Component {
     location.reload();
   }
 
-  handleSnippetSelected(key) {
-    const username = cookie.load('username');
-    window.location = `/${username}/${key}`;
+  handleSnippetSelected(snippetOwner, snippetKey) {
+    window.location = `/${snippetOwner}/${snippetKey}`;
     const { router } = this.props;
-    router.push(`/${username}/${key}`);
+    router.push(`/${snippetOwner}/${snippetKey}`);
   }
 
   handleTitleTouchTap() {
@@ -158,12 +157,13 @@ export class CodesplainAppBar extends Component {
       />,
     ];
 
-    const { userSnippets } = this.props;
+    const { username, userSnippets } = this.props;
     const { isDialogOpen, isLoggedIn } = this.state;
     const rightElement = isLoggedIn ?
       (<AppMenu
         onSignOut={this.handleSignOut}
         onSnippetSelected={this.handleSnippetSelected}
+        username={username}
         userSnippets={userSnippets}
       />)
       : <LoginButton onClick={this.onLoginClick} />;
@@ -199,24 +199,31 @@ export class CodesplainAppBar extends Component {
 
 CodesplainAppBar.propTypes = {
   hasUnsavedChanges: PropTypes.bool.isRequired,
+  username: PropTypes.string,
   userSnippets: CustomPropTypes.snippets,
 };
 
 CodesplainAppBar.defaultProps = {
+  username: '',
   userSnippets: {},
 };
 
 const mapStateToProps = (state) => {
   const {
     app,
+    app: {
+      hasUnsavedChanges,
+    },
     user: {
+      username,
       userSnippets,
     },
   } = state;
   return {
-    hasUnsavedChanges: app.hasUnsavedChanges,
+    hasUnsavedChanges,
     appState: app,
     userSnippets,
+    username,
   };
 };
 

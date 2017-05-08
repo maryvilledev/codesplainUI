@@ -15,6 +15,7 @@ const makeMenuItems = (orgSnippets, onClick) => {
       onClick={onClick}
       primaryText={orgName}
       snippetsList={orgSnippets[orgName]}
+      snippetOwner={orgName}
     />
   ));
 };
