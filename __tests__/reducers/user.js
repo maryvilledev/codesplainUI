@@ -73,7 +73,7 @@ describe('Reducer: User', () => {
     expect(reducer({}, action)).toEqual(expected);
   });
 
-  it('should handle SET_USER_SNIPPETS', () => {
+  it('handles SET_USER_SNIPPETS', () => {
     const userSnippets = {
       test_snippet_1: {
         snippetName: 'Test Snippet 1',
@@ -92,6 +92,28 @@ describe('Reducer: User', () => {
     };
     const expected = { userSnippets };
     expect(reducer(undefined, action)).toEqual(expect.objectContaining(expected));
+  });
+
+  it('handles SET_SNIPPET_LISTS', () => {
+    const snippetList = {
+      username: { snippet: {} },
+      org1: {},
+      org2: {},
+    };
+    const state = {
+      username: 'username',
+      userSnippets: {},
+      orgSnippets: {},
+    };
+    const expected = {
+      ...state,
+      userSnippets: snippetList.username,
+      orgSnippets: {
+        org1: {},
+        org2: {},
+      },
+    };
+    expect(reducer(state, actions.setSnippetLists(snippetList))).toEqual(expected);
   });
 
   describe('SWITCH_ORG', () => {

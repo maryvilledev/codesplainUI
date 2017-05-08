@@ -56,6 +56,15 @@ const user = (state = initialState, action) => {
       userSnippets: action.payload,
     };
   }
+  case actions.SET_SNIPPET_LISTS: {
+    const userSnippets = _.get(action.payload, state.username);
+    const orgSnippets = _.omit(action.payload, state.username);
+    return {
+      ...state,
+      orgSnippets,
+      userSnippets,
+    };
+  }
   case actions.SWITCH_ORG: {
     const org = action.payload;
     if (state.orgs.indexOf(org) !== -1) {
