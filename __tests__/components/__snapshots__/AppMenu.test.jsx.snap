@@ -38,6 +38,11 @@ exports[`<AppMenu /> snapshot tests matches snapshot of when user is logged in 1
     onRequestChange={[Function]}
     onTouchTap={[Function]}
     open={null}
+    style={
+      Object {
+        "cursor": "pointer",
+      }
+    }
     targetOrigin={
       Object {
         "horizontal": "right",
@@ -97,6 +102,11 @@ exports[`<AppMenu /> snapshot tests matches snapshot of when user is not logged 
     onRequestChange={[Function]}
     onTouchTap={[Function]}
     open={null}
+    style={
+      Object {
+        "cursor": "pointer",
+      }
+    }
     targetOrigin={
       Object {
         "horizontal": "right",

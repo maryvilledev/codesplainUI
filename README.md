@@ -16,4 +16,4 @@ Say anything you want about it. Markdown is even supported.
 Once you are all done, save your code to a persistant URL, and we'll hold on to it for you or anyone you want to show it to.
 
 ## Serverless Application
-This application is built as a React SPA and uses XHR for data requests to a REST API. As a result, the application can be deployed serverless. For a better idea of what that looks like, see https://github.com/maryvilledev/codesplain-lambdas.
+This application is built as a React SPA and uses AJAX for data requests to a REST API. As a result, the application can be deployed serverless. For a better idea of what that looks like, see https://github.com/maryvilledev/codesplain-lambdas.

@@ -36,18 +36,37 @@ export class AppBody extends Component {
     this.state = {
       isValidSnippet: true,
     };
+    this.loadSnippet = this.loadSnippet.bind(this);
   }
+
   componentDidMount() {
+    this.loadSnippet();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // Reload snippet if URL changes. Assume it is valid, and
+    // if it is not, the call to loadSnippet will handle it.
+    if (this.state.pathname !== nextProps.router.location.pathname) {
+      this.setState({ isValidSnippet: true });
+      this.loadSnippet();
+    }
+  }
+
+  loadSnippet() {
     const {
       dispatch,
       router,
       username,
     } = this.props;
     const {
-      id: snippetKey,
-      username: snippetOwner,
-    } = router.params;
+      params: {
+        id: snippetKey,
+        username: snippetOwner,
+      },
+      location: { pathname },
+    } = router;
 
+    this.setState({ pathname });
     if (!snippetOwner && !snippetKey) {
       // This is a new snippet for the current user, enable all permissions
       const permissions = {
@@ -88,7 +107,7 @@ export class AppBody extends Component {
         // Reroute if using legacy url
         // So /:username/snippets/:id -> /:username/:id
         const nextRoute = `/${snippetOwner}/${sanitizeKey(snippetKey)}`;
-        if (router.location.pathname !== nextRoute) {
+        if (pathname !== nextRoute) {
           router.push(nextRoute);
         }
       }, () => {
