@@ -36,6 +36,17 @@ Object {
 }
 `;
 
+exports[`Actions: User action creators creates correct SET_USER_SNIPPETS object 1`] = `
+Object {
+  "payload": Array [
+    "list",
+    "of",
+    "snippets",
+  ],
+  "type": "SET_USER_SNIPPETS",
+}
+`;
+
 exports[`Actions: User action creators creates correct SWITCH_ORG object 1`] = `
 Object {
   "payload": "galactic-federation",

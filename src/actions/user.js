@@ -33,14 +33,8 @@ export const addOrganizations = organizations => ({
   payload: organizations,
 });
 
-export const switchOrg = org => ({
-  type: SWITCH_ORG,
-  payload: org,
-});
-
-export const saveUsername = username => ({
-  type: SAVE_USERNAME,
-  payload: username,
+export const clearUserCredentials = () => ({
+  type: CLEAR_USER_CREDENTIALS,
 });
 
 export const saveAccessToken = accessToken => ({
@@ -48,8 +42,14 @@ export const saveAccessToken = accessToken => ({
   payload: accessToken,
 });
 
-export const clearUserCredentials = () => ({
-  type: CLEAR_USER_CREDENTIALS,
+export const saveUsername = username => ({
+  type: SAVE_USERNAME,
+  payload: username,
+});
+
+export const setSnippetLists = snippetLists => ({
+  type: SET_SNIPPET_LISTS,
+  payload: snippetLists,
 });
 
 export const setUserSnippets = snippetMeta => ({
@@ -57,9 +57,9 @@ export const setUserSnippets = snippetMeta => ({
   payload: snippetMeta,
 });
 
-export const setSnippetLists = snippetLists => ({
-  type: SET_SNIPPET_LISTS,
-  payload: snippetLists,
+export const switchOrg = org => ({
+  type: SWITCH_ORG,
+  payload: org,
 });
 
 export const updateUserSnippetsStarted = () => ({

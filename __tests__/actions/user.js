@@ -21,14 +21,8 @@ describe('Actions: User', () => {
       expect(actions.addOrganizations(organizations)).toEqual(expected);
     });
 
-    it('creates correct SWITCH_ORG object', () => {
-      const org = 'galactic-federation';
-      expect(actions.switchOrg(org)).toMatchSnapshot();
-    });
-
-    it('creates correct SAVE_USERNAME object', () => {
-      const token = 'token';
-      expect(actions.saveUsername(token)).toMatchSnapshot();
+    it('creates correct CLEAR_USER_CREDENTIALS object', () => {
+      expect(actions.clearUserCredentials()).toMatchSnapshot();
     });
 
     it('creates correct SAVE_ACCESS_TOKEN object', () => {
@@ -36,13 +30,24 @@ describe('Actions: User', () => {
       expect(actions.saveAccessToken(token)).toMatchSnapshot();
     });
 
-    it('creates correct CLEAR_USER_CREDENTIALS object', () => {
-      expect(actions.clearUserCredentials()).toMatchSnapshot();
+    it('creates correct SAVE_USERNAME object', () => {
+      const token = 'token';
+      expect(actions.saveUsername(token)).toMatchSnapshot();
     });
 
     it('creates correct SET_SNIPPET_LISTS object', () => {
       const snippetLists = ['list', 'of', 'snippets'];
       expect(actions.setSnippetLists(snippetLists)).toMatchSnapshot();
+    });
+
+    it('creates correct SET_USER_SNIPPETS object', () => {
+      const snippetLists = ['list', 'of', 'snippets'];
+      expect(actions.setUserSnippets(snippetLists)).toMatchSnapshot();
+    });
+
+    it('creates correct SWITCH_ORG object', () => {
+      const org = 'galactic-federation';
+      expect(actions.switchOrg(org)).toMatchSnapshot();
     });
   });
 
