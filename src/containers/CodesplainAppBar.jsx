@@ -10,10 +10,9 @@ import cookie from 'react-cookie';
 
 import {
   addOrganizations,
-  fetchOrgsSnippets,
+  fetchSnippetLists,
   restoreUserCredentials,
   switchOrg,
-  updateUserSnippets,
 } from '../actions/user';
 import { resetState } from '../actions/app';
 import { closeAnnotationPanel } from '../actions/annotation';
@@ -67,8 +66,7 @@ export class CodesplainAppBar extends Component {
     dispatch(restoreUserCredentials(token, username));
     dispatch(addOrganizations([username].concat(savedOrganizations)));
     dispatch(switchOrg(username));
-    dispatch(updateUserSnippets());
-    dispatch(fetchOrgsSnippets());
+    dispatch(fetchSnippetLists());
   }
 
   onLoginClick() {
