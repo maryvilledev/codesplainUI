@@ -9,6 +9,8 @@ import AppMenu from '../../src/components/menus/AppMenu';
 const defaultProps = {
   onSignOut: jest.fn(),
   onSnippetSelected: jest.fn(),
+  orgSnippets: {},
+  username: 'username',
   userSnippets: {},
 };
 

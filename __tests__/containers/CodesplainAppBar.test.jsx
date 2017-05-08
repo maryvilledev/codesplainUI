@@ -11,9 +11,6 @@ describe('<CodesplainAppBar />', () => {
   const shallowWithContext = node => shallow(node, { context: { muiTheme } });
 
   describe('snapshot tests', () => {
-    const userState = {
-      userSnippets: [],
-    };
     afterEach(() => {
       cookie.remove('token');
     });
@@ -21,7 +18,6 @@ describe('<CodesplainAppBar />', () => {
       const wrapper = shallowWithContext(
         <CodesplainAppBar
           hasUnsavedChanges={false}
-          userState={userState}
         />,
       );
       expect(shallowToJson(wrapper)).toMatchSnapshot();
@@ -32,7 +28,7 @@ describe('<CodesplainAppBar />', () => {
       const wrapper = shallowWithContext(
         <CodesplainAppBar
           hasUnsavedChanges={false}
-          userState={userState}
+          username="username"
         />,
       );
       expect(shallowToJson(wrapper)).toMatchSnapshot();

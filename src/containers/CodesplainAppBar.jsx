@@ -157,12 +157,13 @@ export class CodesplainAppBar extends Component {
       />,
     ];
 
-    const { username, userSnippets } = this.props;
+    const { orgSnippets, username, userSnippets } = this.props;
     const { isDialogOpen, isLoggedIn } = this.state;
     const rightElement = isLoggedIn ?
       (<AppMenu
         onSignOut={this.handleSignOut}
         onSnippetSelected={this.handleSnippetSelected}
+        orgSnippets={orgSnippets}
         username={username}
         userSnippets={userSnippets}
       />)
@@ -199,11 +200,13 @@ export class CodesplainAppBar extends Component {
 
 CodesplainAppBar.propTypes = {
   hasUnsavedChanges: PropTypes.bool.isRequired,
+  orgSnippets: CustomPropTypes.orgSnippets,
   username: PropTypes.string,
   userSnippets: CustomPropTypes.snippets,
 };
 
 CodesplainAppBar.defaultProps = {
+  orgSnippets: {},
   username: '',
   userSnippets: {},
 };
@@ -215,6 +218,7 @@ const mapStateToProps = (state) => {
       hasUnsavedChanges,
     },
     user: {
+      orgSnippets,
       username,
       userSnippets,
     },
@@ -222,6 +226,7 @@ const mapStateToProps = (state) => {
   return {
     hasUnsavedChanges,
     appState: app,
+    orgSnippets,
     userSnippets,
     username,
   };

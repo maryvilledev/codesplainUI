@@ -65,6 +65,7 @@ class Editor extends React.Component {
   componentDidMount() {
     const codeMirror = this.codeMirror.getCodeMirror();
     codeMirror.on('gutterClick', this.handleGutterClick);
+    codeMirror.on('cursorActivity', this.handleCursorActivity);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -177,7 +178,6 @@ class Editor extends React.Component {
   // https://facebook.github.io/react/docs/refs-and-the-dom.html#caveats
   codeMirrorRef(cm) {
     this.codeMirror = cm;
-    cm.getCodeMirror().on('cursorActivity', this.handleCursorActivity);
   }
 
   render() {

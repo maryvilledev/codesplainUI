@@ -5,7 +5,9 @@ exports[`<CodesplainAppBar /> snapshot tests user is logged in 1`] = `
       <AppMenu
         onSignOut={[Function]}
         onSnippetSelected={[Function]}
-        userSnippets={Object {}} />
+        orgSnippets={Object {}}
+        userSnippets={Object {}}
+        username="username" />
     }
     iconStyleRight={
       Object {

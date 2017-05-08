@@ -9,6 +9,7 @@ import {
 import ArrowDropDown from 'material-ui/svg-icons/navigation/arrow-drop-down';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
+import OrgSnippetsMenu from './OrgSnippetsMenu';
 import SnippetList from './SnippetList';
 import CustomPropTypes from '../../util/custom-prop-types';
 
@@ -48,7 +49,7 @@ const makeAppMenuIcon = () => {
 <AppMenu /> renders as a white vertical ellipse ⋮ . When clicked it expands to
 display a "Sign out" option, that when clicked invokes the 'onSignOut' prop.
 */
-const AppMenu = ({ onSignOut, onSnippetSelected, username, userSnippets }) => (
+const AppMenu = ({ onSignOut, onSnippetSelected, orgSnippets, username, userSnippets }) => (
   <div>
     <IconMenu
       anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
@@ -63,6 +64,10 @@ const AppMenu = ({ onSignOut, onSnippetSelected, username, userSnippets }) => (
         primaryText="My Snippets"
         snippetsList={userSnippets}
       />
+      <OrgSnippetsMenu
+        onClick={onSnippetSelected}
+        orgSnippets={orgSnippets}
+      />
       <MenuItem
         onClick={onSignOut}
         primaryText="Sign out"
@@ -74,6 +79,7 @@ const AppMenu = ({ onSignOut, onSnippetSelected, username, userSnippets }) => (
 AppMenu.propTypes = {
   onSignOut: PropTypes.func.isRequired,
   onSnippetSelected: PropTypes.func.isRequired,
+  orgSnippets: CustomPropTypes.orgSnippets.isRequired,
   username: PropTypes.string.isRequired,
   userSnippets: CustomPropTypes.snippets.isRequired,
 };

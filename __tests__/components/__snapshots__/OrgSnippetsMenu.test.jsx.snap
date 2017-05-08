@@ -34,6 +34,7 @@ exports[`<OrgSnippetsMenu /> snapshot tests matches when snippets are passed 1`]
       <SnippetList
         onClick={[Function]}
         primaryText="org1"
+        snippetOwner="org1"
         snippetsList={
             Object {
                 "baz": Object {
@@ -47,6 +48,7 @@ exports[`<OrgSnippetsMenu /> snapshot tests matches when snippets are passed 1`]
       <SnippetList
         onClick={[Function]}
         primaryText="org2"
+        snippetOwner="org2"
         snippetsList={Object {}} />,
     ]
   }

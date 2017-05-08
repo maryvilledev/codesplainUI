@@ -9,6 +9,7 @@ const defaultProps = {
   onClick: jest.fn(),
   primaryText: '',
   snippetsList: {},
+  snippetOwner: 'username',
 };
 
 describe('<SnippetList />', () => {
@@ -32,6 +33,7 @@ describe('<SnippetList />', () => {
       const wrapper = shallowWithContext(
         <SnippetList
           {...defaultProps}
+          snippetOwner="username"
           snippetsList={snippetsList}
         />,
       );
