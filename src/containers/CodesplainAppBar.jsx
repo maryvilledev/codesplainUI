@@ -14,7 +14,7 @@ import { closeAnnotationPanel } from '../actions/annotation';
 import LoginButton from '../components/buttons/LoginButton';
 import AppMenu from '../components/menus/AppMenu';
 import CustomPropTypes from '../util/custom-prop-types';
-import AuthorIcon from '../components/AuthorIcon.jsx'
+import AuthorIcon from '../components/AuthorIcon';
 
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 const GITHUB_URL = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&scope=read:org`;
@@ -155,7 +155,7 @@ export class CodesplainAppBar extends Component {
       : (<LoginButton
         onClick={this.onLoginClick}
       />);
-    rightElement += <AuthorIcon author={author} />;
+    rightElement = <span>{rightElement}<AuthorIcon author={author} /></span>;
     const titleElement = (
       <span
         onClick={this.handleTitleTouchTap}
