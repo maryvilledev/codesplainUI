@@ -24,6 +24,7 @@ const styles = {
     flexFlow: 'row wrap',
     height: '100%',
   },
+  container: { height: '85%' },
   rightSection: {
     display: 'flex',
     flexFlow: 'column wrap',
@@ -139,7 +140,7 @@ export class AppBody extends Component {
       return <NotFound />;
     }
     return (
-      <div style={{ height: '85%' }}>
+      <div style={styles.container}>
         <div style={styles.body}>
           <SnippetArea />
           <div style={styles.rightSection}>

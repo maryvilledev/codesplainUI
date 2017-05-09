@@ -23,6 +23,10 @@ const styles = {
   toolbarField: {
     flex: '1 1 auto',
   },
+  bottomRow: {
+    display: 'flex',
+    flexFlow: 'row wrap',
+  },
 };
 
 /*
@@ -56,12 +60,7 @@ const SnippetAreaToolbar = (props) => {
         onChange={onTitleChange}
         value={title}
       />
-      <div
-        style={{
-          display: 'flex',
-          flexFlow: 'row wrap',
-        }}
-      >
+      <div style={styles.bottomRow} >
         <LanguageSelector
           disabled={readOnly}
           language={language}
