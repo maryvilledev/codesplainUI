@@ -61,11 +61,11 @@ class AppMenu extends Component {
     });
   }
 
-  handleSnippetSelected() {
+  handleSnippetSelected(snippetOwner, snippetKey) {
     this.setState({
       iconMenuOpen: false,
     });
-    this.props.onSnippetSelected();
+    this.props.onSnippetSelected(snippetOwner, snippetKey);
   }
 
   render() {
