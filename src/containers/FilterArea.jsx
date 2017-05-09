@@ -16,11 +16,13 @@ import FilterAreaActions from '../components/FilterAreaActions';
 import RulesSelector from '../components/RulesSelector';
 import CustomPropTypes from '../util/custom-prop-types';
 
+const filterCount = filters => _.keys(filters).length;
+
 export class FilterArea extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isExpanded: false,
+      isExpanded: filterCount(props.filters) !== 0,
     };
     this.handleRuleSelected = this.handleRuleSelected.bind(this);
     this.handleClearAllFilters = this.handleClearAllFilters.bind(this);
@@ -29,12 +31,18 @@ export class FilterArea extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const numberOfFilters = Object.keys(this.props.filters).length;
-    const numberOfNextFilters = Object.keys(nextProps.filters).length;
-    // Set isExpanded to false if there are no filters to display
-    if (numberOfFilters !== numberOfNextFilters && !numberOfNextFilters) {
-      this.setState({ isExpanded: false });
+    const numberOfFilters = filterCount(this.props.filters);
+    const numberOfNextFilters = filterCount(nextProps.filters);
+    // Do nothing if the number of filters hasn't changed
+    if (numberOfFilters === numberOfNextFilters) {
+      return;
     }
+    // This component's isExpanded property is based on whether there are filters
+    // to display or not. If there aren't filters to display, close the panel;
+    // if there are, it should be expanded.
+    this.setState({
+      isExpanded: Boolean(numberOfNextFilters),
+    });
   }
 
   handleRuleSelected(filterName) {
@@ -61,7 +69,7 @@ export class FilterArea extends React.Component {
   render() {
     const { filters } = this.props;
     const { isExpanded } = this.state;
-    const doesHaveFilters = Boolean(Object.keys(filters).length);
+    const doesHaveFilters = Boolean(filterCount(filters));
     const filterAreaActions = doesHaveFilters && isExpanded ?
       (<FilterAreaActions
         clearAll={this.handleClearAllFilters}
