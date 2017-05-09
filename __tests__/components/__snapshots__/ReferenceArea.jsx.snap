@@ -3,8 +3,10 @@ exports[`<ReferenceArea /> matches snapshot 1`] = `
   style={
     Object {
       "bottom": 0,
+      "display": "inline-flex",
+      "flexFlow": "row nowrap",
+      "justifyContent": "flex-end",
       "padding": 4,
-      "position": "fixed",
       "right": 0,
     }
   }>

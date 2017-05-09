@@ -6,7 +6,6 @@ import cookie from 'react-cookie';
 import Annotations from './Annotations';
 import FilterArea from './FilterArea';
 import SnippetArea from './SnippetArea';
-import ReferenceArea from '../components/ReferenceArea';
 import {
   loadSnippet,
   restoreState,
@@ -24,7 +23,6 @@ const styles = {
     flexFlow: 'row wrap',
     height: '100%',
   },
-  container: { height: '85%' },
   rightSection: {
     display: 'flex',
     flexFlow: 'column wrap',
@@ -140,15 +138,12 @@ export class AppBody extends Component {
       return <NotFound />;
     }
     return (
-      <div style={styles.container}>
-        <div style={styles.body}>
-          <SnippetArea />
-          <div style={styles.rightSection}>
-            <FilterArea />
-            <Annotations />
-          </div>
+      <div style={styles.body}>
+        <SnippetArea />
+        <div style={styles.rightSection}>
+          <FilterArea />
+          <Annotations />
         </div>
-        <ReferenceArea />
       </div>
     );
   }
