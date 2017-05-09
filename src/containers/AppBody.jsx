@@ -25,7 +25,7 @@ const styles = {
   },
   rightSection: {
     display: 'flex',
-    flexFlow: 'column wrap',
+    flexFlow: 'column nowrap',
     height: '100%',
     flex: '1 0',
     minWidth: '300px',
