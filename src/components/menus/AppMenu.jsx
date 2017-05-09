@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import cookie from 'react-cookie';
 
 import {
@@ -45,36 +45,72 @@ const makeAppMenuIcon = () => {
   return <MoreVertIcon color="white" />;
 };
 
-/*
-<AppMenu /> renders as a white vertical ellipse ⋮ . When clicked it expands to
-display a "Sign out" option, that when clicked invokes the 'onSignOut' prop.
-*/
-const AppMenu = ({ onSignOut, onSnippetSelected, orgSnippets, username, userSnippets }) => (
-  <div>
-    <IconMenu
-      anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-      iconButtonElement={makeAppMenuIcon()}
-      iconStyle={styles.iconButtonElement}
-      style={styles.iconMenu}
-      targetOrigin={{ horizontal: 'right', vertical: 'top' }}
-    >
-      <SnippetList
-        onClick={onSnippetSelected}
-        snippetOwner={username}
-        primaryText="My Snippets"
-        snippetsList={userSnippets}
-      />
-      <OrgSnippetsMenu
-        onClick={onSnippetSelected}
-        orgSnippets={orgSnippets}
-      />
-      <MenuItem
-        onClick={onSignOut}
-        primaryText="Sign out"
-      />
-    </IconMenu>
-  </div>
-);
+class AppMenu extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      iconMenuOpen: false,
+    };
+    this.handleOnRequestChange = this.handleOnRequestChange.bind(this);
+    this.handleSnippetSelected = this.handleSnippetSelected.bind(this);
+  }
+
+  handleOnRequestChange(open) {
+    this.setState({
+      iconMenuOpen: open,
+    });
+  }
+
+  handleSnippetSelected() {
+    this.setState({
+      iconMenuOpen: false,
+    });
+    this.props.onSnippetSelected();
+  }
+
+  render() {
+    const {
+      onSignOut,
+      orgSnippets,
+      username,
+      userSnippets,
+    } = this.props;
+    const {
+      iconMenuOpen,
+    } = this.state;
+
+    return (
+      <div>
+        <IconMenu
+          anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+          iconButtonElement={makeAppMenuIcon()}
+          iconStyle={styles.iconButtonElement}
+          onItemTouchTap={this.handleOnItemTouchTap}
+          onRequestChange={this.handleOnRequestChange}
+          open={iconMenuOpen}
+          style={styles.iconMenu}
+          targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+          useLayerForClickAway
+        >
+          <SnippetList
+            onClick={this.handleSnippetSelected}
+            snippetOwner={username}
+            primaryText="My Snippets"
+            snippetsList={userSnippets}
+          />
+          <OrgSnippetsMenu
+            onClick={this.handleSnippetSelected}
+            orgSnippets={orgSnippets}
+          />
+          <MenuItem
+            onClick={onSignOut}
+            primaryText="Sign out"
+          />
+        </IconMenu>
+      </div>
+    );
+  }
+}
 
 AppMenu.propTypes = {
   onSignOut: PropTypes.func.isRequired,

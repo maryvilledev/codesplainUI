@@ -12,6 +12,7 @@ exports[`<SnippetList /> snapshot tests matches when no snippets are passed 1`] 
   focusState="none"
   insetChildren={false}
   menuItems={null}
+  onTouchTap={[Function]}
   primaryText=""
   rightIcon={<NavigationArrowDropRight />} />
 `;
@@ -61,6 +62,7 @@ exports[`<SnippetList /> snapshot tests matches when snippets are passed 1`] = `
         primaryText="qux" />,
     ]
   }
+  onTouchTap={[Function]}
   primaryText=""
   rightIcon={<NavigationArrowDropRight />} />
 `;

@@ -37,7 +37,7 @@ exports[`<AppMenu /> snapshot tests matches snapshot of when user is logged in 1
     onMouseUp={[Function]}
     onRequestChange={[Function]}
     onTouchTap={[Function]}
-    open={null}
+    open={false}
     style={
       Object {
         "cursor": "pointer",
@@ -50,7 +50,7 @@ exports[`<AppMenu /> snapshot tests matches snapshot of when user is logged in 1
       }
     }
     touchTapCloseDelay={200}
-    useLayerForClickAway={false}>
+    useLayerForClickAway={true}>
     <SnippetList
       onClick={[Function]}
       primaryText="My Snippets"
@@ -106,7 +106,7 @@ exports[`<AppMenu /> snapshot tests matches snapshot of when user is not logged 
     onMouseUp={[Function]}
     onRequestChange={[Function]}
     onTouchTap={[Function]}
-    open={null}
+    open={false}
     style={
       Object {
         "cursor": "pointer",
@@ -119,7 +119,7 @@ exports[`<AppMenu /> snapshot tests matches snapshot of when user is not logged 
       }
     }
     touchTapCloseDelay={200}
-    useLayerForClickAway={false}>
+    useLayerForClickAway={true}>
     <SnippetList
       onClick={[Function]}
       primaryText="My Snippets"
