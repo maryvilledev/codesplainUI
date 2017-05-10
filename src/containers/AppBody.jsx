@@ -15,6 +15,7 @@ import {
 import { setPermissions } from '../actions/permissions';
 import NotFound from '../components/NotFound';
 import { removeDeprecatedFiltersFromState } from '../util/codemirror-utils';
+import CustomPropTypes from '../util/custom-prop-types';
 import { sanitizeKey } from '../util/requests';
 import { setDefaults } from '../util/state-management';
 
@@ -56,6 +57,7 @@ export class AppBody extends Component {
     const {
       dispatch,
       router,
+      orgs,
       username,
     } = this.props;
     const {
@@ -100,7 +102,7 @@ export class AppBody extends Component {
         const permissions = {
           canRead: true,
           // Only the owner of a snippet may edit it.
-          canEdit: (snippetOwner === username),
+          canEdit: (snippetOwner === username) || (orgs.includes(snippetOwner)),
         };
         dispatch(setPermissions(permissions));
 
@@ -155,20 +157,24 @@ export class AppBody extends Component {
 }
 
 AppBody.propTypes = {
+  orgs: CustomPropTypes.orgs,
   username: PropTypes.string,
 };
 
 AppBody.defaultProps = {
+  orgs: [],
   username: '',
 };
 
 const mapStateToProps = (state) => {
   const {
     user: {
+      orgs,
       username,
     },
   } = state;
   return {
+    orgs,
     username,
   };
 };
