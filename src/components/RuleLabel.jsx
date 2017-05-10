@@ -15,6 +15,7 @@ const styles = {
     fontSize: '10pt',
     lineHeight: 1,
     marginTop: '5px',
+    marginRight: '5px',
     maxWidth: '200px',
     padding: '5px',
     width: '100%',
