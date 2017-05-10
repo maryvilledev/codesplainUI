@@ -112,8 +112,8 @@ export class AppBody extends Component {
 
         const permissions = {
           canRead: true,
-          // Currently, users may only edit a file they own
-          canEdit: (username === cookie.load('username')),
+          canEdit: (username === cookie.load('username') ||
+           cookie.load('orgs').split(' ').includes(username)),
         };
         dispatch(setPermissions(permissions));
 
