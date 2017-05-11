@@ -34,7 +34,6 @@ class LineSnippet extends React.Component {
             options={codeMirrorOptions}
           />
         </Paper>
-        <br />
       </div>
     );
   }
