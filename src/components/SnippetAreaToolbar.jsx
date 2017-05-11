@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import {
   TextField,
+  Avatar,
 } from 'material-ui';
 
 import LanguageSelector from './LanguageSelector';
@@ -32,6 +33,12 @@ const styles = {
     flexShrink: '1',
     verticalAlign: 'middle',
   },
+  avatar: {
+    flexBasis: 'auto',
+    flexGrow: '1',
+    flexShrink: '1',
+    verticalAlign: 'middle',
+  },
 };
 
 /*
@@ -54,10 +61,17 @@ const SnippetAreaToolbar = (props) => {
     title,
     orgs,
     selectedOrg,
+    avatarUrl,
   } = props;
 
   return (
     <div style={styles.toolbar}>
+      <div style={styles.avatar}>
+        <Avatar
+          size={30}
+          src={avatarUrl}
+        />
+      </div>
       <TextField
         hintText="Snippet Name"
         id="titleField"

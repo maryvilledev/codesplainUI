@@ -13,6 +13,18 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is no
       "padding": "0",
     }
   }>
+  <div
+    style={
+      Object {
+        "flexBasis": "auto",
+        "flexGrow": "1",
+        "flexShrink": "1",
+        "verticalAlign": "middle",
+      }
+    }>
+    <Avatar
+      size={30} />
+  </div>
   <TextField
     disabled={false}
     floatingLabelFixed={false}
@@ -97,6 +109,18 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is re
       "padding": "0",
     }
   }>
+  <div
+    style={
+      Object {
+        "flexBasis": "auto",
+        "flexGrow": "1",
+        "flexShrink": "1",
+        "verticalAlign": "middle",
+      }
+    }>
+    <Avatar
+      size={30} />
+  </div>
   <TextField
     disabled={false}
     floatingLabelFixed={false}
