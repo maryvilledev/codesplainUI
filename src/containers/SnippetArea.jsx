@@ -227,6 +227,7 @@ export class SnippetArea extends React.Component {
       snippetLanguage,
       snippetTitle,
       username,
+      author,
     } = this.props;
     const { avatarUrl } = this.state;
 
@@ -252,6 +253,7 @@ export class SnippetArea extends React.Component {
             selectedOrg={selectedOrg}
             title={snippetTitle}
             avatarUrl={avatarUrl}
+            author={author}
           />
           <ConfirmLockDialog
             accept={this.handleToggleReadOnly}

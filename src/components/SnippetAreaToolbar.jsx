@@ -3,6 +3,7 @@ import {
   TextField,
   Avatar,
 } from 'material-ui';
+import ReactTooltip from 'react-tooltip';
 
 import LanguageSelector from './LanguageSelector';
 import LockButton from './buttons/LockButton';
@@ -33,6 +34,7 @@ const styles = {
     verticalAlign: 'bottom',
     paddingTop: '10px',
     margin: '3px',
+    marginLeft: '20px',
   },
 };
 
@@ -57,6 +59,7 @@ const SnippetAreaToolbar = (props) => {
     orgs,
     selectedOrg,
     avatarUrl,
+    author,
   } = props;
 
   return (
@@ -69,7 +72,11 @@ const SnippetAreaToolbar = (props) => {
           onChange={onTitleChange}
           value={title}
         />
-        <div style={styles.avatar}>
+        <div
+          style={styles.avatar}
+          data-tip
+          data-for="avatar"
+        >
           {(avatarUrl) ?
             <Avatar
               size={20}
@@ -77,6 +84,13 @@ const SnippetAreaToolbar = (props) => {
             />
         : null}
         </div>
+        <ReactTooltip
+          id="avatar"
+          effect="solid"
+          place="bottom"
+        >
+          {author}
+        </ReactTooltip>
       </div>
       <div style={styles.row} >
         <LanguageSelector
@@ -123,11 +137,13 @@ SnippetAreaToolbar.propTypes = {
   orgs: CustomPropTypes.orgs.isRequired,
   selectedOrg: PropTypes.string,
   avatarUrl: PropTypes.string,
+  author: PropTypes.string,
 };
 
 SnippetAreaToolbar.defaultProps = {
   selectedOrg: '',
   avatarUrl: null,
+  author: '',
 };
 
 export default SnippetAreaToolbar;
