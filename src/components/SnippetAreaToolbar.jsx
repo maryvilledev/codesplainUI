@@ -67,10 +67,12 @@ const SnippetAreaToolbar = (props) => {
   return (
     <div style={styles.toolbar}>
       <div style={styles.avatar}>
-        <Avatar
-          size={30}
-          src={avatarUrl}
-        />
+        {(avatarUrl) ?
+          <Avatar
+            size={30}
+            src={avatarUrl}
+          />
+        : null}
       </div>
       <TextField
         hintText="Snippet Name"

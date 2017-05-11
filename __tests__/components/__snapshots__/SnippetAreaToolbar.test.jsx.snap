@@ -21,10 +21,7 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is no
         "flexShrink": "1",
         "verticalAlign": "middle",
       }
-    }>
-    <Avatar
-      size={30} />
-  </div>
+    } />
   <TextField
     disabled={false}
     floatingLabelFixed={false}
@@ -117,10 +114,7 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is re
         "flexShrink": "1",
         "verticalAlign": "middle",
       }
-    }>
-    <Avatar
-      size={30} />
-  </div>
+    } />
   <TextField
     disabled={false}
     floatingLabelFixed={false}
