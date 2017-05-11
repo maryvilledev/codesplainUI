@@ -120,10 +120,12 @@ SnippetAreaToolbar.propTypes = {
   title: PropTypes.string.isRequired,
   orgs: CustomPropTypes.orgs.isRequired,
   selectedOrg: PropTypes.string,
+  avatarUrl: PropTypes.string,
 };
 
 SnippetAreaToolbar.defaultProps = {
   selectedOrg: '',
+  avatarUrl: null,
 };
 
 export default SnippetAreaToolbar;

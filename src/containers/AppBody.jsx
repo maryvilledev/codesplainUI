@@ -80,7 +80,6 @@ export class AppBody extends Component {
 
     this.setState({ pathname: router.location.pathname });
     if (!snippetOwner && !snippetKey) {
-      dispatch(setAuthor(snippetOwner));
       // This is a new snippet for the current user, enable all permissions
       const permissions = {
         canRead: true,
@@ -117,6 +116,7 @@ export class AppBody extends Component {
         if (router.location.pathname !== nextRoute) {
           router.push(nextRoute);
         }
+        dispatch(setAuthor(snippetOwner));
       }, () => {
         // Failed to get the snippet, either bad URL or unauthorized
         this.setState({
