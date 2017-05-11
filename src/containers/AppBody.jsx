@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Card } from 'material-ui';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import cookie from 'react-cookie';
@@ -7,7 +6,6 @@ import cookie from 'react-cookie';
 import Annotations from './Annotations';
 import FilterArea from './FilterArea';
 import SnippetArea from './SnippetArea';
-import ReferenceArea from '../components/ReferenceArea';
 import {
   loadSnippet,
   restoreState,
@@ -20,14 +18,18 @@ import { sanitizeKey } from '../util/requests';
 import { setDefaults } from '../util/state-management';
 
 const styles = {
-  snippetAreaSection: {
-    height: '90vh',
-  },
-  snippetAreaSectionCard: {
+  body: {
+    display: 'flex',
+    flexFlow: 'row wrap',
     height: '100%',
   },
-  snippetAreaSectionCardContainer: {
-    height: 'inherit',
+  rightSection: {
+    display: 'flex',
+    flexFlow: 'column nowrap',
+    height: '100%',
+    flex: '1 1 auto',
+    overflowY: 'auto',
+    boxShadow: '0px 1px 6px rgba(0, 0, 0, 0.12), 0px 1px 4px rgba(0, 0, 0, 0.12)',
   },
 };
 
@@ -143,30 +145,11 @@ export class AppBody extends Component {
       return <NotFound />;
     }
     return (
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col-lg-2">
-            <FilterArea />
-          </div>
-          <div
-            className="col-lg-5 col-md-7"
-            style={styles.snippetAreaSection}
-          >
-            <Card
-              containerStyle={styles.snippetAreaSectionCardContainer}
-              style={styles.snippetAreaSectionCard}
-            >
-              <SnippetArea />
-            </Card>
-          </div>
-          <div className="col-lg-5 col-md-5">
-            <Card>
-              <Annotations />
-            </Card>
-          </div>
-        </div>
-        <div className="row">
-          <ReferenceArea />
+      <div style={styles.body}>
+        <SnippetArea />
+        <div style={styles.rightSection}>
+          <FilterArea />
+          <Annotations />
         </div>
       </div>
     );
