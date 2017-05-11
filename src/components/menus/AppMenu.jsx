@@ -1,10 +1,10 @@
 import React, { PropTypes } from 'react';
-import cookie from 'react-cookie';
 
 import {
   Avatar,
   IconMenu,
   MenuItem,
+  IconButton,
 } from 'material-ui';
 import ArrowDropDown from 'material-ui/svg-icons/navigation/arrow-drop-down';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
@@ -27,8 +27,7 @@ const styles = {
 
 // Returns an <Avatar /> of the user's GitHub icon if the requisite cookie is
 // present, otherwise returns null.
-const makeAppMenuIcon = () => {
-  const avatarURL = cookie.load('userAvatarURL');
+const makeAppMenuIcon = (avatarURL) => {
   if (avatarURL) {
     return (
       <div>
@@ -41,18 +40,22 @@ const makeAppMenuIcon = () => {
       </div>
     );
   }
-  return <MoreVertIcon color="white" />;
+  return (
+    <IconButton>
+      <MoreVertIcon color="white" />
+    </IconButton>
+  );
 };
 
 /*
 <AppMenu /> renders as a white vertical ellipse ⋮ . When clicked it expands to
 display a "Sign out" option, that when clicked invokes the 'onSignOut' prop.
 */
-const AppMenu = ({ onSignOut, snippetTitles, onTitleClicked }) => (
+const AppMenu = ({ onSignOut, snippetTitles, onTitleClicked, avatarURL }) => (
   <div>
     <IconMenu
       style={styles.iconMenu}
-      iconButtonElement={makeAppMenuIcon()}
+      iconButtonElement={makeAppMenuIcon(avatarURL)}
       targetOrigin={{ horizontal: 'right', vertical: 'top' }}
       anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
       iconStyle={styles.iconButtonElement}
@@ -70,6 +73,7 @@ const AppMenu = ({ onSignOut, snippetTitles, onTitleClicked }) => (
 );
 
 AppMenu.propTypes = {
+  avatarURL: PropTypes.string.isRequired,
   onSignOut: PropTypes.func.isRequired,
   onTitleClicked: PropTypes.func.isRequired,
   snippetTitles: CustomPropTypes.snippets.isRequired,

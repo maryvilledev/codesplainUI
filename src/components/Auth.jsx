@@ -2,13 +2,10 @@ import React from 'react';
 import cookie from 'react-cookie';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import _ from 'lodash';
 
 import {
   fetchAccessToken,
   saveAccessToken,
-  fetchUserInfo,
-  saveUsername,
 } from '../actions/user';
 import Loading from '../components/Loading';
 import Alert from '../components/Alert';
@@ -24,8 +21,8 @@ const resolveErrorMessage = (status) => {
   case 403: {
     return errors.badOrg;
   }
-    // eslint-disable-next-line
-    case 400: //Intentional fallthrough
+// eslint-disable-next-line
+case 400: //Intentional fallthrough
   default: {
     return errors.badCode;
   }
@@ -59,17 +56,9 @@ export class Auth extends React.Component {
     const { dispatch } = this.props;
     dispatch(fetchAccessToken(authCode))
       .then((res) => {
-        const { token, orgs } = res.data;
+        const { token } = res.data;
         dispatch(saveAccessToken(token));
         cookie.save('token', token, { path: '/' });
-        cookie.save('orgs', _.join(orgs, ' '), { path: '/' });
-      })
-      .then(() => dispatch(fetchUserInfo()))
-      .then((res) => {
-        const { login: username, avatar_url: userAvatarURL } = res.data;
-        dispatch(saveUsername(username));
-        cookie.save('userAvatarURL', userAvatarURL, { path: '/' });
-        cookie.save('username', username, { path: '/' });
         this.setState({ waiting: false });
       })
       .catch((err) => {
