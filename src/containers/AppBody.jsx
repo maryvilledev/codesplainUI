@@ -13,6 +13,7 @@ import {
   restoreState,
 } from '../actions/app';
 import { setPermissions } from '../actions/permissions';
+import { switchOrg } from '../actions/user';
 import NotFound from '../components/NotFound';
 import { removeDeprecatedFiltersFromState } from '../util/codemirror-utils';
 import { sanitizeKey } from '../util/requests';
@@ -97,10 +98,18 @@ export class AppBody extends Component {
         // Restore the application's state
         dispatch(restoreState(appState));
 
+        // If the user is a member of the org in question, make the org the
+        // current org
+        const isMember = cookie.load('orgs').split(' ').includes(snippetOwner);
+        if (isMember) {
+          dispatch(switchOrg(snippetOwner));
+        }
+
         const permissions = {
           canRead: true,
-          // Only the owner of a snippet may edit it.
-          canEdit: (snippetOwner === username),
+          // User can edit a snippet if he/she owns the snippet, or they belong
+          // to the organization that owns the snippet
+          canEdit: snippetOwner === username || isMember,
         };
         dispatch(setPermissions(permissions));
 
