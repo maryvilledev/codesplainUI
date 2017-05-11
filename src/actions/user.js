@@ -1,5 +1,4 @@
 import axios from 'axios';
-import cookie from 'react-cookie';
 
 import { makeSaveEndpointUrl } from '../util/requests';
 
@@ -10,6 +9,7 @@ const noSuchKey = data => (
   typeof data === 'string' && data.includes('NoSuchKey')
 );
 
+export const SET_AVATAR_URL = 'SET_AVATAR_URL';
 export const SET_USER_SNIPPETS = 'SET_USER_SNIPPETS';
 export const UPDATE_USER_SNIPPETS_STARTED = 'UPDATE_USER_SNIPPETS_STARTED';
 export const UPDATE_USER_SNIPPETS_SUCCEEDED = 'UPDATE_USER_SNIPPETS_SUCCEEDED';
@@ -21,6 +21,11 @@ export const SAVE_USERNAME = 'SAVE_USERNAME';
 export const SAVE_ACCESS_TOKEN = 'SAVE_ACCESS_TOKEN';
 export const CLEAR_USER_CREDENTIALS = 'CLEAR_USER_CREDENTIALS';
 export const RESTORE_USER_CREDENTIALS = 'RESTORE_USER_CREDENTIALS';
+
+export const setAvatarUrl = url => ({
+  type: SET_AVATAR_URL,
+  payload: url,
+});
 
 export const addOrg = org => ({
   type: ADD_ORG,
@@ -62,10 +67,8 @@ export const updateUserSnippetsFailed = () => ({
   type: UPDATE_USER_SNIPPETS_FAILED,
 });
 
-export const updateUserSnippets = () => (dispatch) => {
-  // Load requisite cookies, return Promise if they aren't present
-  const token = cookie.load('token');
-  const username = cookie.load('username');
+export const updateUserSnippets = () => (dispatch, getState) => {
+  const { token, username } = getState().user;
 
   // Fetch the user's snippet meta data and save it
   const headers = {
@@ -106,6 +109,19 @@ export const fetchUserInfo = () => (dispatch, getState) => {
   return axios({
     method: 'GET',
     url: 'https://api.github.com/user',
+    headers: reqHeaders,
+  });
+};
+
+export const fetchUserOrgs = () => (dispatch, getState) => {
+  const { token } = getState().user;
+  const reqHeaders = {
+    Accept: 'application/json',
+    Authorization: `token ${token}`,
+  };
+  return axios({
+    method: 'GET',
+    url: 'https://api.github.com/user/orgs',
     headers: reqHeaders,
   });
 };

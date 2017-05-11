@@ -22,6 +22,7 @@ describe('<CodesplainAppBar />', () => {
     it('user is not logged in', () => {
       const wrapper = shallowWithContext(
         <CodesplainAppBar
+          username="FooBar"
           hasUnsavedChanges={false}
           userState={userState}
           author={mockAuthor}
@@ -34,6 +35,7 @@ describe('<CodesplainAppBar />', () => {
       cookie.save('token', 'foobar');
       const wrapper = shallowWithContext(
         <CodesplainAppBar
+          username="FooBar"
           hasUnsavedChanges={false}
           userState={userState}
           author={mockAuthor}

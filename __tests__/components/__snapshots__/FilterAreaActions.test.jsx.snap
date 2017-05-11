@@ -1,8 +1,15 @@
 exports[`<FilterAreaActions /> matches snapshot of when the app is not in read-only mode 1`] = `
-<CardActions>
+<CardActions
+  style={
+    Object {
+      "display": "flex",
+      "flexFlow": "row nowrap",
+      "justifyContent": "space-evenly",
+    }
+  }>
   <FlatButton
     disabled={false}
-    fullWidth={true}
+    fullWidth={false}
     label="Select All"
     labelPosition="after"
     labelStyle={
@@ -19,7 +26,7 @@ exports[`<FilterAreaActions /> matches snapshot of when the app is not in read-o
     secondary={false} />
   <FlatButton
     disabled={false}
-    fullWidth={true}
+    fullWidth={false}
     label="Clear All"
     labelPosition="after"
     labelStyle={

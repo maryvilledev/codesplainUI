@@ -1,3 +1,15 @@
+html {
+  height: 100%;
+}
+
+body {
+  height: inherit;
+}
+
+div#root {
+  height: inherit;
+}
+
 .cm-s-codesplain {
   flex-grow: 1;
   flex-shrink: 1;
@@ -8,7 +20,7 @@
 .cm-s-codesplain span {
   font-size: 108%;
   line-height: 108%;
-  padding-top: 0.5%;
+  padding-top: 0.3%;
 }
 
 .ReactCodeMirror {
