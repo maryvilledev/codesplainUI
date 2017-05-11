@@ -57,7 +57,15 @@ export class AppBody extends Component {
   }
 
   componentDidUpdate() {
-    this.updatePermissions();
+    const { router } = this.props;
+    const {
+      id: snippetKey,
+      username: snippetOwner,
+    } = router.params;
+
+    if (snippetOwner && snippetKey) {
+      this.updatePermissions();
+    }
   }
 
   loadSnippet() {
@@ -136,7 +144,7 @@ export class AppBody extends Component {
 
     const permissions = {
       canRead: true,
-      // Users may only edit a file they (or one of their orgs) own
+      // Users may only edit & save a file they (or one of their orgs) own
       canEdit: (username === snippetOwner || isMember),
     };
     dispatch(setPermissions(permissions));
