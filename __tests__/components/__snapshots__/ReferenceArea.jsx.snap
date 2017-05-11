@@ -6,7 +6,7 @@ exports[`<ReferenceArea /> matches snapshot 1`] = `
       "display": "inline-flex",
       "flexFlow": "row nowrap",
       "justifyContent": "flex-end",
-      "padding": 4,
+      "padding": "0.7rem",
       "right": 0,
     }
   }>

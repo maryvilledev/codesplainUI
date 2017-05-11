@@ -11,6 +11,7 @@ const styles = {
     display: 'flex',
     flexFlow: 'column nowrap',
     justifyContent: 'flex-start',
+    overflow: 'auto',
   },
 };
 

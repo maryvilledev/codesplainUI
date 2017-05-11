@@ -32,6 +32,7 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     height: 'inherit',
+    overflow: 'auto',
   },
   card: {
     height: '100%',

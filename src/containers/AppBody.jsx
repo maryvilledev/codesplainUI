@@ -28,7 +28,8 @@ const styles = {
     flexFlow: 'column nowrap',
     height: '100%',
     flex: '1 0',
-    minWidth: '300px',
+    overflow: 'auto',
+    boxShadow: '0px 1px 6px rgba(0, 0, 0, 0.12), 0px 1px 4px rgba(0, 0, 0, 0.12)',
   },
 };
 
