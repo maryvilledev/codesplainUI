@@ -116,9 +116,7 @@ export class CodesplainAppBar extends Component {
   }
 
   handleSnippetSelected(key) {
-    const { username } = this.props;
-    window.location = `/${username}/${key}`;
-    const { router } = this.props;
+    const { username, router } = this.props;
     router.push(`/${username}/${key}`);
   }
 

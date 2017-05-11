@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Card } from 'material-ui';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
@@ -12,6 +12,9 @@ import {
   loadSnippet,
   restoreState,
 } from '../actions/app';
+import {
+  switchOrg,
+} from '../actions/user';
 import { setPermissions } from '../actions/permissions';
 import NotFound from '../components/NotFound';
 import { removeDeprecatedFiltersFromState } from '../util/codemirror-utils';
@@ -37,6 +40,7 @@ export class AppBody extends Component {
       isValidSnippet: true,
     };
     this.loadSnippet = this.loadSnippet.bind(this);
+    this.updatePermissions = this.updatePermissions.bind(this);
   }
 
   componentDidMount() {
@@ -52,6 +56,10 @@ export class AppBody extends Component {
     }
   }
 
+  componentDidUpdate() {
+    this.updatePermissions();
+  }
+
   loadSnippet() {
     const {
       dispatch,
@@ -61,7 +69,6 @@ export class AppBody extends Component {
       id: snippetKey,
       username: snippetOwner,
     } = router.params;
-    const { username } = this.props;
 
     this.setState({ pathname: router.location.pathname });
     if (!snippetOwner && !snippetKey) {
@@ -93,13 +100,7 @@ export class AppBody extends Component {
         }
         // Restore the application's state
         dispatch(restoreState(appState));
-
-        const permissions = {
-          canRead: true,
-          // Currently, users may only edit a file they own
-          canEdit: (snippetOwner === username),
-        };
-        dispatch(setPermissions(permissions));
+        this.updatePermissions();
 
         // Reroute if using legacy url
         // So /:username/snippets/:id -> /:username/:id
@@ -113,6 +114,32 @@ export class AppBody extends Component {
           isValidSnippet: false,
         });
       });
+  }
+
+  updatePermissions() {
+    const {
+      username,
+      orgs,
+      dispatch,
+      router,
+    } = this.props;
+    const {
+      username: snippetOwner,
+    } = router.params;
+
+    // If the user is a member of the org in question, make the org the
+    // current org
+    const isMember = orgs.includes(snippetOwner);
+    if (isMember) {
+      dispatch(switchOrg(snippetOwner));
+    }
+
+    const permissions = {
+      canRead: true,
+      // Users may only edit a file they (or one of their orgs) own
+      canEdit: (username === snippetOwner || isMember),
+    };
+    dispatch(setPermissions(permissions));
   }
 
   render() {
@@ -151,15 +178,27 @@ export class AppBody extends Component {
   }
 }
 
+AppBody.propTypes = {
+  orgs: PropTypes.string,
+  username: PropTypes.string,
+};
+
+AppBody.defaultProps = {
+  orgs: [],
+  username: '',
+};
+
 const mapStateToProps = (state) => {
   const {
     user: {
       username,
+      orgs,
     },
   } = state;
 
   return {
     username,
+    orgs,
   };
 };
 
