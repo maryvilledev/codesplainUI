@@ -1,9 +1,9 @@
 import React from 'react';
 
-import AppBody from './AppBody';
-import CodesplainAppBar from './CodesplainAppBar';
-import NotificationSnackbar from '../components/NotificationSnackbar';
-import ReferenceArea from '../components/ReferenceArea';
+import AppBody from '../containers/AppBody';
+import CodesplainAppBar from '../containers/CodesplainAppBar';
+import NotificationSnackbar from './NotificationSnackbar';
+import ReferenceArea from './ReferenceArea';
 
 const styles = {
   container: {

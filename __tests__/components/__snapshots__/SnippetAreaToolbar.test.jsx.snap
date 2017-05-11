@@ -10,18 +10,50 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is no
       "padding": "0",
     }
   }>
-  <TextField
-    disabled={false}
-    floatingLabelFixed={false}
-    fullWidth={true}
-    hintText="Snippet Name"
-    id="titleField"
-    multiLine={false}
-    onChange={[Function]}
-    rows={1}
-    type="text"
-    underlineShow={true}
-    value="" />
+  <div
+    style={
+      Object {
+        "display": "flex",
+        "flexFlow": "row wrap",
+      }
+    }>
+    <TextField
+      disabled={false}
+      floatingLabelFixed={false}
+      fullWidth={false}
+      hintText="Snippet Name"
+      id="titleField"
+      multiLine={false}
+      onChange={[Function]}
+      rows={1}
+      style={
+        Object {
+          "flex": "1 1 auto",
+        }
+      }
+      type="text"
+      underlineShow={true}
+      value="" />
+    <div
+      data-for="avatar"
+      data-tip={true}
+      style={
+        Object {
+          "flexBasis": "auto",
+          "margin": "3px",
+          "marginLeft": "20px",
+          "paddingTop": "10px",
+          "verticalAlign": "bottom",
+        }
+      } />
+    <ReactTooltip
+      effect="solid"
+      id="avatar"
+      insecure={true}
+      place="bottom"
+      resizeHide={true}
+      wrapper="div" />
+  </div>
   <div
     style={
       Object {
@@ -82,18 +114,50 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is re
       "padding": "0",
     }
   }>
-  <TextField
-    disabled={false}
-    floatingLabelFixed={false}
-    fullWidth={true}
-    hintText="Snippet Name"
-    id="titleField"
-    multiLine={false}
-    onChange={[Function]}
-    rows={1}
-    type="text"
-    underlineShow={true}
-    value="" />
+  <div
+    style={
+      Object {
+        "display": "flex",
+        "flexFlow": "row wrap",
+      }
+    }>
+    <TextField
+      disabled={false}
+      floatingLabelFixed={false}
+      fullWidth={false}
+      hintText="Snippet Name"
+      id="titleField"
+      multiLine={false}
+      onChange={[Function]}
+      rows={1}
+      style={
+        Object {
+          "flex": "1 1 auto",
+        }
+      }
+      type="text"
+      underlineShow={true}
+      value="" />
+    <div
+      data-for="avatar"
+      data-tip={true}
+      style={
+        Object {
+          "flexBasis": "auto",
+          "margin": "3px",
+          "marginLeft": "20px",
+          "paddingTop": "10px",
+          "verticalAlign": "bottom",
+        }
+      } />
+    <ReactTooltip
+      effect="solid"
+      id="avatar"
+      insecure={true}
+      place="bottom"
+      resizeHide={true}
+      wrapper="div" />
+  </div>
   <div
     style={
       Object {

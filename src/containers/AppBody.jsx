@@ -10,10 +10,8 @@ import {
   loadSnippet,
   restoreState,
 } from '../actions/app';
-import {
-  switchOrg,
-} from '../actions/user';
-import { setPermissions } from '../actions/permissions';
+import { setPermissions, setAuthor } from '../actions/permissions';
+import { switchOrg } from '../actions/user';
 import NotFound from '../components/NotFound';
 import { removeDeprecatedFiltersFromState } from '../util/codemirror-utils';
 import CustomPropTypes from '../util/custom-prop-types';
@@ -110,6 +108,7 @@ export class AppBody extends Component {
         if (router.location.pathname !== nextRoute) {
           router.push(nextRoute);
         }
+        dispatch(setAuthor(snippetOwner));
       }, () => {
         // Failed to get the snippet, either bad URL or unauthorized
         this.setState({

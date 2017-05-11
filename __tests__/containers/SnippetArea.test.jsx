@@ -22,14 +22,11 @@ const mockFilters = {
     prettyTokenName: 'Morty Smith',
   },
 };
-const mockPermissions = {
-  canRead: true,
-  canEdit: true,
-};
 const mockSnippet = 'print(\'Squanch ya later!\')';
 const mockSnippetTitle = 'Squanchy AI';
 const mockOrgs = ['galactic-federation'];
 const mockSelectedOrg = 'galactic-federation';
+const mockAuthor = 'rick-sanchez';
 
 describe('<SnippetArea />', () => {
   beforeEach(() => {
@@ -45,9 +42,10 @@ describe('<SnippetArea />', () => {
       filters={mockFilters}
       readOnly
       snippetLanguage="python3"
-      permissions={mockPermissions}
       orgs={mockOrgs}
       selectedOrg={mockSelectedOrg}
+      author={mockAuthor}
+      canEdit
     />,
   );
   it('updates the snippet on handleSnippetChanged', () => {
