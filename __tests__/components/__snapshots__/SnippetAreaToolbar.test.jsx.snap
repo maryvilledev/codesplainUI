@@ -13,24 +13,37 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is no
   <div
     style={
       Object {
-        "flexBasis": "auto",
-        "flexGrow": "1",
-        "flexShrink": "1",
-        "verticalAlign": "middle",
+        "display": "flex",
+        "flexFlow": "row wrap",
       }
-    } />
-  <TextField
-    disabled={false}
-    floatingLabelFixed={false}
-    fullWidth={true}
-    hintText="Snippet Name"
-    id="titleField"
-    multiLine={false}
-    onChange={[Function]}
-    rows={1}
-    type="text"
-    underlineShow={true}
-    value="" />
+    }>
+    <TextField
+      disabled={false}
+      floatingLabelFixed={false}
+      fullWidth={false}
+      hintText="Snippet Name"
+      id="titleField"
+      multiLine={false}
+      onChange={[Function]}
+      rows={1}
+      style={
+        Object {
+          "flex": "1 1 auto",
+        }
+      }
+      type="text"
+      underlineShow={true}
+      value="" />
+    <div
+      style={
+        Object {
+          "flexBasis": "auto",
+          "margin": "3px",
+          "paddingTop": "10px",
+          "verticalAlign": "bottom",
+        }
+      } />
+  </div>
   <div
     style={
       Object {
@@ -94,24 +107,37 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is re
   <div
     style={
       Object {
-        "flexBasis": "auto",
-        "flexGrow": "1",
-        "flexShrink": "1",
-        "verticalAlign": "middle",
+        "display": "flex",
+        "flexFlow": "row wrap",
       }
-    } />
-  <TextField
-    disabled={false}
-    floatingLabelFixed={false}
-    fullWidth={true}
-    hintText="Snippet Name"
-    id="titleField"
-    multiLine={false}
-    onChange={[Function]}
-    rows={1}
-    type="text"
-    underlineShow={true}
-    value="" />
+    }>
+    <TextField
+      disabled={false}
+      floatingLabelFixed={false}
+      fullWidth={false}
+      hintText="Snippet Name"
+      id="titleField"
+      multiLine={false}
+      onChange={[Function]}
+      rows={1}
+      style={
+        Object {
+          "flex": "1 1 auto",
+        }
+      }
+      type="text"
+      underlineShow={true}
+      value="" />
+    <div
+      style={
+        Object {
+          "flexBasis": "auto",
+          "margin": "3px",
+          "paddingTop": "10px",
+          "verticalAlign": "bottom",
+        }
+      } />
+  </div>
   <div
     style={
       Object {

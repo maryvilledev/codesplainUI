@@ -24,15 +24,15 @@ const styles = {
   toolbarField: {
     flex: '1 1 auto',
   },
-  bottomRow: {
+  row: {
     display: 'flex',
     flexFlow: 'row wrap',
   },
   avatar: {
     flexBasis: 'auto',
-    flexGrow: '1',
-    flexShrink: '1',
-    verticalAlign: 'middle',
+    verticalAlign: 'bottom',
+    paddingTop: '10px',
+    margin: '3px',
   },
 };
 
@@ -61,22 +61,24 @@ const SnippetAreaToolbar = (props) => {
 
   return (
     <div style={styles.toolbar}>
-      <div style={styles.avatar}>
-        {(avatarUrl) ?
-          <Avatar
-            size={30}
-            src={avatarUrl}
-          />
+      <div style={styles.row}>
+        <TextField
+          hintText="Snippet Name"
+          id="titleField"
+          style={styles.toolbarField}
+          onChange={onTitleChange}
+          value={title}
+        />
+        <div style={styles.avatar}>
+          {(avatarUrl) ?
+            <Avatar
+              size={20}
+              src={avatarUrl}
+            />
         : null}
+        </div>
       </div>
-      <TextField
-        hintText="Snippet Name"
-        id="titleField"
-        fullWidth
-        onChange={onTitleChange}
-        value={title}
-      />
-      <div style={styles.bottomRow} >
+      <div style={styles.row} >
         <LanguageSelector
           disabled={readOnly}
           language={language}
