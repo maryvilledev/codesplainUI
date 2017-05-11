@@ -26,7 +26,7 @@ const saveIconButton = disabled => (
   <IconButton disabled={disabled}>
     <SaveIcon />
   </IconButton>
-)
+);
 
 class SaveMenu extends React.Component {
   constructor(props) {

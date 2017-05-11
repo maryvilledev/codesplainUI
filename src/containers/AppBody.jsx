@@ -110,10 +110,16 @@ export class AppBody extends Component {
         // Restore the application's state
         dispatch(restoreState(appState));
 
+        // If the user is a member of the org in question, make the org the
+        // current org
+        const isMember = cookie.load('orgs').split(' ').includes(username);
+        if (isMember) {
+          dispatch(switchOrg(username));
+        }
+
         const permissions = {
           canRead: true,
-          // Currently, users may only edit a file they own
-          canEdit: (username === cookie.load('username')),
+          canEdit: (username === cookie.load('username') || isMember),
         };
         dispatch(setPermissions(permissions));
 
