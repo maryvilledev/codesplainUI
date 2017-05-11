@@ -26,6 +26,14 @@ describe('Actions: User', () => {
     });
   });
   describe('action creators', () => {
+    it('creates correct SET_AVATAR_URL object', () => {
+      const url = 'https://foobar.com/quxbaz';
+      const expected = {
+        type: actions.SET_AVATAR_URL,
+        payload: url,
+      };
+      expect(actions.setAvatarUrl(url)).toEqual(expected);
+    });
     it('creates correct SAVE_USERNAME object', () => {
       const token = 'token';
       const expected = {
