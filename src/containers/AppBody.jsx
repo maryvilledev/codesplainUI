@@ -27,8 +27,8 @@ const styles = {
     display: 'flex',
     flexFlow: 'column nowrap',
     height: '100%',
-    flex: '1 0',
-    overflow: 'auto',
+    flex: '1 1 auto',
+    overflowY: 'auto',
     boxShadow: '0px 1px 6px rgba(0, 0, 0, 0.12), 0px 1px 4px rgba(0, 0, 0, 0.12)',
   },
 };
