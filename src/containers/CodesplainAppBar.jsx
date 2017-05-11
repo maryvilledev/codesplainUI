@@ -59,7 +59,7 @@ export class CodesplainAppBar extends Component {
   }
 
   componentDidMount() {
-    const { dispatch, token } = this.props;
+    const { dispatch, token, router } = this.props;
     const tokenCookie = cookie.load('token');
 
     // Save token to state if it hasn't already been (by <Auth />)
@@ -84,7 +84,13 @@ export class CodesplainAppBar extends Component {
           dispatch(addOrg(username));
           dispatch(switchOrg(username));
         })
-        .then(() => dispatch(updateUserSnippets()));
+        .then(() => dispatch(updateUserSnippets()))
+        .catch(() => {
+          // If we fail, token must have been invalid:
+          // remove it and redirect to home page
+          cookie.remove('token', { path: '/' });
+          router.push('/');
+        });
     }
   }
 
@@ -222,7 +228,7 @@ CodesplainAppBar.propTypes = {
 
 CodesplainAppBar.defaultProps = {
   userSnippets: {},
-  token: undefined,
+  token: '',
   avatarURL: '',
 };
 
