@@ -1,6 +1,9 @@
-import _ from 'lodash';
-import { CardText } from 'material-ui';
 import React, { PropTypes } from 'react';
+import _ from 'lodash';
+import {
+  Card,
+  CardText,
+} from 'material-ui';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
@@ -25,9 +28,18 @@ import SnippetAreaToolbar from '../components/SnippetAreaToolbar';
 import CustomPropTypes from '../util/custom-prop-types';
 
 const styles = {
-  snippetAreaCardText: {
+  cardText: {
     display: 'flex',
     flexDirection: 'column',
+    height: 'inherit',
+    overflow: 'auto',
+  },
+  card: {
+    height: '100%',
+    flex: '2 1 auto',
+    zIndex: 'auto',
+  },
+  cardContainer: {
     height: 'inherit',
   },
 };
@@ -204,40 +216,45 @@ export class SnippetArea extends React.Component {
 
     const markedLines = Object.keys(annotations).map(key => Number(key));
     return (
-      <CardText style={styles.snippetAreaCardText}>
-        <SnippetAreaToolbar
-          canSave={permissions.canEdit}
-          language={snippetLanguage}
-          onLanguageChange={this.handleLanguageChanged}
-          onLockClick={this.handleLock}
-          onOrgChanged={this.handleOrgChanged}
-          onSaveAsClick={this.handleSaveAs}
-          onSaveClick={this.handleSave}
-          onTitleChange={this.handleTitleChanged}
-          orgs={orgs}
-          readOnly={readOnly}
-          saveEnabled={Boolean(username)}
-          selectedOrg={selectedOrg}
-          title={snippetTitle}
-        />
-        <ConfirmLockDialog
-          accept={this.handleToggleReadOnly}
-          isOpen={this.state.lockDialogOpen}
-          reject={this.handleCloseModal}
-        />
-        <Editor
-          AST={AST}
-          filters={filters}
-          language={snippetLanguage}
-          markedLines={markedLines}
-          onChange={this.handleSnippetChanged}
-          onGutterClick={this.handleGutterClick}
-          openLine={openLine}
-          readOnly={readOnly}
-          value={snippet}
-          errors={errors}
-        />
-      </CardText>
+      <Card
+        containerStyle={styles.cardContainer}
+        style={styles.card}
+      >
+        <CardText style={styles.cardText}>
+          <SnippetAreaToolbar
+            canSave={permissions.canEdit}
+            language={snippetLanguage}
+            onLanguageChange={this.handleLanguageChanged}
+            onLockClick={this.handleLock}
+            onOrgChanged={this.handleOrgChanged}
+            onSaveAsClick={this.handleSaveAs}
+            onSaveClick={this.handleSave}
+            onTitleChange={this.handleTitleChanged}
+            orgs={orgs}
+            readOnly={readOnly}
+            saveEnabled={Boolean(username)}
+            selectedOrg={selectedOrg}
+            title={snippetTitle}
+          />
+          <ConfirmLockDialog
+            accept={this.handleToggleReadOnly}
+            isOpen={this.state.lockDialogOpen}
+            reject={this.handleCloseModal}
+          />
+          <Editor
+            AST={AST}
+            filters={filters}
+            language={snippetLanguage}
+            markedLines={markedLines}
+            onChange={this.handleSnippetChanged}
+            onGutterClick={this.handleGutterClick}
+            openLine={openLine}
+            readOnly={readOnly}
+            value={snippet}
+            errors={errors}
+          />
+        </CardText>
+      </Card>
     );
   }
 }

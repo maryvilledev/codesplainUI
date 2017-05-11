@@ -5,22 +5,27 @@ import {
 } from 'material-ui';
 
 const styles = {
+  cardActions: {
+    display: 'flex',
+    flexFlow: 'row nowrap',
+    justifyContent: 'space-evenly',
+  },
   label: {
     fontSize: '12px',
   },
 };
 
 const FilterAreaActions = ({ clearAll, selectAll }) => (
-  <CardActions>
+  <CardActions
+    style={styles.cardActions}
+  >
     <FlatButton
-      fullWidth
       label="Select All"
       labelStyle={styles.label}
       onTouchTap={selectAll}
       primary
     />
     <FlatButton
-      fullWidth
       label="Clear All"
       labelStyle={styles.label}
       onTouchTap={clearAll}

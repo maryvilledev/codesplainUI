@@ -38,8 +38,8 @@ const annotationModeOptions = {
 
 const makeMarker = () => {
   const marker = document.createElement('div');
-  marker.style.color = '#822';
-  marker.innerHTML = '●';
+  marker.style.color = 'black';
+  marker.innerHTML = '✎';
   return marker;
 };
 
