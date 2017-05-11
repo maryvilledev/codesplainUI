@@ -6,6 +6,7 @@ import githubIcon from '../../res/github-icon-blue.png';
 
 const style = {
   paper: {
+    backgroundColor: '#262626', // light black
     bottom: 0,
     right: 0,
     padding: '0.7rem',

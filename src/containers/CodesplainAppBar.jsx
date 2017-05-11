@@ -28,11 +28,16 @@ const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 const GITHUB_URL = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&scope=read:org`;
 
 const styles = {
+  appBar: {
+    background: '#333333', // light black
+  },
   rightElement: {
     marginTop: '16px',
   },
   title: {
     cursor: 'pointer',
+    color: '#00e6e6', // tealish
+    fontWeight: 'bold',
   },
 };
 
@@ -200,6 +205,7 @@ export class CodesplainAppBar extends Component {
     return (
       <div>
         <AppBar
+          style={styles.appBar}
           showMenuIconButton={false}
           title={titleElement}
           iconElementRight={rightElement}
