@@ -35,14 +35,24 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is no
       underlineShow={true}
       value="" />
     <div
+      data-for="avatar"
+      data-tip={true}
       style={
         Object {
           "flexBasis": "auto",
           "margin": "3px",
+          "marginLeft": "20px",
           "paddingTop": "10px",
           "verticalAlign": "bottom",
         }
       } />
+    <ReactTooltip
+      effect="solid"
+      id="avatar"
+      insecure={true}
+      place="bottom"
+      resizeHide={true}
+      wrapper="div" />
   </div>
   <div
     style={
@@ -129,14 +139,24 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is re
       underlineShow={true}
       value="" />
     <div
+      data-for="avatar"
+      data-tip={true}
       style={
         Object {
           "flexBasis": "auto",
           "margin": "3px",
+          "marginLeft": "20px",
           "paddingTop": "10px",
           "verticalAlign": "bottom",
         }
       } />
+    <ReactTooltip
+      effect="solid"
+      id="avatar"
+      insecure={true}
+      place="bottom"
+      resizeHide={true}
+      wrapper="div" />
   </div>
   <div
     style={
