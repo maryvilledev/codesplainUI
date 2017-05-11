@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import { Card } from 'material-ui';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import cookie from 'react-cookie';
