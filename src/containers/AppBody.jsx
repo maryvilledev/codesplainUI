@@ -16,23 +16,14 @@ import {
 import { setPermissions } from '../actions/permissions';
 import NotFound from '../components/NotFound';
 import { removeDeprecatedFiltersFromState } from '../util/codemirror-utils';
+import CustomPropTypes from '../util/custom-prop-types';
 import { sanitizeKey } from '../util/requests';
 import { setDefaults } from '../util/state-management';
 
 const styles = {
   body: {
     display: 'flex',
-    flexFlow: 'row wrap',
     height: '100%',
-  },
-  rightSection: {
-    boxShadow: '0px 1px 6px rgba(0, 0, 0, 0.12), 0px 1px 4px rgba(0, 0, 0, 0.12)',
-    display: 'flex',
-    flex: '2 1',
-    flexFlow: 'column nowrap',
-    height: '100%',
-    minWidth: '300px',
-    overflowY: 'auto',
   },
 };
 
@@ -159,9 +150,9 @@ export class AppBody extends Component {
       return <NotFound />;
     }
     return (
-      <div style={styles.body}>
+      <div style={styles.body} id="app-body" >
         <SnippetArea />
-        <div style={styles.rightSection}>
+        <div id="app-body-right-section" style={styles.rightSection}>
           <FilterArea />
           <Annotations />
         </div>
@@ -171,7 +162,7 @@ export class AppBody extends Component {
 }
 
 AppBody.propTypes = {
-  orgs: PropTypes.string,
+  orgs: CustomPropTypes.orgs,
   username: PropTypes.string,
 };
 
@@ -187,7 +178,6 @@ const mapStateToProps = (state) => {
       orgs,
     },
   } = state;
-
   return {
     username,
     orgs,
