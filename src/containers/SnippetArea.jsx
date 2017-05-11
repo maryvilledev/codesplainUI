@@ -35,8 +35,6 @@ const styles = {
     overflow: 'auto',
   },
   card: {
-    height: '100%',
-    flex: '2 1',
     zIndex: 'auto',
   },
   cardContainer: {
@@ -217,6 +215,7 @@ export class SnippetArea extends React.Component {
     const markedLines = Object.keys(annotations).map(key => Number(key));
     return (
       <Card
+        id="app-body-snippet-area"
         containerStyle={styles.cardContainer}
         style={styles.card}
       >
