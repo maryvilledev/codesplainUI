@@ -12,7 +12,7 @@ exports[`<AppMenu /> snapshot tests matches snapshot of when user is logged in 1
       <div>
         <Avatar
           size={30}
-          src="https://github.com/octocat.png"
+          src="https://wallykazam.com/whozit"
           style={
             Object {
               "marginBottom": "1rem",
@@ -83,8 +83,18 @@ exports[`<AppMenu /> snapshot tests matches snapshot of when user is not logged 
     }
     animated={true}
     iconButtonElement={
-      <NavigationMoreVert
-        color="white" />
+      <div>
+        <Avatar
+          size={30}
+          src="https://wallykazam.com/whozit"
+          style={
+            Object {
+              "marginBottom": "1rem",
+            }
+          } />
+        <NavigationArrowDropDown
+          color="white" />
+      </div>
     }
     iconStyle={
       Object {

@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
+import { Card } from 'material-ui';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import cookie from 'react-cookie';
@@ -10,8 +11,10 @@ import {
   loadSnippet,
   restoreState,
 } from '../actions/app';
+import {
+  switchOrg,
+} from '../actions/user';
 import { setPermissions } from '../actions/permissions';
-import { restoreUserCredentials, addOrg, switchOrg } from '../actions/user';
 import NotFound from '../components/NotFound';
 import { removeDeprecatedFiltersFromState } from '../util/codemirror-utils';
 import { sanitizeKey } from '../util/requests';
@@ -40,22 +43,10 @@ export class AppBody extends Component {
       isValidSnippet: true,
     };
     this.loadSnippet = this.loadSnippet.bind(this);
+    this.updatePermissions = this.updatePermissions.bind(this);
   }
 
   componentDidMount() {
-    const { dispatch } = this.props;
-
-    // If the user is authenticated, add their Github to the orgs, and make it
-    // the selected value
-    if (cookie.load('token') && cookie.load('username')) {
-      const savedUsername = cookie.load('username');
-      dispatch(addOrg(savedUsername));
-      dispatch(switchOrg(savedUsername));
-
-      // If they are a member of any organizations, add to list as well
-      cookie.load('orgs').split(' ').forEach(org => dispatch(addOrg(org)));
-    }
-
     this.loadSnippet();
   }
 
@@ -68,6 +59,18 @@ export class AppBody extends Component {
     }
   }
 
+  componentDidUpdate() {
+    const { router } = this.props;
+    const {
+      id: snippetKey,
+      username: snippetOwner,
+    } = router.params;
+
+    if (snippetOwner && snippetKey) {
+      this.updatePermissions();
+    }
+  }
+
   loadSnippet() {
     const {
       dispatch,
@@ -75,11 +78,11 @@ export class AppBody extends Component {
     } = this.props;
     const {
       id: snippetKey,
-      username,
+      username: snippetOwner,
     } = router.params;
 
     this.setState({ pathname: router.location.pathname });
-    if (!username && !snippetKey) {
+    if (!snippetOwner && !snippetKey) {
       // This is a new snippet for the current user, enable all permissions
       const permissions = {
         canRead: true,
@@ -97,10 +100,7 @@ export class AppBody extends Component {
       return;
     }
 
-    // Restore the user's credentials into state
-    dispatch(restoreUserCredentials(cookie.load('token'), cookie.load('username')));
-
-    dispatch(loadSnippet(username, snippetKey))
+    dispatch(loadSnippet(snippetOwner, snippetKey))
       .then((res) => {
         // Normalize the app state received from S3
         const appState = setDefaults(removeDeprecatedFiltersFromState(res.data));
@@ -111,23 +111,11 @@ export class AppBody extends Component {
         }
         // Restore the application's state
         dispatch(restoreState(appState));
-
-        // If the user is a member of the org in question, make the org the
-        // current org
-        const isMember = cookie.load('orgs').split(' ').includes(username);
-        if (isMember) {
-          dispatch(switchOrg(username));
-        }
-
-        const permissions = {
-          canRead: true,
-          canEdit: (username === cookie.load('username') || isMember),
-        };
-        dispatch(setPermissions(permissions));
+        this.updatePermissions();
 
         // Reroute if using legacy url
         // So /:username/snippets/:id -> /:username/:id
-        const nextRoute = `/${username}/${sanitizeKey(snippetKey)}`;
+        const nextRoute = `/${snippetOwner}/${sanitizeKey(snippetKey)}`;
         if (router.location.pathname !== nextRoute) {
           router.push(nextRoute);
         }
@@ -137,6 +125,32 @@ export class AppBody extends Component {
           isValidSnippet: false,
         });
       });
+  }
+
+  updatePermissions() {
+    const {
+      username,
+      orgs,
+      dispatch,
+      router,
+    } = this.props;
+    const {
+      username: snippetOwner,
+    } = router.params;
+
+    // If the user is a member of the org in question, make the org the
+    // current org
+    const isMember = orgs.includes(snippetOwner);
+    if (isMember) {
+      dispatch(switchOrg(snippetOwner));
+    }
+
+    const permissions = {
+      canRead: true,
+      // Users may only edit & save a file they (or one of their orgs) own
+      canEdit: (username === snippetOwner || isMember),
+    };
+    dispatch(setPermissions(permissions));
   }
 
   render() {
@@ -156,4 +170,28 @@ export class AppBody extends Component {
   }
 }
 
-export default withRouter(connect()(AppBody));
+AppBody.propTypes = {
+  orgs: PropTypes.string,
+  username: PropTypes.string,
+};
+
+AppBody.defaultProps = {
+  orgs: [],
+  username: '',
+};
+
+const mapStateToProps = (state) => {
+  const {
+    user: {
+      username,
+      orgs,
+    },
+  } = state;
+
+  return {
+    username,
+    orgs,
+  };
+};
+
+export default withRouter(connect(mapStateToProps)(AppBody));

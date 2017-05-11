@@ -2,14 +2,15 @@ import * as actions from '../../src/actions/user';
 import reducer, { initialState } from '../../src/reducers/user';
 
 describe('Reducer: User', () => {
-it('shoud have initial state', () => {
-      const initial = {
-        "orgs": [],
-        "selectedOrg": null,
-        "token": "",
-        "userSnippets": {},
-        "username": ""}
-      expect(reducer(undefined, {})).toEqual(initial);
+  it('shoud have initial state', () => {
+    const initial = {
+      orgs: [],
+      selectedOrg: null,
+      token: '',
+      userSnippets: {},
+      username: '',
+    };
+    expect(reducer(undefined, {})).toEqual(initial);
   });
 
   it('handles SAVE_USERNAME', () => {
@@ -58,6 +59,16 @@ it('shoud have initial state', () => {
     const expected = {
       username,
     };
+    expect(reducer({}, action)).toEqual(expected);
+  });
+
+  it('handles SET_AVATAR_URL', () => {
+    const url = 'https://foobar.com/quxbaz';
+    const action = {
+      type: actions.SET_AVATAR_URL,
+      payload: url,
+    };
+    const expected = { avatarURL: url };
     expect(reducer({}, action)).toEqual(expected);
   });
 
@@ -90,9 +101,9 @@ it('shoud have initial state', () => {
     const org = 'galactic-federation';
     const action = {
       type: actions.ADD_ORG,
-      payload: org
-    }
-    expect(reducer(undefined, action).orgs).toEqual(expect.arrayContaining([org]))
+      payload: org,
+    };
+    expect(reducer(undefined, action).orgs).toEqual(expect.arrayContaining([org]));
   });
 
   describe('SWITCH_ORG', () => {
@@ -101,19 +112,19 @@ it('shoud have initial state', () => {
     const invalidOrg = 'international-counsel-of-ricks';
     beforeEach(() => {
       state.orgs = [validOrg];
-      state.selectedOrg = null
+      state.selectedOrg = null;
     });
     it('should set the org if the org exists', () => {
       const action = {
         type: actions.SWITCH_ORG,
-        payload: validOrg
+        payload: validOrg,
       };
       expect(reducer(state, action).selectedOrg).toEqual(validOrg);
     });
     it('shouldn\'t set the org if the org doesn\'t exists', () => {
       const action = {
         type: actions.SWITCH_ORG,
-        payload: invalidOrg
+        payload: invalidOrg,
       };
       expect(reducer(state, action).selectedOrg).toBe(null);
     });

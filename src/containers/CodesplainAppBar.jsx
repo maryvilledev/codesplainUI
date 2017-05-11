@@ -8,7 +8,16 @@ import {
 import { withRouter } from 'react-router';
 import cookie from 'react-cookie';
 
-import { updateUserSnippets } from '../actions/user';
+import {
+  updateUserSnippets,
+  fetchUserOrgs,
+  fetchUserInfo,
+  saveAccessToken,
+  saveUsername,
+  addOrg,
+  switchOrg,
+  setAvatarUrl,
+} from '../actions/user';
 import { resetState } from '../actions/app';
 import { closeAnnotationPanel } from '../actions/annotation';
 import LoginButton from '../components/buttons/LoginButton';
@@ -50,8 +59,39 @@ export class CodesplainAppBar extends Component {
   }
 
   componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch(updateUserSnippets());
+    const { dispatch, token, router } = this.props;
+    const tokenCookie = cookie.load('token');
+
+    // Save token to state if it hasn't already been (by <Auth />)
+    if (!token && tokenCookie) {
+      dispatch(saveAccessToken(tokenCookie));
+    }
+
+    // If we have a token (thus are logged in), get user's info & save to state
+    if (tokenCookie) {
+      dispatch(fetchUserOrgs())
+        .then(({ data }) => {
+          // Dispatch orgs to state
+          data.forEach(org => dispatch(addOrg(org.login)));
+        })
+        .then(() => dispatch(fetchUserInfo()))
+        .then((res) => {
+          const { login: username, avatar_url: userAvatarURL } = res.data;
+          dispatch(saveUsername(username));
+          dispatch(setAvatarUrl(userAvatarURL));
+
+          // Add user's username to orgs list, and select it as default
+          dispatch(addOrg(username));
+          dispatch(switchOrg(username));
+        })
+        .then(() => dispatch(updateUserSnippets()))
+        .catch(() => {
+          // If we fail, token must have been invalid:
+          // remove it and redirect to home page
+          cookie.remove('token', { path: '/' });
+          router.push('/');
+        });
+    }
   }
 
   onLoginClick() {
@@ -76,17 +116,13 @@ export class CodesplainAppBar extends Component {
   handleSignOut() {
     const { router } = this.props;
     cookie.remove('token', { path: '/' });
-    cookie.remove('username', { path: '/' });
-    cookie.remove('orgs', { path: '/' });
-    cookie.remove('userAvatarURL', { path: '/' });
     this.setState({ isLoggedIn: false });
     router.push('/');
     location.reload();
   }
 
   handleSnippetSelected(key) {
-    const username = cookie.load('username');
-    const { router } = this.props;
+    const { username, router } = this.props;
     router.push(`/${username}/${key}`);
   }
 
@@ -142,10 +178,11 @@ export class CodesplainAppBar extends Component {
       />,
     ];
 
-    const { userSnippets } = this.props;
+    const { userSnippets, avatarURL } = this.props;
     const { isDialogOpen, isLoggedIn } = this.state;
     const rightElement = isLoggedIn ?
       (<AppMenu
+        avatarURL={avatarURL}
         onSignOut={this.handleSignOut}
         onTitleClicked={this.handleSnippetSelected}
         snippetTitles={userSnippets}
@@ -184,23 +221,34 @@ export class CodesplainAppBar extends Component {
 CodesplainAppBar.propTypes = {
   hasUnsavedChanges: PropTypes.bool.isRequired,
   userSnippets: CustomPropTypes.snippets,
+  username: PropTypes.string.isRequired,
+  token: PropTypes.string,
+  avatarURL: PropTypes.string,
 };
 
 CodesplainAppBar.defaultProps = {
   userSnippets: {},
+  token: '',
+  avatarURL: '',
 };
 
 const mapStateToProps = (state) => {
   const {
     app,
     user: {
+      avatarURL,
       userSnippets,
+      username,
+      token,
     },
   } = state;
   return {
     hasUnsavedChanges: app.hasUnsavedChanges,
     appState: app,
     userSnippets,
+    username,
+    token,
+    avatarURL,
   };
 };
 
