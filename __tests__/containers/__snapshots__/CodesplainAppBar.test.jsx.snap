@@ -2,14 +2,10 @@ exports[`<CodesplainAppBar /> snapshot tests user is logged in 1`] = `
 <div>
   <AppBar
     iconElementRight={
-      <span>
-        <AppMenu
-          onSignOut={[Function]}
-          onTitleClicked={[Function]}
-          snippetTitles={Object {}} />
-        <AuthorIcon
-          author="phoenixperson" />
-      </span>
+      <AppMenu
+        onSignOut={[Function]}
+        onTitleClicked={[Function]}
+        snippetTitles={Object {}} />
     }
     iconStyleRight={
       Object {
@@ -75,12 +71,8 @@ exports[`<CodesplainAppBar /> snapshot tests user is not logged in 1`] = `
 <div>
   <AppBar
     iconElementRight={
-      <span>
-        <LoginButton
-          onClick={[Function]} />
-        <AuthorIcon
-          author="phoenixperson" />
-      </span>
+      <LoginButton
+        onClick={[Function]} />
     }
     iconStyleRight={Object {}}
     showMenuIconButton={false}

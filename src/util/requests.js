@@ -1,4 +1,7 @@
+import axios from 'axios';
+
 const API_URL = process.env.REACT_APP_API_URL;
+const GITHUB_API_URL = 'https://api.github.com';
 
 // encodeURIComponent does not convert all URI-unfriendly characters, necessitating
 // and enhanced encoding function
@@ -27,3 +30,16 @@ language.
 */
 export const makeParserEndpointUrl = language =>
   `${API_URL}/parsers/${language}`;
+
+export const makeUserUrl = user =>
+  `${GITHUB_API_URL}/users/${user}`;
+
+export const fetchUserAvatar = (user, token) => {
+  const reqHeaders = {
+    headers: {
+      Authorization: `token ${token}`,
+    },
+  };
+  return axios.get(makeUserUrl(user), reqHeaders)
+      .then(res => res.data.avatar_url);
+};
