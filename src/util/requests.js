@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 const API_URL = process.env.REACT_APP_API_URL;
 
 // encodeURIComponent does not convert all URI-unfriendly characters, necessitating
@@ -27,3 +29,14 @@ language.
 */
 export const makeParserEndpointUrl = language =>
   `${API_URL}/parsers/${language}`;
+
+// When requesting a user's list of snippets, the string "{}" will be returned
+// if they don't have any snippets, so it's necessary to parse the string as JSON
+// In case the snippet list is a string && !== "{}", it will still be parsed into
+// an Object; if the snippetList argument is an object, do nothing.
+export const sanitizeSnippetList = (snippetList) => {
+  if (_.isString(snippetList)) {
+    return JSON.parse(snippetList);
+  }
+  return snippetList;
+};

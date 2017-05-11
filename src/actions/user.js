@@ -1,6 +1,7 @@
 import axios from 'axios';
+import _ from 'lodash';
 
-import { makeSaveEndpointUrl } from '../util/requests';
+import { makeSaveEndpointUrl, sanitizeSnippetList } from '../util/requests';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -117,9 +118,9 @@ export const fetchSnippetLists = () => (dispatch, getState) => {
     url,
     headers,
   })
-    .then(({ data }) => {
-      console.log('data', data);
-      dispatch(setSnippetLists(data));
+    .then(({ data: snippetLists }) => {
+      const sanitizedSnippetLists = _.mapValues(snippetLists, sanitizeSnippetList);
+      dispatch(setSnippetLists(sanitizedSnippetLists));
     });
 };
 

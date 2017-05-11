@@ -104,7 +104,6 @@ export class AppBody extends Component {
         if (isMember) {
           dispatch(switchOrg(snippetOwner));
         }
-
         const permissions = {
           canRead: true,
           // User can edit a snippet if he/she owns the snippet, or they belong
