@@ -1,23 +1,39 @@
 import React, { PropTypes } from 'react';
 
 import IconButton from 'material-ui/IconButton';
-import TrashCan from 'material-ui/svg-icons/action/trash';
+import TrashCan from 'material-ui/svg-icons/action/delete';
 import ReactTooltip from 'react-tooltip';
+
+const styles = {
+  button: {
+    zIndex: 5,
+  },
+  buttonContainer: {
+    height: '48px',
+  },
+  inlineBlock: {
+    display: 'inline-block',
+  },
+};
 
 const DeleteButton = ({ onClick, isEnabled }) => {
 
   return (
-    <span>
-      <div>
+    <span style={styles.buttonContainer}>
+      <div
+        styles={styles.inlineBlock}
+        >
         <IconButton
           id="TrashButton"
-          //TODO: disabled
+          disabled={!isEnabled}
           onTouchTap={onClick}
-          //TODO: style
+          style={styles.button}
         >
-          <Trash />
+          <TrashCan />
         </IconButton>
       </div>
     </span>
   )
-}
+};
+
+export default DeleteButton;

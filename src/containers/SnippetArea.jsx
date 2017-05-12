@@ -222,7 +222,7 @@ export class SnippetArea extends React.Component {
       >
         <CardText style={styles.cardText}>
           <SnippetAreaToolbar
-            canSave={permissions.canEdit}
+            canEdit={permissions.canEdit}
             language={snippetLanguage}
             onLanguageChange={this.handleLanguageChanged}
             onLockClick={this.handleLock}
