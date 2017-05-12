@@ -6,7 +6,7 @@ body {
   height: inherit;
 }
 
-div#root {
+#root {
   height: inherit;
 }
 
@@ -31,7 +31,10 @@ div#root {
 }
 
 #app-body {
-  flex-flow: row wrap,
+  box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.12), 0px 1px 4px rgba(0, 0, 0, 0.12);
+  flex-flow: row wrap;
+  height: 100%;
+  overflow: auto;
 }
 
 #app-body-right-section {
@@ -42,17 +45,18 @@ div#root {
   height: 100%;
   min-width: 300px;
   overflow-y: auto;
-  max-width: 30vw;
+  max-width: 35vw;
 }
 
 #app-body-snippet-area {
   height: 100%;
-  flex: 2 0;
-  max-width: 70vw;
+  flex: 2 1;
+  max-width: 65vw;
 }
 
 @media screen and (max-width: 680px) {
   #app-body {
+    height: auto;
     flex-flow: column nowrap;
   }
 
