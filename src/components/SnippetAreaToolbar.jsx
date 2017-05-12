@@ -59,6 +59,7 @@ const SnippetAreaToolbar = (props) => {
     onTitleChange,
     onOrgChanged,
     readOnly,
+    deleteEnabled,
     saveEnabled,
     title,
     orgs,
@@ -104,35 +105,36 @@ const SnippetAreaToolbar = (props) => {
           onChange={onLanguageChange}
           style={styles.toolbarField}
         />
-      <div style={styles.buttonsContainer}>
-        <LockButton
-          onClick={onLockClick}
-          readOnly={readOnly}
-          style={styles.button}
-        />
-        <SaveMenu
-          canSave={canEdit}
-          enabled={saveEnabled}
-          id="saveMenu"
-          onSaveAsClick={onSaveAsClick}
-          onSaveClick={onSaveClick}
-          style={styles.button}
-          orgs={orgs}
-          onOrgChanged={onOrgChanged}
-          selectedOrg={selectedOrg}
-        />
-        <DeleteButton
-          style={styles.button}
-          isEnabled={canEdit && saveEnabled}
-          onClick={onDeleteClick}
-        />
-      </div>
+        <div style={styles.buttonsContainer}>
+          <LockButton
+            onClick={onLockClick}
+            readOnly={readOnly}
+            style={styles.button}
+          />
+          <SaveMenu
+            canSave={canEdit}
+            enabled={saveEnabled}
+            id="saveMenu"
+            onSaveAsClick={onSaveAsClick}
+            onSaveClick={onSaveClick}
+            style={styles.button}
+            orgs={orgs}
+            onOrgChanged={onOrgChanged}
+            selectedOrg={selectedOrg}
+          />
+          <DeleteButton
+            style={styles.button}
+            isEnabled={deleteEnabled}
+            onClick={onDeleteClick}
+          />
+        </div>
       </div>
     </div>
   );
 };
 
 SnippetAreaToolbar.propTypes = {
+  deleteEnabled: PropTypes.bool.isRequired,
   canEdit: PropTypes.bool.isRequired,
   language: PropTypes.string.isRequired,
   onLanguageChange: PropTypes.func.isRequired,

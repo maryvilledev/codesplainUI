@@ -206,7 +206,7 @@ export class SnippetArea extends React.Component {
     const { dispatch, snippetKey, router } = this.props;
     dispatch(deleteSnippet(snippetKey))
       .then(() => {
-        router.push('/'); //TODO: Test that does not redirect delete fails
+        router.push('/'); // TODO: Test that does not redirect delete fails
       });
   }
 
@@ -231,6 +231,7 @@ export class SnippetArea extends React.Component {
       errors,
       readOnly,
       selectedOrg,
+      snippetKey,
       snippet,
       snippetLanguage,
       snippetTitle,
@@ -238,8 +239,11 @@ export class SnippetArea extends React.Component {
       author,
     } = this.props;
     const { avatarUrl } = this.state;
-
     const markedLines = Object.keys(annotations).map(key => Number(key));
+    // Delete button is enabled only when user is logged in, owns snippet,
+    // and is not viewing a new snippet
+    const deleteEnabled = snippetKey && canEdit && username;
+
     return (
       <Card
         id="app-body-snippet-area"
@@ -251,6 +255,7 @@ export class SnippetArea extends React.Component {
             canEdit={canEdit}
             language={snippetLanguage}
             onDeleteClick={this.handleDelete}
+            deleteEnabled={deleteEnabled}
             onLanguageChange={this.handleLanguageChanged}
             onLockClick={this.handleLock}
             onOrgChanged={this.handleOrgChanged}
