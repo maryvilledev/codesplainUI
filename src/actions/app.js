@@ -161,6 +161,36 @@ export const saveExisting = () => (dispatch, getState) => {
       });
 };
 
+export const deleteSnippet = snippetKey => (dispatch, getState) => {
+  // Get items out of app state
+  const {
+    user: {
+      token,
+      selectedOrg,
+    },
+  } = getState();
+
+  // Construct request objects
+  const reqHeaders = {
+    headers: {
+      Authorization: token,
+    },
+  };
+
+  // Delete the snippet
+  dispatch(addNotification('Deleting...'));
+  return axios.delete(makeSaveEndpointUrl(selectedOrg, snippetKey), reqHeaders)
+    .then(() => {
+      // Remove the 'deleting...' notifications
+      dispatch(closeNotification());
+      // Give user feedback that snippet deleted
+      dispatch(addNotification('Snippet Deleted!'));
+    })
+    .catch(() => {
+      dispatch(addNotification('Failed to delete snippet; please try again'));
+    });
+};
+
 export const loadSnippet = (username, snippetKey) => (dispatch, getState) => {
   const { token } = getState().user;
   const reqHeaders = {

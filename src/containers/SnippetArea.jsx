@@ -18,6 +18,7 @@ import {
   setSnippetLanguage,
   setSnippetTitle,
   toggleEditState,
+  deleteSnippet,
 } from '../actions/app';
 import { addNotification } from '../actions/notifications';
 import { loadParser } from '../actions/parser';
@@ -69,6 +70,7 @@ export class SnippetArea extends React.Component {
     this.handleTitleChanged = this.handleTitleChanged.bind(this);
     this.handleToggleReadOnly = this.handleToggleReadOnly.bind(this);
     this.handleOrgChanged = this.handleOrgChanged.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   componentDidMount() {
@@ -200,6 +202,14 @@ export class SnippetArea extends React.Component {
       });
   }
 
+  handleDelete() {
+    const { dispatch, snippetKey, router } = this.props;
+    dispatch(deleteSnippet(snippetKey))
+      .then(() => {
+        router.push('/'); //TODO: Test that does not redirect delete fails
+      });
+  }
+
   handleOrgChanged(org) {
     const { dispatch } = this.props;
     dispatch(switchOrg(org));
@@ -240,6 +250,7 @@ export class SnippetArea extends React.Component {
           <SnippetAreaToolbar
             canEdit={canEdit}
             language={snippetLanguage}
+            onDeleteClick={this.handleDelete}
             onLanguageChange={this.handleLanguageChanged}
             onLockClick={this.handleLock}
             onOrgChanged={this.handleOrgChanged}
@@ -284,6 +295,7 @@ SnippetArea.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   snippet: PropTypes.string.isRequired,
   snippetTitle: PropTypes.string.isRequired,
+  snippetKey: PropTypes.string.isRequired,
   errors: CustomPropTypes.errors,
   snippetLanguage: PropTypes.string.isRequired,
   orgs: CustomPropTypes.orgs.isRequired,
@@ -315,6 +327,7 @@ const mapStateToProps = (state) => {
       readOnly,
       snippet,
       snippetTitle,
+      snippetKey,
     },
     permissions: {
       canEdit,
@@ -338,6 +351,7 @@ const mapStateToProps = (state) => {
     readOnly,
     snippet,
     snippetTitle,
+    snippetKey,
     errors,
     orgs,
     selectedOrg,

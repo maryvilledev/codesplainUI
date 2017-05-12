@@ -55,6 +55,7 @@ const SnippetAreaToolbar = (props) => {
     onLockClick,
     onSaveAsClick,
     onSaveClick,
+    onDeleteClick,
     onTitleChange,
     onOrgChanged,
     readOnly,
@@ -123,7 +124,7 @@ const SnippetAreaToolbar = (props) => {
         <DeleteButton
           style={styles.button}
           isEnabled={canEdit && saveEnabled}
-          onClick={() => console.log('tickle')}
+          onClick={onDeleteClick}
         />
       </div>
       </div>
@@ -138,6 +139,7 @@ SnippetAreaToolbar.propTypes = {
   onLockClick: PropTypes.func.isRequired,
   onSaveAsClick: PropTypes.func.isRequired,
   onSaveClick: PropTypes.func.isRequired,
+  onDeleteClick: PropTypes.func.isRequired,
   onTitleChange: PropTypes.func.isRequired,
   onOrgChanged: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
