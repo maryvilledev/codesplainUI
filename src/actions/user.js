@@ -1,5 +1,5 @@
-import axios from 'axios';
 import _ from 'lodash';
+import axios from 'axios';
 
 import { makeSaveEndpointUrl, sanitizeSnippetList } from '../util/requests';
 
@@ -16,13 +16,16 @@ export const CLEAR_USER_CREDENTIALS = 'CLEAR_USER_CREDENTIALS';
 export const RESTORE_USER_CREDENTIALS = 'RESTORE_USER_CREDENTIALS';
 export const SAVE_ACCESS_TOKEN = 'SAVE_ACCESS_TOKEN';
 export const SAVE_USERNAME = 'SAVE_USERNAME';
-export const SET_USER_SNIPPETS = 'SET_USER_SNIPPETS';
+export const SET_AVATAR_URL = 'SET_AVATAR_URL';
 export const SET_SNIPPET_LISTS = 'SET_SNIPPET_LISTS';
+export const SET_USER_SNIPPETS = 'SET_USER_SNIPPETS';
 export const SWITCH_ORG = 'SWITCH_ORG';
 export const UPDATE_USER_SNIPPETS = 'UPDATE_USER_SNIPPETS';
-export const UPDATE_USER_SNIPPETS_FAILED = 'UPDATE_USER_SNIPPETS_FAILED';
-export const UPDATE_USER_SNIPPETS_STARTED = 'UPDATE_USER_SNIPPETS_STARTED';
-export const UPDATE_USER_SNIPPETS_SUCCEEDED = 'UPDATE_USER_SNIPPETS_SUCCEEDED';
+
+export const setAvatarUrl = url => ({
+  type: SET_AVATAR_URL,
+  payload: url,
+});
 
 export const addOrg = org => ({
   type: ADD_ORG,
@@ -63,20 +66,7 @@ export const switchOrg = org => ({
   payload: org,
 });
 
-export const updateUserSnippetsStarted = () => ({
-  type: UPDATE_USER_SNIPPETS_STARTED,
-});
-
-export const updateUserSnippetsSucceeded = () => ({
-  type: UPDATE_USER_SNIPPETS_SUCCEEDED,
-});
-
-export const updateUserSnippetsFailed = () => ({
-  type: UPDATE_USER_SNIPPETS_FAILED,
-});
-
 export const updateUserSnippets = () => (dispatch, getState) => {
-  // Load requisite cookies, return Promise if they aren't present
   const {
     user: {
       token,
@@ -88,18 +78,13 @@ export const updateUserSnippets = () => (dispatch, getState) => {
     Accept: 'application/json',
     Authorization: `token ${token}`,
   };
-  dispatch(updateUserSnippetsStarted());
   return axios.get(makeSaveEndpointUrl(username), { headers })
-    .then((res) => {
+    .then(({ data }) => {
       // Jump to catch block if the user has no index.json file:
-      if (noSuchKey(res.data)) {
+      if (noSuchKey(data)) {
         throw new Error(`index.json does not exist for ${username}!`);
       }
-      dispatch(setUserSnippets(res.data));
-      dispatch(updateUserSnippetsSucceeded());
-    })
-    .catch(() => {
-      dispatch(updateUserSnippetsFailed());
+      dispatch(setUserSnippets(data));
     });
 };
 
@@ -147,10 +132,15 @@ export const fetchUserInfo = () => (dispatch, getState) => {
   });
 };
 
-export const restoreUserCredentials = (token, username) => ({
-  type: RESTORE_USER_CREDENTIALS,
-  payload: {
-    token,
-    username,
-  },
-});
+export const fetchUserOrgs = () => (dispatch, getState) => {
+  const { token } = getState().user;
+  const reqHeaders = {
+    Accept: 'application/json',
+    Authorization: `token ${token}`,
+  };
+  return axios({
+    method: 'GET',
+    url: 'https://api.github.com/user/orgs',
+    headers: reqHeaders,
+  });
+};

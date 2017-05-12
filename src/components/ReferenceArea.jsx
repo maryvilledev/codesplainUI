@@ -6,10 +6,13 @@ import githubIcon from '../../res/github-icon-blue.png';
 
 const style = {
   paper: {
-    position: 'fixed',
+    backgroundColor: '#262626', // light black
     bottom: 0,
     right: 0,
-    padding: 4,
+    padding: '0.7rem',
+    display: 'inline-flex',
+    flexFlow: 'row nowrap',
+    justifyContent: 'flex-end',
   },
   linkArea: {
     padding: 2,

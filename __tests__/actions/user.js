@@ -1,5 +1,4 @@
 import moxios from 'moxios';
-import cookie from 'react-cookie';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
@@ -20,9 +19,26 @@ describe('Actions: User', () => {
       };
       expect(actions.addOrganizations(organizations)).toEqual(expected);
     });
-
     it('creates correct CLEAR_USER_CREDENTIALS object', () => {
       expect(actions.clearUserCredentials()).toMatchSnapshot();
+    });
+  });
+  describe('action creators', () => {
+    it('creates correct SET_AVATAR_URL object', () => {
+      const url = 'https://foobar.com/quxbaz';
+      const expected = {
+        type: actions.SET_AVATAR_URL,
+        payload: url,
+      };
+      expect(actions.setAvatarUrl(url)).toEqual(expected);
+    });
+    it('creates correct SAVE_USERNAME object', () => {
+      const token = 'token';
+      const expected = {
+        type: actions.SAVE_USERNAME,
+        payload: token,
+      };
+      expect(actions.saveUsername(token)).toEqual(expected);
     });
 
     it('creates correct SAVE_ACCESS_TOKEN object', () => {
@@ -60,8 +76,6 @@ describe('Actions: User', () => {
     });
 
     afterEach(() => {
-      cookie.remove('token');
-      cookie.remove('username');
       moxios.uninstall();
     });
 
@@ -92,7 +106,12 @@ describe('Actions: User', () => {
             { type: actions.UPDATE_USER_SNIPPETS_STARTED },
             { type: actions.UPDATE_USER_SNIPPETS_SUCCEEDED },
           ];
-          const store = mockStore({ user: { token: '1234', username: 'foo' } });
+          const store = mockStore({
+            user: {
+              username: 'FooBar',
+              token: '1234',
+            },
+          });
           return store.dispatch(actions.updateUserSnippets())
             .then(() => { // return of async actions
               expect(store.getActions()).toEqual(expectedActions);
@@ -111,7 +130,12 @@ describe('Actions: User', () => {
           { type: actions.UPDATE_USER_SNIPPETS_STARTED },
           { type: actions.UPDATE_USER_SNIPPETS_FAILED },
         ];
-        const store = mockStore({ user: { token: '1234', username: 'foo' } });
+        const store = mockStore({
+          user: {
+            username: 'FooBar',
+            token: '1234',
+          },
+        });
         return store.dispatch(actions.updateUserSnippets())
           .catch(() => {
             expect(store.getActions()).toEqual(expectedActions);

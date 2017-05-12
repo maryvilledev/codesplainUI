@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import { Card } from 'material-ui';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import cookie from 'react-cookie';
@@ -7,27 +6,22 @@ import cookie from 'react-cookie';
 import Annotations from './Annotations';
 import FilterArea from './FilterArea';
 import SnippetArea from './SnippetArea';
-import ReferenceArea from '../components/ReferenceArea';
 import {
   loadSnippet,
   restoreState,
 } from '../actions/app';
-import { setPermissions } from '../actions/permissions';
+import { setPermissions, setAuthor } from '../actions/permissions';
 import { switchOrg } from '../actions/user';
 import NotFound from '../components/NotFound';
 import { removeDeprecatedFiltersFromState } from '../util/codemirror-utils';
+import CustomPropTypes from '../util/custom-prop-types';
 import { sanitizeKey } from '../util/requests';
 import { setDefaults } from '../util/state-management';
 
 const styles = {
-  snippetAreaSection: {
-    height: '90vh',
-  },
-  snippetAreaSectionCard: {
+  body: {
+    display: 'flex',
     height: '100%',
-  },
-  snippetAreaSectionCardContainer: {
-    height: 'inherit',
   },
 };
 
@@ -38,6 +32,7 @@ export class AppBody extends Component {
       isValidSnippet: true,
     };
     this.loadSnippet = this.loadSnippet.bind(this);
+    this.updatePermissions = this.updatePermissions.bind(this);
   }
 
   componentDidMount() {
@@ -53,11 +48,22 @@ export class AppBody extends Component {
     }
   }
 
+  componentDidUpdate() {
+    const { router } = this.props;
+    const {
+      id: snippetKey,
+      username: snippetOwner,
+    } = router.params;
+
+    if (snippetOwner && snippetKey) {
+      this.updatePermissions();
+    }
+  }
+
   loadSnippet() {
     const {
       dispatch,
       router,
-      username,
     } = this.props;
     const {
       params: {
@@ -97,20 +103,7 @@ export class AppBody extends Component {
         }
         // Restore the application's state
         dispatch(restoreState(appState));
-
-        // If the user is a member of the org in question, make the org the
-        // current org
-        const isMember = cookie.load('orgs').split(' ').includes(snippetOwner);
-        if (isMember) {
-          dispatch(switchOrg(snippetOwner));
-        }
-        const permissions = {
-          canRead: true,
-          // User can edit a snippet if he/she owns the snippet, or they belong
-          // to the organization that owns the snippet
-          canEdit: snippetOwner === username || isMember,
-        };
-        dispatch(setPermissions(permissions));
+        this.updatePermissions();
 
         // Reroute if using legacy url
         // So /:username/snippets/:id -> /:username/:id
@@ -118,6 +111,7 @@ export class AppBody extends Component {
         if (pathname !== nextRoute) {
           router.push(nextRoute);
         }
+        dispatch(setAuthor(snippetOwner));
       }, () => {
         // Failed to get the snippet, either bad URL or unauthorized
         this.setState({
@@ -126,36 +120,43 @@ export class AppBody extends Component {
       });
   }
 
+  updatePermissions() {
+    const {
+      username,
+      orgs,
+      dispatch,
+      router,
+    } = this.props;
+    const {
+      username: snippetOwner,
+    } = router.params;
+
+    // If the user is a member of the org in question, make the org the
+    // current org
+    const isMember = orgs.includes(snippetOwner);
+    if (isMember) {
+      dispatch(switchOrg(snippetOwner));
+    }
+
+    const permissions = {
+      canRead: true,
+      // Users may only edit & save a file they (or one of their orgs) own
+      canEdit: (username === snippetOwner || isMember),
+    };
+    dispatch(setPermissions(permissions));
+  }
+
   render() {
     const { isValidSnippet } = this.state;
     if (!isValidSnippet) {
       return <NotFound />;
     }
     return (
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col-lg-2">
-            <FilterArea />
-          </div>
-          <div
-            className="col-lg-5 col-md-7"
-            style={styles.snippetAreaSection}
-          >
-            <Card
-              containerStyle={styles.snippetAreaSectionCardContainer}
-              style={styles.snippetAreaSectionCard}
-            >
-              <SnippetArea />
-            </Card>
-          </div>
-          <div className="col-lg-5 col-md-5">
-            <Card>
-              <Annotations />
-            </Card>
-          </div>
-        </div>
-        <div className="row">
-          <ReferenceArea />
+      <div style={styles.body} id="app-body" >
+        <SnippetArea />
+        <div id="app-body-right-section" style={styles.rightSection}>
+          <FilterArea />
+          <Annotations />
         </div>
       </div>
     );
@@ -163,10 +164,12 @@ export class AppBody extends Component {
 }
 
 AppBody.propTypes = {
+  orgs: CustomPropTypes.orgs,
   username: PropTypes.string,
 };
 
 AppBody.defaultProps = {
+  orgs: [],
   username: '',
 };
 
@@ -174,10 +177,12 @@ const mapStateToProps = (state) => {
   const {
     user: {
       username,
+      orgs,
     },
   } = state;
   return {
     username,
+    orgs,
   };
 };
 

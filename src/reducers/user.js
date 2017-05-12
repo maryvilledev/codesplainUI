@@ -13,6 +13,13 @@ export const initialState = {
 
 const user = (state = initialState, action) => {
   switch (action.type) {
+  case actions.SET_AVATAR_URL: {
+    const url = action.payload;
+    return {
+      ...state,
+      avatarURL: url,
+    };
+  }
   case actions.ADD_ORG: {
     return {
       ...state,
@@ -30,12 +37,6 @@ const user = (state = initialState, action) => {
       ...initialState,
       orgs: state.orgs,
       selectedOrg: state.selectedOrg,
-    };
-  }
-  case actions.RESTORE_USER_CREDENTIALS: {
-    return {
-      ...state,
-      ...action.payload,
     };
   }
   case actions.SAVE_ACCESS_TOKEN: {

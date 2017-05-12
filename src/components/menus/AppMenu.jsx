@@ -1,10 +1,10 @@
 import React, { Component, PropTypes } from 'react';
-import cookie from 'react-cookie';
 
 import {
   Avatar,
   IconMenu,
   MenuItem,
+  IconButton,
 } from 'material-ui';
 import ArrowDropDown from 'material-ui/svg-icons/navigation/arrow-drop-down';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
@@ -26,10 +26,9 @@ const styles = {
   },
 };
 
-// Returns an <Avatar /> of the user's GitHub icon if the requisite cookie is
-// present, otherwise returns null.
-const makeAppMenuIcon = () => {
-  const avatarURL = cookie.load('userAvatarURL');
+// Return an <Avatar /> of the user's GitHub avatar if a URL is specified, else
+// Return a generic menu icon
+const makeAppMenuIcon = (avatarURL) => {
   if (avatarURL) {
     return (
       <div>
@@ -42,7 +41,11 @@ const makeAppMenuIcon = () => {
       </div>
     );
   }
-  return <MoreVertIcon color="white" />;
+  return (
+    <IconButton>
+      <MoreVertIcon color="white" />
+    </IconButton>
+  );
 };
 
 class AppMenu extends Component {
@@ -70,6 +73,7 @@ class AppMenu extends Component {
 
   render() {
     const {
+      avatarURL,
       onSignOut,
       orgSnippets,
       username,
@@ -83,7 +87,7 @@ class AppMenu extends Component {
       <div>
         <IconMenu
           anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-          iconButtonElement={makeAppMenuIcon()}
+          iconButtonElement={makeAppMenuIcon(avatarURL)}
           iconStyle={styles.iconButtonElement}
           onItemTouchTap={this.handleOnItemTouchTap}
           onRequestChange={this.handleOnRequestChange}
@@ -94,8 +98,8 @@ class AppMenu extends Component {
         >
           <SnippetList
             onClick={this.handleSnippetSelected}
-            snippetOwner={username}
             primaryText="My Snippets"
+            snippetOwner={username}
             snippetsList={userSnippets}
           />
           <OrgSnippetsMenu
@@ -113,11 +117,16 @@ class AppMenu extends Component {
 }
 
 AppMenu.propTypes = {
+  avatarURL: PropTypes.string,
   onSignOut: PropTypes.func.isRequired,
   onSnippetSelected: PropTypes.func.isRequired,
   orgSnippets: CustomPropTypes.orgSnippets.isRequired,
   username: PropTypes.string.isRequired,
   userSnippets: CustomPropTypes.snippets.isRequired,
+};
+
+AppMenu.defaultProps = {
+  avatarURL: '',
 };
 
 export default AppMenu;

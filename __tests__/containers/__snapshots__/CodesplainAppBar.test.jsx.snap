@@ -3,11 +3,12 @@ exports[`<CodesplainAppBar /> snapshot tests user is logged in 1`] = `
   <AppBar
     iconElementRight={
       <AppMenu
+        avatarURL=""
         onSignOut={[Function]}
         onSnippetSelected={[Function]}
         orgSnippets={Object {}}
         userSnippets={Object {}}
-        username="username" />
+        username="FooBar" />
     }
     iconStyleRight={
       Object {
@@ -15,12 +16,19 @@ exports[`<CodesplainAppBar /> snapshot tests user is logged in 1`] = `
       }
     }
     showMenuIconButton={false}
+    style={
+      Object {
+        "background": "#333333",
+      }
+    }
     title={
       <span
         onClick={[Function]}
         style={
           Object {
+            "color": "#00e6e6",
             "cursor": "pointer",
+            "fontWeight": "bold",
           }
         }>
         Codesplain
@@ -78,12 +86,19 @@ exports[`<CodesplainAppBar /> snapshot tests user is not logged in 1`] = `
     }
     iconStyleRight={Object {}}
     showMenuIconButton={false}
+    style={
+      Object {
+        "background": "#333333",
+      }
+    }
     title={
       <span
         onClick={[Function]}
         style={
           Object {
+            "color": "#00e6e6",
             "cursor": "pointer",
+            "fontWeight": "bold",
           }
         }>
         Codesplain

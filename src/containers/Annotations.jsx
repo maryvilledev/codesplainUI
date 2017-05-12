@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { CardText } from 'material-ui/Card';
+import { Card, CardHeader, CardText } from 'material-ui/Card';
 import { withRouter } from 'react-router';
 
 import {
@@ -20,6 +20,12 @@ import {
   hasPreviousAnnotation,
 } from '../util/annotations';
 import CustomPropTypes from '../util/custom-prop-types';
+
+const styles = {
+  card: {
+    flex: '1 1 auto',
+  },
+};
 
 export class Annotations extends React.Component {
   constructor(props) {
@@ -133,20 +139,30 @@ export class Annotations extends React.Component {
         'Click on a line number to add an annotation or display one' :
         'Lock this snippet to add annotations';
       return (
-        <CardText>{prompt}</CardText>
+        <Card style={styles.card}>
+          <CardHeader
+            title={<h2>Annotation</h2>}
+          />
+          <CardText>{prompt}</CardText>
+        </Card>
       );
     }
     return (
-      <AnnotationPanel
-        annotation={annotation}
-        lineAnnotated={lineAnnotated}
-        saveAnnotation={this.handleSaveAnnotation}
-        closeAnnotation={this.handleCloseAnnotation}
-        getNextAnnotation={this.getNextAnnotation}
-        getPreviousAnnotation={this.getPreviousAnnotation}
-        hasPrevAnnotation={hasPreceedingAnnotation}
-        hasNextAnnotation={hasProceedingAnnotation}
-      />
+      <Card style={styles.card}>
+        <CardHeader
+          title={<h2>Annotation</h2>}
+        />
+        <AnnotationPanel
+          annotation={annotation}
+          lineAnnotated={lineAnnotated}
+          saveAnnotation={this.handleSaveAnnotation}
+          closeAnnotation={this.handleCloseAnnotation}
+          getNextAnnotation={this.getNextAnnotation}
+          getPreviousAnnotation={this.getPreviousAnnotation}
+          hasPrevAnnotation={hasPreceedingAnnotation}
+          hasNextAnnotation={hasProceedingAnnotation}
+        />
+      </Card>
     );
   }
 }

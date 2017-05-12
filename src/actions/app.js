@@ -133,7 +133,7 @@ export const saveExisting = () => (dispatch, getState) => {
     app: appState,
     user: {
       token,
-      username,
+      selectedOrg,
     },
   } = getState();
   const { snippetKey: key } = appState;
@@ -147,7 +147,7 @@ export const saveExisting = () => (dispatch, getState) => {
   };
   dispatch(addNotification('Saving...'));
     // Update the snippet
-  return axios.put(makeSaveEndpointUrl(username, key), reqBody, reqHeaders)
+  return axios.put(makeSaveEndpointUrl(selectedOrg, key), reqBody, reqHeaders)
       .then(() => {
         // Remove the 'saving...' notification
         dispatch(closeNotification());

@@ -9,9 +9,14 @@ import { withRouter } from 'react-router';
 import cookie from 'react-cookie';
 
 import {
+  addOrg,
   addOrganizations,
   fetchSnippetLists,
-  restoreUserCredentials,
+  fetchUserInfo,
+  fetchUserOrgs,
+  saveAccessToken,
+  saveUsername,
+  setAvatarUrl,
   switchOrg,
 } from '../actions/user';
 import { resetState } from '../actions/app';
@@ -24,11 +29,16 @@ const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 const GITHUB_URL = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&scope=read:org`;
 
 const styles = {
+  appBar: {
+    background: '#333333', // light black
+  },
   rightElement: {
     marginTop: '16px',
   },
   title: {
     cursor: 'pointer',
+    color: '#00e6e6', // tealish
+    fontWeight: 'bold',
   },
 };
 
@@ -55,18 +65,42 @@ export class CodesplainAppBar extends Component {
   }
 
   componentDidMount() {
-    const { dispatch } = this.props;
-    const token = cookie.load('token');
-    const username = cookie.load('username');
-    if (!token || !username) {
-      // Exit if user isn't signed in
-      return;
+    const { dispatch, token, router } = this.props;
+    const tokenCookie = cookie.load('token');
+
+    // Save token to state if it hasn't already been (by <Auth />)
+    if (!token && tokenCookie) {
+      dispatch(saveAccessToken(tokenCookie));
     }
-    const savedOrganizations = cookie.load('orgs').split(' ');
-    dispatch(restoreUserCredentials(token, username));
-    dispatch(addOrganizations([username].concat(savedOrganizations)));
-    dispatch(switchOrg(username));
-    dispatch(fetchSnippetLists());
+
+    // If we have a token (thus are logged in), get user's info & save to state
+    if (tokenCookie) {
+      dispatch(fetchUserOrgs())
+        .then(({ data }) => {
+          // Dispatch orgs to state
+          // Create a list of the names organizations the user belongs to
+          const orgs = data.map(org => org.login);
+          // Save the organizations list to the store
+          dispatch(addOrganizations(orgs));
+          return dispatch(fetchUserInfo());
+        })
+        .then(({ data }) => {
+          const { login: username, avatar_url: userAvatarURL } = data;
+          dispatch(saveUsername(username));
+          dispatch(setAvatarUrl(userAvatarURL));
+
+          // Add user's username to orgs list, and select it as default
+          dispatch(addOrg(username));
+          dispatch(switchOrg(username));
+          return dispatch(fetchSnippetLists());
+        })
+        .catch(() => {
+          // If we fail, token must have been invalid:
+          // remove it and redirect to home page
+          cookie.remove('token', { path: '/' });
+          router.push('/');
+        });
+    }
   }
 
   onLoginClick() {
@@ -91,16 +125,12 @@ export class CodesplainAppBar extends Component {
   handleSignOut() {
     const { router } = this.props;
     cookie.remove('token', { path: '/' });
-    cookie.remove('username', { path: '/' });
-    cookie.remove('orgs', { path: '/' });
-    cookie.remove('userAvatarURL', { path: '/' });
     this.setState({ isLoggedIn: false });
     router.push('/');
     location.reload();
   }
 
   handleSnippetSelected(snippetOwner, snippetKey) {
-    window.location = `/${snippetOwner}/${snippetKey}`;
     const { router } = this.props;
     router.push(`/${snippetOwner}/${snippetKey}`);
   }
@@ -157,10 +187,11 @@ export class CodesplainAppBar extends Component {
       />,
     ];
 
-    const { orgSnippets, username, userSnippets } = this.props;
+    const { avatarURL, orgSnippets, username, userSnippets } = this.props;
     const { isDialogOpen, isLoggedIn } = this.state;
     const rightElement = isLoggedIn ?
       (<AppMenu
+        avatarURL={avatarURL}
         onSignOut={this.handleSignOut}
         onSnippetSelected={this.handleSnippetSelected}
         orgSnippets={orgSnippets}
@@ -180,6 +211,7 @@ export class CodesplainAppBar extends Component {
     return (
       <div>
         <AppBar
+          style={styles.appBar}
           showMenuIconButton={false}
           title={titleElement}
           iconElementRight={rightElement}
@@ -199,14 +231,18 @@ export class CodesplainAppBar extends Component {
 }
 
 CodesplainAppBar.propTypes = {
+  avatarURL: PropTypes.string,
   hasUnsavedChanges: PropTypes.bool.isRequired,
   orgSnippets: CustomPropTypes.orgSnippets,
+  token: PropTypes.string,
   username: PropTypes.string,
   userSnippets: CustomPropTypes.snippets,
 };
 
 CodesplainAppBar.defaultProps = {
+  avatarURL: '',
   orgSnippets: {},
+  token: '',
   username: '',
   userSnippets: {},
 };
@@ -218,7 +254,9 @@ const mapStateToProps = (state) => {
       hasUnsavedChanges,
     },
     user: {
+      avatarURL,
       orgSnippets,
+      token,
       username,
       userSnippets,
     },
@@ -229,6 +267,8 @@ const mapStateToProps = (state) => {
     orgSnippets,
     userSnippets,
     username,
+    token,
+    avatarURL,
   };
 };
 

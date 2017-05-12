@@ -38,12 +38,18 @@ const annotationModeOptions = {
 
 const makeMarker = () => {
   const marker = document.createElement('div');
-  marker.style.color = '#822';
-  marker.innerHTML = '●';
+  marker.style.color = 'black';
+  marker.innerHTML = '✎';
   return marker;
 };
 
-const pushValueToCodeMirror = (value, codeMirrorInst) => codeMirrorInst.setValue(value);
+const pushValueToCodeMirror = (value, codeMirrorInst) => {
+  // setValue() moves cursor to start of the text, so we have to
+  // be sure to put it back where it should be.
+  const pos = codeMirrorInst.getCursor();
+  codeMirrorInst.setValue(value);
+  codeMirrorInst.setCursor(pos);
+};
 
 class Editor extends React.Component {
   constructor(props) {

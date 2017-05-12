@@ -1,7 +1,9 @@
 import React, { PropTypes } from 'react';
 import {
   TextField,
+  Avatar,
 } from 'material-ui';
+import ReactTooltip from 'react-tooltip';
 
 import LanguageSelector from './LanguageSelector';
 import LockButton from './buttons/LockButton';
@@ -12,25 +14,27 @@ const styles = {
   toolbar: {
     backgroundColor: 'transparent',
     display: 'flex',
-    flexBasis: 'auto',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    flexGrow: '1',
-    flexShrink: '0',
+    flex: '1 0 auto',
+    flexFlow: 'column wrap',
     margin: '0',
     padding: '0',
   },
   buttons: {
-    flexBasis: 'auto',
-    flexGrow: '1',
-    flexShrink: '1',
-    verticalAlign: 'middle',
+    flex: '1 1 auto',
   },
   toolbarField: {
+    flex: '1 1 auto',
+  },
+  row: {
+    display: 'flex',
+    flexFlow: 'row wrap',
+  },
+  avatar: {
     flexBasis: 'auto',
-    flexGrow: '1',
-    flexShrink: '1',
-    verticalAlign: 'middle',
+    verticalAlign: 'bottom',
+    paddingTop: '10px',
+    margin: '3px',
+    marginLeft: '20px',
   },
 };
 
@@ -54,40 +58,65 @@ const SnippetAreaToolbar = (props) => {
     title,
     orgs,
     selectedOrg,
+    avatarUrl,
+    author,
   } = props;
 
   return (
     <div style={styles.toolbar}>
-      <TextField
-        hintText="Snippet Name"
-        id="titleField"
-        onChange={onTitleChange}
-        style={styles.toolbarField}
-        value={title}
-      />
-      <LanguageSelector
-        disabled={readOnly}
-        language={language}
-        onChange={onLanguageChange}
-        style={styles.toolbarField}
-      />
-      <div>
-        <LockButton
-          onClick={onLockClick}
-          readOnly={readOnly}
-          style={styles.buttons}
+      <div style={styles.row}>
+        <TextField
+          hintText="Snippet Name"
+          id="titleField"
+          style={styles.toolbarField}
+          onChange={onTitleChange}
+          value={title}
         />
-        <SaveMenu
-          canSave={canSave}
-          enabled={saveEnabled}
-          id="saveMenu"
-          onSaveAsClick={onSaveAsClick}
-          onSaveClick={onSaveClick}
-          style={styles.buttons}
-          orgs={orgs}
-          onOrgChanged={onOrgChanged}
-          selectedOrg={selectedOrg}
+        <div
+          style={styles.avatar}
+          data-tip
+          data-for="avatar"
+        >
+          {(avatarUrl) ?
+            <Avatar
+              size={20}
+              src={avatarUrl}
+            />
+        : null}
+        </div>
+        <ReactTooltip
+          id="avatar"
+          effect="solid"
+          place="bottom"
+        >
+          {author}
+        </ReactTooltip>
+      </div>
+      <div style={styles.row} >
+        <LanguageSelector
+          disabled={readOnly}
+          language={language}
+          onChange={onLanguageChange}
+          style={styles.toolbarField}
         />
+        <div>
+          <LockButton
+            onClick={onLockClick}
+            readOnly={readOnly}
+            style={styles.buttons}
+          />
+          <SaveMenu
+            canSave={canSave}
+            enabled={saveEnabled}
+            id="saveMenu"
+            onSaveAsClick={onSaveAsClick}
+            onSaveClick={onSaveClick}
+            style={styles.buttons}
+            orgs={orgs}
+            onOrgChanged={onOrgChanged}
+            selectedOrg={selectedOrg}
+          />
+        </div>
       </div>
     </div>
   );
@@ -107,10 +136,14 @@ SnippetAreaToolbar.propTypes = {
   title: PropTypes.string.isRequired,
   orgs: CustomPropTypes.orgs.isRequired,
   selectedOrg: PropTypes.string,
+  avatarUrl: PropTypes.string,
+  author: PropTypes.string,
 };
 
 SnippetAreaToolbar.defaultProps = {
   selectedOrg: '',
+  avatarUrl: null,
+  author: '',
 };
 
 export default SnippetAreaToolbar;

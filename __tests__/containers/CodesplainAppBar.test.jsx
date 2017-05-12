@@ -6,6 +6,8 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import { CodesplainAppBar } from '../../src/containers/CodesplainAppBar';
 
+const mockAuthor = 'phoenixperson';
+
 describe('<CodesplainAppBar />', () => {
   const muiTheme = getMuiTheme();
   const shallowWithContext = node => shallow(node, { context: { muiTheme } });
@@ -17,7 +19,9 @@ describe('<CodesplainAppBar />', () => {
     it('user is not logged in', () => {
       const wrapper = shallowWithContext(
         <CodesplainAppBar
+          username="FooBar"
           hasUnsavedChanges={false}
+          author={mockAuthor}
         />,
       );
       expect(shallowToJson(wrapper)).toMatchSnapshot();
@@ -27,8 +31,8 @@ describe('<CodesplainAppBar />', () => {
       cookie.save('token', 'foobar');
       const wrapper = shallowWithContext(
         <CodesplainAppBar
+          username="FooBar"
           hasUnsavedChanges={false}
-          username="username"
         />,
       );
       expect(shallowToJson(wrapper)).toMatchSnapshot();

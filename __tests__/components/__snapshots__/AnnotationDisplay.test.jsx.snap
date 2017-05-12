@@ -40,6 +40,7 @@ exports[`<AnnotationDisplay /> snapshots when an annotation after current one ex
           "display": "flex",
           "flex": "0 1 auto",
           "justifyContent": "flex-end",
+          "paddingRight": "1rem",
         }
       }>
       <IconButton
@@ -111,6 +112,7 @@ exports[`<AnnotationDisplay /> snapshots when an annotation before current one e
           "display": "flex",
           "flex": "0 1 auto",
           "justifyContent": "flex-end",
+          "paddingRight": "1rem",
         }
       }>
       <IconButton
@@ -182,6 +184,7 @@ exports[`<AnnotationDisplay /> snapshots when annotation exists before/after cur
           "display": "flex",
           "flex": "0 1 auto",
           "justifyContent": "flex-end",
+          "paddingRight": "1rem",
         }
       }>
       <IconButton
@@ -253,6 +256,7 @@ exports[`<AnnotationDisplay /> snapshots when no annotations before/after curren
           "display": "flex",
           "flex": "0 1 auto",
           "justifyContent": "flex-end",
+          "paddingRight": "1rem",
         }
       }>
       <IconButton

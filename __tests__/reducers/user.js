@@ -73,6 +73,16 @@ describe('Reducer: User', () => {
     expect(reducer({}, action)).toEqual(expected);
   });
 
+  it('handles SET_AVATAR_URL', () => {
+    const url = 'https://foobar.com/quxbaz';
+    const action = {
+      type: actions.SET_AVATAR_URL,
+      payload: url,
+    };
+    const expected = { avatarURL: url };
+    expect(reducer({}, action)).toEqual(expected);
+  });
+
   it('handles SET_USER_SNIPPETS', () => {
     const userSnippets = {
       test_snippet_1: {
@@ -114,6 +124,15 @@ describe('Reducer: User', () => {
       },
     };
     expect(reducer(state, actions.setSnippetLists(snippetList))).toEqual(expected);
+  });
+
+  it('should handle ADD_ORG', () => {
+    const org = 'galactic-federation';
+    const action = {
+      type: actions.ADD_ORG,
+      payload: org,
+    };
+    expect(reducer(undefined, action).orgs).toEqual(expect.arrayContaining([org]));
   });
 
   describe('SWITCH_ORG', () => {
