@@ -23,6 +23,35 @@ Object {
 }
 `;
 
+exports[`Actions: App async actions deleteSnippet() dispatches the correct actions if the action fails 1`] = `
+Array [
+  Object {
+    "payload": "Deleting...",
+    "type": "ADD_NOTIFICATION",
+  },
+  Object {
+    "payload": "Failed to delete snippet; please try again",
+    "type": "ADD_NOTIFICATION",
+  },
+]
+`;
+
+exports[`Actions: App async actions deleteSnippet() dispatches the correct actions if the action succeeded 1`] = `
+Array [
+  Object {
+    "payload": "Deleting...",
+    "type": "ADD_NOTIFICATION",
+  },
+  Object {
+    "type": "CLOSE_NOTIFICATION",
+  },
+  Object {
+    "payload": "Snippet Deleted!",
+    "type": "ADD_NOTIFICATION",
+  },
+]
+`;
+
 exports[`Actions: App async actions saveNew() dispatches SAVE_FAILED if save failed 1`] = `
 Array [
   Object {

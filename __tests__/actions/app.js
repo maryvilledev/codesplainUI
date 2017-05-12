@@ -218,6 +218,46 @@ describe('Actions: App', () => {
           });
       });
     });
+    describe('deleteSnippet()', () => {
+      it('dispatches the correct actions if the action succeeded', () => {
+        const snippetKey = 'snippetKey';
+        moxios.wait(() => {
+          const request = moxios.requests.mostRecent();
+          request.respondWith({
+            status: 200,
+          });
+        });
+        const store = mockStore({
+          user: {
+            token: '',
+            selectedOrg: '',
+          },
+        });
+        return store.dispatch(actions.deleteSnippet(snippetKey))
+          .then(() => {
+            expect(store.getActions()).toMatchSnapshot();
+          });
+      });
+      it('dispatches the correct actions if the action fails', () => {
+        const snippetKey = 'snippetKey';
+        moxios.wait(() => {
+          const request = moxios.requests.mostRecent();
+          request.respondWith({
+            status: 400,
+          });
+        });
+        const store = mockStore({
+          user: {
+            token: '',
+            selectedOrg: '',
+          },
+        });
+        return store.dispatch(actions.deleteSnippet(snippetKey))
+          .then(() => {
+            expect(store.getActions()).toMatchSnapshot();
+          });
+      });
+    });
     describe('saveExisting()', () => {
       it('description', () => {
         it('dispatches SAVE_SUCCEEDED if saved', () => {
