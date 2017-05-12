@@ -17,6 +17,7 @@ const styles = {
     display: 'flex',
     flex: '0 1 auto',
     justifyContent: 'flex-end',
+    paddingRight: '1rem',
   },
   cancelButton: {
     marginRight: '0.2rem',

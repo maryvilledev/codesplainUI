@@ -6,6 +6,7 @@ import {
 } from 'material-ui';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import cookie from 'react-cookie';
 
 import { openAnnotationPanel } from '../actions/annotation';
 import {
@@ -26,6 +27,7 @@ import ConfirmLockDialog from '../components/ConfirmLockDialog';
 import Editor from '../components/Editor';
 import SnippetAreaToolbar from '../components/SnippetAreaToolbar';
 import CustomPropTypes from '../util/custom-prop-types';
+import { fetchUserAvatar } from '../util/requests';
 
 const styles = {
   cardText: {
@@ -35,8 +37,6 @@ const styles = {
     overflow: 'auto',
   },
   card: {
-    height: '100%',
-    flex: '2 1',
     zIndex: 'auto',
   },
   cardContainer: {
@@ -56,6 +56,7 @@ export class SnippetArea extends React.Component {
     super(props);
     this.state = {
       lockDialogOpen: false,
+      avatarUrl: '',
     };
 
     this.handleCloseModal = this.handleCloseModal.bind(this);
@@ -73,6 +74,18 @@ export class SnippetArea extends React.Component {
   componentDidMount() {
     const { dispatch, snippetLanguage } = this.props;
     dispatch(loadParser(snippetLanguage));
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { author } = this.props;
+    const token = cookie.load('token');
+    if (!nextProps.author || !token) {
+      return;
+    }
+    if (author !== nextProps.author) {
+      fetchUserAvatar(nextProps.author, token)
+        .then(avatarUrl => this.setState({ avatarUrl }));
+    }
   }
 
   handleLanguageChanged(ev, key, language) {
@@ -204,7 +217,7 @@ export class SnippetArea extends React.Component {
       filters,
       openLine,
       orgs,
-      permissions,
+      canEdit,
       errors,
       readOnly,
       selectedOrg,
@@ -212,17 +225,20 @@ export class SnippetArea extends React.Component {
       snippetLanguage,
       snippetTitle,
       username,
+      author,
     } = this.props;
+    const { avatarUrl } = this.state;
 
     const markedLines = Object.keys(annotations).map(key => Number(key));
     return (
       <Card
+        id="app-body-snippet-area"
         containerStyle={styles.cardContainer}
         style={styles.card}
       >
-        <CardText style={styles.cardText}>
+        <CardText style={styles.snippetAreaCardText}>
           <SnippetAreaToolbar
-            canEdit={permissions.canEdit}
+            canEdit={canEdit}
             language={snippetLanguage}
             onLanguageChange={this.handleLanguageChanged}
             onLockClick={this.handleLock}
@@ -235,6 +251,8 @@ export class SnippetArea extends React.Component {
             saveEnabled={Boolean(username)}
             selectedOrg={selectedOrg}
             title={snippetTitle}
+            avatarUrl={avatarUrl}
+            author={author}
           />
           <ConfirmLockDialog
             accept={this.handleToggleReadOnly}
@@ -266,12 +284,13 @@ SnippetArea.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   snippet: PropTypes.string.isRequired,
   snippetTitle: PropTypes.string.isRequired,
-  permissions: CustomPropTypes.permissions.isRequired,
   errors: CustomPropTypes.errors,
   snippetLanguage: PropTypes.string.isRequired,
   orgs: CustomPropTypes.orgs.isRequired,
   selectedOrg: PropTypes.string,
   username: PropTypes.string,
+  canEdit: PropTypes.bool.isRequired,
+  author: PropTypes.string,
 };
 
 SnippetArea.defaultProps = {
@@ -279,6 +298,7 @@ SnippetArea.defaultProps = {
   selectedOrg: '',
   errors: [],
   username: '',
+  author: '',
 };
 
 const mapStateToProps = (state) => {
@@ -296,7 +316,10 @@ const mapStateToProps = (state) => {
       snippet,
       snippetTitle,
     },
-    permissions,
+    permissions: {
+      canEdit,
+      author,
+    },
     parser: {
       errors,
     },
@@ -315,11 +338,12 @@ const mapStateToProps = (state) => {
     readOnly,
     snippet,
     snippetTitle,
-    permissions,
     errors,
     orgs,
     selectedOrg,
     username,
+    canEdit,
+    author,
   };
 };
 

@@ -6,7 +6,7 @@ body {
   height: inherit;
 }
 
-div#root {
+#root {
   height: inherit;
 }
 
@@ -28,4 +28,44 @@ div#root {
   flex-shrink: 1;
   flex-basis: auto;
   height: 80%;
+}
+
+#app-body {
+  box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.12), 0px 1px 4px rgba(0, 0, 0, 0.12);
+  flex-flow: row wrap;
+  height: 100%;
+  overflow: auto;
+}
+
+#app-body-right-section {
+  box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.12), 0px 1px 4px rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-flow: column nowrap;
+  flex: 1 1;
+  height: 100%;
+  min-width: 300px;
+  overflow-y: auto;
+  max-width: 35vw;
+}
+
+#app-body-snippet-area {
+  height: 100%;
+  flex: 2 1;
+  max-width: 65vw;
+}
+
+@media screen and (max-width: 680px) {
+  #app-body {
+    height: auto;
+    flex-flow: column nowrap;
+  }
+
+  #app-body-right-section {
+    max-width: 100%;
+    overflow-y: visible;
+  }
+
+  #app-body-snippet-area {
+    max-width: 100%;
+  }
 }

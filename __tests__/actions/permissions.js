@@ -14,4 +14,14 @@ describe('Actions: permissions', () => {
       expect(actions.setPermissions(permissions)).toEqual(expected);
     });
   });
+  describe('SET_AUTHOR', () => {
+    it('creates an action to set the author', () => {
+      const author = 'phoenixperson';
+      const expected = {
+        type: actions.SET_AUTHOR,
+        payload: author,
+      };
+      expect(actions.setAuthor(author)).toEqual(expected);
+    });
+  });
 });

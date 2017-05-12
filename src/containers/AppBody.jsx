@@ -10,28 +10,18 @@ import {
   loadSnippet,
   restoreState,
 } from '../actions/app';
-import {
-  switchOrg,
-} from '../actions/user';
-import { setPermissions } from '../actions/permissions';
+import { setPermissions, setAuthor } from '../actions/permissions';
+import { switchOrg } from '../actions/user';
 import NotFound from '../components/NotFound';
 import { removeDeprecatedFiltersFromState } from '../util/codemirror-utils';
+import CustomPropTypes from '../util/custom-prop-types';
 import { sanitizeKey } from '../util/requests';
 import { setDefaults } from '../util/state-management';
 
 const styles = {
   body: {
     display: 'flex',
-    flexFlow: 'row wrap',
     height: '100%',
-  },
-  rightSection: {
-    display: 'flex',
-    flexFlow: 'column nowrap',
-    height: '100%',
-    flex: '2 1',
-    overflowY: 'auto',
-    boxShadow: '0px 1px 6px rgba(0, 0, 0, 0.12), 0px 1px 4px rgba(0, 0, 0, 0.12)',
   },
 };
 
@@ -118,6 +108,7 @@ export class AppBody extends Component {
         if (router.location.pathname !== nextRoute) {
           router.push(nextRoute);
         }
+        dispatch(setAuthor(snippetOwner));
       }, () => {
         // Failed to get the snippet, either bad URL or unauthorized
         this.setState({
@@ -158,9 +149,9 @@ export class AppBody extends Component {
       return <NotFound />;
     }
     return (
-      <div style={styles.body}>
+      <div style={styles.body} id="app-body" >
         <SnippetArea />
-        <div style={styles.rightSection}>
+        <div id="app-body-right-section" style={styles.rightSection}>
           <FilterArea />
           <Annotations />
         </div>
@@ -170,7 +161,7 @@ export class AppBody extends Component {
 }
 
 AppBody.propTypes = {
-  orgs: PropTypes.string,
+  orgs: CustomPropTypes.orgs,
   username: PropTypes.string,
 };
 
@@ -186,7 +177,6 @@ const mapStateToProps = (state) => {
       orgs,
     },
   } = state;
-
   return {
     username,
     orgs,

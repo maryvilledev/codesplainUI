@@ -15,7 +15,7 @@ import {
   useRouterHistory,
 } from 'react-router';
 
-import App from './containers/App';
+import App from './components/App';
 import Auth from './components/Auth';
 import NotFoundView from './components/NotFoundView';
 import configureStore from './store/configureStore';

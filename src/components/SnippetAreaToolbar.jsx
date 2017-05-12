@@ -1,7 +1,9 @@
 import React, { PropTypes } from 'react';
 import {
   TextField,
+  Avatar,
 } from 'material-ui';
+import ReactTooltip from 'react-tooltip';
 
 import LanguageSelector from './LanguageSelector';
 import LockButton from './buttons/LockButton';
@@ -27,9 +29,16 @@ const styles = {
   toolbarField: {
     flex: '1 1 auto',
   },
-  bottomRow: {
+  row: {
     display: 'flex',
     flexFlow: 'row wrap',
+  },
+  avatar: {
+    flexBasis: 'auto',
+    verticalAlign: 'bottom',
+    paddingTop: '10px',
+    margin: '3px',
+    marginLeft: '20px',
   },
 };
 
@@ -53,18 +62,41 @@ const SnippetAreaToolbar = (props) => {
     title,
     orgs,
     selectedOrg,
+    avatarUrl,
+    author,
   } = props;
 
   return (
     <div style={styles.toolbar}>
-      <TextField
-        hintText="Snippet Name"
-        id="titleField"
-        fullWidth
-        onChange={onTitleChange}
-        value={title}
-      />
-      <div style={styles.bottomRow} >
+      <div style={styles.row}>
+        <TextField
+          hintText="Snippet Name"
+          id="titleField"
+          style={styles.toolbarField}
+          onChange={onTitleChange}
+          value={title}
+        />
+        <div
+          style={styles.avatar}
+          data-tip
+          data-for="avatar"
+        >
+          {(avatarUrl) ?
+            <Avatar
+              size={20}
+              src={avatarUrl}
+            />
+        : null}
+        </div>
+        <ReactTooltip
+          id="avatar"
+          effect="solid"
+          place="bottom"
+        >
+          {author}
+        </ReactTooltip>
+      </div>
+      <div style={styles.row} >
         <LanguageSelector
           disabled={readOnly}
           language={language}
@@ -112,10 +144,14 @@ SnippetAreaToolbar.propTypes = {
   title: PropTypes.string.isRequired,
   orgs: CustomPropTypes.orgs.isRequired,
   selectedOrg: PropTypes.string,
+  avatarUrl: PropTypes.string,
+  author: PropTypes.string,
 };
 
 SnippetAreaToolbar.defaultProps = {
   selectedOrg: '',
+  avatarUrl: null,
+  author: '',
 };
 
 export default SnippetAreaToolbar;
