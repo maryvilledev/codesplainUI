@@ -110,7 +110,7 @@ const SnippetAreaToolbar = (props) => {
             style={styles.button}
           />
           <SaveMenu
-            canEdit={canEdit}
+            canSave={canEdit}
             enabled={saveEnabled}
             id="saveMenu"
             onSaveAsClick={onSaveAsClick}
@@ -122,7 +122,8 @@ const SnippetAreaToolbar = (props) => {
           />
           <DeleteButton
             style={styles.button}
-
+            isEnabled={canEdit}
+            onClick={() => console.log('tickle')}
           />
         </div>
       </div>

@@ -17,7 +17,6 @@ const styles = {
 };
 
 const DeleteButton = ({ onClick, isEnabled }) => {
-
   return (
     <span style={styles.buttonContainer}>
       <div
