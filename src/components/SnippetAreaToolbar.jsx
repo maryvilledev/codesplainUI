@@ -104,28 +104,28 @@ const SnippetAreaToolbar = (props) => {
           style={styles.toolbarField}
         />
       <div style={styles.buttonsContainer}>
-          <LockButton
-            onClick={onLockClick}
-            readOnly={readOnly}
-            style={styles.button}
-          />
-          <SaveMenu
-            canSave={canEdit}
-            enabled={saveEnabled}
-            id="saveMenu"
-            onSaveAsClick={onSaveAsClick}
-            onSaveClick={onSaveClick}
-            style={styles.button}
-            orgs={orgs}
-            onOrgChanged={onOrgChanged}
-            selectedOrg={selectedOrg}
-          />
-          <DeleteButton
-            style={styles.button}
-            isEnabled={canEdit}
-            onClick={() => console.log('tickle')}
-          />
-        </div>
+        <LockButton
+          onClick={onLockClick}
+          readOnly={readOnly}
+          style={styles.button}
+        />
+        <SaveMenu
+          canSave={canEdit}
+          enabled={saveEnabled}
+          id="saveMenu"
+          onSaveAsClick={onSaveAsClick}
+          onSaveClick={onSaveClick}
+          style={styles.button}
+          orgs={orgs}
+          onOrgChanged={onOrgChanged}
+          selectedOrg={selectedOrg}
+        />
+        <DeleteButton
+          style={styles.button}
+          isEnabled={canEdit && saveEnabled}
+          onClick={() => console.log('tickle')}
+        />
+      </div>
       </div>
     </div>
   );
