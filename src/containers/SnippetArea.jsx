@@ -67,12 +67,12 @@ export class SnippetArea extends React.Component {
     this.handleGutterClick = this.handleGutterClick.bind(this);
     this.handleLanguageChanged = this.handleLanguageChanged.bind(this);
     this.handleLock = this.handleLock.bind(this);
+    this.handleOrgChanged = this.handleOrgChanged.bind(this);
     this.handleSave = this.handleSave.bind(this);
     this.handleSaveAs = this.handleSaveAs.bind(this);
     this.handleSnippetChanged = this.handleSnippetChanged.bind(this);
     this.handleTitleChanged = this.handleTitleChanged.bind(this);
     this.handleToggleReadOnly = this.handleToggleReadOnly.bind(this);
-    this.handleOrgChanged = this.handleOrgChanged.bind(this);
   }
 
   componentDidMount() {
@@ -83,8 +83,9 @@ export class SnippetArea extends React.Component {
   componentWillReceiveProps(nextProps) {
     const { author } = this.props;
     const token = cookie.load('token');
+
     if (!nextProps.author || !token) {
-      return;
+      this.setState({ avatarUrl: '' });
     }
     if (author !== nextProps.author) {
       fetchUserAvatar(nextProps.author, token)
@@ -142,8 +143,8 @@ export class SnippetArea extends React.Component {
     const {
       dispatch,
       router,
-      snippetTitle,
       selectedOrg,
+      snippetTitle,
     } = this.props;
 
     const { id } = router.params;
@@ -218,30 +219,32 @@ export class SnippetArea extends React.Component {
     const {
       annotations,
       AST,
+      author,
+      canEdit,
+      errors,
       filters,
       openLine,
       orgs,
-      canEdit,
-      errors,
       readOnly,
       selectedOrg,
       snippet,
       snippetLanguage,
       snippetTitle,
       username,
-      author,
     } = this.props;
     const { avatarUrl } = this.state;
 
-    const markedLines = Object.keys(annotations).map(key => Number(key));
+    const markedLines = Object.keys(annotations).map(Number);
     return (
       <Card
-        id="app-body-snippet-area"
         containerStyle={styles.cardContainer}
+        id="app-body-snippet-area"
         style={styles.card}
       >
         <CardText style={styles.snippetAreaCardText}>
           <SnippetAreaToolbar
+            author={author}
+            avatarUrl={avatarUrl}
             canSave={canEdit}
             language={snippetLanguage}
             onLanguageChange={this.handleLanguageChanged}
@@ -255,8 +258,6 @@ export class SnippetArea extends React.Component {
             saveEnabled={Boolean(username)}
             selectedOrg={selectedOrg}
             title={snippetTitle}
-            avatarUrl={avatarUrl}
-            author={author}
           />
           <ConfirmLockDialog
             accept={this.handleToggleReadOnly}
@@ -265,6 +266,7 @@ export class SnippetArea extends React.Component {
           />
           <Editor
             AST={AST}
+            errors={errors}
             filters={filters}
             language={snippetLanguage}
             markedLines={markedLines}
@@ -273,7 +275,6 @@ export class SnippetArea extends React.Component {
             openLine={openLine}
             readOnly={readOnly}
             value={snippet}
-            errors={errors}
           />
         </CardText>
       </Card>
@@ -283,26 +284,26 @@ export class SnippetArea extends React.Component {
 
 SnippetArea.propTypes = {
   annotations: CustomPropTypes.annotations.isRequired,
+  author: PropTypes.string,
+  canEdit: PropTypes.bool.isRequired,
+  errors: CustomPropTypes.errors,
   filters: CustomPropTypes.filters.isRequired,
   openLine: PropTypes.number,
-  readOnly: PropTypes.bool.isRequired,
-  snippet: PropTypes.string.isRequired,
-  snippetTitle: PropTypes.string.isRequired,
-  errors: CustomPropTypes.errors,
-  snippetLanguage: PropTypes.string.isRequired,
   orgs: CustomPropTypes.orgs.isRequired,
+  readOnly: PropTypes.bool.isRequired,
   selectedOrg: PropTypes.string,
+  snippet: PropTypes.string.isRequired,
+  snippetLanguage: PropTypes.string.isRequired,
+  snippetTitle: PropTypes.string.isRequired,
   username: PropTypes.string,
-  canEdit: PropTypes.bool.isRequired,
-  author: PropTypes.string,
 };
 
 SnippetArea.defaultProps = {
+  author: '',
+  errors: [],
   openLine: -1,
   selectedOrg: '',
-  errors: [],
   username: '',
-  author: '',
 };
 
 const mapStateToProps = (state) => {
@@ -315,14 +316,14 @@ const mapStateToProps = (state) => {
       annotations,
       AST,
       filters,
-      snippetLanguage,
       readOnly,
       snippet,
+      snippetLanguage,
       snippetTitle,
     },
     permissions: {
-      canEdit,
       author,
+      canEdit,
     },
     parser: {
       errors,
@@ -336,18 +337,18 @@ const mapStateToProps = (state) => {
   return {
     annotations,
     AST,
-    filters,
-    snippetLanguage,
-    openLine: (isDisplayingAnnotation ? lineAnnotated.lineNumber : undefined),
-    readOnly,
-    snippet,
-    snippetTitle,
-    errors,
-    orgs,
-    selectedOrg,
-    username,
-    canEdit,
     author,
+    canEdit,
+    errors,
+    filters,
+    openLine: (isDisplayingAnnotation ? lineAnnotated.lineNumber : undefined),
+    orgs,
+    readOnly,
+    selectedOrg,
+    snippet,
+    snippetLanguage,
+    snippetTitle,
+    username,
   };
 };
 

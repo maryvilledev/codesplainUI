@@ -1,0 +1,29 @@
+exports[`<AuthorAvatarIcon /> matches snapshot when it is open 1`] = `
+<div
+  data-for="avatar"
+  data-tip={true}
+  style={
+    Object {
+      "flexBasis": "auto",
+      "margin": "3px",
+      "marginLeft": "20px",
+      "paddingTop": "10px",
+      "verticalAlign": "bottom",
+    }
+  }>
+  <Avatar
+    size={20}
+    src="https://avatars2.githubusercontent.com/u/0?v=3" />
+  <ReactTooltip
+    effect="solid"
+    id="avatar"
+    insecure={true}
+    place="bottom"
+    resizeHide={true}
+    wrapper="div">
+    author
+  </ReactTooltip>
+</div>
+`;
+
+exports[`<AuthorAvatarIcon /> matches snapshot when no avatar url is provided 1`] = `null`;

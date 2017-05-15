@@ -34,25 +34,9 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is no
       type="text"
       underlineShow={true}
       value="" />
-    <div
-      data-for="avatar"
-      data-tip={true}
-      style={
-        Object {
-          "flexBasis": "auto",
-          "margin": "3px",
-          "marginLeft": "20px",
-          "paddingTop": "10px",
-          "verticalAlign": "bottom",
-        }
-      } />
-    <ReactTooltip
-      effect="solid"
-      id="avatar"
-      insecure={true}
-      place="bottom"
-      resizeHide={true}
-      wrapper="div" />
+    <AuthorAvatarIcon
+      author=""
+      avatarUrl="" />
   </div>
   <div
     style={
@@ -138,25 +122,9 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is re
       type="text"
       underlineShow={true}
       value="" />
-    <div
-      data-for="avatar"
-      data-tip={true}
-      style={
-        Object {
-          "flexBasis": "auto",
-          "margin": "3px",
-          "marginLeft": "20px",
-          "paddingTop": "10px",
-          "verticalAlign": "bottom",
-        }
-      } />
-    <ReactTooltip
-      effect="solid"
-      id="avatar"
-      insecure={true}
-      place="bottom"
-      resizeHide={true}
-      wrapper="div" />
+    <AuthorAvatarIcon
+      author=""
+      avatarUrl="" />
   </div>
   <div
     style={

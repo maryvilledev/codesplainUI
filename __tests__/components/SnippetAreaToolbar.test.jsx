@@ -119,7 +119,7 @@ describe('<SnippetAreaToolbar />', () => {
         <SnippetAreaToolbar
           {...defaultProps}
           readOnly={readOnly}
-        />
+        />,
       );
       expect(wrapper.find('LockButton').prop('readOnly')).toBe(readOnly);
     });
@@ -129,7 +129,7 @@ describe('<SnippetAreaToolbar />', () => {
         <SnippetAreaToolbar
           {...defaultProps}
           readOnly={readOnly}
-        />
+        />,
       );
       expect(wrapper.find('LanguageSelector').prop('disabled')).toBe(readOnly);
     });

@@ -1,16 +1,22 @@
 import React, { PropTypes } from 'react';
 import {
   TextField,
-  Avatar,
 } from 'material-ui';
-import ReactTooltip from 'react-tooltip';
 
+import AuthorAvatarIcon from './AuthorAvatarIcon';
 import LanguageSelector from './LanguageSelector';
 import LockButton from './buttons/LockButton';
 import SaveMenu from './menus/SaveMenu';
 import CustomPropTypes from '../util/custom-prop-types';
 
 const styles = {
+  buttons: {
+    flex: '1 1 auto',
+  },
+  row: {
+    display: 'flex',
+    flexFlow: 'row wrap',
+  },
   toolbar: {
     backgroundColor: 'transparent',
     display: 'flex',
@@ -19,22 +25,8 @@ const styles = {
     margin: '0',
     padding: '0',
   },
-  buttons: {
-    flex: '1 1 auto',
-  },
   toolbarField: {
     flex: '1 1 auto',
-  },
-  row: {
-    display: 'flex',
-    flexFlow: 'row wrap',
-  },
-  avatar: {
-    flexBasis: 'auto',
-    verticalAlign: 'bottom',
-    paddingTop: '10px',
-    margin: '3px',
-    marginLeft: '20px',
   },
 };
 
@@ -45,21 +37,21 @@ here, because it does not reflow correctly when the screen is resized.
 */
 const SnippetAreaToolbar = (props) => {
   const {
+    author,
+    avatarUrl,
     canSave,
     language,
     onLanguageChange,
     onLockClick,
+    onOrgChanged,
     onSaveAsClick,
     onSaveClick,
     onTitleChange,
-    onOrgChanged,
+    orgs,
     readOnly,
     saveEnabled,
-    title,
-    orgs,
     selectedOrg,
-    avatarUrl,
-    author,
+    title,
   } = props;
 
   return (
@@ -72,25 +64,10 @@ const SnippetAreaToolbar = (props) => {
           onChange={onTitleChange}
           value={title}
         />
-        <div
-          style={styles.avatar}
-          data-tip
-          data-for="avatar"
-        >
-          {(avatarUrl) ?
-            <Avatar
-              size={20}
-              src={avatarUrl}
-            />
-        : null}
-        </div>
-        <ReactTooltip
-          id="avatar"
-          effect="solid"
-          place="bottom"
-        >
-          {author}
-        </ReactTooltip>
+        <AuthorAvatarIcon
+          author={author}
+          avatarUrl={avatarUrl}
+        />
       </div>
       <div style={styles.row} >
         <LanguageSelector
@@ -109,12 +86,12 @@ const SnippetAreaToolbar = (props) => {
             canSave={canSave}
             enabled={saveEnabled}
             id="saveMenu"
+            onOrgChanged={onOrgChanged}
             onSaveAsClick={onSaveAsClick}
             onSaveClick={onSaveClick}
-            style={styles.buttons}
             orgs={orgs}
-            onOrgChanged={onOrgChanged}
             selectedOrg={selectedOrg}
+            style={styles.buttons}
           />
         </div>
       </div>
@@ -123,27 +100,27 @@ const SnippetAreaToolbar = (props) => {
 };
 
 SnippetAreaToolbar.propTypes = {
+  author: PropTypes.string,
+  avatarUrl: PropTypes.string,
   canSave: PropTypes.bool.isRequired,
   language: PropTypes.string.isRequired,
   onLanguageChange: PropTypes.func.isRequired,
   onLockClick: PropTypes.func.isRequired,
+  onOrgChanged: PropTypes.func.isRequired,
   onSaveAsClick: PropTypes.func.isRequired,
   onSaveClick: PropTypes.func.isRequired,
   onTitleChange: PropTypes.func.isRequired,
-  onOrgChanged: PropTypes.func.isRequired,
+  orgs: CustomPropTypes.orgs.isRequired,
   readOnly: PropTypes.bool.isRequired,
   saveEnabled: PropTypes.bool.isRequired,
-  title: PropTypes.string.isRequired,
-  orgs: CustomPropTypes.orgs.isRequired,
   selectedOrg: PropTypes.string,
-  avatarUrl: PropTypes.string,
-  author: PropTypes.string,
+  title: PropTypes.string.isRequired,
 };
 
 SnippetAreaToolbar.defaultProps = {
-  selectedOrg: '',
-  avatarUrl: null,
   author: '',
+  avatarUrl: '',
+  selectedOrg: '',
 };
 
 export default SnippetAreaToolbar;
