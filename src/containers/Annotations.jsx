@@ -139,8 +139,6 @@ export class Annotations extends React.Component {
       hasPreceedingAnnotation,
     } = this.state;
 
-    console.log(hasPreceedingAnnotation, hasProceedingAnnotation);
-
     if (!isDisplayingAnnotation) {
       const prompt = readOnly ?
         'Click on a line number to add an annotation or display one' :
