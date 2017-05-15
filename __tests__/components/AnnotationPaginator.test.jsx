@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
-import AnnotationPaginator from '../../src/components/AnnotationPaginator';
+import AnnotationPaginator from '../../src/components/buttons/AnnotationPaginator';
 
 const defaultProps = {
   getNextAnnotation: jest.fn(),

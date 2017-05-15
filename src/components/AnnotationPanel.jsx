@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 
 import AnnotationDisplay from './AnnotationDisplay';
 import AnnotationEditor from './AnnotationEditor';
-import AnnotationPaginator from './AnnotationPaginator';
+import AnnotationPaginator from './buttons/AnnotationPaginator';
 import LineSnippet from './LineSnippet';
 
 const style = {
