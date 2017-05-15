@@ -186,8 +186,9 @@ export const deleteSnippet = snippetKey => (dispatch, getState) => {
       // Give user feedback that snippet deleted
       dispatch(addNotification('Snippet Deleted!'));
     })
-    .catch(() => {
+    .catch((err) => {
       dispatch(addNotification('Failed to delete snippet; please try again'));
+      throw err;
     });
 };
 
