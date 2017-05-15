@@ -7,7 +7,7 @@ const AnnotationPaginator = ({ hasNextAnnotation, getNextAnnotation,
   hasPrevAnnotation, getPreviousAnnotation, style }) => (
     <div style={style}>
       <IconButton
-        disabled={hasPrevAnnotation}
+        disabled={!hasPrevAnnotation}
         id="previous-annotation"
         onTouchTap={getPreviousAnnotation}
         tooltip="Previous Annotation"
@@ -17,7 +17,7 @@ const AnnotationPaginator = ({ hasNextAnnotation, getNextAnnotation,
         <Previous />
       </IconButton>
       <IconButton
-        disabled={hasNextAnnotation}
+        disabled={!hasNextAnnotation}
         id="next-annotation"
         onTouchTap={getNextAnnotation}
         tooltip="Next Annotation"
