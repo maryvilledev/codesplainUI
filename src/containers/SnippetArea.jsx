@@ -24,7 +24,11 @@ import {
 import { addNotification } from '../actions/notifications';
 import { loadParser } from '../actions/parser';
 import { setPermissions } from '../actions/permissions';
-import { updateUserSnippets, switchOrg } from '../actions/user';
+import {
+  fetchSnippetLists,
+  updateUserSnippets,
+  switchOrg,
+} from '../actions/user';
 import ConfirmLockDialog from '../components/ConfirmLockDialog';
 import Editor from '../components/Editor';
 import SnippetAreaToolbar from '../components/SnippetAreaToolbar';
@@ -213,6 +217,7 @@ export class SnippetArea extends React.Component {
       .then(() => {
         dispatch(resetState());
         dispatch(updateUserSnippets());
+        dispatch(fetchSnippetLists()); // Update org snippet lists
         router.push('/'); // TODO: Test that does not redirect delete fails
       });
   }
