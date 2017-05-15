@@ -29,7 +29,7 @@ import {
   updateUserSnippets,
   switchOrg,
 } from '../actions/user';
-import ConfirmLockDialog from '../components/ConfirmLockDialog';
+import ConfirmationDialog from '../components/ConfirmationDialog';
 import Editor from '../components/Editor';
 import SnippetAreaToolbar from '../components/SnippetAreaToolbar';
 import CustomPropTypes from '../util/custom-prop-types';
@@ -66,6 +66,7 @@ export class SnippetArea extends React.Component {
     super(props);
     this.state = {
       lockDialogOpen: false,
+      deleteDialogOpen: false,
       avatarUrl: '',
     };
 
@@ -80,6 +81,7 @@ export class SnippetArea extends React.Component {
     this.handleToggleReadOnly = this.handleToggleReadOnly.bind(this);
     this.handleOrgChanged = this.handleOrgChanged.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.showDeleteModal = this.showDeleteModal.bind(this);
   }
 
   componentDidMount() {
@@ -139,9 +141,14 @@ export class SnippetArea extends React.Component {
     this.handleCloseModal();
   }
 
+  showDeleteModal() {
+    this.setState({ deleteDialogOpen: true });
+  }
+
   handleCloseModal() {
     this.setState({
       lockDialogOpen: false,
+      deleteDialogOpen: false,
     });
   }
 
@@ -212,6 +219,7 @@ export class SnippetArea extends React.Component {
   }
 
   handleDelete() {
+    this.setState({ deleteDialogOpen: false });
     const { dispatch, snippetKey, router } = this.props;
     dispatch(deleteSnippet(snippetKey))
       .then(() => {
@@ -266,7 +274,7 @@ export class SnippetArea extends React.Component {
           <SnippetAreaToolbar
             canEdit={canEdit}
             language={snippetLanguage}
-            onDeleteClick={this.handleDelete}
+            onDeleteClick={this.showDeleteModal}
             deleteEnabled={deleteEnabled}
             onLanguageChange={this.handleLanguageChanged}
             onLockClick={this.handleLock}
@@ -282,10 +290,19 @@ export class SnippetArea extends React.Component {
             avatarUrl={avatarUrl}
             author={author}
           />
-          <ConfirmLockDialog
+          <ConfirmationDialog
             accept={this.handleToggleReadOnly}
             isOpen={this.state.lockDialogOpen}
             reject={this.handleCloseModal}
+            title="Are you sure you want to lock editing?"
+            message="Note that you will not be able to revert back to edit mode"
+          />
+          <ConfirmationDialog
+            accept={this.handleDelete}
+            isOpen={this.state.deleteDialogOpen}
+            reject={this.handleCloseModal}
+            title="Are you sure you want to delete this snippet?"
+            message="Note that you can not undo this action"
           />
           <Editor
             AST={AST}
