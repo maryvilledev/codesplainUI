@@ -2,7 +2,6 @@ exports[`<ReferenceArea /> matches snapshot 1`] = `
 <div
   style={
     Object {
-      "backgroundColor": "#262626",
       "bottom": 0,
       "display": "inline-flex",
       "flexFlow": "row nowrap",

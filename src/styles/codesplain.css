@@ -52,6 +52,11 @@ body {
   height: 100%;
   flex: 2 1;
   max-width: 65vw;
+  overflow: auto;
+}
+
+#app-body-snippet-area > div > div {
+  height:inherit;
 }
 
 @media screen and (max-width: 680px) {

@@ -66,11 +66,14 @@ export class AppBody extends Component {
       router,
     } = this.props;
     const {
-      id: snippetKey,
-      username: snippetOwner,
-    } = router.params;
+      params: {
+        id: snippetKey,
+        username: snippetOwner,
+      },
+      location: { pathname },
+    } = router;
 
-    this.setState({ pathname: router.location.pathname });
+    this.setState({ pathname });
     if (!snippetOwner && !snippetKey) {
       // This is a new snippet for the current user, enable all permissions
       const permissions = {
@@ -105,7 +108,7 @@ export class AppBody extends Component {
         // Reroute if using legacy url
         // So /:username/snippets/:id -> /:username/:id
         const nextRoute = `/${snippetOwner}/${sanitizeKey(snippetKey)}`;
-        if (router.location.pathname !== nextRoute) {
+        if (pathname !== nextRoute) {
           router.push(nextRoute);
         }
         dispatch(setAuthor(snippetOwner));

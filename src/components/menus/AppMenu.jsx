@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 
 import {
   Avatar,
@@ -9,6 +9,7 @@ import {
 import ArrowDropDown from 'material-ui/svg-icons/navigation/arrow-drop-down';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
+import OrgSnippetsMenu from './OrgSnippetsMenu';
 import SnippetList from './SnippetList';
 import CustomPropTypes from '../../util/custom-prop-types';
 
@@ -25,8 +26,8 @@ const styles = {
   },
 };
 
-// Returns an <Avatar /> of the user's GitHub icon if the requisite cookie is
-// present, otherwise returns null.
+// Return an <Avatar /> of the user's GitHub avatar if a URL is specified, else
+// Return a generic menu icon
 const makeAppMenuIcon = (avatarURL) => {
   if (avatarURL) {
     return (
@@ -47,36 +48,85 @@ const makeAppMenuIcon = (avatarURL) => {
   );
 };
 
-/*
-<AppMenu /> renders as a white vertical ellipse ⋮ . When clicked it expands to
-display a "Sign out" option, that when clicked invokes the 'onSignOut' prop.
-*/
-const AppMenu = ({ onSignOut, snippetTitles, onTitleClicked, avatarURL }) => (
-  <div>
-    <IconMenu
-      style={styles.iconMenu}
-      iconButtonElement={makeAppMenuIcon(avatarURL)}
-      targetOrigin={{ horizontal: 'right', vertical: 'top' }}
-      anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-      iconStyle={styles.iconButtonElement}
-    >
-      <SnippetList
-        onClick={onTitleClicked}
-        titles={snippetTitles}
-      />
-      <MenuItem
-        onClick={onSignOut}
-        primaryText="Sign out"
-      />
-    </IconMenu>
-  </div>
-);
+class AppMenu extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      iconMenuOpen: false,
+    };
+    this.handleOnRequestChange = this.handleOnRequestChange.bind(this);
+    this.handleSnippetSelected = this.handleSnippetSelected.bind(this);
+  }
+
+  handleOnRequestChange(open) {
+    this.setState({
+      iconMenuOpen: open,
+    });
+  }
+
+  handleSnippetSelected(snippetOwner, snippetKey) {
+    this.setState({
+      iconMenuOpen: false,
+    });
+    this.props.onSnippetSelected(snippetOwner, snippetKey);
+  }
+
+  render() {
+    const {
+      avatarURL,
+      onSignOut,
+      orgSnippets,
+      username,
+      userSnippets,
+    } = this.props;
+    const {
+      iconMenuOpen,
+    } = this.state;
+
+    return (
+      <div>
+        <IconMenu
+          anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+          iconButtonElement={makeAppMenuIcon(avatarURL)}
+          iconStyle={styles.iconButtonElement}
+          onItemTouchTap={this.handleOnItemTouchTap}
+          onRequestChange={this.handleOnRequestChange}
+          open={iconMenuOpen}
+          style={styles.iconMenu}
+          targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+          useLayerForClickAway
+        >
+          <SnippetList
+            onClick={this.handleSnippetSelected}
+            primaryText="My Snippets"
+            snippetOwner={username}
+            snippetsList={userSnippets}
+          />
+          <OrgSnippetsMenu
+            onClick={this.handleSnippetSelected}
+            orgSnippets={orgSnippets}
+          />
+          <MenuItem
+            onClick={onSignOut}
+            primaryText="Sign out"
+          />
+        </IconMenu>
+      </div>
+    );
+  }
+}
 
 AppMenu.propTypes = {
-  avatarURL: PropTypes.string.isRequired,
+  avatarURL: PropTypes.string,
   onSignOut: PropTypes.func.isRequired,
-  onTitleClicked: PropTypes.func.isRequired,
-  snippetTitles: CustomPropTypes.snippets.isRequired,
+  onSnippetSelected: PropTypes.func.isRequired,
+  orgSnippets: CustomPropTypes.orgSnippets.isRequired,
+  username: PropTypes.string.isRequired,
+  userSnippets: CustomPropTypes.snippets.isRequired,
+};
+
+AppMenu.defaultProps = {
+  avatarURL: '',
 };
 
 export default AppMenu;

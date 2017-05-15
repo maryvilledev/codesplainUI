@@ -43,6 +43,10 @@ const styles = {
   },
   cardContainer: {
     height: 'inherit',
+    display: 'inline-flex',
+    flexFlow: 'column nowrap',
+    justifyContent: 'flex-start',
+    width: '100%',
   },
 };
 

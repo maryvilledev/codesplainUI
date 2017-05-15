@@ -9,14 +9,15 @@ import { withRouter } from 'react-router';
 import cookie from 'react-cookie';
 
 import {
-  updateUserSnippets,
-  fetchUserOrgs,
+  addOrg,
+  addOrganizations,
+  fetchSnippetLists,
   fetchUserInfo,
+  fetchUserOrgs,
   saveAccessToken,
   saveUsername,
-  addOrg,
-  switchOrg,
   setAvatarUrl,
+  switchOrg,
 } from '../actions/user';
 import { resetState } from '../actions/app';
 import { closeAnnotationPanel } from '../actions/annotation';
@@ -77,19 +78,22 @@ export class CodesplainAppBar extends Component {
       dispatch(fetchUserOrgs())
         .then(({ data }) => {
           // Dispatch orgs to state
-          data.forEach(org => dispatch(addOrg(org.login)));
+          // Create a list of the names organizations the user belongs to
+          const orgs = data.map(org => org.login);
+          // Save the organizations list to the store
+          dispatch(addOrganizations(orgs));
+          return dispatch(fetchUserInfo());
         })
-        .then(() => dispatch(fetchUserInfo()))
-        .then((res) => {
-          const { login: username, avatar_url: userAvatarURL } = res.data;
+        .then(({ data }) => {
+          const { login: username, avatar_url: userAvatarURL } = data;
           dispatch(saveUsername(username));
           dispatch(setAvatarUrl(userAvatarURL));
 
           // Add user's username to orgs list, and select it as default
           dispatch(addOrg(username));
           dispatch(switchOrg(username));
+          return dispatch(fetchSnippetLists());
         })
-        .then(() => dispatch(updateUserSnippets()))
         .catch(() => {
           // If we fail, token must have been invalid:
           // remove it and redirect to home page
@@ -126,9 +130,9 @@ export class CodesplainAppBar extends Component {
     location.reload();
   }
 
-  handleSnippetSelected(key) {
-    const { username, router } = this.props;
-    router.push(`/${username}/${key}`);
+  handleSnippetSelected(snippetOwner, snippetKey) {
+    const { router } = this.props;
+    router.push(`/${snippetOwner}/${snippetKey}`);
   }
 
   handleTitleTouchTap() {
@@ -183,14 +187,16 @@ export class CodesplainAppBar extends Component {
       />,
     ];
 
-    const { userSnippets, avatarURL } = this.props;
+    const { avatarURL, orgSnippets, username, userSnippets } = this.props;
     const { isDialogOpen, isLoggedIn } = this.state;
     const rightElement = isLoggedIn ?
       (<AppMenu
         avatarURL={avatarURL}
         onSignOut={this.handleSignOut}
-        onTitleClicked={this.handleSnippetSelected}
-        snippetTitles={userSnippets}
+        onSnippetSelected={this.handleSnippetSelected}
+        orgSnippets={orgSnippets}
+        username={username}
+        userSnippets={userSnippets}
       />)
       : <LoginButton onClick={this.onLoginClick} />;
     const titleElement = (
@@ -225,32 +231,40 @@ export class CodesplainAppBar extends Component {
 }
 
 CodesplainAppBar.propTypes = {
-  hasUnsavedChanges: PropTypes.bool.isRequired,
-  userSnippets: CustomPropTypes.snippets,
-  username: PropTypes.string.isRequired,
-  token: PropTypes.string,
   avatarURL: PropTypes.string,
+  hasUnsavedChanges: PropTypes.bool.isRequired,
+  orgSnippets: CustomPropTypes.orgSnippets,
+  token: PropTypes.string,
+  username: PropTypes.string,
+  userSnippets: CustomPropTypes.snippets,
 };
 
 CodesplainAppBar.defaultProps = {
-  userSnippets: {},
-  token: '',
   avatarURL: '',
+  orgSnippets: {},
+  token: '',
+  username: '',
+  userSnippets: {},
 };
 
 const mapStateToProps = (state) => {
   const {
     app,
+    app: {
+      hasUnsavedChanges,
+    },
     user: {
       avatarURL,
-      userSnippets,
-      username,
+      orgSnippets,
       token,
+      username,
+      userSnippets,
     },
   } = state;
   return {
-    hasUnsavedChanges: app.hasUnsavedChanges,
+    hasUnsavedChanges,
     appState: app,
+    orgSnippets,
     userSnippets,
     username,
     token,
