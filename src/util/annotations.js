@@ -1,10 +1,10 @@
 import _ from 'lodash';
 
 export const hasPreviousAnnotation = (annotatedLines, lineNumber) =>
-  _.head(annotatedLines) !== lineNumber;
+  annotatedLines.includes(lineNumber) && _.head(annotatedLines) !== lineNumber;
 
 export const hasNextAnnotation = (annotatedLines, lineNumber) =>
-  _.last(annotatedLines) !== lineNumber;
+  annotatedLines.includes(lineNumber) && _.last(annotatedLines) !== lineNumber;
 
 export const getAnnotatedLines = annotations =>
   _.sortBy(_.keys(annotations).map(key => Number(key)));
