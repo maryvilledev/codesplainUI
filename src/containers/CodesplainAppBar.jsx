@@ -8,6 +8,10 @@ import {
 import { withRouter } from 'react-router';
 import cookie from 'react-cookie';
 
+
+import { setGists } from '../actions/gists';
+import { fetchGists } from '../util/requests';
+
 import {
   addOrg,
   addOrganizations,
@@ -92,6 +96,8 @@ export class CodesplainAppBar extends Component {
           // Add user's username to orgs list, and select it as default
           dispatch(addOrg(username));
           dispatch(switchOrg(username));
+          fetchGists(tokenCookie)
+            .then(gists => dispatch(setGists(gists)));
           return dispatch(fetchSnippetLists());
         })
         .catch(() => {
@@ -187,7 +193,7 @@ export class CodesplainAppBar extends Component {
       />,
     ];
 
-    const { avatarURL, orgSnippets, username, userSnippets } = this.props;
+    const { avatarURL, orgSnippets, username, userSnippets, gists } = this.props;
     const { isDialogOpen, isLoggedIn } = this.state;
     const rightElement = isLoggedIn ?
       (<AppMenu
@@ -207,6 +213,8 @@ export class CodesplainAppBar extends Component {
         Codesplain
       </span>
     );
+
+    console.log(gists);
 
     return (
       <div>
@@ -260,6 +268,7 @@ const mapStateToProps = (state) => {
       username,
       userSnippets,
     },
+    gists,
   } = state;
   return {
     hasUnsavedChanges,
@@ -269,6 +278,7 @@ const mapStateToProps = (state) => {
     username,
     token,
     avatarURL,
+    gists,
   };
 };
 
