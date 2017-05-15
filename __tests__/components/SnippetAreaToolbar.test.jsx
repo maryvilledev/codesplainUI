@@ -7,6 +7,7 @@ import SnippetAreaToolbar from '../../src/components/SnippetAreaToolbar';
 
 const defaultProps = {
   canEdit: true,
+  deleteEnabled: true,
   language: 'python',
   onLanguageChange: jest.fn(),
   onLockClick: jest.fn(),

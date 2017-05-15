@@ -245,7 +245,7 @@ export class SnippetArea extends React.Component {
     const markedLines = Object.keys(annotations).map(key => Number(key));
     // Delete button is enabled only when user is logged in, owns snippet,
     // and is not viewing a new snippet
-    const deleteEnabled = snippetKey && canEdit && username;
+    const deleteEnabled = Boolean(snippetKey && canEdit && username);
 
     return (
       <Card

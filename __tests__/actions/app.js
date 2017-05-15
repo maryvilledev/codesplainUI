@@ -253,46 +253,44 @@ describe('Actions: App', () => {
           },
         });
         return store.dispatch(actions.deleteSnippet(snippetKey))
-          .then(() => {
+          .catch(() => {
             expect(store.getActions()).toMatchSnapshot();
           });
       });
     });
     describe('saveExisting()', () => {
-      it('description', () => {
-        it('dispatches SAVE_SUCCEEDED if saved', () => {
-          moxios.wait(() => {
-            const request = moxios.requests.mostRecent();
-            request.respondWith({
-              status: 200,
-              response: { status: '200' },
-            });
+      it('dispatches SAVE_SUCCEEDED if saved', () => {
+        moxios.wait(() => {
+          const request = moxios.requests.mostRecent();
+          request.respondWith({
+            status: 200,
+            response: { status: '200' },
           });
-          const store = mockStore({
-            app: {},
-            user: { token: '', username: '' },
-          });
-          return store.dispatch(actions.saveExisting())
-            .then(() => { // return of async actions
-              expect(store.getActions()).toMatchSnapshot();
-            });
         });
-        it('dispatches SAVE_FAILED if save failed', () => {
-          moxios.wait(() => {
-            const request = moxios.requests.mostRecent();
-            request.respondWith({
-              status: 400,
-            });
-          });
-          const store = mockStore({
-            app: {},
-            user: { token: '', username: '' },
-          });
-          return store.dispatch(actions.saveExisting())
-            .then(() => { // return of async actions
-              expect(store.getActions()).toMatchSnapshot();
-            });
+        const store = mockStore({
+          app: {},
+          user: { token: '', username: '' },
         });
+        return store.dispatch(actions.saveExisting())
+          .then(() => { // return of async actions
+            expect(store.getActions()).toMatchSnapshot();
+          });
+      });
+      it('dispatches SAVE_FAILED if save failed', () => {
+        moxios.wait(() => {
+          const request = moxios.requests.mostRecent();
+          request.respondWith({
+            status: 400,
+          });
+        });
+        const store = mockStore({
+          app: {},
+          user: { token: '', username: '' },
+        });
+        return store.dispatch(actions.saveExisting())
+          .then(() => { // return of async actions
+            expect(store.getActions()).toMatchSnapshot();
+          });
       });
     });
   });
