@@ -53,6 +53,7 @@ export class Annotations extends React.Component {
       },
     } = nextProps;
     const nextAnnotatedLines = getAnnotatedLines(annotations);
+    console.log(nextAnnotatedLines);
     this.setState({
       hasProceedingAnnotation: hasNextAnnotation(nextAnnotatedLines, lineNumber),
       hasPreceedingAnnotation: hasPreviousAnnotation(nextAnnotatedLines, lineNumber),
@@ -137,6 +138,8 @@ export class Annotations extends React.Component {
       hasProceedingAnnotation,
       hasPreceedingAnnotation,
     } = this.state;
+
+    console.log(hasPreceedingAnnotation, hasProceedingAnnotation);
 
     if (!isDisplayingAnnotation) {
       const prompt = readOnly ?

@@ -2,7 +2,7 @@ exports[`<AnnotationPanel /> snapshots matches snapshot 1`] = `
 <div>
   <IconButton
     disableTouchRipple={false}
-    disabled={false}
+    disabled={true}
     iconStyle={Object {}}
     id="previous-annotation"
     onTouchTap={[Function]}
@@ -13,7 +13,7 @@ exports[`<AnnotationPanel /> snapshots matches snapshot 1`] = `
   </IconButton>
   <IconButton
     disableTouchRipple={false}
-    disabled={false}
+    disabled={true}
     iconStyle={Object {}}
     id="next-annotation"
     onTouchTap={[Function]}
