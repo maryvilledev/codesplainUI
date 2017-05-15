@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react';
 
 import AnnotationDisplay from './AnnotationDisplay';
 import AnnotationEditor from './AnnotationEditor';
-import AnnotationPaginator from './buttons/AnnotationPaginator';
 import LineSnippet from './LineSnippet';
 
 const style = {
@@ -49,10 +48,6 @@ class AnnotationPanel extends React.Component {
     const {
       annotation,
       closeAnnotation,
-      getNextAnnotation,
-      getPreviousAnnotation,
-      hasNextAnnotation,
-      hasPrevAnnotation,
       lineAnnotated: {
         lineNumber,
         lineText,
@@ -61,13 +56,6 @@ class AnnotationPanel extends React.Component {
     const { isEditing } = this.state;
     return (
       <div style={style.container}>
-        { isEditing ? null :
-        <AnnotationPaginator
-          getNextAnnotation={getNextAnnotation}
-          getPreviousAnnotation={getPreviousAnnotation}
-          hasPrevAnnotation={hasPrevAnnotation}
-          hasNextAnnotation={hasNextAnnotation}
-        />}
         <LineSnippet
           lineNumber={lineNumber + 1}
           value={lineText}
@@ -93,10 +81,6 @@ AnnotationPanel.propTypes = {
   annotation: PropTypes.string.isRequired,
   closeAnnotation: PropTypes.func.isRequired,
   saveAnnotation: PropTypes.func.isRequired,
-  getNextAnnotation: PropTypes.func.isRequired,
-  getPreviousAnnotation: PropTypes.func.isRequired,
-  hasNextAnnotation: PropTypes.bool.isRequired,
-  hasPrevAnnotation: PropTypes.bool.isRequired,
   lineAnnotated: PropTypes.shape({
     lineNumber: PropTypes.number,
     lineText: PropTypes.string,

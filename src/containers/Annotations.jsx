@@ -159,10 +159,10 @@ export class Annotations extends React.Component {
               <h2 style={styles.headerItem}>Annotation</h2>
               <AnnotationPaginator
                 style={styles.headerItem}
-                getNextAnnotation={getNextAnnotation}
-                getPreviousAnnotation={getPreviousAnnotation}
+                getNextAnnotation={this.getNextAnnotation}
+                getPreviousAnnotation={this.getPreviousAnnotation}
                 hasPrevAnnotation={hasPreceedingAnnotation}
-                hasNextAnnotation={hasPreceedingAnnotation}
+                hasNextAnnotation={hasProceedingAnnotation}
               />
             </div>
           }
@@ -172,10 +172,6 @@ export class Annotations extends React.Component {
           lineAnnotated={lineAnnotated}
           saveAnnotation={this.handleSaveAnnotation}
           closeAnnotation={this.handleCloseAnnotation}
-          getNextAnnotation={this.getNextAnnotation}
-          getPreviousAnnotation={this.getPreviousAnnotation}
-          hasPrevAnnotation={hasPreceedingAnnotation}
-          hasNextAnnotation={hasProceedingAnnotation}
         />
       </Card>
     );
