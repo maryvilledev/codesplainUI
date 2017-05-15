@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 
 import AnnotationDisplay from './AnnotationDisplay';
 import AnnotationEditor from './AnnotationEditor';
+import AnnotationPaginator from './AnnotationPaginator';
 import LineSnippet from './LineSnippet';
 
 const style = {
@@ -70,15 +71,20 @@ class AnnotationPanel extends React.Component {
             closeAnnotation={closeAnnotation}
             saveAnnotation={this.handleSaveAnnotation}
           /> :
-          <AnnotationDisplay
-            annotation={annotation}
-            closeAnnotation={closeAnnotation}
-            editAnnotation={this.toggleEditState}
-            getNextAnnotation={getNextAnnotation}
-            getPreviousAnnotation={getPreviousAnnotation}
-            hasPrevAnnotation={hasPrevAnnotation}
-            hasNextAnnotation={hasNextAnnotation}
-          />
+          <div>
+            <AnnotationDisplay
+              annotation={annotation}
+              closeAnnotation={closeAnnotation}
+              editAnnotation={this.toggleEditState}
+            />
+            <AnnotationPaginator
+              getNextAnnotation={getNextAnnotation}
+              getPreviousAnnotation={getPreviousAnnotation}
+              hasPrevAnnotation={hasPrevAnnotation}
+              hasNextAnnotation={hasNextAnnotation}
+            />
+          </div>
+
         }
       </div>
     );
