@@ -4,14 +4,14 @@ import Previous from 'material-ui/svg-icons/navigation/arrow-back';
 import Next from 'material-ui/svg-icons/navigation/arrow-forward';
 
 const AnnotationPaginator = ({ hasNextAnnotation, getNextAnnotation,
-  hasPrevAnnotation, getPreviousAnnotation }) => (
-    <div>
+  hasPrevAnnotation, getPreviousAnnotation, style }) => (
+    <div style={style}>
       <IconButton
         disabled={hasPrevAnnotation}
         id="previous-annotation"
         onTouchTap={getPreviousAnnotation}
         tooltip="Previous Annotation"
-        tooltipPosition="top"
+        tooltipPosition="top-right"
         touch
       >
         <Previous />
@@ -21,7 +21,7 @@ const AnnotationPaginator = ({ hasNextAnnotation, getNextAnnotation,
         id="next-annotation"
         onTouchTap={getNextAnnotation}
         tooltip="Next Annotation"
-        tooltipPosition="top"
+        tooltipPosition="top-right"
         touch
       >
         <Next />
