@@ -34,6 +34,7 @@ describe('<SnippetArea />', () => {
   });
   const wrapper = shallow(
     <SnippetArea
+      snippetKey="foo_bar"
       dispatch={mockDispatch}
       annotations={mockAnnotations}
       snippet={mockSnippet}

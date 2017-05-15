@@ -70,7 +70,12 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is no
           "flex": "1 1 auto",
         }
       } />
-    <div>
+    <div
+      style={
+        Object {
+          "display": "inline-flex",
+        }
+      }>
       <LockButton
         onClick={[Function]}
         readOnly={false}
@@ -92,6 +97,14 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is no
           ]
         }
         selectedOrg="galactic-federation"
+        style={
+          Object {
+            "flex": "1 1 auto",
+          }
+        } />
+      <DeleteButton
+        isEnabled={true}
+        onClick={[Function]}
         style={
           Object {
             "flex": "1 1 auto",
@@ -174,7 +187,12 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is re
           "flex": "1 1 auto",
         }
       } />
-    <div>
+    <div
+      style={
+        Object {
+          "display": "inline-flex",
+        }
+      }>
       <LockButton
         onClick={[Function]}
         readOnly={true}
@@ -196,6 +214,14 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is re
           ]
         }
         selectedOrg="galactic-federation"
+        style={
+          Object {
+            "flex": "1 1 auto",
+          }
+        } />
+      <DeleteButton
+        isEnabled={true}
+        onClick={[Function]}
         style={
           Object {
             "flex": "1 1 auto",

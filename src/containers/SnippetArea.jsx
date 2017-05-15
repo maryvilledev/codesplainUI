@@ -12,12 +12,14 @@ import { openAnnotationPanel } from '../actions/annotation';
 import {
   parseSnippet,
   saveNew,
+  resetState,
   saveExisting,
   setSnippetContents,
   setSnippetKey,
   setSnippetLanguage,
   setSnippetTitle,
   toggleEditState,
+  deleteSnippet,
 } from '../actions/app';
 import { addNotification } from '../actions/notifications';
 import { loadParser } from '../actions/parser';
@@ -73,6 +75,7 @@ export class SnippetArea extends React.Component {
     this.handleTitleChanged = this.handleTitleChanged.bind(this);
     this.handleToggleReadOnly = this.handleToggleReadOnly.bind(this);
     this.handleOrgChanged = this.handleOrgChanged.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   componentDidMount() {
@@ -204,6 +207,16 @@ export class SnippetArea extends React.Component {
       });
   }
 
+  handleDelete() {
+    const { dispatch, snippetKey, router } = this.props;
+    dispatch(deleteSnippet(snippetKey))
+      .then(() => {
+        dispatch(resetState());
+        dispatch(updateUserSnippets());
+        router.push('/'); // TODO: Test that does not redirect delete fails
+      });
+  }
+
   handleOrgChanged(org) {
     const { dispatch } = this.props;
     dispatch(switchOrg(org));
@@ -225,6 +238,7 @@ export class SnippetArea extends React.Component {
       errors,
       readOnly,
       selectedOrg,
+      snippetKey,
       snippet,
       snippetLanguage,
       snippetTitle,
@@ -232,8 +246,11 @@ export class SnippetArea extends React.Component {
       author,
     } = this.props;
     const { avatarUrl } = this.state;
-
     const markedLines = Object.keys(annotations).map(key => Number(key));
+    // Delete button is enabled only when user is logged in, owns snippet,
+    // and is not viewing a new snippet
+    const deleteEnabled = Boolean(snippetKey && canEdit && username);
+
     return (
       <Card
         id="app-body-snippet-area"
@@ -242,8 +259,10 @@ export class SnippetArea extends React.Component {
       >
         <CardText style={styles.snippetAreaCardText}>
           <SnippetAreaToolbar
-            canSave={canEdit}
+            canEdit={canEdit}
             language={snippetLanguage}
+            onDeleteClick={this.handleDelete}
+            deleteEnabled={deleteEnabled}
             onLanguageChange={this.handleLanguageChanged}
             onLockClick={this.handleLock}
             onOrgChanged={this.handleOrgChanged}
@@ -288,6 +307,7 @@ SnippetArea.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   snippet: PropTypes.string.isRequired,
   snippetTitle: PropTypes.string.isRequired,
+  snippetKey: PropTypes.string.isRequired,
   errors: CustomPropTypes.errors,
   snippetLanguage: PropTypes.string.isRequired,
   orgs: CustomPropTypes.orgs.isRequired,
@@ -319,6 +339,7 @@ const mapStateToProps = (state) => {
       readOnly,
       snippet,
       snippetTitle,
+      snippetKey,
     },
     permissions: {
       canEdit,
@@ -342,6 +363,7 @@ const mapStateToProps = (state) => {
     readOnly,
     snippet,
     snippetTitle,
+    snippetKey,
     errors,
     orgs,
     selectedOrg,

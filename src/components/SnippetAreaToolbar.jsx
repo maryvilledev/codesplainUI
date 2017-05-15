@@ -7,6 +7,7 @@ import ReactTooltip from 'react-tooltip';
 
 import LanguageSelector from './LanguageSelector';
 import LockButton from './buttons/LockButton';
+import DeleteButton from './buttons/DeleteButton';
 import SaveMenu from './menus/SaveMenu';
 import CustomPropTypes from '../util/custom-prop-types';
 
@@ -19,7 +20,10 @@ const styles = {
     margin: '0',
     padding: '0',
   },
-  buttons: {
+  buttonsContainer: {
+    display: 'inline-flex',
+  },
+  button: {
     flex: '1 1 auto',
   },
   toolbarField: {
@@ -45,15 +49,17 @@ here, because it does not reflow correctly when the screen is resized.
 */
 const SnippetAreaToolbar = (props) => {
   const {
-    canSave,
+    canEdit,
     language,
     onLanguageChange,
     onLockClick,
     onSaveAsClick,
     onSaveClick,
+    onDeleteClick,
     onTitleChange,
     onOrgChanged,
     readOnly,
+    deleteEnabled,
     saveEnabled,
     title,
     orgs,
@@ -99,22 +105,27 @@ const SnippetAreaToolbar = (props) => {
           onChange={onLanguageChange}
           style={styles.toolbarField}
         />
-        <div>
+        <div style={styles.buttonsContainer}>
           <LockButton
             onClick={onLockClick}
             readOnly={readOnly}
-            style={styles.buttons}
+            style={styles.button}
           />
           <SaveMenu
-            canSave={canSave}
+            canSave={canEdit}
             enabled={saveEnabled}
             id="saveMenu"
             onSaveAsClick={onSaveAsClick}
             onSaveClick={onSaveClick}
-            style={styles.buttons}
+            style={styles.button}
             orgs={orgs}
             onOrgChanged={onOrgChanged}
             selectedOrg={selectedOrg}
+          />
+          <DeleteButton
+            style={styles.button}
+            isEnabled={deleteEnabled}
+            onClick={onDeleteClick}
           />
         </div>
       </div>
@@ -123,12 +134,14 @@ const SnippetAreaToolbar = (props) => {
 };
 
 SnippetAreaToolbar.propTypes = {
-  canSave: PropTypes.bool.isRequired,
+  deleteEnabled: PropTypes.bool.isRequired,
+  canEdit: PropTypes.bool.isRequired,
   language: PropTypes.string.isRequired,
   onLanguageChange: PropTypes.func.isRequired,
   onLockClick: PropTypes.func.isRequired,
   onSaveAsClick: PropTypes.func.isRequired,
   onSaveClick: PropTypes.func.isRequired,
+  onDeleteClick: PropTypes.func.isRequired,
   onTitleChange: PropTypes.func.isRequired,
   onOrgChanged: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
