@@ -5,20 +5,18 @@ exports[`<AnnotationPanel /> snapshot tests matches snapshot when an annotation 
       "padding": "3%",
     }
   }>
+  <AnnotationPaginator
+    getNextAnnotation={[Function]}
+    getPreviousAnnotation={[Function]}
+    hasNextAnnotation={false}
+    hasPrevAnnotation={false} />
   <LineSnippet
     lineNumber={1}
     value="You don\'t know me!" />
-  <div>
-    <AnnotationDisplay
-      annotation="Wubba lubba dub dub!"
-      closeAnnotation={[Function]}
-      editAnnotation={[Function]} />
-    <AnnotationPaginator
-      getNextAnnotation={[Function]}
-      getPreviousAnnotation={[Function]}
-      hasNextAnnotation={false}
-      hasPrevAnnotation={false} />
-  </div>
+  <AnnotationDisplay
+    annotation="Wubba lubba dub dub!"
+    closeAnnotation={[Function]}
+    editAnnotation={[Function]} />
 </div>
 `;
 

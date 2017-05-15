@@ -11,6 +11,7 @@ const AnnotationPaginator = ({ hasNextAnnotation, getNextAnnotation,
         id="previous-annotation"
         onTouchTap={getPreviousAnnotation}
         tooltip="Previous Annotation"
+        tooltipPosition="top"
         touch
       >
         <Previous />
@@ -20,6 +21,7 @@ const AnnotationPaginator = ({ hasNextAnnotation, getNextAnnotation,
         id="next-annotation"
         onTouchTap={getNextAnnotation}
         tooltip="Next Annotation"
+        tooltipPosition="top"
         touch
       >
         <Next />

@@ -7,7 +7,7 @@ exports[`<AnnotationPanel /> snapshots matches snapshot 1`] = `
     id="previous-annotation"
     onTouchTap={[Function]}
     tooltip="Previous Annotation"
-    tooltipPosition="bottom-center"
+    tooltipPosition="top"
     touch={true}>
     <NavigationArrowBack />
   </IconButton>
@@ -18,7 +18,7 @@ exports[`<AnnotationPanel /> snapshots matches snapshot 1`] = `
     id="next-annotation"
     onTouchTap={[Function]}
     tooltip="Next Annotation"
-    tooltipPosition="bottom-center"
+    tooltipPosition="top"
     touch={true}>
     <NavigationArrowForward />
   </IconButton>

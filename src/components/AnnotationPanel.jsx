@@ -61,6 +61,13 @@ class AnnotationPanel extends React.Component {
     const { isEditing } = this.state;
     return (
       <div style={style.container}>
+        { isEditing ? null :
+        <AnnotationPaginator
+          getNextAnnotation={getNextAnnotation}
+          getPreviousAnnotation={getPreviousAnnotation}
+          hasPrevAnnotation={hasPrevAnnotation}
+          hasNextAnnotation={hasNextAnnotation}
+        />}
         <LineSnippet
           lineNumber={lineNumber + 1}
           value={lineText}
@@ -71,20 +78,11 @@ class AnnotationPanel extends React.Component {
             closeAnnotation={closeAnnotation}
             saveAnnotation={this.handleSaveAnnotation}
           /> :
-          <div>
-            <AnnotationDisplay
-              annotation={annotation}
-              closeAnnotation={closeAnnotation}
-              editAnnotation={this.toggleEditState}
-            />
-            <AnnotationPaginator
-              getNextAnnotation={getNextAnnotation}
-              getPreviousAnnotation={getPreviousAnnotation}
-              hasPrevAnnotation={hasPrevAnnotation}
-              hasNextAnnotation={hasNextAnnotation}
-            />
-          </div>
-
+          <AnnotationDisplay
+            annotation={annotation}
+            closeAnnotation={closeAnnotation}
+            editAnnotation={this.toggleEditState}
+          />
         }
       </div>
     );
