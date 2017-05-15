@@ -49,4 +49,23 @@ describe('util: requests', () => {
       expect(reqUtils.sanitizeSnippetList(snippetList)).toEqual(expected);
     });
   });
+  describe('gistReducer', () => {
+    it('parses the gist', () => {
+      const gist = {
+        files: {
+          'meeseeks.py': {
+            raw_url: 'www.rickandmorty100years.com',
+          },
+          'ndestroy.java': {
+            raw_url: 'galacticfed.gov',
+          },
+        },
+      };
+      const expected = [
+        { name: 'meeseeks.py', url: 'www.rickandmorty100years.com' },
+        { name: 'ndestroy.java', url: 'galacticfed.gov' },
+      ];
+      expect(reqUtils.gistReducer([], gist)).toEqual(expected);
+    });
+  });
 });
