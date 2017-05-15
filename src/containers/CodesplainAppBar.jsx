@@ -21,6 +21,7 @@ import {
 } from '../actions/user';
 import { resetState } from '../actions/app';
 import { closeAnnotationPanel } from '../actions/annotation';
+import { setAuthor } from '../actions/permissions';
 import LoginButton from '../components/buttons/LoginButton';
 import AppMenu from '../components/menus/AppMenu';
 import CustomPropTypes from '../util/custom-prop-types';
@@ -154,6 +155,7 @@ export class CodesplainAppBar extends Component {
 
     // Reset state
     dispatch(resetState());
+    dispatch(setAuthor(''));
     // Close the annotation panel
     dispatch(closeAnnotationPanel());
     // If the user is not already at the home page, redirect them to it
