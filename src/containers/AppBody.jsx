@@ -9,6 +9,7 @@ import SnippetArea from './SnippetArea';
 import {
   loadSnippet,
   restoreState,
+  setSnippetKey,
 } from '../actions/app';
 import { setPermissions, setAuthor } from '../actions/permissions';
 import { switchOrg } from '../actions/user';
@@ -96,13 +97,10 @@ export class AppBody extends Component {
       .then((res) => {
         // Normalize the app state received from S3
         const appState = setDefaults(removeDeprecatedFiltersFromState(res.data));
-        // Snippet may not have a S3 key value saved; set it to the URL's id
-        // param if the state object is lacking it
-        if (!appState.snippetKey) {
-          appState.snippetKey = snippetKey;
-        }
+
         // Restore the application's state
         dispatch(restoreState(appState));
+        dispatch(setSnippetKey(snippetKey));
         this.updatePermissions();
 
         // Reroute if using legacy url
