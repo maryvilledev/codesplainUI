@@ -81,15 +81,28 @@ export class SnippetArea extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { author } = this.props;
+    const {
+      author,
+      avatarUrl: loggedInUserAvatarUrl,
+      username: loggedInUser,
+    } = this.props;
     const token = cookie.load('token');
 
     if (!nextProps.author || !token) {
       this.setState({ avatarUrl: '' });
     }
     if (author !== nextProps.author) {
+      // The URL to the user's avatar is already in the store, so if the snippet
+      // is owned by the current user, then use the URL in the store instead
+      // of pinging Github's API for it.
+      if (loggedInUser === nextProps.author) {
+        this.setState({
+          avatarUrl: loggedInUserAvatarUrl,
+        });
+        return;
+      }
       fetchUserAvatar(nextProps.author, token)
-        .then(avatarUrl => this.setState({ avatarUrl }));
+        .then((avatarUrl) => { this.setState({ avatarUrl }); });
     }
   }
 
@@ -285,6 +298,7 @@ export class SnippetArea extends React.Component {
 SnippetArea.propTypes = {
   annotations: CustomPropTypes.annotations.isRequired,
   author: PropTypes.string,
+  avatarUrl: PropTypes.string,
   canEdit: PropTypes.bool.isRequired,
   errors: CustomPropTypes.errors,
   filters: CustomPropTypes.filters.isRequired,
@@ -300,6 +314,7 @@ SnippetArea.propTypes = {
 
 SnippetArea.defaultProps = {
   author: '',
+  avatarUrl: '',
   errors: [],
   openLine: -1,
   selectedOrg: '',
@@ -329,6 +344,7 @@ const mapStateToProps = (state) => {
       errors,
     },
     user: {
+      avatarUrl,
       orgs,
       selectedOrg,
       username,
@@ -338,6 +354,7 @@ const mapStateToProps = (state) => {
     annotations,
     AST,
     author,
+    avatarUrl,
     canEdit,
     errors,
     filters,
