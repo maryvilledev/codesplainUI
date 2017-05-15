@@ -1,0 +1,11 @@
+exports[`util: requests stripState returns an object with correct keys for a serialized state 1`] = `
+Object {
+  "AST": Object {},
+  "annotations": Object {},
+  "filters": Object {},
+  "readOnly": false,
+  "snippet": "",
+  "snippetLanguage": "python3",
+  "snippetTitle": "",
+}
+`;

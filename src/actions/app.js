@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import { addNotification, closeNotification } from './notifications';
-import { makeSaveEndpointUrl } from '../util/requests';
+import { makeSaveEndpointUrl, stripState } from '../util/requests';
 
 export const RESET_STATE = 'RESET_STATE';
 export const EDIT_ANNOTATION = 'EDIT_ANNOTATION';
@@ -103,14 +103,19 @@ export const saveNew = org => (dispatch, getState) => {
   } = getState();
   // Construct the necessary request objects
   const reqBody = JSON.stringify(appState);
-  const reqHeaders = {
-    headers: {
-      Authorization: token,
-    },
+  const headers = {
+    Authorization: token,
   };
+  const transformRequest = [
+    (data) => {
+      const dataObj = JSON.parse(data);
+      return JSON.stringify(stripState(dataObj));
+    },
+  ];
+  const config = { headers, transformRequest };
   dispatch(addNotification('Saving...'));
     // Save the new snippet
-  return axios.post(makeSaveEndpointUrl(org), reqBody, reqHeaders)
+  return axios.post(makeSaveEndpointUrl(org), reqBody, config)
       .then((res) => {
         // Remove the 'saving...' notification
         dispatch(closeNotification());
@@ -140,14 +145,19 @@ export const saveExisting = () => (dispatch, getState) => {
 
     // Construct the necessary request objects
   const reqBody = JSON.stringify(appState);
-  const reqHeaders = {
-    headers: {
-      Authorization: token,
-    },
+  const headers = {
+    Authorization: token,
   };
+  const transformRequest = [
+    (data) => {
+      const dataObj = JSON.parse(data);
+      return JSON.stringify(stripState(dataObj));
+    },
+  ];
+  const config = { headers, transformRequest };
   dispatch(addNotification('Saving...'));
     // Update the snippet
-  return axios.put(makeSaveEndpointUrl(selectedOrg, key), reqBody, reqHeaders)
+  return axios.put(makeSaveEndpointUrl(selectedOrg, key), reqBody, config)
       .then(() => {
         // Remove the 'saving...' notification
         dispatch(closeNotification());

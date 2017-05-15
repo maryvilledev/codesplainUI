@@ -54,3 +54,28 @@ export const fetchUserAvatar = (user, token) => {
   const reqUrl = makeUserUrl(user);
   return axios.get(reqUrl, reqHeaders).then(({ data }) => data.avatar_url);
 };
+
+/*
+Returns new object containing only the fields from the given state object
+that we want to serialize.
+*/
+export const stripState = (state) => {
+  const {
+    annotations,
+    AST,
+    filters,
+    snippetLanguage,
+    readOnly,
+    snippetTitle,
+    snippet,
+  } = state;
+  return {
+    annotations,
+    AST,
+    filters,
+    snippetLanguage,
+    readOnly,
+    snippetTitle,
+    snippet,
+  };
+};
