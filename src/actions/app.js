@@ -180,5 +180,11 @@ export const loadSnippet = (username, snippetKey) => (dispatch, getState) => {
     method: 'GET',
     url: makeSaveEndpointUrl(username, snippetKey),
     headers: reqHeaders,
+    transformResponse: [
+      (data) => {
+        const dataObj = JSON.parse(data);
+        return stripState(dataObj);
+      },
+    ],
   });
 };
