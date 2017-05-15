@@ -208,6 +208,7 @@ export class SnippetArea extends React.Component {
     dispatch(deleteSnippet(snippetKey))
       .then(() => {
         dispatch(resetState());
+        dispatch(updateUserSnippets());
         router.push('/'); // TODO: Test that does not redirect delete fails
       });
   }
