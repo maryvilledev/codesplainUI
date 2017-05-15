@@ -53,7 +53,6 @@ export class Annotations extends React.Component {
       },
     } = nextProps;
     const nextAnnotatedLines = getAnnotatedLines(annotations);
-    console.log(nextAnnotatedLines);
     this.setState({
       hasProceedingAnnotation: hasNextAnnotation(nextAnnotatedLines, lineNumber),
       hasPreceedingAnnotation: hasPreviousAnnotation(nextAnnotatedLines, lineNumber),
