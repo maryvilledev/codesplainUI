@@ -12,6 +12,7 @@ import { openAnnotationPanel } from '../actions/annotation';
 import {
   parseSnippet,
   saveNew,
+  resetState,
   saveExisting,
   setSnippetContents,
   setSnippetKey,
@@ -206,6 +207,7 @@ export class SnippetArea extends React.Component {
     const { dispatch, snippetKey, router } = this.props;
     dispatch(deleteSnippet(snippetKey))
       .then(() => {
+        dispatch(resetState());
         router.push('/'); // TODO: Test that does not redirect delete fails
       });
   }
