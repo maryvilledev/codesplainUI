@@ -203,6 +203,7 @@ export class CodesplainAppBar extends Component {
         orgSnippets={orgSnippets}
         username={username}
         userSnippets={userSnippets}
+        gists={gists}
       />)
       : <LoginButton onClick={this.onLoginClick} />;
     const titleElement = (
@@ -213,8 +214,6 @@ export class CodesplainAppBar extends Component {
         Codesplain
       </span>
     );
-
-    console.log(gists);
 
     return (
       <div>

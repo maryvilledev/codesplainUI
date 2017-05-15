@@ -11,6 +11,7 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
 import OrgSnippetsMenu from './OrgSnippetsMenu';
 import SnippetList from './SnippetList';
+import GistsMenu from './GistsMenu';
 import CustomPropTypes from '../../util/custom-prop-types';
 
 const styles = {
@@ -78,6 +79,7 @@ class AppMenu extends Component {
       orgSnippets,
       username,
       userSnippets,
+      gists,
     } = this.props;
     const {
       iconMenuOpen,
@@ -105,6 +107,10 @@ class AppMenu extends Component {
           <OrgSnippetsMenu
             onClick={this.handleSnippetSelected}
             orgSnippets={orgSnippets}
+          />
+          <GistsMenu
+            onClick={(name, url) => console.log(name, url)}
+            gists={gists}
           />
           <MenuItem
             onClick={onSignOut}
