@@ -40,6 +40,7 @@ const styles = {
     zIndex: 'auto',
   },
   cardContainer: {
+    paddingBottom: 0,
     height: 'inherit',
     display: 'inline-flex',
     flexFlow: 'column nowrap',

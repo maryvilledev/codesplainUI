@@ -14,12 +14,9 @@ import SnippetList from './SnippetList';
 import CustomPropTypes from '../../util/custom-prop-types';
 
 const styles = {
-  avatar: {
-    marginBottom: '1rem',
-  },
-  iconButtonElement: {
-    display: 'flex',
-    flexFlow: 'row nowrap',
+  iconButtonContainer: {
+    display: 'inline-flex',
+    alignItems: 'center',
   },
   iconMenu: {
     cursor: 'pointer',
@@ -31,7 +28,7 @@ const styles = {
 const makeAppMenuIcon = (avatarURL) => {
   if (avatarURL) {
     return (
-      <div>
+      <div style={styles.iconButtonContainer}>
         <Avatar
           size={30}
           src={avatarURL}
@@ -88,7 +85,6 @@ class AppMenu extends Component {
         <IconMenu
           anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
           iconButtonElement={makeAppMenuIcon(avatarURL)}
-          iconStyle={styles.iconButtonElement}
           onItemTouchTap={this.handleOnItemTouchTap}
           onRequestChange={this.handleOnRequestChange}
           open={iconMenuOpen}
