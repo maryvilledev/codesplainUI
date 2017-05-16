@@ -15,9 +15,7 @@ body {
 }
 
 .cm-s-codesplain {
-  flex-grow: 1;
-  flex-shrink: 1;
-  flex-basis: auto;
+  flex: 1 1 auto;
   height: 100%;
 }
 
@@ -28,9 +26,7 @@ body {
 }
 
 .ReactCodeMirror {
-  flex-grow: 3;
-  flex-shrink: 1;
-  flex-basis: auto;
+  flex: 3 1 auto;
   height: 80%;
 }
 
@@ -76,5 +72,6 @@ body {
 
   #app-body-snippet-area {
     max-width: 100%;
+    min-height: 50vh;
   }
 }
