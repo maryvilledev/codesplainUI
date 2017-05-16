@@ -80,6 +80,7 @@ class AppMenu extends Component {
       username,
       userSnippets,
       gists,
+      onImportGist,
     } = this.props;
     const {
       iconMenuOpen,
@@ -109,7 +110,7 @@ class AppMenu extends Component {
             orgSnippets={orgSnippets}
           />
           <GistsMenu
-            onClick={(name, url) => console.log(name, url)} // TODO
+            onClick={onImportGist}
             gists={gists}
           />
           <MenuItem
@@ -135,6 +136,7 @@ AppMenu.propTypes = {
       url: PropTypes.string,
     }),
   ),
+  onImportGist: PropTypes.func.isRequired,
 };
 
 AppMenu.defaultProps = {

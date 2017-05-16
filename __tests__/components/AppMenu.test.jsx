@@ -8,6 +8,7 @@ import AppMenu from '../../src/components/menus/AppMenu';
 const defaultProps = {
   avatarURL: 'https://wallykazam.com/whozit',
   onSignOut: jest.fn(),
+  onImportGist: jest.fn(),
   onSnippetSelected: jest.fn(),
   orgSnippets: {},
   username: 'username',

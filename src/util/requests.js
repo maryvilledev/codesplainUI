@@ -68,3 +68,6 @@ export const gistReducer = (list, gist) => {
 export const fetchGists = token =>
   axios.get(GIST_URL, githubHeaders(token)).then(({ data }) =>
     data.reduce(gistReducer, []));
+
+export const fetchGist = url =>
+  axios.get(url).then(({ data }) => data);

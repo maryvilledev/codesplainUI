@@ -10,7 +10,7 @@ import cookie from 'react-cookie';
 
 
 import { setGists } from '../actions/gists';
-import { fetchGists } from '../util/requests';
+import { fetchGists, fetchGist } from '../util/requests';
 
 import {
   addOrg,
@@ -23,7 +23,11 @@ import {
   setAvatarUrl,
   switchOrg,
 } from '../actions/user';
-import { resetState } from '../actions/app';
+import {
+  resetState,
+  setSnippetContents,
+  setSnippetTitle,
+ } from '../actions/app';
 import { closeAnnotationPanel } from '../actions/annotation';
 import LoginButton from '../components/buttons/LoginButton';
 import AppMenu from '../components/menus/AppMenu';
@@ -66,6 +70,7 @@ export class CodesplainAppBar extends Component {
     this.handleTitleTouchTap = this.handleTitleTouchTap.bind(this);
     this.onLoginClick = this.onLoginClick.bind(this);
     this.redirectToHomePage = this.redirectToHomePage.bind(this);
+    this.handleImportGist = this.handleImportGist.bind(this);
   }
 
   componentDidMount() {
@@ -179,6 +184,13 @@ export class CodesplainAppBar extends Component {
     this.redirectToHomePage();
   }
 
+  handleImportGist(name, url) {
+    const { dispatch } = this.props;
+    this.redirectToHomePage();
+    dispatch(setSnippetTitle(name));
+    fetchGist(url).then(contents => dispatch(setSnippetContents(contents)));
+  }
+
   render() {
     const actions = [
       <FlatButton
@@ -204,6 +216,7 @@ export class CodesplainAppBar extends Component {
         username={username}
         userSnippets={userSnippets}
         gists={gists}
+        onImportGist={this.handleImportGist}
       />)
       : <LoginButton onClick={this.onLoginClick} />;
     const titleElement = (
