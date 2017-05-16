@@ -130,12 +130,7 @@ AppMenu.propTypes = {
   orgSnippets: CustomPropTypes.orgSnippets.isRequired,
   username: PropTypes.string.isRequired,
   userSnippets: CustomPropTypes.snippets.isRequired,
-  gists: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string,
-      url: PropTypes.string,
-    }),
-  ),
+  gists: CustomPropTypes.gists,
   onImportGist: PropTypes.func.isRequired,
 };
 

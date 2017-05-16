@@ -3,6 +3,8 @@ import _ from 'lodash';
 import { MenuItem } from 'material-ui';
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 
+import CustomPropTypes from '../../util/custom-prop-types';
+
 const makeMenuItems = (gists, onClick) => {
   if (_.isEmpty(gists)) {
     return null;
@@ -38,25 +40,21 @@ class GistMenu extends Component {
     const { onClick, gists } = this.props;
     const { focusState } = this.state;
     const menuItems = makeMenuItems(gists, onClick);
-    return (<MenuItem
-      disabled={!menuItems}
-      focusState={focusState}
-      menuItems={menuItems}
-      onTouchTap={this.handleOnTouchTap}
-      primaryText="Import Gist"
-      rightIcon={<ArrowDropRight />}
-    />);
+    return (
+      <MenuItem
+        disabled={!menuItems}
+        focusState={focusState}
+        menuItems={menuItems}
+        onTouchTap={this.handleOnTouchTap}
+        primaryText="Import Gist"
+        rightIcon={<ArrowDropRight />}
+      />);
   }
 }
 
 GistMenu.propTypes = {
   onClick: PropTypes.func.isRequired,
-  gists: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string,
-      url: PropTypes.string,
-    }),
-  ),
+  gists: CustomPropTypes.gists,
 };
 
 GistMenu.defaultProps = {
