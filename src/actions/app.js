@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import { addNotification, closeNotification } from './notifications';
-import { makeSaveEndpointUrl, stripState } from '../util/requests';
+import { makeSaveEndpointUrl, normalizeState } from '../util/requests';
 
 export const RESET_STATE = 'RESET_STATE';
 export const EDIT_ANNOTATION = 'EDIT_ANNOTATION';
@@ -109,7 +109,7 @@ export const saveNew = org => (dispatch, getState) => {
   const transformRequest = [
     (data) => {
       const dataObj = JSON.parse(data);
-      return JSON.stringify(stripState(dataObj));
+      return JSON.stringify(normalizeState(dataObj));
     },
   ];
   const config = { headers, transformRequest };
@@ -151,7 +151,7 @@ export const saveExisting = () => (dispatch, getState) => {
   const transformRequest = [
     (data) => {
       const dataObj = JSON.parse(data);
-      return JSON.stringify(stripState(dataObj));
+      return JSON.stringify(normalizeState(dataObj));
     },
   ];
   const config = { headers, transformRequest };
@@ -183,7 +183,7 @@ export const loadSnippet = (username, snippetKey) => (dispatch, getState) => {
     transformResponse: [
       (data) => {
         const dataObj = JSON.parse(data);
-        return stripState(dataObj);
+        return normalizeState(dataObj);
       },
     ],
   });

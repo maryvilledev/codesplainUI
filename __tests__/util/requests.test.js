@@ -50,7 +50,7 @@ describe('util: requests', () => {
     });
   });
 
-  describe('stripState', () => {
+  describe('normalizeState', () => {
     it('returns an object with correct keys for a serialized state', () => {
       const state = {
         foobar: 'blah',
@@ -64,7 +64,7 @@ describe('util: requests', () => {
         snippetKey: '',
         snippetTitle: '',
       };
-      expect(reqUtils.stripState(state)).toMatchSnapshot();
+      expect(reqUtils.normalizeState(state)).toMatchSnapshot();
     });
   });
 });
