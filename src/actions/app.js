@@ -107,6 +107,7 @@ export const saveNew = org => (dispatch, getState) => {
   const headers = {
     Authorization: token,
   };
+  // `transformRequest` allows changes to the request data before it is sent to the server 
   const transformRequest = [
     (data) => {
       const dataObj = JSON.parse(data);
