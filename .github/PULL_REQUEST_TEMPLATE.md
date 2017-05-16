@@ -1,5 +1,3 @@
-<!--- Provide a general summary of your changes in the Title above -->
-
 ## Description
 <!--- Describe your changes in detail -->
 
@@ -12,5 +10,13 @@
 - [ ] My code follows the code style of this project.
 - [ ] I have added tests to cover my changes.
 - [ ] All new and existing tests passed.
+
+## Browsers
+<!-- Which browsers have you tested this on? -->
+- [ ] Chrome
+- [ ] Firefox
+- [ ] Safari
+- [ ] Mobile:
+- [ ] Other:
 
 ## Screenshots (if appropriate):
