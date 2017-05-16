@@ -43,7 +43,7 @@ class GistMenu extends Component {
       focusState={focusState}
       menuItems={menuItems}
       onTouchTap={this.handleOnTouchTap}
-      primaryText="Import Gist..."
+      primaryText="Import Gist"
       rightIcon={<ArrowDropRight />}
     />);
   }

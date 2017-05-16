@@ -30,7 +30,7 @@ exports[`<GistsMenu /> snapshot tests matches when gists are passed 1`] = `
     ]
   }
   onTouchTap={[Function]}
-  primaryText="Import Gist..."
+  primaryText="Import Gist"
   rightIcon={<NavigationArrowDropRight />} />
 `;
 
@@ -49,6 +49,6 @@ exports[`<GistsMenu /> snapshot tests matches when no snippets are passed 1`] = 
   insetChildren={false}
   menuItems={null}
   onTouchTap={[Function]}
-  primaryText="Import Gist..."
+  primaryText="Import Gist"
   rightIcon={<NavigationArrowDropRight />} />
 `;
