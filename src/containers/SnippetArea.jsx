@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import _ from 'lodash';
+import debounce from 'lodash/debounce';
 import {
   Card,
   CardText,
@@ -53,7 +53,7 @@ async function dispatchParseSnippet(snippet, dispatch) {
   dispatch(parseSnippet(snippet));
 }
 // Only fire the parse snippet action 400 millis after the last keydown
-const debouncedParseSnippetDispatch = _.debounce(dispatchParseSnippet, 400);
+const debouncedParseSnippetDispatch = debounce(dispatchParseSnippet, 400);
 
 export class SnippetArea extends React.Component {
   constructor(props) {

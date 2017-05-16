@@ -1,5 +1,5 @@
 import axios from 'axios';
-import _ from 'lodash';
+import isString from 'lodash/isString';
 
 const API_URL = process.env.REACT_APP_API_URL;
 const GITHUB_API_URL = 'https://api.github.com';
@@ -37,7 +37,7 @@ export const makeParserEndpointUrl = language =>
 // In case the snippet list is a string && !== "{}", it will still be parsed into
 // an Object; if the snippetList argument is an object, do nothing.
 export const sanitizeSnippetList = (snippetList) => {
-  if (_.isString(snippetList)) {
+  if (isString(snippetList)) {
     return JSON.parse(snippetList);
   }
   return snippetList;
