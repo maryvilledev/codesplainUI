@@ -33,6 +33,9 @@ Array [
     "payload": "Failed to delete snippet; please try again",
     "type": "ADD_NOTIFICATION",
   },
+  Object {
+    "type": "CLOSE_NOTIFICATION",
+  },
 ]
 `;
 

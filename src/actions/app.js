@@ -1,7 +1,8 @@
 import axios from 'axios';
-
+import { removeDeprecatedFiltersFromState } from '../util/codemirror-utils';
 import { addNotification, closeNotification } from './notifications';
 import { makeSaveEndpointUrl, stripState } from '../util/requests';
+import { setDefaults } from '../util/state-management';
 
 export const RESET_STATE = 'RESET_STATE';
 export const EDIT_ANNOTATION = 'EDIT_ANNOTATION';
@@ -198,6 +199,8 @@ export const deleteSnippet = snippetKey => (dispatch, getState) => {
     })
     .catch((err) => {
       dispatch(addNotification('Failed to delete snippet; please try again'));
+      // Remove error notification
+      dispatch(closeNotification());
       throw err;
     });
 };
@@ -214,7 +217,7 @@ export const loadSnippet = (username, snippetKey) => (dispatch, getState) => {
     transformResponse: [
       (data) => {
         const dataObj = JSON.parse(data);
-        return stripState(dataObj);
+        return setDefaults(removeDeprecatedFiltersFromState(stripState(dataObj)));
       },
     ],
   });

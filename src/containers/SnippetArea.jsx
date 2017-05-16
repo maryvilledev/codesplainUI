@@ -16,6 +16,7 @@ import {
   saveExisting,
   setSnippetContents,
   setSnippetKey,
+  setAuthor,
   setSnippetLanguage,
   setSnippetTitle,
   toggleEditState,
@@ -224,6 +225,7 @@ export class SnippetArea extends React.Component {
     dispatch(deleteSnippet(snippetKey))
       .then(() => {
         dispatch(resetState());
+        dispatch(setAuthor(''));
         dispatch(updateUserSnippets());
         dispatch(fetchSnippetLists()); // Update org snippet lists
         router.push('/'); // TODO: Test that does not redirect delete fails
