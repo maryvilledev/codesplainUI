@@ -60,6 +60,7 @@ exports[`<AppMenu /> snapshot tests matches snapshot of when user is logged in 1
       onClick={[Function]}
       orgSnippets={Object {}} />
     <GistMenu
+      gists={Array []}
       onClick={[Function]} />
     <MenuItem
       anchorOrigin={
@@ -141,6 +142,7 @@ exports[`<AppMenu /> snapshot tests matches snapshot of when user is not logged 
       onClick={[Function]}
       orgSnippets={Object {}} />
     <GistMenu
+      gists={Array []}
       onClick={[Function]} />
     <MenuItem
       anchorOrigin={
