@@ -244,6 +244,12 @@ CodesplainAppBar.propTypes = {
   token: PropTypes.string,
   username: PropTypes.string,
   userSnippets: CustomPropTypes.snippets,
+  gists: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      url: PropTypes.string,
+    }),
+  ),
 };
 
 CodesplainAppBar.defaultProps = {
@@ -252,6 +258,7 @@ CodesplainAppBar.defaultProps = {
   token: '',
   username: '',
   userSnippets: {},
+  gists: [],
 };
 
 const mapStateToProps = (state) => {
