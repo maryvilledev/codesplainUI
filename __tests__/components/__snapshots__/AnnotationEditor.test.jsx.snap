@@ -37,6 +37,7 @@ exports[`<AnnotationEditor /> matches snapshot 1`] = `
         "alignItems": "center",
         "display": "flex",
         "flexFlow": "row wrap",
+        "justifyContent": "space-between",
         "marginTop": "0.5rem",
       }
     }>
@@ -50,10 +51,7 @@ exports[`<AnnotationEditor /> matches snapshot 1`] = `
       secondary={true}
       style={
         Object {
-          "flexBasis": "auto",
-          "flexFlow": 1,
-          "flexShrink": 1,
-          "marginRight": "0.2rem",
+          "flex": "1 1",
         }
       } />
     <RaisedButton
@@ -66,9 +64,7 @@ exports[`<AnnotationEditor /> matches snapshot 1`] = `
       secondary={false}
       style={
         Object {
-          "flexBasis": "auto",
-          "flexFlow": 1,
-          "flexShrink": 1,
+          "flex": "1 1",
         }
       } />
     <a
@@ -76,10 +72,9 @@ exports[`<AnnotationEditor /> matches snapshot 1`] = `
       rel="noopener noreferrer"
       style={
         Object {
-          "flexBasis": "auto",
-          "flexFlow": 1,
-          "flexShrink": 1,
-          "paddingLeft": "1rem",
+          "display": "flex",
+          "flex": "1 1 auto",
+          "justifyContent": "center",
         }
       }
       target="_blank">
@@ -96,6 +91,7 @@ exports[`<AnnotationEditor /> matches snapshot 1`] = `
         style={
           Object {
             "color": "#d3d3d3",
+            "fontSize": "small",
           }
         }>
         Styling with Markdown is supported
