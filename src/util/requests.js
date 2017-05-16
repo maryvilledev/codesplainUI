@@ -60,8 +60,8 @@ export const fetchUserAvatar = (user, token) => {
 // Each gist contains a dict of filenames to file info. We need to iterate and get
 // the filenames and urls
 export const gistReducer = (list, gist) => {
-  _.forIn(gist.files, (value, key) =>
-    list.push({ name: key, url: value.raw_url }));
+  _.forIn(gist.files, ({ raw_url: url }, name) =>
+    list.push({ name, url }));
   return list;
 };
 
