@@ -109,7 +109,7 @@ class AppMenu extends Component {
             orgSnippets={orgSnippets}
           />
           <GistsMenu
-            onClick={(name, url) => console.log(name, url)}
+            onClick={(name, url) => console.log(name, url)} // TODO
             gists={gists}
           />
           <MenuItem

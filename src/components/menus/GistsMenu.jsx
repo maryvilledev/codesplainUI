@@ -49,4 +49,18 @@ class GistMenu extends Component {
   }
 }
 
+GistMenu.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  gists: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      url: PropTypes.string,
+    }),
+  ),
+};
+
+GistMenu.defaultProps = {
+  gists: [],
+};
+
 export default GistMenu;
