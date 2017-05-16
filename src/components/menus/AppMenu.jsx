@@ -9,10 +9,6 @@ import {
 import ArrowDropDown from 'material-ui/svg-icons/navigation/arrow-drop-down';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
-import OrgSnippetsMenu from './OrgSnippetsMenu';
-import SnippetList from './SnippetList';
-import CustomPropTypes from '../../util/custom-prop-types';
-
 const styles = {
   avatar: {
     marginBottom: '1rem',
@@ -75,9 +71,6 @@ class AppMenu extends Component {
     const {
       avatarURL,
       onSignOut,
-      orgSnippets,
-      username,
-      userSnippets,
     } = this.props;
     const {
       iconMenuOpen,
@@ -96,16 +89,6 @@ class AppMenu extends Component {
           targetOrigin={{ horizontal: 'right', vertical: 'top' }}
           useLayerForClickAway
         >
-          <SnippetList
-            onClick={this.handleSnippetSelected}
-            primaryText="My Snippets"
-            snippetOwner={username}
-            snippetsList={userSnippets}
-          />
-          <OrgSnippetsMenu
-            onClick={this.handleSnippetSelected}
-            orgSnippets={orgSnippets}
-          />
           <MenuItem
             onClick={onSignOut}
             primaryText="Sign out"
@@ -120,9 +103,6 @@ AppMenu.propTypes = {
   avatarURL: PropTypes.string,
   onSignOut: PropTypes.func.isRequired,
   onSnippetSelected: PropTypes.func.isRequired,
-  orgSnippets: CustomPropTypes.orgSnippets.isRequired,
-  username: PropTypes.string.isRequired,
-  userSnippets: CustomPropTypes.snippets.isRequired,
 };
 
 AppMenu.defaultProps = {

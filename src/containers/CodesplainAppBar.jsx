@@ -24,6 +24,7 @@ import { closeAnnotationPanel } from '../actions/annotation';
 import LoginButton from '../components/buttons/LoginButton';
 import AppMenu from '../components/menus/AppMenu';
 import CustomPropTypes from '../util/custom-prop-types';
+import SnippetMenu from '../components/menus/SnippetMenu';
 
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 const GITHUB_URL = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&scope=read:org`;
@@ -32,7 +33,7 @@ const styles = {
   appBar: {
     background: '#333333', // light black
   },
-  rightElement: {
+  appMenu: {
     marginTop: '16px',
   },
   title: {
@@ -189,7 +190,7 @@ export class CodesplainAppBar extends Component {
 
     const { avatarURL, orgSnippets, username, userSnippets } = this.props;
     const { isDialogOpen, isLoggedIn } = this.state;
-    const rightElement = isLoggedIn ?
+    const appMenu = isLoggedIn ?
       (<AppMenu
         avatarURL={avatarURL}
         onSignOut={this.handleSignOut}
@@ -207,6 +208,17 @@ export class CodesplainAppBar extends Component {
         Codesplain
       </span>
     );
+    const rightSection = (
+      <div>
+        <SnippetMenu
+          username={username}
+          userSnippets={userSnippets}
+          orgSnippets={orgSnippets}
+          onSnippetSelected={this.handleSnippetSelected}
+        />
+        {appMenu}
+      </div>
+    );
 
     return (
       <div>
@@ -214,8 +226,8 @@ export class CodesplainAppBar extends Component {
           style={styles.appBar}
           showMenuIconButton={false}
           title={titleElement}
-          iconElementRight={rightElement}
-          iconStyleRight={isLoggedIn ? styles.rightElement : {}}
+          iconElementRight={rightSection}
+          iconStyleRight={isLoggedIn ? styles.appMenu : {}}
         />
         <Dialog
           actions={actions}
