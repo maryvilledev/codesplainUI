@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { removeDeprecatedFiltersFromState } from '../util/codemirror-utils';
 import { addNotification, closeNotification } from './notifications';
-import { makeSaveEndpointUrl, stripState } from '../util/requests';
+import { makeSaveEndpointUrl, normalizeState } from '../util/requests';
 import { setDefaults } from '../util/state-management';
 
 export const RESET_STATE = 'RESET_STATE';
@@ -110,7 +110,7 @@ export const saveNew = org => (dispatch, getState) => {
   const transformRequest = [
     (data) => {
       const dataObj = JSON.parse(data);
-      return JSON.stringify(stripState(dataObj));
+      return JSON.stringify(normalizeState(dataObj));
     },
   ];
   const config = { headers, transformRequest };
@@ -152,7 +152,7 @@ export const saveExisting = () => (dispatch, getState) => {
   const transformRequest = [
     (data) => {
       const dataObj = JSON.parse(data);
-      return JSON.stringify(stripState(dataObj));
+      return JSON.stringify(normalizeState(dataObj));
     },
   ];
   const config = { headers, transformRequest };
@@ -217,7 +217,7 @@ export const loadSnippet = (username, snippetKey) => (dispatch, getState) => {
     transformResponse: [
       (data) => {
         const dataObj = JSON.parse(data);
-        return setDefaults(removeDeprecatedFiltersFromState(stripState(dataObj)));
+        return setDefaults(removeDeprecatedFiltersFromState(normalizeState(dataObj)));
       },
     ],
   });

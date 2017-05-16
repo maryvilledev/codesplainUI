@@ -59,7 +59,7 @@ export const fetchUserAvatar = (user, token) => {
 Returns new object containing only the fields from the given state object
 that we want to serialize.
 */
-export const stripState = (state) => {
+export const normalizeState = (state) => {
   const {
     annotations,
     AST,
