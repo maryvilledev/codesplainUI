@@ -1,6 +1,6 @@
 exports[`<AuthorAvatarIcon /> matches snapshot when it is open 1`] = `
 <div
-  data-for="avatar"
+  data-for="author-avatar"
   data-tip={true}
   style={
     Object {

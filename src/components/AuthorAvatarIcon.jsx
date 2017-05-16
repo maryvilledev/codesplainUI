@@ -18,7 +18,7 @@ const AuthorAvatarIcon = ({ author, avatarUrl }) => {
   if (avatarUrl) {
     return (
       <div
-        data-for="avatar"
+        data-for="author-avatar"
         data-tip
         style={styles.avatar}
       >
