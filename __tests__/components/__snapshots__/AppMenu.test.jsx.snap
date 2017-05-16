@@ -9,24 +9,19 @@ exports[`<AppMenu /> snapshot tests matches snapshot of when user is logged in 1
     }
     animated={true}
     iconButtonElement={
-      <div>
+      <div
+        style={
+          Object {
+            "alignItems": "center",
+            "display": "inline-flex",
+          }
+        }>
         <Avatar
           size={30}
-          src="https://wallykazam.com/whozit"
-          style={
-            Object {
-              "marginBottom": "1rem",
-            }
-          } />
+          src="https://wallykazam.com/whozit" />
         <NavigationArrowDropDown
           color="white" />
       </div>
-    }
-    iconStyle={
-      Object {
-        "display": "flex",
-        "flexFlow": "row nowrap",
-      }
     }
     multiple={false}
     onItemTouchTap={[Function]}
@@ -91,24 +86,19 @@ exports[`<AppMenu /> snapshot tests matches snapshot of when user is not logged 
     }
     animated={true}
     iconButtonElement={
-      <div>
+      <div
+        style={
+          Object {
+            "alignItems": "center",
+            "display": "inline-flex",
+          }
+        }>
         <Avatar
           size={30}
-          src="https://wallykazam.com/whozit"
-          style={
-            Object {
-              "marginBottom": "1rem",
-            }
-          } />
+          src="https://wallykazam.com/whozit" />
         <NavigationArrowDropDown
           color="white" />
       </div>
-    }
-    iconStyle={
-      Object {
-        "display": "flex",
-        "flexFlow": "row nowrap",
-      }
     }
     multiple={false}
     onItemTouchTap={[Function]}

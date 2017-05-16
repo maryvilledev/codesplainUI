@@ -6,12 +6,14 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import SnippetAreaToolbar from '../../src/components/SnippetAreaToolbar';
 
 const defaultProps = {
-  canSave: true,
+  canEdit: true,
+  deleteEnabled: true,
   language: 'python',
   onLanguageChange: jest.fn(),
   onLockClick: jest.fn(),
   onSaveClick: jest.fn(),
   onSaveAsClick: jest.fn(),
+  onDeleteClick: jest.fn(),
   onTitleChange: jest.fn(),
   onOrgChanged: jest.fn(),
   readOnly: false,
@@ -119,7 +121,7 @@ describe('<SnippetAreaToolbar />', () => {
         <SnippetAreaToolbar
           {...defaultProps}
           readOnly={readOnly}
-        />
+        />,
       );
       expect(wrapper.find('LockButton').prop('readOnly')).toBe(readOnly);
     });
@@ -129,7 +131,7 @@ describe('<SnippetAreaToolbar />', () => {
         <SnippetAreaToolbar
           {...defaultProps}
           readOnly={readOnly}
-        />
+        />,
       );
       expect(wrapper.find('LanguageSelector').prop('disabled')).toBe(readOnly);
     });

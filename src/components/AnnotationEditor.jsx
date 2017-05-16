@@ -11,30 +11,26 @@ const styles = {
     display: 'flex',
     flexFlow: 'row wrap',
     alignItems: 'center',
+    justifyContent: 'space-between',
     marginTop: '0.5rem',
   },
   button: {
-    flexFlow: 1,
-    flexShrink: 1,
-    flexBasis: 'auto',
+    flex: '1 1',
   },
   cancelButton: {
-    flexFlow: 1,
-    flexShrink: 1,
-    flexBasis: 'auto',
-    marginRight: '0.2rem',
+    flex: '1 1',
   },
   hintText: {
     top: '1rem',
   },
   markdownHintText: {
     color: '#d3d3d3',
+    fontSize: 'small',
   },
   markdownIndicator: {
-    paddingLeft: '1rem',
-    flexFlow: 1,
-    flexShrink: 1,
-    flexBasis: 'auto',
+    flex: '1 1 auto',
+    display: 'flex',
+    justifyContent: 'center',
   },
   markdownLogo: {
     width: '2rem',

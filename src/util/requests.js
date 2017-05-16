@@ -71,3 +71,27 @@ export const fetchGists = token =>
 
 export const fetchGist = url =>
   axios.get(url).then(({ data }) => data);
+/*
+Returns new object containing only the fields from the given state object
+that we want to serialize.
+*/
+export const normalizeState = (state) => {
+  const {
+    annotations,
+    AST,
+    filters,
+    snippetLanguage,
+    readOnly,
+    snippetTitle,
+    snippet,
+  } = state;
+  return {
+    annotations,
+    AST,
+    filters,
+    snippetLanguage,
+    readOnly,
+    snippetTitle,
+    snippet,
+  };
+};
