@@ -48,7 +48,8 @@ class GistMenu extends Component {
         onTouchTap={this.handleOnTouchTap}
         primaryText="Import Gist"
         rightIcon={<ArrowDropRight />}
-      />);
+      />
+    );
   }
 }
 
