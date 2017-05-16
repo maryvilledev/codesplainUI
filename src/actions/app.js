@@ -107,7 +107,9 @@ export const saveNew = org => (dispatch, getState) => {
   const headers = {
     Authorization: token,
   };
-  // `transformRequest` allows changes to the request data before it is sent to the server 
+  // This function is run by axios prior to sending POST request.
+  // It transforms data that is sent in the request by removing extra
+  // fields from the state object.
   const transformRequest = [
     (data) => {
       const dataObj = JSON.parse(data);
