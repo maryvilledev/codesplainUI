@@ -26,13 +26,13 @@ const styles = {
 
 // Return an <Avatar /> of the user's GitHub avatar if a URL is specified, else
 // Return a generic menu icon
-const makeAppMenuIcon = (avatarURL) => {
-  if (avatarURL) {
+const makeAppMenuIcon = (avatarUrl) => {
+  if (avatarUrl) {
     return (
       <div style={styles.iconButtonContainer}>
         <Avatar
           size={30}
-          src={avatarURL}
+          src={avatarUrl}
           style={styles.avatar}
         />
         <ArrowDropDown color="white" />
@@ -71,7 +71,7 @@ class AppMenu extends Component {
 
   render() {
     const {
-      avatarURL,
+      avatarUrl,
       onSignOut,
       orgSnippets,
       username,
@@ -87,7 +87,7 @@ class AppMenu extends Component {
       <div>
         <IconMenu
           anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-          iconButtonElement={makeAppMenuIcon(avatarURL)}
+          iconButtonElement={makeAppMenuIcon(avatarUrl)}
           onItemTouchTap={this.handleOnItemTouchTap}
           onRequestChange={this.handleOnRequestChange}
           open={iconMenuOpen}
@@ -120,7 +120,7 @@ class AppMenu extends Component {
 }
 
 AppMenu.propTypes = {
-  avatarURL: PropTypes.string,
+  avatarUrl: PropTypes.string,
   onSignOut: PropTypes.func.isRequired,
   onSnippetSelected: PropTypes.func.isRequired,
   orgSnippets: CustomPropTypes.orgSnippets.isRequired,

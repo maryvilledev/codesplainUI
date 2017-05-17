@@ -1,10 +1,9 @@
 import React, { PropTypes } from 'react';
 import {
   TextField,
-  Avatar,
 } from 'material-ui';
-import ReactTooltip from 'react-tooltip';
 
+import AuthorAvatarIcon from './AuthorAvatarIcon';
 import LanguageSelector from './LanguageSelector';
 import LockButton from './buttons/LockButton';
 import DeleteButton from './buttons/DeleteButton';
@@ -12,6 +11,13 @@ import SaveMenu from './menus/SaveMenu';
 import CustomPropTypes from '../util/custom-prop-types';
 
 const styles = {
+  buttons: {
+    flex: '1 1 auto',
+  },
+  row: {
+    display: 'flex',
+    flexFlow: 'row wrap',
+  },
   toolbar: {
     backgroundColor: 'transparent',
     display: 'flex',
@@ -29,17 +35,6 @@ const styles = {
   toolbarField: {
     flex: '1 1 auto',
   },
-  row: {
-    display: 'flex',
-    flexFlow: 'row wrap',
-  },
-  avatar: {
-    flexBasis: 'auto',
-    verticalAlign: 'bottom',
-    paddingTop: '10px',
-    margin: '3px',
-    marginLeft: '20px',
-  },
 };
 
 /*
@@ -49,23 +44,23 @@ here, because it does not reflow correctly when the screen is resized.
 */
 const SnippetAreaToolbar = (props) => {
   const {
+    author,
+    avatarUrl,
     canEdit,
+    deleteEnabled,
     language,
+    onDeleteClick,
     onLanguageChange,
     onLockClick,
+    onOrgChanged,
     onSaveAsClick,
     onSaveClick,
-    onDeleteClick,
     onTitleChange,
-    onOrgChanged,
-    readOnly,
-    deleteEnabled,
-    saveEnabled,
-    title,
     orgs,
+    readOnly,
+    saveEnabled,
     selectedOrg,
-    avatarUrl,
-    author,
+    title,
   } = props;
 
   return (
@@ -74,29 +69,14 @@ const SnippetAreaToolbar = (props) => {
         <TextField
           hintText="Snippet Name"
           id="titleField"
-          style={styles.toolbarField}
           onChange={onTitleChange}
+          style={styles.toolbarField}
           value={title}
         />
-        <div
-          style={styles.avatar}
-          data-tip
-          data-for="avatar"
-        >
-          {(avatarUrl) ?
-            <Avatar
-              size={20}
-              src={avatarUrl}
-            />
-        : null}
-        </div>
-        <ReactTooltip
-          id="avatar"
-          effect="solid"
-          place="bottom"
-        >
-          {author}
-        </ReactTooltip>
+        <AuthorAvatarIcon
+          author={author}
+          avatarUrl={avatarUrl}
+        />
       </div>
       <div style={styles.row} >
         <LanguageSelector
@@ -115,12 +95,12 @@ const SnippetAreaToolbar = (props) => {
             canSave={canEdit}
             enabled={saveEnabled}
             id="saveMenu"
+            onOrgChanged={onOrgChanged}
             onSaveAsClick={onSaveAsClick}
             onSaveClick={onSaveClick}
-            style={styles.button}
             orgs={orgs}
-            onOrgChanged={onOrgChanged}
             selectedOrg={selectedOrg}
+            style={styles.button}
           />
           <DeleteButton
             style={styles.button}
@@ -134,29 +114,29 @@ const SnippetAreaToolbar = (props) => {
 };
 
 SnippetAreaToolbar.propTypes = {
-  deleteEnabled: PropTypes.bool.isRequired,
+  author: PropTypes.string,
+  avatarUrl: PropTypes.string,
   canEdit: PropTypes.bool.isRequired,
+  deleteEnabled: PropTypes.bool.isRequired,
   language: PropTypes.string.isRequired,
+  onDeleteClick: PropTypes.func.isRequired,
   onLanguageChange: PropTypes.func.isRequired,
   onLockClick: PropTypes.func.isRequired,
+  onOrgChanged: PropTypes.func.isRequired,
   onSaveAsClick: PropTypes.func.isRequired,
   onSaveClick: PropTypes.func.isRequired,
-  onDeleteClick: PropTypes.func.isRequired,
   onTitleChange: PropTypes.func.isRequired,
-  onOrgChanged: PropTypes.func.isRequired,
+  orgs: CustomPropTypes.orgs.isRequired,
   readOnly: PropTypes.bool.isRequired,
   saveEnabled: PropTypes.bool.isRequired,
-  title: PropTypes.string.isRequired,
-  orgs: CustomPropTypes.orgs.isRequired,
   selectedOrg: PropTypes.string,
-  avatarUrl: PropTypes.string,
-  author: PropTypes.string,
+  title: PropTypes.string.isRequired,
 };
 
 SnippetAreaToolbar.defaultProps = {
-  selectedOrg: '',
-  avatarUrl: null,
   author: '',
+  avatarUrl: '',
+  selectedOrg: '',
 };
 
 export default SnippetAreaToolbar;

@@ -3,6 +3,7 @@ import _ from 'lodash';
 import * as actions from '../actions/user';
 
 export const initialState = {
+  avatarUrl: '',
   orgs: [],
   selectedOrg: null,
   token: '',
@@ -17,7 +18,7 @@ const user = (state = initialState, action) => {
     const url = action.payload;
     return {
       ...state,
-      avatarURL: url,
+      avatarUrl: url,
     };
   }
   case actions.ADD_ORG: {
