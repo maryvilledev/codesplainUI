@@ -97,11 +97,12 @@ export class SnippetArea extends React.Component {
       author,
       avatarUrl: loggedInUserAvatarUrl,
       username: loggedInUser,
+      token,
     } = this.props;
-    const token = cookie.load('token');
 
     if (!nextProps.author || !token) {
       this.setState({ avatarUrl: '' });
+      return;
     }
     if (author !== nextProps.author) {
       // The URL to the user's avatar is already in the store, so if the snippet
@@ -354,6 +355,7 @@ SnippetArea.propTypes = {
   snippetKey: PropTypes.string,
   snippetLanguage: PropTypes.string.isRequired,
   snippetTitle: PropTypes.string.isRequired,
+  token: PropTypes.string,
   username: PropTypes.string,
 };
 
@@ -364,6 +366,7 @@ SnippetArea.defaultProps = {
   openLine: -1,
   selectedOrg: '',
   snippetKey: '',
+  token: '',
   username: '',
 };
 
@@ -394,6 +397,7 @@ const mapStateToProps = (state) => {
       avatarUrl,
       orgs,
       selectedOrg,
+      token,
       username,
     },
   } = state;
@@ -413,6 +417,7 @@ const mapStateToProps = (state) => {
     snippetKey,
     snippetLanguage,
     snippetTitle,
+    token,
     username,
   };
 };
