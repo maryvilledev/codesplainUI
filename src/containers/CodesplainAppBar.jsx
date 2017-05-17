@@ -21,6 +21,7 @@ import {
 } from '../actions/user';
 import { resetState } from '../actions/app';
 import { closeAnnotationPanel } from '../actions/annotation';
+import { setAuthor } from '../actions/permissions';
 import LoginButton from '../components/buttons/LoginButton';
 import AppMenu from '../components/menus/AppMenu';
 import CustomPropTypes from '../util/custom-prop-types';
@@ -154,6 +155,7 @@ export class CodesplainAppBar extends Component {
 
     // Reset state
     dispatch(resetState());
+    dispatch(setAuthor(''));
     // Close the annotation panel
     dispatch(closeAnnotationPanel());
     // If the user is not already at the home page, redirect them to it
@@ -187,11 +189,11 @@ export class CodesplainAppBar extends Component {
       />,
     ];
 
-    const { avatarURL, orgSnippets, username, userSnippets } = this.props;
+    const { avatarUrl, orgSnippets, username, userSnippets } = this.props;
     const { isDialogOpen, isLoggedIn } = this.state;
     const rightElement = isLoggedIn ?
       (<AppMenu
-        avatarURL={avatarURL}
+        avatarUrl={avatarUrl}
         onSignOut={this.handleSignOut}
         onSnippetSelected={this.handleSnippetSelected}
         orgSnippets={orgSnippets}
@@ -231,7 +233,7 @@ export class CodesplainAppBar extends Component {
 }
 
 CodesplainAppBar.propTypes = {
-  avatarURL: PropTypes.string,
+  avatarUrl: PropTypes.string,
   hasUnsavedChanges: PropTypes.bool.isRequired,
   orgSnippets: CustomPropTypes.orgSnippets,
   token: PropTypes.string,
@@ -240,7 +242,7 @@ CodesplainAppBar.propTypes = {
 };
 
 CodesplainAppBar.defaultProps = {
-  avatarURL: '',
+  avatarUrl: '',
   orgSnippets: {},
   token: '',
   username: '',
@@ -254,7 +256,7 @@ const mapStateToProps = (state) => {
       hasUnsavedChanges,
     },
     user: {
-      avatarURL,
+      avatarUrl,
       orgSnippets,
       token,
       username,
@@ -268,7 +270,7 @@ const mapStateToProps = (state) => {
     userSnippets,
     username,
     token,
-    avatarURL,
+    avatarUrl,
   };
 };
 

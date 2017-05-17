@@ -1,4 +1,4 @@
-exports[`<ConfirmLockDialog /> matches snapshot when it is closed 1`] = `
+exports[`<ConfirmationDialog /> matches snapshot when it is closed 1`] = `
 <Dialog
   actions={
     Array [
@@ -39,13 +39,10 @@ exports[`<ConfirmLockDialog /> matches snapshot when it is closed 1`] = `
   }
   modal={true}
   open={false}
-  repositionOnUpdate={true}
-  title="Are you sure you want to lock editing?">
-  Note that you will not be able to revert back to edit mode
-</Dialog>
+  repositionOnUpdate={true} />
 `;
 
-exports[`<ConfirmLockDialog /> matches snapshot when it is open 1`] = `
+exports[`<ConfirmationDialog /> matches snapshot when it is open 1`] = `
 <Dialog
   actions={
     Array [
@@ -86,8 +83,5 @@ exports[`<ConfirmLockDialog /> matches snapshot when it is open 1`] = `
   }
   modal={true}
   open={true}
-  repositionOnUpdate={true}
-  title="Are you sure you want to lock editing?">
-  Note that you will not be able to revert back to edit mode
-</Dialog>
+  repositionOnUpdate={true} />
 `;

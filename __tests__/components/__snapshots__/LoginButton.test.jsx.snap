@@ -6,7 +6,9 @@ exports[`<LoginButton /> matches snapshot 1`] = `
     <span
       style={
         Object {
+          "alignItems": "center",
           "color": "white",
+          "display": "inline-flex",
         }
       }>
       <img
@@ -14,10 +16,11 @@ exports[`<LoginButton /> matches snapshot 1`] = `
         src="github-icon.png"
         style={
           Object {
+            "marginBottom": "4px",
             "marginRight": "7px",
           }
         }
-        width="23" />
+        width="25px" />
       Log In
     </span>
   }

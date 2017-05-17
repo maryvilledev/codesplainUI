@@ -14,10 +14,8 @@ import {
 import { setPermissions, setAuthor } from '../actions/permissions';
 import { switchOrg } from '../actions/user';
 import NotFound from '../components/NotFound';
-import { removeDeprecatedFiltersFromState } from '../util/codemirror-utils';
 import CustomPropTypes from '../util/custom-prop-types';
 import { sanitizeKey } from '../util/requests';
-import { setDefaults } from '../util/state-management';
 
 const styles = {
   body: {
@@ -94,10 +92,7 @@ export class AppBody extends Component {
     }
 
     dispatch(loadSnippet(snippetOwner, snippetKey))
-      .then((res) => {
-        // Normalize the app state received from S3
-        const appState = setDefaults(removeDeprecatedFiltersFromState(res.data));
-
+      .then(({ data: appState }) => {
         // Restore the application's state
         dispatch(restoreState(appState));
         dispatch(setSnippetKey(snippetKey));

@@ -1,7 +1,8 @@
 import axios from 'axios';
-
+import { removeDeprecatedFiltersFromState } from '../util/codemirror-utils';
 import { addNotification, closeNotification } from './notifications';
 import { makeSaveEndpointUrl, normalizeState } from '../util/requests';
+import { setDefaults } from '../util/state-management';
 
 export const RESET_STATE = 'RESET_STATE';
 export const EDIT_ANNOTATION = 'EDIT_ANNOTATION';
@@ -106,6 +107,9 @@ export const saveNew = org => (dispatch, getState) => {
   const headers = {
     Authorization: token,
   };
+  // This function is run by axios prior to sending POST request.
+  // It transforms data that is sent in the request by removing extra
+  // fields from the state object.
   const transformRequest = [
     (data) => {
       const dataObj = JSON.parse(data);
@@ -171,6 +175,39 @@ export const saveExisting = () => (dispatch, getState) => {
       });
 };
 
+export const deleteSnippet = snippetKey => (dispatch, getState) => {
+  // Get items out of app state
+  const {
+    user: {
+      token,
+      selectedOrg,
+    },
+  } = getState();
+
+  // Construct request objects
+  const reqHeaders = {
+    headers: {
+      Authorization: token,
+    },
+  };
+
+  // Delete the snippet
+  dispatch(addNotification('Deleting...'));
+  return axios.delete(makeSaveEndpointUrl(selectedOrg, snippetKey), reqHeaders)
+    .then(() => {
+      // Remove the 'deleting...' notifications
+      dispatch(closeNotification());
+      // Give user feedback that snippet deleted
+      dispatch(addNotification('Snippet Deleted!'));
+    })
+    .catch((err) => {
+      dispatch(addNotification('Failed to delete snippet; please try again'));
+      // Remove error notification
+      dispatch(closeNotification());
+      throw err;
+    });
+};
+
 export const loadSnippet = (username, snippetKey) => (dispatch, getState) => {
   const { token } = getState().user;
   const reqHeaders = {
@@ -183,7 +220,7 @@ export const loadSnippet = (username, snippetKey) => (dispatch, getState) => {
     transformResponse: [
       (data) => {
         const dataObj = JSON.parse(data);
-        return normalizeState(dataObj);
+        return setDefaults(removeDeprecatedFiltersFromState(normalizeState(dataObj)));
       },
     ],
   });

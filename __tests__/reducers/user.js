@@ -79,7 +79,7 @@ describe('Reducer: User', () => {
       type: actions.SET_AVATAR_URL,
       payload: url,
     };
-    const expected = { avatarURL: url };
+    const expected = { avatarUrl: url };
     expect(reducer({}, action)).toEqual(expected);
   });
 
