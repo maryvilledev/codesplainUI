@@ -6,7 +6,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import AppMenu from '../../src/components/menus/AppMenu';
 
 const defaultProps = {
-  avatarURL: 'https://wallykazam.com/whozit',
+  avatarUrl: 'https://wallykazam.com/whozit',
   onSignOut: jest.fn(),
   onSnippetSelected: jest.fn(),
   orgSnippets: {},

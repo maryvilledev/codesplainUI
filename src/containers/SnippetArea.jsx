@@ -10,25 +10,25 @@ import cookie from 'react-cookie';
 
 import { openAnnotationPanel } from '../actions/annotation';
 import {
+  deleteSnippet,
   parseSnippet,
-  saveNew,
   resetState,
   saveExisting,
+  saveNew,
+  setAuthor,
   setSnippetContents,
   setSnippetKey,
-  setAuthor,
   setSnippetLanguage,
   setSnippetTitle,
   toggleEditState,
-  deleteSnippet,
 } from '../actions/app';
 import { addNotification } from '../actions/notifications';
 import { loadParser } from '../actions/parser';
 import { setPermissions } from '../actions/permissions';
 import {
   fetchSnippetLists,
-  updateUserSnippets,
   switchOrg,
+  updateUserSnippets,
 } from '../actions/user';
 import ConfirmationDialog from '../components/ConfirmationDialog';
 import Editor from '../components/Editor';
@@ -47,11 +47,11 @@ const styles = {
     zIndex: 'auto',
   },
   cardContainer: {
-    paddingBottom: 0,
-    height: 'inherit',
     display: 'inline-flex',
     flexFlow: 'column nowrap',
+    height: 'inherit',
     justifyContent: 'flex-start',
+    paddingBottom: 0,
     width: '100%',
   },
 };
@@ -73,16 +73,17 @@ export class SnippetArea extends React.Component {
     };
 
     this.handleCloseModal = this.handleCloseModal.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
     this.handleGutterClick = this.handleGutterClick.bind(this);
     this.handleLanguageChanged = this.handleLanguageChanged.bind(this);
     this.handleLock = this.handleLock.bind(this);
+    this.handleOrgChanged = this.handleOrgChanged.bind(this);
+    this.handleOrgChanged = this.handleOrgChanged.bind(this);
     this.handleSave = this.handleSave.bind(this);
     this.handleSaveAs = this.handleSaveAs.bind(this);
     this.handleSnippetChanged = this.handleSnippetChanged.bind(this);
     this.handleTitleChanged = this.handleTitleChanged.bind(this);
     this.handleToggleReadOnly = this.handleToggleReadOnly.bind(this);
-    this.handleOrgChanged = this.handleOrgChanged.bind(this);
-    this.handleDelete = this.handleDelete.bind(this);
     this.showDeleteModal = this.showDeleteModal.bind(this);
   }
 
@@ -92,14 +93,28 @@ export class SnippetArea extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { author } = this.props;
+    const {
+      author,
+      avatarUrl: loggedInUserAvatarUrl,
+      username: loggedInUser,
+    } = this.props;
     const token = cookie.load('token');
+
     if (!nextProps.author || !token) {
-      return;
+      this.setState({ avatarUrl: '' });
     }
     if (author !== nextProps.author) {
+      // The URL to the user's avatar is already in the store, so if the snippet
+      // is owned by the current user, then use the URL in the store instead
+      // of pinging Github's API for it.
+      if (loggedInUser === nextProps.author) {
+        this.setState({
+          avatarUrl: loggedInUserAvatarUrl,
+        });
+        return;
+      }
       fetchUserAvatar(nextProps.author, token)
-        .then(avatarUrl => this.setState({ avatarUrl }));
+        .then((avatarUrl) => { this.setState({ avatarUrl }); });
     }
   }
 
@@ -158,8 +173,8 @@ export class SnippetArea extends React.Component {
     const {
       dispatch,
       router,
-      snippetTitle,
       selectedOrg,
+      snippetTitle,
     } = this.props;
 
     const { id } = router.params;
@@ -247,38 +262,39 @@ export class SnippetArea extends React.Component {
     const {
       annotations,
       AST,
+      author,
+      canEdit,
+      errors,
       filters,
       openLine,
       orgs,
-      canEdit,
-      errors,
       readOnly,
       selectedOrg,
-      snippetKey,
       snippet,
+      snippetKey,
       snippetLanguage,
       snippetTitle,
       username,
-      author,
     } = this.props;
     const { avatarUrl } = this.state;
-    const markedLines = Object.keys(annotations).map(key => Number(key));
+    const markedLines = Object.keys(annotations).map(Number);
     // Delete button is enabled only when user is logged in, owns snippet,
     // and is not viewing a new snippet
     const deleteEnabled = Boolean(snippetKey && canEdit && username);
-
     return (
       <Card
-        id="app-body-snippet-area"
         containerStyle={styles.cardContainer}
+        id="app-body-snippet-area"
         style={styles.card}
       >
         <CardText style={styles.snippetAreaCardText}>
           <SnippetAreaToolbar
+            author={author}
+            avatarUrl={avatarUrl}
             canEdit={canEdit}
+            deleteEnabled={deleteEnabled}
             language={snippetLanguage}
             onDeleteClick={this.showDeleteModal}
-            deleteEnabled={deleteEnabled}
             onLanguageChange={this.handleLanguageChanged}
             onLockClick={this.handleLock}
             onOrgChanged={this.handleOrgChanged}
@@ -290,25 +306,24 @@ export class SnippetArea extends React.Component {
             saveEnabled={Boolean(username)}
             selectedOrg={selectedOrg}
             title={snippetTitle}
-            avatarUrl={avatarUrl}
-            author={author}
           />
           <ConfirmationDialog
             accept={this.handleToggleReadOnly}
             isOpen={this.state.lockDialogOpen}
+            message="Note that you will not be able to revert back to edit mode"
             reject={this.handleCloseModal}
             title="Are you sure you want to lock editing?"
-            message="Note that you will not be able to revert back to edit mode"
           />
           <ConfirmationDialog
             accept={this.handleDelete}
             isOpen={this.state.deleteDialogOpen}
+            message="Note that you can not undo this action"
             reject={this.handleCloseModal}
             title="Are you sure you want to delete this snippet?"
-            message="Note that you can not undo this action"
           />
           <Editor
             AST={AST}
+            errors={errors}
             filters={filters}
             language={snippetLanguage}
             markedLines={markedLines}
@@ -317,7 +332,6 @@ export class SnippetArea extends React.Component {
             openLine={openLine}
             readOnly={readOnly}
             value={snippet}
-            errors={errors}
           />
         </CardText>
       </Card>
@@ -327,27 +341,29 @@ export class SnippetArea extends React.Component {
 
 SnippetArea.propTypes = {
   annotations: CustomPropTypes.annotations.isRequired,
+  author: PropTypes.string,
+  avatarUrl: PropTypes.string,
+  canEdit: PropTypes.bool.isRequired,
+  errors: CustomPropTypes.errors,
   filters: CustomPropTypes.filters.isRequired,
   openLine: PropTypes.number,
-  readOnly: PropTypes.bool.isRequired,
-  snippet: PropTypes.string.isRequired,
-  snippetTitle: PropTypes.string.isRequired,
-  snippetKey: PropTypes.string.isRequired,
-  errors: CustomPropTypes.errors,
-  snippetLanguage: PropTypes.string.isRequired,
   orgs: CustomPropTypes.orgs.isRequired,
+  readOnly: PropTypes.bool.isRequired,
   selectedOrg: PropTypes.string,
+  snippet: PropTypes.string.isRequired,
+  snippetKey: PropTypes.string.isRequired,
+  snippetLanguage: PropTypes.string.isRequired,
+  snippetTitle: PropTypes.string.isRequired,
   username: PropTypes.string,
-  canEdit: PropTypes.bool.isRequired,
-  author: PropTypes.string,
 };
 
 SnippetArea.defaultProps = {
+  author: '',
+  avatarUrl: '',
+  errors: [],
   openLine: -1,
   selectedOrg: '',
-  errors: [],
   username: '',
-  author: '',
 };
 
 const mapStateToProps = (state) => {
@@ -360,20 +376,21 @@ const mapStateToProps = (state) => {
       annotations,
       AST,
       filters,
-      snippetLanguage,
       readOnly,
       snippet,
-      snippetTitle,
       snippetKey,
+      snippetLanguage,
+      snippetTitle,
     },
     permissions: {
-      canEdit,
       author,
+      canEdit,
     },
     parser: {
       errors,
     },
     user: {
+      avatarUrl,
       orgs,
       selectedOrg,
       username,
@@ -382,19 +399,20 @@ const mapStateToProps = (state) => {
   return {
     annotations,
     AST,
-    filters,
-    snippetLanguage,
-    openLine: (isDisplayingAnnotation ? lineAnnotated.lineNumber : undefined),
-    readOnly,
-    snippet,
-    snippetTitle,
-    snippetKey,
-    errors,
-    orgs,
-    selectedOrg,
-    username,
-    canEdit,
     author,
+    avatarUrl,
+    canEdit,
+    errors,
+    filters,
+    openLine: (isDisplayingAnnotation ? lineAnnotated.lineNumber : undefined),
+    orgs,
+    readOnly,
+    selectedOrg,
+    snippet,
+    snippetKey,
+    snippetLanguage,
+    snippetTitle,
+    username,
   };
 };
 
