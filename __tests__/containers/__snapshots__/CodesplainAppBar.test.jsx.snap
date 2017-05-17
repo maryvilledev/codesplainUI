@@ -3,7 +3,9 @@ exports[`<CodesplainAppBar /> snapshot tests user is logged in 1`] = `
   <AppBar
     iconElementRight={
       <AppMenu
-        avatarURL=""
+        avatarUrl=""
+        gists={Array []}
+        onImportGist={[Function]}
         onSignOut={[Function]}
         onSnippetSelected={[Function]}
         orgSnippets={Object {}}

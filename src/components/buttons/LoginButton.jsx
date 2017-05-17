@@ -9,9 +9,12 @@ const styles = {
   },
   img: {
     marginRight: '7px',
+    marginBottom: '4px',
   },
   span: {
     color: 'white',
+    display: 'inline-flex',
+    alignItems: 'center',
   },
 };
 
@@ -21,7 +24,7 @@ const LoginButtonLabel = (
       alt=""
       src={GitHubIcon}
       style={styles.img}
-      width="23"
+      width="25px"
     />
     Log In
   </span>
