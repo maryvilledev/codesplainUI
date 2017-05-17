@@ -12,6 +12,7 @@ import {
   saveExisting,
 } from '../actions/app';
 import AnnotationPanel from '../components/AnnotationPanel';
+import AnnotationPaginator from '../components/buttons/AnnotationPaginator';
 import {
   getAnnotatedLines,
   getNextAnnotation,
@@ -24,6 +25,9 @@ import CustomPropTypes from '../util/custom-prop-types';
 const styles = {
   card: {
     flex: '1 1 auto',
+  },
+  headerItem: {
+    display: 'inline',
   },
 };
 
@@ -150,17 +154,24 @@ export class Annotations extends React.Component {
     return (
       <Card style={styles.card}>
         <CardHeader
-          title={<h2>Annotation</h2>}
+          title={
+            <div>
+              <h2 style={styles.headerItem}>Annotation</h2>
+              <AnnotationPaginator
+                style={styles.headerItem}
+                getNextAnnotation={this.getNextAnnotation}
+                getPreviousAnnotation={this.getPreviousAnnotation}
+                hasPrevAnnotation={hasPreceedingAnnotation}
+                hasNextAnnotation={hasProceedingAnnotation}
+              />
+            </div>
+          }
         />
         <AnnotationPanel
           annotation={annotation}
           lineAnnotated={lineAnnotated}
           saveAnnotation={this.handleSaveAnnotation}
           closeAnnotation={this.handleCloseAnnotation}
-          getNextAnnotation={this.getNextAnnotation}
-          getPreviousAnnotation={this.getPreviousAnnotation}
-          hasPrevAnnotation={hasPreceedingAnnotation}
-          hasNextAnnotation={hasProceedingAnnotation}
         />
       </Card>
     );

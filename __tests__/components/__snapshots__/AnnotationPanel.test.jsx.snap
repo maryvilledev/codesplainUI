@@ -11,11 +11,7 @@ exports[`<AnnotationPanel /> snapshot tests matches snapshot when an annotation 
   <AnnotationDisplay
     annotation="Wubba lubba dub dub!"
     closeAnnotation={[Function]}
-    editAnnotation={[Function]}
-    getNextAnnotation={[Function]}
-    getPreviousAnnotation={[Function]}
-    hasNextAnnotation={false}
-    hasPrevAnnotation={false} />
+    editAnnotation={[Function]} />
 </div>
 `;
 

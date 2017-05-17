@@ -10,9 +10,12 @@ import cookie from 'react-cookie';
 
 import { openAnnotationPanel } from '../actions/annotation';
 import {
+  deleteSnippet,
   parseSnippet,
-  saveNew,
+  resetState,
   saveExisting,
+  saveNew,
+  setAuthor,
   setSnippetContents,
   setSnippetKey,
   setSnippetLanguage,
@@ -22,8 +25,12 @@ import {
 import { addNotification } from '../actions/notifications';
 import { loadParser } from '../actions/parser';
 import { setPermissions } from '../actions/permissions';
-import { updateUserSnippets, switchOrg } from '../actions/user';
-import ConfirmLockDialog from '../components/ConfirmLockDialog';
+import {
+  fetchSnippetLists,
+  switchOrg,
+  updateUserSnippets,
+} from '../actions/user';
+import ConfirmationDialog from '../components/ConfirmationDialog';
 import Editor from '../components/Editor';
 import SnippetAreaToolbar from '../components/SnippetAreaToolbar';
 import CustomPropTypes from '../util/custom-prop-types';
@@ -40,10 +47,11 @@ const styles = {
     zIndex: 'auto',
   },
   cardContainer: {
-    height: 'inherit',
     display: 'inline-flex',
     flexFlow: 'column nowrap',
+    height: 'inherit',
     justifyContent: 'flex-start',
+    paddingBottom: 0,
     width: '100%',
   },
 };
@@ -60,19 +68,23 @@ export class SnippetArea extends React.Component {
     super(props);
     this.state = {
       lockDialogOpen: false,
+      deleteDialogOpen: false,
       avatarUrl: '',
     };
 
     this.handleCloseModal = this.handleCloseModal.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
     this.handleGutterClick = this.handleGutterClick.bind(this);
     this.handleLanguageChanged = this.handleLanguageChanged.bind(this);
     this.handleLock = this.handleLock.bind(this);
+    this.handleOrgChanged = this.handleOrgChanged.bind(this);
     this.handleOrgChanged = this.handleOrgChanged.bind(this);
     this.handleSave = this.handleSave.bind(this);
     this.handleSaveAs = this.handleSaveAs.bind(this);
     this.handleSnippetChanged = this.handleSnippetChanged.bind(this);
     this.handleTitleChanged = this.handleTitleChanged.bind(this);
     this.handleToggleReadOnly = this.handleToggleReadOnly.bind(this);
+    this.showDeleteModal = this.showDeleteModal.bind(this);
   }
 
   componentDidMount() {
@@ -146,9 +158,14 @@ export class SnippetArea extends React.Component {
     this.handleCloseModal();
   }
 
+  showDeleteModal() {
+    this.setState({ deleteDialogOpen: true });
+  }
+
   handleCloseModal() {
     this.setState({
       lockDialogOpen: false,
+      deleteDialogOpen: false,
     });
   }
 
@@ -218,6 +235,19 @@ export class SnippetArea extends React.Component {
       });
   }
 
+  handleDelete() {
+    this.setState({ deleteDialogOpen: false });
+    const { dispatch, snippetKey, router } = this.props;
+    dispatch(deleteSnippet(snippetKey))
+      .then(() => {
+        dispatch(resetState());
+        dispatch(setAuthor(''));
+        dispatch(updateUserSnippets());
+        dispatch(fetchSnippetLists()); // Update org snippet lists
+        router.push('/'); // TODO: Test that does not redirect delete fails
+      });
+  }
+
   handleOrgChanged(org) {
     const { dispatch } = this.props;
     dispatch(switchOrg(org));
@@ -241,13 +271,16 @@ export class SnippetArea extends React.Component {
       readOnly,
       selectedOrg,
       snippet,
+      snippetKey,
       snippetLanguage,
       snippetTitle,
       username,
     } = this.props;
     const { avatarUrl } = this.state;
-
     const markedLines = Object.keys(annotations).map(Number);
+    // Delete button is enabled only when user is logged in, owns snippet,
+    // and is not viewing a new snippet
+    const deleteEnabled = Boolean(snippetKey && canEdit && username);
     return (
       <Card
         containerStyle={styles.cardContainer}
@@ -258,8 +291,10 @@ export class SnippetArea extends React.Component {
           <SnippetAreaToolbar
             author={author}
             avatarUrl={avatarUrl}
-            canSave={canEdit}
+            canEdit={canEdit}
+            deleteEnabled={deleteEnabled}
             language={snippetLanguage}
+            onDeleteClick={this.showDeleteModal}
             onLanguageChange={this.handleLanguageChanged}
             onLockClick={this.handleLock}
             onOrgChanged={this.handleOrgChanged}
@@ -272,10 +307,19 @@ export class SnippetArea extends React.Component {
             selectedOrg={selectedOrg}
             title={snippetTitle}
           />
-          <ConfirmLockDialog
+          <ConfirmationDialog
             accept={this.handleToggleReadOnly}
             isOpen={this.state.lockDialogOpen}
+            message="Note that you will not be able to revert back to edit mode"
             reject={this.handleCloseModal}
+            title="Are you sure you want to lock editing?"
+          />
+          <ConfirmationDialog
+            accept={this.handleDelete}
+            isOpen={this.state.deleteDialogOpen}
+            message="Note that you can not undo this action"
+            reject={this.handleCloseModal}
+            title="Are you sure you want to delete this snippet?"
           />
           <Editor
             AST={AST}
@@ -307,6 +351,7 @@ SnippetArea.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   selectedOrg: PropTypes.string,
   snippet: PropTypes.string.isRequired,
+  snippetKey: PropTypes.string.isRequired,
   snippetLanguage: PropTypes.string.isRequired,
   snippetTitle: PropTypes.string.isRequired,
   username: PropTypes.string,
@@ -333,6 +378,7 @@ const mapStateToProps = (state) => {
       filters,
       readOnly,
       snippet,
+      snippetKey,
       snippetLanguage,
       snippetTitle,
     },
@@ -363,6 +409,7 @@ const mapStateToProps = (state) => {
     readOnly,
     selectedOrg,
     snippet,
+    snippetKey,
     snippetLanguage,
     snippetTitle,
     username,

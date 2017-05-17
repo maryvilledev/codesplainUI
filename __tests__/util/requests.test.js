@@ -49,4 +49,22 @@ describe('util: requests', () => {
       expect(reqUtils.sanitizeSnippetList(snippetList)).toEqual(expected);
     });
   });
+
+  describe('normalizeState', () => {
+    it('returns an object with correct keys for a serialized state', () => {
+      const state = {
+        foobar: 'blah',
+        annotations: {},
+        AST: {},
+        filters: {},
+        hasUnsavedChanges: false,
+        snippetLanguage: 'python3',
+        readOnly: false,
+        snippet: '',
+        snippetKey: '',
+        snippetTitle: '',
+      };
+      expect(reqUtils.normalizeState(state)).toMatchSnapshot();
+    });
+  });
 });

@@ -6,6 +6,7 @@ import {
 import AuthorAvatarIcon from './AuthorAvatarIcon';
 import LanguageSelector from './LanguageSelector';
 import LockButton from './buttons/LockButton';
+import DeleteButton from './buttons/DeleteButton';
 import SaveMenu from './menus/SaveMenu';
 import CustomPropTypes from '../util/custom-prop-types';
 
@@ -25,6 +26,12 @@ const styles = {
     margin: '0',
     padding: '0',
   },
+  buttonsContainer: {
+    display: 'inline-flex',
+  },
+  button: {
+    flex: '1 1 auto',
+  },
   toolbarField: {
     flex: '1 1 auto',
   },
@@ -39,8 +46,10 @@ const SnippetAreaToolbar = (props) => {
   const {
     author,
     avatarUrl,
-    canSave,
+    canEdit,
+    deleteEnabled,
     language,
+    onDeleteClick,
     onLanguageChange,
     onLockClick,
     onOrgChanged,
@@ -60,8 +69,8 @@ const SnippetAreaToolbar = (props) => {
         <TextField
           hintText="Snippet Name"
           id="titleField"
-          style={styles.toolbarField}
           onChange={onTitleChange}
+          style={styles.toolbarField}
           value={title}
         />
         <AuthorAvatarIcon
@@ -76,14 +85,14 @@ const SnippetAreaToolbar = (props) => {
           onChange={onLanguageChange}
           style={styles.toolbarField}
         />
-        <div>
+        <div style={styles.buttonsContainer}>
           <LockButton
             onClick={onLockClick}
             readOnly={readOnly}
-            style={styles.buttons}
+            style={styles.button}
           />
           <SaveMenu
-            canSave={canSave}
+            canSave={canEdit}
             enabled={saveEnabled}
             id="saveMenu"
             onOrgChanged={onOrgChanged}
@@ -91,7 +100,12 @@ const SnippetAreaToolbar = (props) => {
             onSaveClick={onSaveClick}
             orgs={orgs}
             selectedOrg={selectedOrg}
-            style={styles.buttons}
+            style={styles.button}
+          />
+          <DeleteButton
+            style={styles.button}
+            isEnabled={deleteEnabled}
+            onClick={onDeleteClick}
           />
         </div>
       </div>
@@ -102,8 +116,10 @@ const SnippetAreaToolbar = (props) => {
 SnippetAreaToolbar.propTypes = {
   author: PropTypes.string,
   avatarUrl: PropTypes.string,
-  canSave: PropTypes.bool.isRequired,
+  canEdit: PropTypes.bool.isRequired,
+  deleteEnabled: PropTypes.bool.isRequired,
   language: PropTypes.string.isRequired,
+  onDeleteClick: PropTypes.func.isRequired,
   onLanguageChange: PropTypes.func.isRequired,
   onLockClick: PropTypes.func.isRequired,
   onOrgChanged: PropTypes.func.isRequired,
