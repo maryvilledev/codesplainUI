@@ -63,6 +63,7 @@ export class CodesplainAppBar extends Component {
     this.handleTitleTouchTap = this.handleTitleTouchTap.bind(this);
     this.onLoginClick = this.onLoginClick.bind(this);
     this.redirectToHomePage = this.redirectToHomePage.bind(this);
+    this.resetApplication = this.resetApplication.bind(this);
   }
 
   componentDidMount() {
@@ -123,6 +124,10 @@ export class CodesplainAppBar extends Component {
     window.location = GITHUB_URL;
   }
 
+  handleDialogClose() {
+    this.setState({ isDialogOpen: false });
+  }
+
   handleSignOut() {
     const { router } = this.props;
     cookie.remove('token', { path: '/' });
@@ -133,6 +138,7 @@ export class CodesplainAppBar extends Component {
 
   handleSnippetSelected(snippetOwner, snippetKey) {
     const { router } = this.props;
+    this.resetApplication();
     router.push(`/${snippetOwner}/${snippetKey}`);
   }
 
@@ -147,32 +153,30 @@ export class CodesplainAppBar extends Component {
     }
   }
 
-  redirectToHomePage() {
-    const {
-      dispatch,
-      router,
-    } = this.props;
+  handleConfirmNavigation() {
+    // Close the dialog
+    this.handleDialogClose();
+    // Redirect the user to the home page
+    this.redirectToHomePage();
+  }
+
+  resetApplication() {
+    const { dispatch } = this.props;
 
     // Reset state
     dispatch(resetState());
     dispatch(setAuthor(''));
     // Close the annotation panel
     dispatch(closeAnnotationPanel());
+  }
+
+  redirectToHomePage() {
+    const { router } = this.props;
+    this.resetApplication();
     // If the user is not already at the home page, redirect them to it
     if (router.location.pathname !== '/') {
       router.push('/');
     }
-  }
-
-  handleDialogClose() {
-    this.setState({ isDialogOpen: false });
-  }
-
-  handleConfirmNavigation() {
-    // Close the dialog
-    this.handleDialogClose();
-    // Redirect the user to the home page
-    this.redirectToHomePage();
   }
 
   render() {
