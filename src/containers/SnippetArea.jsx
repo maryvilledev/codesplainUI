@@ -287,7 +287,7 @@ export class SnippetArea extends React.Component {
         id="app-body-snippet-area"
         style={styles.card}
       >
-        <CardText style={styles.snippetAreaCardText}>
+        <CardText style={styles.cardText}>
           <SnippetAreaToolbar
             author={author}
             avatarUrl={avatarUrl}
