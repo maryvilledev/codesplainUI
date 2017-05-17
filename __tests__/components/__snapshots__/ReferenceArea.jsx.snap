@@ -39,6 +39,7 @@ exports[`<ReferenceArea /> matches snapshot 1`] = `
           Object {
             "color": "#666666",
             "padding": "4px",
+            "textDecoration": "none",
           }
         }
         target="_blank">
@@ -54,6 +55,7 @@ exports[`<ReferenceArea /> matches snapshot 1`] = `
           Object {
             "color": "#666666",
             "padding": "4px",
+            "textDecoration": "none",
           }
         }
         target="_blank">
@@ -70,6 +72,7 @@ exports[`<ReferenceArea /> matches snapshot 1`] = `
         Object {
           "color": "#666666",
           "padding": "4px",
+          "textDecoration": "none",
         }
       }
       target="_blank">
