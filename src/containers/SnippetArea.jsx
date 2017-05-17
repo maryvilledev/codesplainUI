@@ -351,7 +351,7 @@ SnippetArea.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   selectedOrg: PropTypes.string,
   snippet: PropTypes.string.isRequired,
-  snippetKey: PropTypes.string.isRequired,
+  snippetKey: PropTypes.string,
   snippetLanguage: PropTypes.string.isRequired,
   snippetTitle: PropTypes.string.isRequired,
   username: PropTypes.string,
@@ -363,6 +363,7 @@ SnippetArea.defaultProps = {
   errors: [],
   openLine: -1,
   selectedOrg: '',
+  snippetKey: '',
   username: '',
 };
 
