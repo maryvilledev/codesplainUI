@@ -43,15 +43,15 @@ export const sanitizeSnippetList = (snippetList) => {
   return snippetList;
 };
 
-export const makeUserUrl = user => `${GITHUB_API_URL}/users/${user}`;
+export const makeUserUrl = () => `${GITHUB_API_URL}/user`;
 
-export const fetchUserAvatar = (user, token) => {
+export const fetchUserAvatar = (token) => {
   const reqHeaders = {
     headers: {
       Authorization: `token ${token}`,
     },
   };
-  const reqUrl = makeUserUrl(user);
+  const reqUrl = makeUserUrl();
   return axios.get(reqUrl, reqHeaders).then(({ data }) => data.avatar_url);
 };
 

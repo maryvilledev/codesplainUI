@@ -9,7 +9,6 @@ import SnippetArea from './SnippetArea';
 import {
   loadSnippet,
   restoreState,
-  setSnippetKey,
 } from '../actions/app';
 import { setPermissions, setAuthor } from '../actions/permissions';
 import { switchOrg } from '../actions/user';
@@ -74,7 +73,6 @@ export class AppBody extends Component {
 
     this.setState({ pathname });
     if (!snippetOwner && !snippetKey) {
-      // This is a new snippet for the current user, enable all permissions
       const permissions = {
         canRead: true,
         canEdit: true,
@@ -92,10 +90,12 @@ export class AppBody extends Component {
     }
 
     dispatch(loadSnippet(snippetOwner, snippetKey))
-      .then(({ data: appState }) => {
+      .then(({ data }) => {
+        // Add snippetKey to the state before restoring
+        const appState = { ...data, snippetKey };
+
         // Restore the application's state
-        dispatch(restoreState(appState));
-        dispatch(setSnippetKey(snippetKey));
+        dispatch(restoreState({ ...appState }));
         this.updatePermissions();
 
         // Reroute if using legacy url
