@@ -277,5 +277,5 @@ const mapStateToProps = (state) => {
     avatarUrl,
   };
 };
-
-export default withRouter(connect(mapStateToProps)(CodesplainAppBar));
+export const ConnectedAppBar = connect(mapStateToProps)(CodesplainAppBar);
+export default withRouter(ConnectedAppBar);
