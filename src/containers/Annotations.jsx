@@ -8,8 +8,8 @@ import {
 import { withRouter } from 'react-router';
 
 import {
-  openAnnotationPanel,
   closeAnnotationPanel,
+  openAnnotationPanel,
 } from '../actions/annotation';
 import {
   saveAnnotation,
@@ -43,10 +43,10 @@ export class Annotations extends React.Component {
       hasPreceedingAnnotation: false,
       hasProceedingAnnotation: false,
     };
+    this.getNextAnnotation = this.getNextAnnotation.bind(this);
+    this.getPreviousAnnotation = this.getPreviousAnnotation.bind(this);
     this.handleCloseAnnotation = this.handleCloseAnnotation.bind(this);
     this.handleSaveAnnotation = this.handleSaveAnnotation.bind(this);
-    this.getPreviousAnnotation = this.getPreviousAnnotation.bind(this);
-    this.getNextAnnotation = this.getNextAnnotation.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -138,8 +138,8 @@ export class Annotations extends React.Component {
     } = this.props;
 
     const {
-      hasProceedingAnnotation,
       hasPreceedingAnnotation,
+      hasProceedingAnnotation,
     } = this.state;
 
     if (!isDisplayingAnnotation) {
@@ -162,20 +162,20 @@ export class Annotations extends React.Component {
             <div>
               <h2 style={styles.headerItem}>Annotation</h2>
               <AnnotationPaginator
-                style={styles.headerItem}
                 getNextAnnotation={this.getNextAnnotation}
                 getPreviousAnnotation={this.getPreviousAnnotation}
-                hasPrevAnnotation={hasPreceedingAnnotation}
                 hasNextAnnotation={hasProceedingAnnotation}
+                hasPrevAnnotation={hasPreceedingAnnotation}
+                style={styles.headerItem}
               />
             </div>
           }
         />
         <AnnotationPanel
           annotation={annotation}
+          closeAnnotation={this.handleCloseAnnotation}
           lineAnnotated={lineAnnotated}
           saveAnnotation={this.handleSaveAnnotation}
-          closeAnnotation={this.handleCloseAnnotation}
         />
       </Card>
     );
@@ -186,9 +186,13 @@ Annotations.propTypes = {
   annotation: PropTypes.string.isRequired,
   annotations: CustomPropTypes.annotations.isRequired,
   isDisplayingAnnotation: PropTypes.bool.isRequired,
-  readOnly: PropTypes.bool.isRequired,
   lineAnnotated: CustomPropTypes.lineAnnotated.isRequired,
-  snippetKey: PropTypes.string.isRequired,
+  readOnly: PropTypes.bool.isRequired,
+  snippetKey: PropTypes.string,
+};
+
+Annotations.defaultProps = {
+  snippetKey: '',
 };
 
 const mapStateToProps = (state) => {
