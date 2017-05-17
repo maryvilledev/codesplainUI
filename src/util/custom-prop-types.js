@@ -40,6 +40,13 @@ const errors = PropTypes.arrayOf(
   }),
 );
 
+const gists = PropTypes.arrayOf(
+  PropTypes.shape({
+    name: PropTypes.string,
+    url: PropTypes.string,
+  }),
+);
+
 const snippets = PropTypes.objectOf(snippetData);
 
 const orgSnippets = PropTypes.objectOf(snippets);
@@ -55,4 +62,5 @@ export default {
   orgSnippets,
   permissions,
   snippets,
+  gists,
 };

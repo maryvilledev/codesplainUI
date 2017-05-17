@@ -8,6 +8,10 @@ import {
 import { withRouter } from 'react-router';
 import cookie from 'react-cookie';
 
+
+import { setGists } from '../actions/gists';
+import { fetchGists, fetchGist } from '../util/requests';
+
 import {
   addOrg,
   addOrganizations,
@@ -19,7 +23,11 @@ import {
   setAvatarUrl,
   switchOrg,
 } from '../actions/user';
-import { resetState } from '../actions/app';
+import {
+  resetState,
+  setSnippetContents,
+  setSnippetTitle,
+ } from '../actions/app';
 import { closeAnnotationPanel } from '../actions/annotation';
 import { setAuthor } from '../actions/permissions';
 import LoginButton from '../components/buttons/LoginButton';
@@ -63,6 +71,7 @@ export class CodesplainAppBar extends Component {
     this.handleTitleTouchTap = this.handleTitleTouchTap.bind(this);
     this.onLoginClick = this.onLoginClick.bind(this);
     this.redirectToHomePage = this.redirectToHomePage.bind(this);
+    this.handleImportGist = this.handleImportGist.bind(this);
   }
 
   componentDidMount() {
@@ -93,6 +102,8 @@ export class CodesplainAppBar extends Component {
           // Add user's username to orgs list, and select it as default
           dispatch(addOrg(username));
           dispatch(switchOrg(username));
+          fetchGists(tokenCookie)
+            .then(gists => dispatch(setGists(gists)));
           return dispatch(fetchSnippetLists());
         })
         .catch(() => {
@@ -175,6 +186,13 @@ export class CodesplainAppBar extends Component {
     this.redirectToHomePage();
   }
 
+  handleImportGist(name, url) {
+    const { dispatch } = this.props;
+    dispatch(setSnippetTitle(name));
+    fetchGist(url).then(contents => dispatch(setSnippetContents(contents)));
+    this.redirectToHomePage();
+  }
+
   render() {
     const actions = [
       <FlatButton
@@ -189,7 +207,7 @@ export class CodesplainAppBar extends Component {
       />,
     ];
 
-    const { avatarUrl, orgSnippets, username, userSnippets } = this.props;
+    const { avatarUrl, orgSnippets, username, userSnippets, gists } = this.props;
     const { isDialogOpen, isLoggedIn } = this.state;
     const rightElement = isLoggedIn ?
       (<AppMenu
@@ -199,6 +217,8 @@ export class CodesplainAppBar extends Component {
         orgSnippets={orgSnippets}
         username={username}
         userSnippets={userSnippets}
+        gists={gists}
+        onImportGist={this.handleImportGist}
       />)
       : <LoginButton onClick={this.onLoginClick} />;
     const titleElement = (
@@ -239,6 +259,7 @@ CodesplainAppBar.propTypes = {
   token: PropTypes.string,
   username: PropTypes.string,
   userSnippets: CustomPropTypes.snippets,
+  gists: CustomPropTypes.gists,
 };
 
 CodesplainAppBar.defaultProps = {
@@ -247,6 +268,7 @@ CodesplainAppBar.defaultProps = {
   token: '',
   username: '',
   userSnippets: {},
+  gists: [],
 };
 
 const mapStateToProps = (state) => {
@@ -262,6 +284,7 @@ const mapStateToProps = (state) => {
       username,
       userSnippets,
     },
+    gists,
   } = state;
   return {
     hasUnsavedChanges,
@@ -271,6 +294,7 @@ const mapStateToProps = (state) => {
     username,
     token,
     avatarUrl,
+    gists,
   };
 };
 
