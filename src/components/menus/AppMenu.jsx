@@ -131,7 +131,7 @@ AppMenu.propTypes = {
 };
 
 AppMenu.defaultProps = {
-  avatarURL: '',
+  avatarUrl: '',
   gists: [],
 };
 
