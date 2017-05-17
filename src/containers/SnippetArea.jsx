@@ -6,7 +6,6 @@ import {
 } from 'material-ui';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import cookie from 'react-cookie';
 
 import { openAnnotationPanel } from '../actions/annotation';
 import {
