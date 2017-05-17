@@ -71,13 +71,14 @@ class AppMenu extends Component {
     const {
       avatarURL,
       onSignOut,
+      style,
     } = this.props;
     const {
       iconMenuOpen,
     } = this.state;
 
     return (
-      <div>
+      <div style={style}>
         <IconMenu
           anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
           iconButtonElement={makeAppMenuIcon(avatarURL)}
@@ -103,10 +104,12 @@ AppMenu.propTypes = {
   avatarURL: PropTypes.string,
   onSignOut: PropTypes.func.isRequired,
   onSnippetSelected: PropTypes.func.isRequired,
+  style: PropTypes.object,
 };
 
 AppMenu.defaultProps = {
   avatarURL: '',
+  style: {},
 };
 
 export default AppMenu;

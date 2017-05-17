@@ -8,27 +8,50 @@ const styles = {
   iconMenu: {
     cursor: 'pointer',
   },
+  menuText: {
+    cursor: 'pointer',
+    color: 'white',
+  },
 };
 
 class SnippetMenu extends Component {
   constructor(props) {
     super(props);
-    this.state = { iconMenuOpen: false };
+    this.state = {
+      menuOpen: false,
+      snippetText: false,
+      cursorOnMenuText: false,
+    };
     this.handleOnRequestChange = this.handleOnRequestChange.bind(this);
     this.handleSnippetSelected = this.handleSnippetSelected.bind(this);
+    this.toggleMenu = this.toggleMenu.bind(this);
+    this.handleMenuTextHover = this.handleMenuTextHover.bind(this);
+    this.handleMenuTextNotHovered = this.handleMenuTextNotHovered.bind(this);
+  }
+
+  toggleMenu() {
+    this.setState({ menuOpen: !this.state.menuOpen });
   }
 
   handleOnRequestChange(open) {
     this.setState({
-      iconMenuOpen: open,
+      menuOpen: open,
     });
   }
 
   handleSnippetSelected(snippetOwner, snippetKey) {
     this.setState({
-      iconMenuOpen: false,
+      menuOpen: false,
     });
     this.props.onSnippetSelected(snippetOwner, snippetKey);
+  }
+
+  handleMenuTextHover() {
+    this.setState({ cursorOnMenuText: true });
+  }
+
+  handleMenuTextNotHovered() {
+    this.setState({ cursorOnMenuText: false });
   }
 
   render() {
@@ -38,16 +61,28 @@ class SnippetMenu extends Component {
       orgSnippets,
     } = this.props;
     const {
-      iconMenuOpen,
+      menuOpen,
+      cursorOnMenuText,
     } = this.state;
 
-    return (
-      <Menu
+    const hoverStyles = cursorOnMenuText ? { textDecoration: 'underline' } : {};
+    const menuText = (
+      <div
+        onClick={this.toggleMenu}
+        style={{ ...hoverStyles, ...styles.menuText }}
+        onMouseOver={this.handleMenuTextHover}
+        onMouseLeave={this.handleMenuTextNotHovered}
+      >
+        Snippets
+      </div>
+    );
+    const menu = menuOpen ?
+      (<Menu
         anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
         value="Snippets"
         onItemTouchTap={this.handleOnItemTouchTap}
         onRequestChange={this.handleOnRequestChange}
-        open={iconMenuOpen}
+        open={menuOpen}
         style={styles.iconMenu}
         targetOrigin={{ horizontal: 'right', vertical: 'top' }}
         useLayerForClickAway
@@ -62,7 +97,13 @@ class SnippetMenu extends Component {
           onClick={this.handleSnippetSelected}
           orgSnippets={orgSnippets}
         />
-      </Menu>
+      </Menu>) : null;
+
+    return (
+      <span>
+        {menuText}
+        {menu}
+      </span>
     );
   }
 }

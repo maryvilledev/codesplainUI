@@ -32,14 +32,30 @@ const GITHUB_URL = `https://github.com/login/oauth/authorize?client_id=${CLIENT_
 const styles = {
   appBar: {
     background: '#333333', // light black
+    height: '60px',
   },
-  appMenu: {
-    marginTop: '16px',
+  titleWrapper: {
+    display: 'inline-flex',
+    flexGrow: '0',
+    flexBasis: 'auto',
+  },
+  iconStyleRight: {
+    // marginTop: '16px',
+    // marginLeft: '25px',
+    margin: '0',
   },
   title: {
     cursor: 'pointer',
     color: '#00e6e6', // tealish
     fontWeight: 'bold',
+  },
+  appMenu: {
+  },
+  rightSection: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: '100%',
   },
 };
 
@@ -209,7 +225,9 @@ export class CodesplainAppBar extends Component {
       </span>
     );
     const rightSection = (
-      <div>
+      <div
+        style={styles.rightSection}
+      >
         <SnippetMenu
           username={username}
           userSnippets={userSnippets}
@@ -224,10 +242,11 @@ export class CodesplainAppBar extends Component {
       <div>
         <AppBar
           style={styles.appBar}
+          titleStyle={styles.titleWrapper}
           showMenuIconButton={false}
           title={titleElement}
           iconElementRight={rightSection}
-          iconStyleRight={isLoggedIn ? styles.appMenu : {}}
+          iconStyleRight={styles.iconStyleRight}
         />
         <Dialog
           actions={actions}
