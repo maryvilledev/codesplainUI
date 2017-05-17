@@ -7,8 +7,7 @@ import ReactTooltip from 'react-tooltip';
 const styles = {
   avatar: {
     flexBasis: 'auto',
-    margin: '3px',
-    marginLeft: '20px',
+    margin: '3px 3px 3px 20px',
     paddingTop: '10px',
     verticalAlign: 'bottom',
   },

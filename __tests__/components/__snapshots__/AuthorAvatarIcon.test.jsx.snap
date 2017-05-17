@@ -1,12 +1,11 @@
-exports[`<AuthorAvatarIcon /> matches snapshot when it is open 1`] = `
+exports[`<AuthorAvatarIcon /> snapshots matches snapshot when avatar url is provided 1`] = `
 <div
   data-for="author-avatar"
   data-tip={true}
   style={
     Object {
       "flexBasis": "auto",
-      "margin": "3px",
-      "marginLeft": "20px",
+      "margin": "3px 3px 3px 20px",
       "paddingTop": "10px",
       "verticalAlign": "bottom",
     }
@@ -26,4 +25,4 @@ exports[`<AuthorAvatarIcon /> matches snapshot when it is open 1`] = `
 </div>
 `;
 
-exports[`<AuthorAvatarIcon /> matches snapshot when no avatar url is provided 1`] = `null`;
+exports[`<AuthorAvatarIcon /> snapshots matches snapshot when no avatar url is provided 1`] = `null`;
