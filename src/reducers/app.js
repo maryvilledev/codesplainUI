@@ -118,12 +118,6 @@ const app = (state = initialState, action) => {
       snippetLanguage: action.payload,
     };
   }
-  case actions.CLEAR_UNSAVED_CHANGES: {
-    return {
-      ...state,
-      hasUnsavedChanges: false,
-    };
-  }
   case actions.PARSE_SNIPPET: {
     if (action.meta) {
       return state;

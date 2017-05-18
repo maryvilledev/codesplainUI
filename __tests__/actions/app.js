@@ -1,8 +1,7 @@
 import moxios from 'moxios';
-import configureMockStore from 'redux-mock-store';
-import thunk from 'redux-thunk';
 
 import * as actions from '../../src/actions/app';
+import generateMockStore from '../../src/testUtils/mockStore';
 
 describe('Actions: App', () => {
   describe('SET_SNIPPET_KEY', () => {
@@ -14,11 +13,7 @@ describe('Actions: App', () => {
   describe('SET_SNIPPET_CONTENTS', () => {
     it('creates an action to set the snippet contents', () => {
       const snippet = 'Show me what you got';
-      const expected = {
-        type: actions.SET_SNIPPET_CONTENTS,
-        payload: snippet,
-      };
-      expect(actions.setSnippetContents(snippet)).toEqual(expected);
+      expect(actions.setSnippetContents(snippet)).toMatchSnapshot();
     });
   });
   describe('SET_RULE_FILTERS', () => {
@@ -35,11 +30,7 @@ describe('Actions: App', () => {
           selected: true,
         },
       };
-      const expected = {
-        type: actions.SET_RULE_FILTERS,
-        payload: filters,
-      };
-      expect(actions.setRuleFilters(filters)).toEqual(expected);
+      expect(actions.setRuleFilters(filters)).toMatchSnapshot();
     });
   });
   describe('RESET_RULE_FILTERS', () => {
@@ -70,19 +61,12 @@ describe('Actions: App', () => {
           'DEDENT',
         ],
       };
-      const expected = {
-        type: actions.SET_AST,
-        payload: AST,
-      };
-      expect(actions.setAST(AST)).toEqual(expected);
+      expect(actions.setAST(AST)).toMatchSnapshot();
     });
   });
   describe('TOGGLE_EDITING_STATE', () => {
     it('creates an action that toggles the editing state', () => {
-      const expected = {
-        type: actions.TOGGLE_EDITING_STATE,
-      };
-      expect(actions.toggleEditState()).toEqual(expected);
+      expect(actions.toggleEditState()).toMatchSnapshot();
     });
   });
   describe('SAVE_ANNOTATION', () => {
@@ -92,11 +76,7 @@ describe('Actions: App', () => {
         lineNumber: 1,
         lineText: 'What is my purpose?',
       };
-      const expected = {
-        type: actions.SAVE_ANNOTATION,
-        payload: annotationData,
-      };
-      expect(actions.saveAnnotation(annotationData)).toEqual(expected);
+      expect(actions.saveAnnotation(annotationData)).toMatchSnapshot();
     });
   });
   describe('RESTORE_STATE', () => {
@@ -119,11 +99,7 @@ describe('Actions: App', () => {
         filters: {},
         readOnly: false,
       };
-      const expected = {
-        type: actions.RESTORE_STATE,
-        payload: savedState,
-      };
-      expect(actions.restoreState(savedState)).toEqual(expected);
+      expect(actions.restoreState(savedState)).toMatchSnapshot();
     });
   });
   describe('SET_SNIPPET_TITLE', () => {
@@ -139,26 +115,13 @@ describe('Actions: App', () => {
   describe('SET_SNIPPET_LANGUAGE', () => {
     it('creates an action to set the snippet language', () => {
       const snippetLanguage = 'Gromflomite';
-      const expected = {
-        type: actions.SET_SNIPPET_LANGUAGE,
-        payload: snippetLanguage,
-      };
-      expect(actions.setSnippetLanguage(snippetLanguage)).toEqual(expected);
+      expect(actions.setSnippetLanguage(snippetLanguage)).toMatchSnapshot();
     });
   });
   describe('PARSE_SNIPPET', () => {
     it('creates an action to parse the snippet with a web worker', () => {
       const snippet = 'Grasssss tastes bad';
-      const expected = {
-        type: actions.PARSE_SNIPPET,
-        meta: {
-          WebWorker: true,
-        },
-        payload: {
-          snippet,
-        },
-      };
-      expect(actions.parseSnippet(snippet)).toEqual(expected);
+      expect(actions.parseSnippet(snippet)).toMatchSnapshot();
     });
   });
   describe('SAVE_SUCCEEDED', () => {
@@ -170,9 +133,6 @@ describe('Actions: App', () => {
     });
   });
   describe('async actions', () => {
-    const middlewares = [thunk];
-    const mockStore = configureMockStore(middlewares);
-
     beforeEach(() => {
       moxios.install();
     });
@@ -190,7 +150,7 @@ describe('Actions: App', () => {
             response: { key, status: '200' },
           });
         });
-        const store = mockStore({
+        const store = generateMockStore({
           app: {},
           user: { token: '' },
         });
@@ -208,7 +168,7 @@ describe('Actions: App', () => {
             status: 400,
           });
         });
-        const store = mockStore({
+        const store = generateMockStore({
           app: {},
           user: { token: '' },
         });
@@ -227,7 +187,7 @@ describe('Actions: App', () => {
             status: 200,
           });
         });
-        const store = mockStore({
+        const store = generateMockStore({
           user: {
             token: '',
             selectedOrg: '',
@@ -246,7 +206,7 @@ describe('Actions: App', () => {
             status: 400,
           });
         });
-        const store = mockStore({
+        const store = generateMockStore({
           user: {
             token: '',
             selectedOrg: '',
@@ -267,7 +227,7 @@ describe('Actions: App', () => {
             response: { status: '200' },
           });
         });
-        const store = mockStore({
+        const store = generateMockStore({
           app: {},
           user: { token: '', username: '' },
         });
@@ -283,7 +243,7 @@ describe('Actions: App', () => {
             status: 400,
           });
         });
-        const store = mockStore({
+        const store = generateMockStore({
           app: {},
           user: { token: '', username: '' },
         });

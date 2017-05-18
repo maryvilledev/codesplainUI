@@ -1,3 +1,15 @@
+exports[`Actions: App PARSE_SNIPPET creates an action to parse the snippet with a web worker 1`] = `
+Object {
+  "meta": Object {
+    "WebWorker": true,
+  },
+  "payload": Object {
+    "snippet": "Grasssss tastes bad",
+  },
+  "type": "PARSE_SNIPPET",
+}
+`;
+
 exports[`Actions: App RESET_RULE_FILTERS matches snapshot 1`] = `
 Object {
   "type": "RESET_RULE_FILTERS",
@@ -10,9 +22,86 @@ Object {
 }
 `;
 
+exports[`Actions: App RESTORE_STATE creates an action that restores state 1`] = `
+Object {
+  "payload": Object {
+    "AST": Object {
+      "begin": 0,
+      "children": Array [
+        "NEWLINE",
+        "INDENT",
+        "NEWLINE",
+        "DEDENT",
+      ],
+      "end": 1,
+      "type": "file_input",
+    },
+    "annotations": Object {},
+    "filters": Object {},
+    "readOnly": false,
+    "snippet": "	",
+    "snippetTitle": "",
+  },
+  "type": "RESTORE_STATE",
+}
+`;
+
+exports[`Actions: App SAVE_ANNOTATION creates an action that adds an annotation 1`] = `
+Object {
+  "payload": Object {
+    "annotation": "You pass butter.",
+    "lineNumber": 1,
+    "lineText": "What is my purpose?",
+  },
+  "type": "SAVE_ANNOTATION",
+}
+`;
+
 exports[`Actions: App SELECT_ALL_FILTERS matches snapshot 1`] = `
 Object {
   "type": "SELECT_ALL_FILTERS",
+}
+`;
+
+exports[`Actions: App SET_AST creates an action to set the abstract syntax tree 1`] = `
+Object {
+  "payload": Object {
+    "begin": 0,
+    "children": Array [
+      "NEWLINE",
+      "INDENT",
+      "NEWLINE",
+      "DEDENT",
+    ],
+    "end": 1,
+    "type": "file_input",
+  },
+  "type": "SET_AST",
+}
+`;
+
+exports[`Actions: App SET_RULE_FILTERS creates an action to set the rule filters 1`] = `
+Object {
+  "payload": Object {
+    "atom": Object {
+      "count": 21,
+      "prettyTokenName": "Atoms",
+      "selected": true,
+    },
+    "for_stmt": Object {
+      "count": 1,
+      "prettyTokenName": "For Loops",
+      "selected": false,
+    },
+  },
+  "type": "SET_RULE_FILTERS",
+}
+`;
+
+exports[`Actions: App SET_SNIPPET_CONTENTS creates an action to set the snippet contents 1`] = `
+Object {
+  "payload": "Show me what you got",
+  "type": "SET_SNIPPET_CONTENTS",
 }
 `;
 
@@ -20,6 +109,19 @@ exports[`Actions: App SET_SNIPPET_KEY creates correct action object 1`] = `
 Object {
   "payload": "szechuan sauce",
   "type": "SET_SNIPPET_KEY",
+}
+`;
+
+exports[`Actions: App SET_SNIPPET_LANGUAGE creates an action to set the snippet language 1`] = `
+Object {
+  "payload": "Gromflomite",
+  "type": "SET_SNIPPET_LANGUAGE",
+}
+`;
+
+exports[`Actions: App TOGGLE_EDITING_STATE creates an action that toggles the editing state 1`] = `
+Object {
+  "type": "TOGGLE_EDITING_STATE",
 }
 `;
 
