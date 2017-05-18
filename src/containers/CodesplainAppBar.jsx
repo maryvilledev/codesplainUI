@@ -27,6 +27,7 @@ import {
   resetState,
   setSnippetContents,
   setSnippetTitle,
+  parseSnippet,
  } from '../actions/app';
 import { closeAnnotationPanel } from '../actions/annotation';
 import { setAuthor } from '../actions/permissions';
@@ -174,7 +175,10 @@ export class CodesplainAppBar extends Component {
   handleImportGist(name, url) {
     const { dispatch } = this.props;
     dispatch(setSnippetTitle(name));
-    fetchGist(url).then(contents => dispatch(setSnippetContents(contents)));
+    fetchGist(url).then((contents) => {
+      dispatch(setSnippetContents(contents));
+      dispatch(parseSnippet(contents));
+    });
     this.redirectToHomePage();
   }
 
