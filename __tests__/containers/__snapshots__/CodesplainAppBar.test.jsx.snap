@@ -2,25 +2,66 @@ exports[`<CodesplainAppBar /> snapshot tests user is logged in 1`] = `
 <div>
   <AppBar
     iconElementRight={
-      <AppMenu
-        avatarUrl=""
-        gists={Array []}
-        onImportGist={[Function]}
-        onSignOut={[Function]}
-        onSnippetSelected={[Function]}
-        orgSnippets={Object {}}
-        userSnippets={Object {}}
-        username="FooBar" />
+      <div
+        style={
+          Object {
+            "height": "100%",
+            "margin": 0,
+            "padding": 0,
+            "width": "100%",
+          }
+        }>
+        <div
+          style={
+            Object {
+              "alignItems": "center",
+              "display": "inline-flex",
+              "height": "100%",
+            }
+          }>
+          <SnippetMenu
+            borderBottomColor="#00e6e6"
+            onHoverBackground="#595959"
+            onSnippetSelected={[Function]}
+            orgSnippets={Object {}}
+            style={Object {}}
+            userSnippets={Object {}}
+            username="FooBar" />
+        </div>
+        <div
+          style={
+            Object {
+              "alignItems": "center",
+              "display": "inline-flex",
+              "float": "right",
+              "height": "100%",
+            }
+          }>
+          <AppMenu
+            avatarURL=""
+            avatarUrl=""
+            gists={Array []}
+            onImportGist={[Function]}
+            onSignOut={[Function]}
+            onSnippetSelected={[Function]}
+            orgSnippets={Object {}}
+            style={Object {}}
+            userSnippets={Object {}}
+            username="FooBar" />
+        </div>
+      </div>
     }
     iconStyleRight={
       Object {
-        "marginTop": "16px",
+        "margin": "0",
+        "width": "100%",
       }
     }
     showMenuIconButton={false}
     style={
       Object {
         "background": "#333333",
+        "height": "60px",
       }
     }
     title={
@@ -31,10 +72,18 @@ exports[`<CodesplainAppBar /> snapshot tests user is logged in 1`] = `
             "color": "#00e6e6",
             "cursor": "pointer",
             "fontWeight": "bold",
+            "marginRight": "50px",
           }
         }>
         Codesplain
       </span>
+    }
+    titleStyle={
+      Object {
+        "display": "inline-flex",
+        "flexBasis": "auto",
+        "flexGrow": "0",
+      }
     }
     zDepth={1} />
   <Dialog
@@ -83,14 +132,48 @@ exports[`<CodesplainAppBar /> snapshot tests user is not logged in 1`] = `
 <div>
   <AppBar
     iconElementRight={
-      <LoginButton
-        onClick={[Function]} />
+      <div
+        style={
+          Object {
+            "height": "100%",
+            "margin": 0,
+            "padding": 0,
+            "width": "100%",
+          }
+        }>
+        <div
+          style={
+            Object {
+              "alignItems": "center",
+              "display": "inline-flex",
+              "height": "100%",
+            }
+          } />
+        <div
+          style={
+            Object {
+              "alignItems": "center",
+              "display": "inline-flex",
+              "float": "right",
+              "height": "100%",
+            }
+          }>
+          <LoginButton
+            onClick={[Function]} />
+        </div>
+      </div>
     }
-    iconStyleRight={Object {}}
+    iconStyleRight={
+      Object {
+        "margin": "0",
+        "width": "100%",
+      }
+    }
     showMenuIconButton={false}
     style={
       Object {
         "background": "#333333",
+        "height": "60px",
       }
     }
     title={
@@ -101,10 +184,18 @@ exports[`<CodesplainAppBar /> snapshot tests user is not logged in 1`] = `
             "color": "#00e6e6",
             "cursor": "pointer",
             "fontWeight": "bold",
+            "marginRight": "50px",
           }
         }>
         Codesplain
       </span>
+    }
+    titleStyle={
+      Object {
+        "display": "inline-flex",
+        "flexBasis": "auto",
+        "flexGrow": "0",
+      }
     }
     zDepth={1} />
   <Dialog

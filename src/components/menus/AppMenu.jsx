@@ -109,6 +109,8 @@ AppMenu.propTypes = {
   onSignOut: PropTypes.func.isRequired,
   onSnippetSelected: PropTypes.func.isRequired,
   style: PropTypes.object,
+  gists: PropTypes.array,
+  onImportGist: PropTypes.func.isRequired,
 };
 
 AppMenu.defaultProps = {
@@ -118,7 +120,6 @@ AppMenu.defaultProps = {
   username: PropTypes.string.isRequired,
   userSnippets: CustomPropTypes.snippets.isRequired,
   gists: CustomPropTypes.gists,
-  onImportGist: PropTypes.func.isRequired,
 };
 
 export default AppMenu;
