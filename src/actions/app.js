@@ -202,14 +202,14 @@ export const deleteSnippet = snippetKey => (dispatch, getState) => {
     });
 };
 
-export const loadSnippet = (username, snippetKey) => (dispatch, getState) => {
+export const loadSnippet = (snippetOwner, snippetKey) => (dispatch, getState) => {
   const { token } = getState().user;
   const reqHeaders = {
     Authorization: token,
   };
   return axios({
     method: 'GET',
-    url: makeSaveEndpointUrl(username, snippetKey),
+    url: makeSaveEndpointUrl(snippetOwner, snippetKey),
     headers: reqHeaders,
     transformResponse: [
       (data) => {

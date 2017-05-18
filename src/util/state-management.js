@@ -7,6 +7,6 @@ export const defaultStateValues = {
 };
 
 export const setDefaults = state => _.defaults(
-    { ...state },
-    defaultStateValues,
-  );
+  { ...state },
+  defaultStateValues,
+);
