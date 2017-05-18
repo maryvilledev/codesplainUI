@@ -5,6 +5,7 @@ import notifications from './notifications';
 import parser from './parser';
 import permissions from './permissions';
 import user from './user';
+import gists from './gists';
 
 const reducer = combineReducers({
   app,
@@ -13,6 +14,7 @@ const reducer = combineReducers({
   parser,
   permissions,
   user,
+  gists,
 });
 
 export default reducer;

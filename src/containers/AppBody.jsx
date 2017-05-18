@@ -96,6 +96,7 @@ export class AppBody extends Component {
 
         // Restore the application's state
         dispatch(restoreState({ ...appState }));
+        dispatch(setAuthor(snippetOwner));
         this.updatePermissions();
 
         // Reroute if using legacy url
@@ -104,7 +105,6 @@ export class AppBody extends Component {
         if (pathname !== nextRoute) {
           router.push(nextRoute);
         }
-        dispatch(setAuthor(snippetOwner));
       }, () => {
         // Failed to get the snippet, either bad URL or unauthorized
         this.setState({

@@ -3,6 +3,13 @@ import _ from 'lodash';
 
 const API_URL = process.env.REACT_APP_API_URL;
 const GITHUB_API_URL = 'https://api.github.com';
+const GIST_URL = `${GITHUB_API_URL}/gists`;
+
+const githubHeaders = token => ({
+  headers: {
+    Authorization: `token ${token}`,
+  },
+});
 
 // encodeURIComponent does not convert all URI-unfriendly characters, necessitating
 // and enhanced encoding function
@@ -43,18 +50,27 @@ export const sanitizeSnippetList = (snippetList) => {
   return snippetList;
 };
 
-export const makeUserUrl = () => `${GITHUB_API_URL}/user`;
+export const makeUserUrl = user => `${GITHUB_API_URL}/users/${user}`;
 
-export const fetchUserAvatar = (token) => {
-  const reqHeaders = {
-    headers: {
-      Authorization: `token ${token}`,
-    },
-  };
-  const reqUrl = makeUserUrl();
-  return axios.get(reqUrl, reqHeaders).then(({ data }) => data.avatar_url);
+export const fetchUserAvatar = (user, token) => {
+  const reqUrl = makeUserUrl(user);
+  return axios.get(reqUrl, githubHeaders(token)).then(({ data }) => data.avatar_url);
 };
 
+// Each gist contains a dict of filenames to file info. We need to iterate and get
+// the filenames and urls
+export const gistReducer = (list, gist) => {
+  _.forIn(gist.files, ({ raw_url: url }, name) =>
+    list.push({ name, url }));
+  return list;
+};
+
+export const fetchGists = token =>
+  axios.get(GIST_URL, githubHeaders(token)).then(({ data }) =>
+    data.reduce(gistReducer, []));
+
+export const fetchGist = url =>
+  axios.get(url).then(({ data }) => data);
 /*
 Returns new object containing only the fields from the given state object
 that we want to serialize.
