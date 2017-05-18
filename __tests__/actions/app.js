@@ -224,5 +224,28 @@ describe('Actions: App', () => {
           });
       });
     });
+    describe('loadSnippet()', () => {
+      it('dispatches the correct actions if the action succeeded', () => {
+        moxios.wait(() => {
+          const request = moxios.requests.mostRecent();
+          request.respondWith({
+            status: 200,
+            response: JSON.stringify({
+              snippet: 'snippet',
+            }),
+          });
+        });
+        const store = generateMockStore({
+          app: {},
+          user: { token: '' },
+        });
+        const snippetOwner = 'snippetOwner';
+        const snippetKey = 'key';
+        return store.dispatch(actions.loadSnippet(snippetOwner, snippetKey))
+          .then(() => { // return of async actions
+            expect(store.getActions()).toMatchSnapshot();
+          });
+      });
+    });
   });
 });

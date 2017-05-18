@@ -5,11 +5,11 @@ Array [
     "type": "ADD_NOTIFICATION",
   },
   Object {
-    "payload": "Failed to delete snippet; please try again",
-    "type": "ADD_NOTIFICATION",
+    "type": "CLOSE_NOTIFICATION",
   },
   Object {
-    "type": "CLOSE_NOTIFICATION",
+    "payload": "Failed to delete snippet; please try again",
+    "type": "ADD_NOTIFICATION",
   },
 ]
 `;
@@ -26,6 +26,31 @@ Array [
   Object {
     "payload": "Snippet Deleted!",
     "type": "ADD_NOTIFICATION",
+  },
+]
+`;
+
+exports[`Actions: App async actions loadSnippet() dispatches the correct actions if the action succeeded 1`] = `
+Array [
+  Object {
+    "payload": Object {
+      "AST": undefined,
+      "annotations": undefined,
+      "filters": Object {},
+      "readOnly": undefined,
+      "snippet": "snippet",
+      "snippetLanguage": "python3",
+      "snippetTitle": undefined,
+    },
+    "type": "RESTORE_STATE",
+  },
+  Object {
+    "payload": "key",
+    "type": "SET_SNIPPET_KEY",
+  },
+  Object {
+    "payload": "snippetOwner",
+    "type": "SET_AUTHOR",
   },
 ]
 `;
