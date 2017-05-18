@@ -13,32 +13,21 @@ describe('Actions: User', () => {
 
     it('creates correct ADD_ORGANIZATIONS object', () => {
       const organizations = ['Galactic Federation', 'Council Of Ricks'];
-      const expected = {
-        type: actions.ADD_ORGANIZATIONS,
-        payload: organizations,
-      };
-      expect(actions.addOrganizations(organizations)).toEqual(expected);
+      expect(actions.addOrganizations(organizations)).toMatchSnapshot();
     });
+
     it('creates correct CLEAR_USER_CREDENTIALS object', () => {
       expect(actions.clearUserCredentials()).toMatchSnapshot();
     });
-  });
-  describe('action creators', () => {
+
     it('creates correct SET_AVATAR_URL object', () => {
       const url = 'https://foobar.com/quxbaz';
-      const expected = {
-        type: actions.SET_AVATAR_URL,
-        payload: url,
-      };
-      expect(actions.setAvatarUrl(url)).toEqual(expected);
+      expect(actions.setAvatarUrl(url)).toMatchSnapshot();
     });
+
     it('creates correct SAVE_USERNAME object', () => {
       const token = 'token';
-      const expected = {
-        type: actions.SAVE_USERNAME,
-        payload: token,
-      };
-      expect(actions.saveUsername(token)).toEqual(expected);
+      expect(actions.saveUsername(token)).toMatchSnapshot();
     });
 
     it('creates correct SAVE_ACCESS_TOKEN object', () => {
