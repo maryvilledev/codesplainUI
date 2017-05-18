@@ -22,13 +22,18 @@ const makeMenuItems = (orgSnippets, onClick) => {
 
 const OrgSnippetsMenu = ({ onClick, orgSnippets }) => {
   const menuItems = makeMenuItems(orgSnippets, onClick);
+  // return (
+  //   <MenuItem
+  //     disabled={!menuItems}
+  //     menuItems={menuItems}
+  //     primaryText="Org snippets"
+  //     rightIcon={<ArrowDropRight />}
+  //   />
+  // );
   return (
-    <MenuItem
-      disabled={!menuItems}
-      menuItems={menuItems}
-      primaryText="Org snippets"
-      rightIcon={<ArrowDropRight />}
-    />
+    <span>
+      {menuItems}
+    </span>
   );
 };
 
