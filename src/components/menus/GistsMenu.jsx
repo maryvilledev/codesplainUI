@@ -1,12 +1,12 @@
 import React, { Component, PropTypes } from 'react';
-import _ from 'lodash';
 import { MenuItem } from 'material-ui';
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
+import isEmpty from 'lodash/isEmpty';
 
 import CustomPropTypes from '../../util/custom-prop-types';
 
 const makeMenuItems = (gists, onClick) => {
-  if (_.isEmpty(gists)) {
+  if (isEmpty(gists)) {
     return null;
   }
   return gists.map(({ name, url }) => (
