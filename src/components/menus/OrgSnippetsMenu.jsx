@@ -1,7 +1,4 @@
 import React, { PropTypes } from 'react';
-import { MenuItem } from 'material-ui';
-import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
-
 import SnippetList from './SnippetList';
 import CustomPropTypes from '../../util/custom-prop-types';
 
@@ -22,14 +19,6 @@ const makeMenuItems = (orgSnippets, onClick) => {
 
 const OrgSnippetsMenu = ({ onClick, orgSnippets }) => {
   const menuItems = makeMenuItems(orgSnippets, onClick);
-  // return (
-  //   <MenuItem
-  //     disabled={!menuItems}
-  //     menuItems={menuItems}
-  //     primaryText="Org snippets"
-  //     rightIcon={<ArrowDropRight />}
-  //   />
-  // );
   return (
     <span>
       {menuItems}
