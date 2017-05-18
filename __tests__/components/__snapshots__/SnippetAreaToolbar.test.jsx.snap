@@ -34,25 +34,9 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is no
       type="text"
       underlineShow={true}
       value="" />
-    <div
-      data-for="avatar"
-      data-tip={true}
-      style={
-        Object {
-          "flexBasis": "auto",
-          "margin": "3px",
-          "marginLeft": "20px",
-          "paddingTop": "10px",
-          "verticalAlign": "bottom",
-        }
-      } />
-    <ReactTooltip
-      effect="solid"
-      id="avatar"
-      insecure={true}
-      place="bottom"
-      resizeHide={true}
-      wrapper="div" />
+    <AuthorAvatarIcon
+      author=""
+      avatarUrl="" />
   </div>
   <div
     style={
@@ -70,7 +54,12 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is no
           "flex": "1 1 auto",
         }
       } />
-    <div>
+    <div
+      style={
+        Object {
+          "display": "inline-flex",
+        }
+      }>
       <LockButton
         onClick={[Function]}
         readOnly={false}
@@ -92,6 +81,14 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is no
           ]
         }
         selectedOrg="galactic-federation"
+        style={
+          Object {
+            "flex": "1 1 auto",
+          }
+        } />
+      <DeleteButton
+        isEnabled={true}
+        onClick={[Function]}
         style={
           Object {
             "flex": "1 1 auto",
@@ -138,25 +135,9 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is re
       type="text"
       underlineShow={true}
       value="" />
-    <div
-      data-for="avatar"
-      data-tip={true}
-      style={
-        Object {
-          "flexBasis": "auto",
-          "margin": "3px",
-          "marginLeft": "20px",
-          "paddingTop": "10px",
-          "verticalAlign": "bottom",
-        }
-      } />
-    <ReactTooltip
-      effect="solid"
-      id="avatar"
-      insecure={true}
-      place="bottom"
-      resizeHide={true}
-      wrapper="div" />
+    <AuthorAvatarIcon
+      author=""
+      avatarUrl="" />
   </div>
   <div
     style={
@@ -174,7 +155,12 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is re
           "flex": "1 1 auto",
         }
       } />
-    <div>
+    <div
+      style={
+        Object {
+          "display": "inline-flex",
+        }
+      }>
       <LockButton
         onClick={[Function]}
         readOnly={true}
@@ -196,6 +182,14 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is re
           ]
         }
         selectedOrg="galactic-federation"
+        style={
+          Object {
+            "flex": "1 1 auto",
+          }
+        } />
+      <DeleteButton
+        isEnabled={true}
+        onClick={[Function]}
         style={
           Object {
             "flex": "1 1 auto",

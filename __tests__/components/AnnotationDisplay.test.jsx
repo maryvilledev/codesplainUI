@@ -9,10 +9,6 @@ const defaultProps = {
   annotation: '',
   closeAnnotation: jest.fn(),
   editAnnotation: jest.fn(),
-  getNextAnnotation: jest.fn(),
-  getPreviousAnnotation: jest.fn(),
-  hasNextAnnotation: false,
-  hasPrevAnnotation: false,
 };
 
 describe('<AnnotationDisplay />', () => {

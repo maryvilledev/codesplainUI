@@ -2,12 +2,11 @@ exports[`<ReferenceArea /> matches snapshot 1`] = `
 <div
   style={
     Object {
-      "bottom": 0,
+      "alignItems": "center",
       "display": "inline-flex",
       "flexFlow": "row nowrap",
       "justifyContent": "flex-end",
       "padding": "0.7rem",
-      "right": 0,
     }
   }>
   <a
@@ -24,8 +23,6 @@ exports[`<ReferenceArea /> matches snapshot 1`] = `
       Object {
         "display": "inline-block",
         "font": "12pt Lato, sans-serif",
-        "padding": 2,
-        "verticalAlign": "bottom",
       }
     }>
     <div
@@ -42,6 +39,7 @@ exports[`<ReferenceArea /> matches snapshot 1`] = `
           Object {
             "color": "#666666",
             "padding": "4px",
+            "textDecoration": "none",
           }
         }
         target="_blank">
@@ -57,6 +55,7 @@ exports[`<ReferenceArea /> matches snapshot 1`] = `
           Object {
             "color": "#666666",
             "padding": "4px",
+            "textDecoration": "none",
           }
         }
         target="_blank">
@@ -73,6 +72,7 @@ exports[`<ReferenceArea /> matches snapshot 1`] = `
         Object {
           "color": "#666666",
           "padding": "4px",
+          "textDecoration": "none",
         }
       }
       target="_blank">

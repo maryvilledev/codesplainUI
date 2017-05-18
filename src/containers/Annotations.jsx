@@ -1,17 +1,22 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { Card, CardHeader, CardText } from 'material-ui/Card';
+import {
+  Card,
+  CardText,
+  CardTitle,
+} from 'material-ui/Card';
 import { withRouter } from 'react-router';
 
 import {
-  openAnnotationPanel,
   closeAnnotationPanel,
+  openAnnotationPanel,
 } from '../actions/annotation';
 import {
   saveAnnotation,
   saveExisting,
 } from '../actions/app';
 import AnnotationPanel from '../components/AnnotationPanel';
+import AnnotationPaginator from '../components/buttons/AnnotationPaginator';
 import {
   getAnnotatedLines,
   getNextAnnotation,
@@ -25,6 +30,9 @@ const styles = {
   card: {
     flex: '1 1 auto',
   },
+  headerItem: {
+    display: 'inline',
+  },
 };
 
 export class Annotations extends React.Component {
@@ -35,10 +43,10 @@ export class Annotations extends React.Component {
       hasPreceedingAnnotation: false,
       hasProceedingAnnotation: false,
     };
+    this.getNextAnnotation = this.getNextAnnotation.bind(this);
+    this.getPreviousAnnotation = this.getPreviousAnnotation.bind(this);
     this.handleCloseAnnotation = this.handleCloseAnnotation.bind(this);
     this.handleSaveAnnotation = this.handleSaveAnnotation.bind(this);
-    this.getPreviousAnnotation = this.getPreviousAnnotation.bind(this);
-    this.getNextAnnotation = this.getNextAnnotation.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -130,8 +138,8 @@ export class Annotations extends React.Component {
     } = this.props;
 
     const {
-      hasProceedingAnnotation,
       hasPreceedingAnnotation,
+      hasProceedingAnnotation,
     } = this.state;
 
     if (!isDisplayingAnnotation) {
@@ -140,7 +148,7 @@ export class Annotations extends React.Component {
         'Lock this snippet to add annotations';
       return (
         <Card style={styles.card}>
-          <CardHeader
+          <CardTitle
             title={<h2>Annotation</h2>}
           />
           <CardText>{prompt}</CardText>
@@ -149,18 +157,25 @@ export class Annotations extends React.Component {
     }
     return (
       <Card style={styles.card}>
-        <CardHeader
-          title={<h2>Annotation</h2>}
+        <CardTitle
+          title={
+            <div>
+              <h2 style={styles.headerItem}>Annotation</h2>
+              <AnnotationPaginator
+                getNextAnnotation={this.getNextAnnotation}
+                getPreviousAnnotation={this.getPreviousAnnotation}
+                hasNextAnnotation={hasProceedingAnnotation}
+                hasPrevAnnotation={hasPreceedingAnnotation}
+                style={styles.headerItem}
+              />
+            </div>
+          }
         />
         <AnnotationPanel
           annotation={annotation}
+          closeAnnotation={this.handleCloseAnnotation}
           lineAnnotated={lineAnnotated}
           saveAnnotation={this.handleSaveAnnotation}
-          closeAnnotation={this.handleCloseAnnotation}
-          getNextAnnotation={this.getNextAnnotation}
-          getPreviousAnnotation={this.getPreviousAnnotation}
-          hasPrevAnnotation={hasPreceedingAnnotation}
-          hasNextAnnotation={hasProceedingAnnotation}
         />
       </Card>
     );
@@ -171,9 +186,13 @@ Annotations.propTypes = {
   annotation: PropTypes.string.isRequired,
   annotations: CustomPropTypes.annotations.isRequired,
   isDisplayingAnnotation: PropTypes.bool.isRequired,
-  readOnly: PropTypes.bool.isRequired,
   lineAnnotated: CustomPropTypes.lineAnnotated.isRequired,
-  snippetKey: PropTypes.string.isRequired,
+  readOnly: PropTypes.bool.isRequired,
+  snippetKey: PropTypes.string,
+};
+
+Annotations.defaultProps = {
+  snippetKey: '',
 };
 
 const mapStateToProps = (state) => {

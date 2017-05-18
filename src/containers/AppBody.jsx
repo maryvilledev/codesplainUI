@@ -9,14 +9,13 @@ import SnippetArea from './SnippetArea';
 import {
   loadSnippet,
   restoreState,
+  setSnippetKey,
 } from '../actions/app';
 import { setPermissions, setAuthor } from '../actions/permissions';
 import { switchOrg } from '../actions/user';
 import NotFound from '../components/NotFound';
-import { removeDeprecatedFiltersFromState } from '../util/codemirror-utils';
 import CustomPropTypes from '../util/custom-prop-types';
 import { sanitizeKey } from '../util/requests';
-import { setDefaults } from '../util/state-management';
 
 const styles = {
   body: {
@@ -93,16 +92,11 @@ export class AppBody extends Component {
     }
 
     dispatch(loadSnippet(snippetOwner, snippetKey))
-      .then((res) => {
-        // Normalize the app state received from S3
-        const appState = setDefaults(removeDeprecatedFiltersFromState(res.data));
-        // Snippet may not have a S3 key value saved; set it to the URL's id
-        // param if the state object is lacking it
-        if (!appState.snippetKey) {
-          appState.snippetKey = snippetKey;
-        }
+      .then(({ data: appState }) => {
         // Restore the application's state
         dispatch(restoreState(appState));
+        dispatch(setSnippetKey(snippetKey));
+        dispatch(setAuthor(snippetOwner));
         this.updatePermissions();
 
         // Reroute if using legacy url
@@ -111,7 +105,6 @@ export class AppBody extends Component {
         if (pathname !== nextRoute) {
           router.push(nextRoute);
         }
-        dispatch(setAuthor(snippetOwner));
       }, () => {
         // Failed to get the snippet, either bad URL or unauthorized
         this.setState({

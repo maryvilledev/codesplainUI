@@ -6,18 +6,15 @@ import githubIcon from '../../res/github-icon-blue.png';
 
 const style = {
   paper: {
-    bottom: 0,
-    right: 0,
     padding: '0.7rem',
     display: 'inline-flex',
     flexFlow: 'row nowrap',
     justifyContent: 'flex-end',
+    alignItems: 'center',
   },
   linkArea: {
-    padding: 2,
     display: 'inline-block',
     font: '12pt Lato, sans-serif',
-    verticalAlign: 'bottom',
   },
   logoArea: {
     display: 'block',
@@ -26,6 +23,7 @@ const style = {
   link: {
     padding: '4px',
     color: '#666666',
+    textDecoration: 'none',
   },
 };
 

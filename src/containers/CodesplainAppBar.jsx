@@ -8,6 +8,10 @@ import {
 import { withRouter } from 'react-router';
 import cookie from 'react-cookie';
 
+
+import { setGists } from '../actions/gists';
+import { fetchGists, fetchGist } from '../util/requests';
+
 import {
   addOrg,
   addOrganizations,
@@ -19,8 +23,13 @@ import {
   setAvatarUrl,
   switchOrg,
 } from '../actions/user';
-import { resetState } from '../actions/app';
+import {
+  resetState,
+  setSnippetContents,
+  setSnippetTitle,
+ } from '../actions/app';
 import { closeAnnotationPanel } from '../actions/annotation';
+import { setAuthor } from '../actions/permissions';
 import LoginButton from '../components/buttons/LoginButton';
 import AppMenu from '../components/menus/AppMenu';
 import CustomPropTypes from '../util/custom-prop-types';
@@ -62,6 +71,8 @@ export class CodesplainAppBar extends Component {
     this.handleTitleTouchTap = this.handleTitleTouchTap.bind(this);
     this.onLoginClick = this.onLoginClick.bind(this);
     this.redirectToHomePage = this.redirectToHomePage.bind(this);
+    this.resetApplication = this.resetApplication.bind(this);
+    this.handleImportGist = this.handleImportGist.bind(this);
   }
 
   componentDidMount() {
@@ -92,6 +103,8 @@ export class CodesplainAppBar extends Component {
           // Add user's username to orgs list, and select it as default
           dispatch(addOrg(username));
           dispatch(switchOrg(username));
+          fetchGists(tokenCookie)
+            .then(gists => dispatch(setGists(gists)));
           return dispatch(fetchSnippetLists());
         })
         .catch(() => {
@@ -122,6 +135,10 @@ export class CodesplainAppBar extends Component {
     window.location = GITHUB_URL;
   }
 
+  handleDialogClose() {
+    this.setState({ isDialogOpen: false });
+  }
+
   handleSignOut() {
     const { router } = this.props;
     cookie.remove('token', { path: '/' });
@@ -132,6 +149,7 @@ export class CodesplainAppBar extends Component {
 
   handleSnippetSelected(snippetOwner, snippetKey) {
     const { router } = this.props;
+    this.resetApplication();
     router.push(`/${snippetOwner}/${snippetKey}`);
   }
 
@@ -146,31 +164,37 @@ export class CodesplainAppBar extends Component {
     }
   }
 
-  redirectToHomePage() {
-    const {
-      dispatch,
-      router,
-    } = this.props;
-
-    // Reset state
-    dispatch(resetState());
-    // Close the annotation panel
-    dispatch(closeAnnotationPanel());
-    // If the user is not already at the home page, redirect them to it
-    if (router.location.pathname !== '/') {
-      router.push('/');
-    }
-  }
-
-  handleDialogClose() {
-    this.setState({ isDialogOpen: false });
-  }
-
   handleConfirmNavigation() {
     // Close the dialog
     this.handleDialogClose();
     // Redirect the user to the home page
     this.redirectToHomePage();
+  }
+
+  handleImportGist(name, url) {
+    const { dispatch } = this.props;
+    dispatch(setSnippetTitle(name));
+    fetchGist(url).then(contents => dispatch(setSnippetContents(contents)));
+    this.redirectToHomePage();
+  }
+
+  resetApplication() {
+    const { dispatch } = this.props;
+
+    // Reset state
+    dispatch(resetState());
+    dispatch(setAuthor(''));
+    // Close the annotation panel
+    dispatch(closeAnnotationPanel());
+  }
+
+  redirectToHomePage() {
+    const { router } = this.props;
+    this.resetApplication();
+    // If the user is not already at the home page, redirect them to it
+    if (router.location.pathname !== '/') {
+      router.push('/');
+    }
   }
 
   render() {
@@ -187,16 +211,18 @@ export class CodesplainAppBar extends Component {
       />,
     ];
 
-    const { avatarURL, orgSnippets, username, userSnippets } = this.props;
+    const { avatarUrl, orgSnippets, username, userSnippets, gists } = this.props;
     const { isDialogOpen, isLoggedIn } = this.state;
     const rightElement = isLoggedIn ?
       (<AppMenu
-        avatarURL={avatarURL}
+        avatarUrl={avatarUrl}
         onSignOut={this.handleSignOut}
         onSnippetSelected={this.handleSnippetSelected}
         orgSnippets={orgSnippets}
         username={username}
         userSnippets={userSnippets}
+        gists={gists}
+        onImportGist={this.handleImportGist}
       />)
       : <LoginButton onClick={this.onLoginClick} />;
     const titleElement = (
@@ -231,20 +257,22 @@ export class CodesplainAppBar extends Component {
 }
 
 CodesplainAppBar.propTypes = {
-  avatarURL: PropTypes.string,
+  avatarUrl: PropTypes.string,
   hasUnsavedChanges: PropTypes.bool.isRequired,
   orgSnippets: CustomPropTypes.orgSnippets,
   token: PropTypes.string,
   username: PropTypes.string,
   userSnippets: CustomPropTypes.snippets,
+  gists: CustomPropTypes.gists,
 };
 
 CodesplainAppBar.defaultProps = {
-  avatarURL: '',
+  avatarUrl: '',
   orgSnippets: {},
   token: '',
   username: '',
   userSnippets: {},
+  gists: [],
 };
 
 const mapStateToProps = (state) => {
@@ -254,12 +282,13 @@ const mapStateToProps = (state) => {
       hasUnsavedChanges,
     },
     user: {
-      avatarURL,
+      avatarUrl,
       orgSnippets,
       token,
       username,
       userSnippets,
     },
+    gists,
   } = state;
   return {
     hasUnsavedChanges,
@@ -268,8 +297,9 @@ const mapStateToProps = (state) => {
     userSnippets,
     username,
     token,
-    avatarURL,
+    avatarUrl,
+    gists,
   };
 };
-
-export default withRouter(connect(mapStateToProps)(CodesplainAppBar));
+export const ConnectedAppBar = connect(mapStateToProps)(CodesplainAppBar);
+export default withRouter(ConnectedAppBar);
