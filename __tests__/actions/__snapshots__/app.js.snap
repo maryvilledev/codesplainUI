@@ -35,12 +35,12 @@ Array [
   Object {
     "payload": Object {
       "AST": undefined,
-      "annotations": undefined,
+      "annotations": Object {},
       "filters": Object {},
-      "readOnly": undefined,
+      "readOnly": false,
       "snippet": "snippet",
       "snippetLanguage": "python3",
-      "snippetTitle": undefined,
+      "snippetTitle": "title",
     },
     "type": "RESTORE_STATE",
   },
