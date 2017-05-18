@@ -14,7 +14,6 @@ import {
   resetState,
   saveExisting,
   saveNew,
-  setAuthor,
   setSnippetContents,
   setSnippetKey,
   setSnippetLanguage,
@@ -23,7 +22,7 @@ import {
 } from '../actions/app';
 import { addNotification } from '../actions/notifications';
 import { loadParser } from '../actions/parser';
-import { setPermissions } from '../actions/permissions';
+import { setPermissions, setAuthor } from '../actions/permissions';
 import {
   fetchSnippetLists,
   switchOrg,
@@ -114,7 +113,7 @@ export class SnippetArea extends React.Component {
         return;
       }
       fetchUserAvatar(nextProps.author, token)
-        .then((avatarUrl) => { this.setState({ avatarUrl }); });
+        .then(avatarUrl => this.setState({ avatarUrl }));
     }
   }
 
