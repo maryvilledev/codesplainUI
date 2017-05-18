@@ -247,6 +247,17 @@ export class CodesplainAppBar extends Component {
         onImportGist={this.handleImportGist}
       />)
       : <LoginButton onClick={this.onLoginClick} />;
+    const snippetMenu = isLoggedIn ?
+      (<SnippetMenu
+        username={username}
+        userSnippets={userSnippets}
+        orgSnippets={orgSnippets}
+        onSnippetSelected={this.handleSnippetSelected}
+        onHoverBackground="#595959"
+        borderBottomColor={styles.title.color}
+      />)
+      : null;
+
     const titleElement = (
       <span
         onClick={this.handleTitleTouchTap}
@@ -258,14 +269,7 @@ export class CodesplainAppBar extends Component {
     const rightSection = (
       <div style={styles.rightSection}>
         <div style={styles.snippetMenu}>
-          <SnippetMenu
-            username={username}
-            userSnippets={userSnippets}
-            orgSnippets={orgSnippets}
-            onSnippetSelected={this.handleSnippetSelected}
-            onHoverBackground="#595959"
-            borderBottomColor={styles.title.color}
-          />
+          {snippetMenu}
         </div>
         <div style={styles.appMenu}>
           {appMenu}
