@@ -49,22 +49,31 @@ const styles = {
     flexBasis: 'auto',
   },
   iconStyleRight: {
-    // marginTop: '16px',
-    // marginLeft: '25px',
     margin: '0',
+    width: '100%',
   },
   title: {
     cursor: 'pointer',
     color: '#00e6e6', // tealish
     fontWeight: 'bold',
-  },
-  appMenu: {
+    marginRight: '50px',
   },
   rightSection: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
+    margin: 0,
+    padding: 0,
     height: '100%',
+    width: '100%',
+  },
+  appMenu: {
+    display: 'inline-flex',
+    float: 'right',
+    height: '100%',
+    alignItems: 'center',
+  },
+  snippetMenu: {
+    display: 'inline-flex',
+    height: '100%',
+    alignItems: 'center',
   },
 };
 
@@ -247,16 +256,20 @@ export class CodesplainAppBar extends Component {
       </span>
     );
     const rightSection = (
-      <div
-        style={styles.rightSection}
-      >
-        <SnippetMenu
-          username={username}
-          userSnippets={userSnippets}
-          orgSnippets={orgSnippets}
-          onSnippetSelected={this.handleSnippetSelected}
-        />
-        {appMenu}
+      <div style={styles.rightSection}>
+        <div style={styles.snippetMenu}>
+          <SnippetMenu
+            username={username}
+            userSnippets={userSnippets}
+            orgSnippets={orgSnippets}
+            onSnippetSelected={this.handleSnippetSelected}
+            onHoverBackground="#595959"
+            borderBottomColor={styles.title.color}
+          />
+        </div>
+        <div style={styles.appMenu}>
+          {appMenu}
+        </div>
       </div>
     );
 
