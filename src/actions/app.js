@@ -1,6 +1,9 @@
 import axios from 'axios';
-import { removeDeprecatedFiltersFromState } from '../util/codemirror-utils';
+
+
 import { addNotification, closeNotification } from './notifications';
+import { setAuthor } from './permissions';
+import { removeDeprecatedFiltersFromState } from '../util/codemirror-utils';
 import { makeSaveEndpointUrl, normalizeState } from '../util/requests';
 import { setDefaults } from '../util/state-management';
 
@@ -217,5 +220,11 @@ export const loadSnippet = (snippetOwner, snippetKey) => (dispatch, getState) =>
         return setDefaults(removeDeprecatedFiltersFromState(normalizeState(dataObj)));
       },
     ],
-  });
+  })
+    .then(({ data: appState }) => {
+      // Restore the application's state
+      dispatch(restoreState(appState));
+      dispatch(setSnippetKey(snippetKey));
+      dispatch(setAuthor(snippetOwner));
+    });
 };
