@@ -34,37 +34,6 @@ exports[`<AnnotationDisplay /> snapshots when an annotation after current one ex
         primary={true}
         secondary={false} />
     </div>
-    <div
-      style={
-        Object {
-          "display": "flex",
-          "flex": "0 1 auto",
-          "justifyContent": "flex-end",
-        }
-      }>
-      <IconButton
-        disableTouchRipple={false}
-        disabled={false}
-        iconStyle={Object {}}
-        id="previous-annotation"
-        onTouchTap={[Function]}
-        tooltip="Previous Annotation"
-        tooltipPosition="bottom-center"
-        touch={true}>
-        <NavigationArrowBack />
-      </IconButton>
-      <IconButton
-        disableTouchRipple={false}
-        disabled={true}
-        iconStyle={Object {}}
-        id="next-annotation"
-        onTouchTap={[Function]}
-        tooltip="Next Annotation"
-        tooltipPosition="bottom-center"
-        touch={true}>
-        <NavigationArrowForward />
-      </IconButton>
-    </div>
   </div>
 </div>
 `;
@@ -104,37 +73,6 @@ exports[`<AnnotationDisplay /> snapshots when an annotation before current one e
         onTouchTap={[Function]}
         primary={true}
         secondary={false} />
-    </div>
-    <div
-      style={
-        Object {
-          "display": "flex",
-          "flex": "0 1 auto",
-          "justifyContent": "flex-end",
-        }
-      }>
-      <IconButton
-        disableTouchRipple={false}
-        disabled={true}
-        iconStyle={Object {}}
-        id="previous-annotation"
-        onTouchTap={[Function]}
-        tooltip="Previous Annotation"
-        tooltipPosition="bottom-center"
-        touch={true}>
-        <NavigationArrowBack />
-      </IconButton>
-      <IconButton
-        disableTouchRipple={false}
-        disabled={false}
-        iconStyle={Object {}}
-        id="next-annotation"
-        onTouchTap={[Function]}
-        tooltip="Next Annotation"
-        tooltipPosition="bottom-center"
-        touch={true}>
-        <NavigationArrowForward />
-      </IconButton>
     </div>
   </div>
 </div>
@@ -176,37 +114,6 @@ exports[`<AnnotationDisplay /> snapshots when annotation exists before/after cur
         primary={true}
         secondary={false} />
     </div>
-    <div
-      style={
-        Object {
-          "display": "flex",
-          "flex": "0 1 auto",
-          "justifyContent": "flex-end",
-        }
-      }>
-      <IconButton
-        disableTouchRipple={false}
-        disabled={true}
-        iconStyle={Object {}}
-        id="previous-annotation"
-        onTouchTap={[Function]}
-        tooltip="Previous Annotation"
-        tooltipPosition="bottom-center"
-        touch={true}>
-        <NavigationArrowBack />
-      </IconButton>
-      <IconButton
-        disableTouchRipple={false}
-        disabled={true}
-        iconStyle={Object {}}
-        id="next-annotation"
-        onTouchTap={[Function]}
-        tooltip="Next Annotation"
-        tooltipPosition="bottom-center"
-        touch={true}>
-        <NavigationArrowForward />
-      </IconButton>
-    </div>
   </div>
 </div>
 `;
@@ -246,37 +153,6 @@ exports[`<AnnotationDisplay /> snapshots when no annotations before/after curren
         onTouchTap={[Function]}
         primary={true}
         secondary={false} />
-    </div>
-    <div
-      style={
-        Object {
-          "display": "flex",
-          "flex": "0 1 auto",
-          "justifyContent": "flex-end",
-        }
-      }>
-      <IconButton
-        disableTouchRipple={false}
-        disabled={false}
-        iconStyle={Object {}}
-        id="previous-annotation"
-        onTouchTap={[Function]}
-        tooltip="Previous Annotation"
-        tooltipPosition="bottom-center"
-        touch={true}>
-        <NavigationArrowBack />
-      </IconButton>
-      <IconButton
-        disableTouchRipple={false}
-        disabled={false}
-        iconStyle={Object {}}
-        id="next-annotation"
-        onTouchTap={[Function]}
-        tooltip="Next Annotation"
-        tooltipPosition="bottom-center"
-        touch={true}>
-        <NavigationArrowForward />
-      </IconButton>
     </div>
   </div>
 </div>

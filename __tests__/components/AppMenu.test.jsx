@@ -1,5 +1,4 @@
 import React from 'react';
-import cookie from 'react-cookie';
 import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -7,18 +6,18 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import AppMenu from '../../src/components/menus/AppMenu';
 
 const defaultProps = {
+  avatarUrl: 'https://wallykazam.com/whozit',
   onSignOut: jest.fn(),
-  onTitleClicked: jest.fn(),
-  snippetTitles: {},
+  onImportGist: jest.fn(),
+  onSnippetSelected: jest.fn(),
+  orgSnippets: {},
+  username: 'username',
+  userSnippets: {},
 };
 
 describe('<AppMenu />', () => {
   const muiTheme = getMuiTheme();
   const shallowWithContext = node => shallow(node, { context: { muiTheme } });
-
-  afterEach(() => {
-    cookie.remove('userAvatarURL');
-  });
 
   describe('snapshot tests', () => {
     it('matches snapshot of when user is not logged in', () => {
@@ -31,7 +30,6 @@ describe('<AppMenu />', () => {
     });
 
     it('matches snapshot of when user is logged in', () => {
-      cookie.save('userAvatarURL', 'https://github.com/octocat.png');
       const wrapper = shallowWithContext(
         <AppMenu {...defaultProps} />,
       );

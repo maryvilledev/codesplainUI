@@ -1,11 +1,31 @@
+exports[`<CodesplainAppBar /> resetApplication dispatches the correct actions to reset state 1`] = `
+Array [
+  Object {
+    "type": "RESET_STATE",
+  },
+  Object {
+    "payload": "",
+    "type": "SET_AUTHOR",
+  },
+  Object {
+    "type": "CLOSE_ANNOTATION_PANEL",
+  },
+]
+`;
+
 exports[`<CodesplainAppBar /> snapshot tests user is logged in 1`] = `
 <div>
   <AppBar
     iconElementRight={
       <AppMenu
+        avatarUrl=""
+        gists={Array []}
+        onImportGist={[Function]}
         onSignOut={[Function]}
-        onTitleClicked={[Function]}
-        snippetTitles={Object {}} />
+        onSnippetSelected={[Function]}
+        orgSnippets={Object {}}
+        userSnippets={Object {}}
+        username="FooBar" />
     }
     iconStyleRight={
       Object {
@@ -13,12 +33,19 @@ exports[`<CodesplainAppBar /> snapshot tests user is logged in 1`] = `
       }
     }
     showMenuIconButton={false}
+    style={
+      Object {
+        "background": "#333333",
+      }
+    }
     title={
       <span
         onClick={[Function]}
         style={
           Object {
+            "color": "#00e6e6",
             "cursor": "pointer",
+            "fontWeight": "bold",
           }
         }>
         Codesplain
@@ -76,12 +103,19 @@ exports[`<CodesplainAppBar /> snapshot tests user is not logged in 1`] = `
     }
     iconStyleRight={Object {}}
     showMenuIconButton={false}
+    style={
+      Object {
+        "background": "#333333",
+      }
+    }
     title={
       <span
         onClick={[Function]}
         style={
           Object {
+            "color": "#00e6e6",
             "cursor": "pointer",
+            "fontWeight": "bold",
           }
         }>
         Codesplain

@@ -22,15 +22,11 @@ const mockFilters = {
     prettyTokenName: 'Morty Smith',
   },
 };
-const mockPermissions = {
-  canRead: true,
-  canEdit: true
-}
-const mockSnippet = "print('Squanch ya later!')"
-const mockSnippetTitle = 'Squanchy AI'
-const mockOpenLine = 2
-const mockOrgs = ['galactic-federation']
-const mockSelectedOrg = 'galactic-federation'
+const mockSnippet = 'print(\'Squanch ya later!\')';
+const mockSnippetTitle = 'Squanchy AI';
+const mockOrgs = ['galactic-federation'];
+const mockSelectedOrg = 'galactic-federation';
+const mockAuthor = 'rick-sanchez';
 
 describe('<SnippetArea />', () => {
   beforeEach(() => {
@@ -38,6 +34,7 @@ describe('<SnippetArea />', () => {
   });
   const wrapper = shallow(
     <SnippetArea
+      snippetKey="foo_bar"
       dispatch={mockDispatch}
       annotations={mockAnnotations}
       snippet={mockSnippet}
@@ -46,11 +43,12 @@ describe('<SnippetArea />', () => {
       filters={mockFilters}
       readOnly
       snippetLanguage="python3"
-      permissions={mockPermissions}
       orgs={mockOrgs}
       selectedOrg={mockSelectedOrg}
-    />
-  )
+      author={mockAuthor}
+      canEdit
+    />,
+  );
   it('updates the snippet on handleSnippetChanged', () => {
     const snippet = 'print(\'Can I squanch in your room?\')';
     wrapper.instance().handleSnippetChanged(snippet);

@@ -1,4 +1,6 @@
-import _ from 'lodash';
+import last from 'lodash/last';
+import isObject from 'lodash/isObject';
+import omit from 'lodash/omit';
 
 let rules;
 let ignoredRules;
@@ -36,7 +38,7 @@ export function highlightNode(codeMirror, node, filters, parentColor) {
   // Node's type is the last element of the node's tags property,
   // if AST was made with tagging parser. Otherwise, if it was made with
   // the legacy parser, it is the type property.
-  const type = node.type ? node.type : _.last(node.tags);
+  const type = node.type ? node.type : last(node.tags);
 
   // If we aren't ignoring this token...
   if (ignoredRules.indexOf(type) === -1) {
@@ -61,8 +63,21 @@ export function highlightNode(codeMirror, node, filters, parentColor) {
 
   // Highlight all children of this token
   node.children.forEach((child) => {
-    if (_.isObject(child)) { highlightNode(codeMirror, child, filters, color); }
+    if (isObject(child)) { highlightNode(codeMirror, child, filters, color); }
   });
+}
+
+export function highlightSelection(codeMirror) {
+  // Make the background color of a selected region transparent, so users
+  // can see the text they have selected.
+  if (codeMirror.somethingSelected()) {
+    const css = 'background: transparent;';
+    codeMirror.markText(
+      codeMirror.getCursor('from'),
+      codeMirror.getCursor('to'),
+      { css },
+    );
+  }
 }
 
 /*
@@ -94,7 +109,10 @@ export async function highlight(codeMirror, AST, filters) {
     return;
   }
   // Make this a first-class function
-  const func = () => highlightNode(codeMirror, AST, filters, 'transparent');
+  const func = () => {
+    highlightNode(codeMirror, AST, filters, 'transparent');
+    highlightSelection(codeMirror);
+  };
   // Codemirror buffers its calls ahead of time, then performs them atomically
   codeMirror.operation(func);
 }
@@ -125,7 +143,7 @@ export const generateFilters = (prevFilters, ruleCounts) => {
   return newFilters;
 };
 
-export const removeDeprecatedFilters = filters => _.omit(filters, ignoredRules);
+export const removeDeprecatedFilters = filters => omit(filters, ignoredRules);
 
 export const removeDeprecatedFiltersFromState = state => ({
   ...state,

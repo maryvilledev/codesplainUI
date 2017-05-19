@@ -40,16 +40,27 @@ const errors = PropTypes.arrayOf(
   }),
 );
 
+const gists = PropTypes.arrayOf(
+  PropTypes.shape({
+    name: PropTypes.string,
+    url: PropTypes.string,
+  }),
+);
+
 const snippets = PropTypes.objectOf(snippetData);
+
+const orgSnippets = PropTypes.objectOf(snippets);
 
 const orgs = PropTypes.arrayOf(PropTypes.string);
 
 export default {
   annotations,
+  errors,
   filters,
   lineAnnotated,
   orgs,
+  orgSnippets,
   permissions,
   snippets,
-  errors,
+  gists,
 };

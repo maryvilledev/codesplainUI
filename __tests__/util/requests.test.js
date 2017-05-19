@@ -9,6 +9,7 @@ describe('util: requests', () => {
       const expected = `${API_URL}/users/${username}/snippets`;
       expect(reqUtils.makeSaveEndpointUrl(username)).toEqual(expected);
     });
+
     it('makes a new PUT endpoint given a username and snippetId', () => {
       const username = 'RickSanchez';
       const snippet = 'portalGun';
@@ -16,6 +17,7 @@ describe('util: requests', () => {
       expect(reqUtils.makeSaveEndpointUrl(username, snippet)).toEqual(expected);
     });
   });
+
   describe('sanitizeKey', () => {
     it('encodes characters that encodeURIComponent does not', () => {
       const str = './"!()*\'';
@@ -24,10 +26,64 @@ describe('util: requests', () => {
       // the encoded string
       expect(str.split().every(ch => encoded.indexOf(ch) === -1)).toBe(true);
     });
+
     it('encodes titles with apostrophes', () => {
       const title = 'rick\'s_recipe_for_concentrated_dark_matter';
       const expected = 'rick%27s_recipe_for_concentrated_dark_matter';
       expect(reqUtils.sanitizeKey(title)).toEqual(expected);
+    });
+  });
+
+  describe('sanitizeSnippetList', () => {
+    it('returns the snippetList argument if it is an Object', () => {
+      const snippetList = {
+        user: {},
+        org1: {},
+        org2: {},
+      };
+      expect(reqUtils.sanitizeSnippetList(snippetList)).toEqual(snippetList);
+    });
+    it('parses the snippetList argument if it a String', () => {
+      const snippetList = '{}';
+      const expected = {};
+      expect(reqUtils.sanitizeSnippetList(snippetList)).toEqual(expected);
+    });
+  });
+  describe('gistReducer', () => {
+    it('parses the gist', () => {
+      const gist = {
+        files: {
+          'meeseeks.py': {
+            raw_url: 'www.rickandmorty100years.com',
+          },
+          'ndestroy.java': {
+            raw_url: 'galacticfed.gov',
+          },
+        },
+      };
+      const expected = [
+        { name: 'meeseeks.py', url: 'www.rickandmorty100years.com' },
+        { name: 'ndestroy.java', url: 'galacticfed.gov' },
+      ];
+      expect(reqUtils.gistReducer([], gist)).toEqual(expected);
+    });
+  });
+
+  describe('normalizeState', () => {
+    it('returns an object with correct keys for a serialized state', () => {
+      const state = {
+        foobar: 'blah',
+        annotations: {},
+        AST: {},
+        filters: {},
+        hasUnsavedChanges: false,
+        snippetLanguage: 'python3',
+        readOnly: false,
+        snippet: '',
+        snippetKey: '',
+        snippetTitle: '',
+      };
+      expect(reqUtils.normalizeState(state)).toMatchSnapshot();
     });
   });
 });

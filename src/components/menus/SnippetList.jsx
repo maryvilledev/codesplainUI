@@ -1,36 +1,70 @@
-import React, { PropTypes } from 'react';
-import _ from 'lodash';
+import React, { Component, PropTypes } from 'react';
 import { MenuItem } from 'material-ui';
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 
 import CustomPropTypes from '../../util/custom-prop-types';
 
-const makeMenuItems = _.memoize((userSnippets, onClick) => {
-  if (Object.keys(userSnippets).length === 0) return null;
-  return Object.keys(userSnippets).map(key => (
+const makeMenuItems = (snippetOwner, snippetsList, onClick) => {
+  if (Object.keys(snippetsList).length === 0) {
+    return null;
+  }
+  return Object.keys(snippetsList).map(snippetKey => (
     <MenuItem
-      key={key}
-      primaryText={userSnippets[key].snippetTitle}
-      onClick={() => onClick(key)}
+      key={snippetKey}
+      onTouchTap={() => onClick(snippetOwner, snippetKey)}
+      primaryText={snippetsList[snippetKey].snippetTitle}
     />
   ));
-});
-
-const SnippetList = ({ titles, onClick }) => {
-  const menuItems = makeMenuItems(titles, onClick);
-  return (
-    <MenuItem
-      disabled={!menuItems}
-      menuItems={menuItems}
-      primaryText="My Snippets"
-      rightIcon={<ArrowDropRight />}
-    />
-  );
 };
 
+class SnippetList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      focusState: 'none',
+    };
+    this.handleOnTouchTap = this.handleOnTouchTap.bind(this);
+  }
+
+  componentWillUnmount() {
+    this.setState({ focusState: 'none' });
+  }
+
+  handleOnTouchTap() {
+    this.setState({
+      focusState: 'focused',
+    });
+  }
+
+  render() {
+    const {
+      onClick,
+      primaryText,
+      snippetOwner,
+      snippetsList,
+    } = this.props;
+    const {
+      focusState,
+    } = this.state;
+    const menuItems = makeMenuItems(snippetOwner, snippetsList, onClick);
+    return (
+      <MenuItem
+        disabled={!menuItems}
+        focusState={focusState}
+        menuItems={menuItems}
+        onTouchTap={this.handleOnTouchTap}
+        primaryText={primaryText}
+        rightIcon={<ArrowDropRight />}
+      />
+    );
+  }
+}
+
 SnippetList.propTypes = {
-  titles: CustomPropTypes.snippets.isRequired,
   onClick: PropTypes.func.isRequired,
+  primaryText: PropTypes.string.isRequired,
+  snippetsList: CustomPropTypes.snippets.isRequired,
+  snippetOwner: PropTypes.string.isRequired,
 };
 
 export default SnippetList;

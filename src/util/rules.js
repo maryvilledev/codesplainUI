@@ -1,6 +1,11 @@
 import axios from 'axios';
-import _ from 'lodash';
-import { setRules, setIgnoredRules } from './codemirror-utils';
+import last from 'lodash/last';
+import {
+  setRules,
+  setIgnoredRules,
+  removeDeprecatedFiltersFromState,
+} from './codemirror-utils';
+import { restoreState } from '../actions/app';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -43,7 +48,9 @@ const loadRules = async (language) => {
 
 // Listen for new parser languages
 const onStateChange = async () => {
-  const newLanguage = store.getState().parser.language;
+  const state = store.getState();
+  const newLanguage = state.parser.language;
+
   let allRules;
   if (currentLanguage === newLanguage) {
     // No need to see this through, we already have the rules
@@ -51,13 +58,20 @@ const onStateChange = async () => {
   } else if (newLanguage in mappingCache) {
     // We've seen this language before, load the rules from cache
     allRules = mappingCache[newLanguage];
+    setAllRules(allRules);
   } else {
     // This is a new language, get the mappings from the API and cache them
     allRules = await loadRules(newLanguage);
     mappingCache[newLanguage] = allRules;
+    setAllRules(allRules);
+
+    // If loading a new set of mappings, we need to make sure
+    // the filters panel doesn't display any rules ignored
+    // within those new mappings.
+    const newState = removeDeprecatedFiltersFromState(state.app);
+    store.dispatch(restoreState(newState));
   }
   currentLanguage = newLanguage;
-  setAllRules(allRules);
 };
 
 // Subscribe to store
@@ -74,7 +88,7 @@ export function getRuleCount(node, map) {
   // Node's type is the last element of the node's tags property,
   // if AST was made with tagging parser. Otherwise, if it was made with
   // the legacy parser, it is the type property.
-  const type = node.type ? node.type : _.last(node.tags);
+  const type = node.type ? node.type : last(node.tags);
 
   if (type === undefined) return;
   if (map[type] === undefined) {

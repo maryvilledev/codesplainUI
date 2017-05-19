@@ -8,9 +8,29 @@ import {
 import { withRouter } from 'react-router';
 import cookie from 'react-cookie';
 
-import { updateUserSnippets } from '../actions/user';
-import { resetState } from '../actions/app';
+
+import { setGists } from '../actions/gists';
+import { fetchGists, fetchGist } from '../util/requests';
+
+import {
+  addOrg,
+  addOrganizations,
+  fetchSnippetLists,
+  fetchUserInfo,
+  fetchUserOrgs,
+  saveAccessToken,
+  saveUsername,
+  setAvatarUrl,
+  switchOrg,
+} from '../actions/user';
+import {
+  resetState,
+  setSnippetContents,
+  setSnippetTitle,
+  parseSnippet,
+ } from '../actions/app';
 import { closeAnnotationPanel } from '../actions/annotation';
+import { setAuthor } from '../actions/permissions';
 import LoginButton from '../components/buttons/LoginButton';
 import AppMenu from '../components/menus/AppMenu';
 import CustomPropTypes from '../util/custom-prop-types';
@@ -19,11 +39,16 @@ const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 const GITHUB_URL = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&scope=read:org`;
 
 const styles = {
+  appBar: {
+    background: '#333333', // light black
+  },
   rightElement: {
     marginTop: '16px',
   },
   title: {
     cursor: 'pointer',
+    color: '#00e6e6', // tealish
+    fontWeight: 'bold',
   },
 };
 
@@ -47,11 +72,49 @@ export class CodesplainAppBar extends Component {
     this.handleTitleTouchTap = this.handleTitleTouchTap.bind(this);
     this.onLoginClick = this.onLoginClick.bind(this);
     this.redirectToHomePage = this.redirectToHomePage.bind(this);
+    this.resetApplication = this.resetApplication.bind(this);
+    this.handleImportGist = this.handleImportGist.bind(this);
   }
 
   componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch(updateUserSnippets());
+    const { dispatch, token, router } = this.props;
+    const tokenCookie = cookie.load('token');
+
+    // Save token to state if it hasn't already been (by <Auth />)
+    if (!token && tokenCookie) {
+      dispatch(saveAccessToken(tokenCookie));
+    }
+
+    // If we have a token (thus are logged in), get user's info & save to state
+    if (tokenCookie) {
+      dispatch(fetchUserOrgs())
+        .then(({ data }) => {
+          // Dispatch orgs to state
+          // Create a list of the names organizations the user belongs to
+          const orgs = data.map(org => org.login);
+          // Save the organizations list to the store
+          dispatch(addOrganizations(orgs));
+          return dispatch(fetchUserInfo());
+        })
+        .then(({ data }) => {
+          const { login: username, avatar_url: userAvatarURL } = data;
+          dispatch(saveUsername(username));
+          dispatch(setAvatarUrl(userAvatarURL));
+
+          // Add user's username to orgs list, and select it as default
+          dispatch(addOrg(username));
+          dispatch(switchOrg(username));
+          fetchGists(tokenCookie)
+            .then(gists => dispatch(setGists(gists)));
+          return dispatch(fetchSnippetLists());
+        })
+        .catch(() => {
+          // If we fail, token must have been invalid:
+          // remove it and redirect to home page
+          cookie.remove('token', { path: '/' });
+          router.push('/');
+        });
+    }
   }
 
   onLoginClick() {
@@ -73,22 +136,22 @@ export class CodesplainAppBar extends Component {
     window.location = GITHUB_URL;
   }
 
+  handleDialogClose() {
+    this.setState({ isDialogOpen: false });
+  }
+
   handleSignOut() {
     const { router } = this.props;
     cookie.remove('token', { path: '/' });
-    cookie.remove('username', { path: '/' });
-    cookie.remove('orgs', { path: '/' });
-    cookie.remove('userAvatarURL', { path: '/' });
     this.setState({ isLoggedIn: false });
     router.push('/');
     location.reload();
   }
 
-  handleSnippetSelected(key) {
-    const username = cookie.load('username');
-    window.location = `/${username}/${key}`;
+  handleSnippetSelected(snippetOwner, snippetKey) {
     const { router } = this.props;
-    router.push(`/${username}/${key}`);
+    this.resetApplication();
+    router.push(`/${snippetOwner}/${snippetKey}`);
   }
 
   handleTitleTouchTap() {
@@ -102,31 +165,40 @@ export class CodesplainAppBar extends Component {
     }
   }
 
-  redirectToHomePage() {
-    const {
-      dispatch,
-      router,
-    } = this.props;
-
-    // Reset state
-    dispatch(resetState());
-    // Close the annotation panel
-    dispatch(closeAnnotationPanel());
-    // If the user is not already at the home page, redirect them to it
-    if (router.location.pathname !== '/') {
-      router.push('/');
-    }
-  }
-
-  handleDialogClose() {
-    this.setState({ isDialogOpen: false });
-  }
-
   handleConfirmNavigation() {
     // Close the dialog
     this.handleDialogClose();
     // Redirect the user to the home page
     this.redirectToHomePage();
+  }
+
+  handleImportGist(name, url) {
+    const { dispatch } = this.props;
+    dispatch(setSnippetTitle(name));
+    fetchGist(url).then((contents) => {
+      dispatch(setSnippetContents(contents));
+      dispatch(parseSnippet(contents));
+    });
+    this.redirectToHomePage();
+  }
+
+  resetApplication() {
+    const { dispatch } = this.props;
+
+    // Reset state
+    dispatch(resetState());
+    dispatch(setAuthor(''));
+    // Close the annotation panel
+    dispatch(closeAnnotationPanel());
+  }
+
+  redirectToHomePage() {
+    const { router } = this.props;
+    this.resetApplication();
+    // If the user is not already at the home page, redirect them to it
+    if (router.location.pathname !== '/') {
+      router.push('/');
+    }
   }
 
   render() {
@@ -143,13 +215,18 @@ export class CodesplainAppBar extends Component {
       />,
     ];
 
-    const { userSnippets } = this.props;
+    const { avatarUrl, orgSnippets, username, userSnippets, gists } = this.props;
     const { isDialogOpen, isLoggedIn } = this.state;
     const rightElement = isLoggedIn ?
       (<AppMenu
+        avatarUrl={avatarUrl}
         onSignOut={this.handleSignOut}
-        onTitleClicked={this.handleSnippetSelected}
-        snippetTitles={userSnippets}
+        onSnippetSelected={this.handleSnippetSelected}
+        orgSnippets={orgSnippets}
+        username={username}
+        userSnippets={userSnippets}
+        gists={gists}
+        onImportGist={this.handleImportGist}
       />)
       : <LoginButton onClick={this.onLoginClick} />;
     const titleElement = (
@@ -164,6 +241,7 @@ export class CodesplainAppBar extends Component {
     return (
       <div>
         <AppBar
+          style={styles.appBar}
           showMenuIconButton={false}
           title={titleElement}
           iconElementRight={rightElement}
@@ -183,26 +261,49 @@ export class CodesplainAppBar extends Component {
 }
 
 CodesplainAppBar.propTypes = {
+  avatarUrl: PropTypes.string,
   hasUnsavedChanges: PropTypes.bool.isRequired,
+  orgSnippets: CustomPropTypes.orgSnippets,
+  token: PropTypes.string,
+  username: PropTypes.string,
   userSnippets: CustomPropTypes.snippets,
+  gists: CustomPropTypes.gists,
 };
 
 CodesplainAppBar.defaultProps = {
+  avatarUrl: '',
+  orgSnippets: {},
+  token: '',
+  username: '',
   userSnippets: {},
+  gists: [],
 };
 
 const mapStateToProps = (state) => {
   const {
     app,
+    app: {
+      hasUnsavedChanges,
+    },
     user: {
+      avatarUrl,
+      orgSnippets,
+      token,
+      username,
       userSnippets,
     },
+    gists,
   } = state;
   return {
-    hasUnsavedChanges: app.hasUnsavedChanges,
+    hasUnsavedChanges,
     appState: app,
+    orgSnippets,
     userSnippets,
+    username,
+    token,
+    avatarUrl,
+    gists,
   };
 };
-
-export default withRouter(connect(mapStateToProps)(CodesplainAppBar));
+export const ConnectedAppBar = connect(mapStateToProps)(CodesplainAppBar);
+export default withRouter(ConnectedAppBar);

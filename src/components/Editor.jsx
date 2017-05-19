@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import CodeMirror from 'react-codemirror';
-import _ from 'lodash';
+import isEqual from 'lodash/isEqual';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/python/python';
 
@@ -38,16 +38,18 @@ const annotationModeOptions = {
 
 const makeMarker = () => {
   const marker = document.createElement('div');
-  marker.style.color = '#822';
-  marker.innerHTML = '●';
+  marker.style.color = 'black';
+  marker.innerHTML = '✎';
   return marker;
 };
 
-const pushValueToCodeMirror = _.once((value, codeMirrorInst) => {
-  if (!codeMirrorInst.getValue() && value) {
-    codeMirrorInst.setValue(value);
-  }
-});
+const pushValueToCodeMirror = (value, codeMirrorInst) => {
+  // setValue() moves cursor to start of the text, so we have to
+  // be sure to put it back where it should be.
+  const pos = codeMirrorInst.getCursor();
+  codeMirrorInst.setValue(value);
+  codeMirrorInst.setCursor(pos);
+};
 
 class Editor extends React.Component {
   constructor(props) {
@@ -58,21 +60,24 @@ class Editor extends React.Component {
     this.deEmphasize = this.deEmphasize.bind(this);
     this.markError = this.markError.bind(this);
     this.clearErrors = this.clearErrors.bind(this);
+    this.handleCursorActivity = this.handleCursorActivity.bind(this);
+    this.codeMirrorRef = this.codeMirrorRef.bind(this);
   }
 
   componentDidMount() {
     const codeMirror = this.codeMirror.getCodeMirror();
     codeMirror.on('gutterClick', this.handleGutterClick);
+    codeMirror.on('cursorActivity', this.handleCursorActivity);
   }
 
   componentWillReceiveProps(nextProps) {
-    const newAST = !_.isEqual(nextProps.AST, this.props.AST);
-    const newFilters = !_.isEqual(nextProps.filters, this.props.filters);
+    const newAST = !isEqual(nextProps.AST, this.props.AST);
+    const newFilters = !isEqual(nextProps.filters, this.props.filters);
     this.setState({ newAST, newFilters });
   }
 
   shouldComponentUpdate(nextProps) {
-    return !_.isEqual(nextProps, this.props);
+    return !isEqual(nextProps, this.props);
   }
 
   componentDidUpdate() {
@@ -95,6 +100,7 @@ class Editor extends React.Component {
     // knowing about it. Push the value to codemirror to rectify
     pushValueToCodeMirror(value, codeMirrorInst);
     codeMirrorInst.clearGutter('annotations');
+
     // eslint-disable-next-line array-callback-return
     markedLines.forEach((lineNumber) => {
       codeMirrorInst.setGutterMarker(Number(lineNumber), 'annotations', makeMarker());
@@ -163,6 +169,20 @@ class Editor extends React.Component {
     styleAll(this.codeMirror.getCodeMirror(), css);
   }
 
+  handleCursorActivity() {
+    const codeMirror = this.codeMirror.getCodeMirror();
+
+    // Always highlight when the cursor moves
+    const { filters, AST } = this.props;
+    highlight(codeMirror, AST, filters);
+  }
+
+  // Need to use bound class method to have an event listener on the ref.
+  // https://facebook.github.io/react/docs/refs-and-the-dom.html#caveats
+  codeMirrorRef(cm) {
+    this.codeMirror = cm;
+  }
+
   render() {
     const {
       language,
@@ -180,7 +200,7 @@ class Editor extends React.Component {
       <CodeMirror
         onChange={onChange}
         options={codeMirrorOptions}
-        ref={(cm) => { this.codeMirror = cm; }}
+        ref={this.codeMirrorRef}
         value={value}
       />
     );

@@ -9,24 +9,19 @@ exports[`<AppMenu /> snapshot tests matches snapshot of when user is logged in 1
     }
     animated={true}
     iconButtonElement={
-      <div>
+      <div
+        style={
+          Object {
+            "alignItems": "center",
+            "display": "inline-flex",
+          }
+        }>
         <Avatar
           size={30}
-          src="https://github.com/octocat.png"
-          style={
-            Object {
-              "marginBottom": "1rem",
-            }
-          } />
+          src="https://wallykazam.com/whozit" />
         <NavigationArrowDropDown
           color="white" />
       </div>
-    }
-    iconStyle={
-      Object {
-        "display": "flex",
-        "flexFlow": "row nowrap",
-      }
     }
     multiple={false}
     onItemTouchTap={[Function]}
@@ -37,7 +32,7 @@ exports[`<AppMenu /> snapshot tests matches snapshot of when user is logged in 1
     onMouseUp={[Function]}
     onRequestChange={[Function]}
     onTouchTap={[Function]}
-    open={null}
+    open={false}
     style={
       Object {
         "cursor": "pointer",
@@ -50,10 +45,18 @@ exports[`<AppMenu /> snapshot tests matches snapshot of when user is logged in 1
       }
     }
     touchTapCloseDelay={200}
-    useLayerForClickAway={false}>
+    useLayerForClickAway={true}>
     <SnippetList
       onClick={[Function]}
-      titles={Object {}} />
+      primaryText="My Snippets"
+      snippetOwner="username"
+      snippetsList={Object {}} />
+    <OrgSnippetsMenu
+      onClick={[Function]}
+      orgSnippets={Object {}} />
+    <GistMenu
+      gists={Array []}
+      onClick={[Function]} />
     <MenuItem
       anchorOrigin={
         Object {
@@ -83,14 +86,19 @@ exports[`<AppMenu /> snapshot tests matches snapshot of when user is not logged 
     }
     animated={true}
     iconButtonElement={
-      <NavigationMoreVert
-        color="white" />
-    }
-    iconStyle={
-      Object {
-        "display": "flex",
-        "flexFlow": "row nowrap",
-      }
+      <div
+        style={
+          Object {
+            "alignItems": "center",
+            "display": "inline-flex",
+          }
+        }>
+        <Avatar
+          size={30}
+          src="https://wallykazam.com/whozit" />
+        <NavigationArrowDropDown
+          color="white" />
+      </div>
     }
     multiple={false}
     onItemTouchTap={[Function]}
@@ -101,7 +109,7 @@ exports[`<AppMenu /> snapshot tests matches snapshot of when user is not logged 
     onMouseUp={[Function]}
     onRequestChange={[Function]}
     onTouchTap={[Function]}
-    open={null}
+    open={false}
     style={
       Object {
         "cursor": "pointer",
@@ -114,10 +122,18 @@ exports[`<AppMenu /> snapshot tests matches snapshot of when user is not logged 
       }
     }
     touchTapCloseDelay={200}
-    useLayerForClickAway={false}>
+    useLayerForClickAway={true}>
     <SnippetList
       onClick={[Function]}
-      titles={Object {}} />
+      primaryText="My Snippets"
+      snippetOwner="username"
+      snippetsList={Object {}} />
+    <OrgSnippetsMenu
+      onClick={[Function]}
+      orgSnippets={Object {}} />
+    <GistMenu
+      gists={Array []}
+      onClick={[Function]} />
     <MenuItem
       anchorOrigin={
         Object {

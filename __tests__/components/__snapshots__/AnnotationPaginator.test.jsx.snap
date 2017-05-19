@@ -1,0 +1,26 @@
+exports[`<AnnotationPanel /> snapshots matches snapshot 1`] = `
+<div>
+  <IconButton
+    disableTouchRipple={false}
+    disabled={true}
+    iconStyle={Object {}}
+    id="previous-annotation"
+    onTouchTap={[Function]}
+    tooltip="Previous Annotation"
+    tooltipPosition="top-right"
+    touch={true}>
+    <NavigationArrowBack />
+  </IconButton>
+  <IconButton
+    disableTouchRipple={false}
+    disabled={true}
+    iconStyle={Object {}}
+    id="next-annotation"
+    onTouchTap={[Function]}
+    tooltip="Next Annotation"
+    tooltipPosition="top-right"
+    touch={true}>
+    <NavigationArrowForward />
+  </IconButton>
+</div>
+`;

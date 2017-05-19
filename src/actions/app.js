@@ -1,7 +1,8 @@
 import axios from 'axios';
-
+import { removeDeprecatedFiltersFromState } from '../util/codemirror-utils';
 import { addNotification, closeNotification } from './notifications';
-import { makeSaveEndpointUrl } from '../util/requests';
+import { makeSaveEndpointUrl, normalizeState } from '../util/requests';
+import { setDefaults } from '../util/state-management';
 
 export const RESET_STATE = 'RESET_STATE';
 export const EDIT_ANNOTATION = 'EDIT_ANNOTATION';
@@ -103,14 +104,22 @@ export const saveNew = org => (dispatch, getState) => {
   } = getState();
   // Construct the necessary request objects
   const reqBody = JSON.stringify(appState);
-  const reqHeaders = {
-    headers: {
-      Authorization: token,
-    },
+  const headers = {
+    Authorization: token,
   };
+  // This function is run by axios prior to sending POST request.
+  // It transforms data that is sent in the request by removing extra
+  // fields from the state object.
+  const transformRequest = [
+    (data) => {
+      const dataObj = JSON.parse(data);
+      return JSON.stringify(normalizeState(dataObj));
+    },
+  ];
+  const config = { headers, transformRequest };
   dispatch(addNotification('Saving...'));
     // Save the new snippet
-  return axios.post(makeSaveEndpointUrl(org), reqBody, reqHeaders)
+  return axios.post(makeSaveEndpointUrl(org), reqBody, config)
       .then((res) => {
         // Remove the 'saving...' notification
         dispatch(closeNotification());
@@ -133,21 +142,26 @@ export const saveExisting = () => (dispatch, getState) => {
     app: appState,
     user: {
       token,
-      username,
+      selectedOrg,
     },
   } = getState();
   const { snippetKey: key } = appState;
 
     // Construct the necessary request objects
   const reqBody = JSON.stringify(appState);
-  const reqHeaders = {
-    headers: {
-      Authorization: token,
-    },
+  const headers = {
+    Authorization: token,
   };
+  const transformRequest = [
+    (data) => {
+      const dataObj = JSON.parse(data);
+      return JSON.stringify(normalizeState(dataObj));
+    },
+  ];
+  const config = { headers, transformRequest };
   dispatch(addNotification('Saving...'));
     // Update the snippet
-  return axios.put(makeSaveEndpointUrl(username, key), reqBody, reqHeaders)
+  return axios.put(makeSaveEndpointUrl(selectedOrg, key), reqBody, config)
       .then(() => {
         // Remove the 'saving...' notification
         dispatch(closeNotification());
@@ -161,6 +175,39 @@ export const saveExisting = () => (dispatch, getState) => {
       });
 };
 
+export const deleteSnippet = snippetKey => (dispatch, getState) => {
+  // Get items out of app state
+  const {
+    user: {
+      token,
+      selectedOrg,
+    },
+  } = getState();
+
+  // Construct request objects
+  const reqHeaders = {
+    headers: {
+      Authorization: token,
+    },
+  };
+
+  // Delete the snippet
+  dispatch(addNotification('Deleting...'));
+  return axios.delete(makeSaveEndpointUrl(selectedOrg, snippetKey), reqHeaders)
+    .then(() => {
+      // Remove the 'deleting...' notifications
+      dispatch(closeNotification());
+      // Give user feedback that snippet deleted
+      dispatch(addNotification('Snippet Deleted!'));
+    })
+    .catch((err) => {
+      dispatch(addNotification('Failed to delete snippet; please try again'));
+      // Remove error notification
+      dispatch(closeNotification());
+      throw err;
+    });
+};
+
 export const loadSnippet = (username, snippetKey) => (dispatch, getState) => {
   const { token } = getState().user;
   const reqHeaders = {
@@ -170,5 +217,11 @@ export const loadSnippet = (username, snippetKey) => (dispatch, getState) => {
     method: 'GET',
     url: makeSaveEndpointUrl(username, snippetKey),
     headers: reqHeaders,
+    transformResponse: [
+      (data) => {
+        const dataObj = JSON.parse(data);
+        return setDefaults(removeDeprecatedFiltersFromState(normalizeState(dataObj)));
+      },
+    ],
   });
 };
