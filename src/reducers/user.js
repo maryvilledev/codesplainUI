@@ -1,4 +1,6 @@
-import _ from 'lodash';
+import get from 'lodash/get';
+import omit from 'lodash/omit';
+import union from 'lodash/union';
 
 import * as actions from '../actions/user';
 
@@ -24,13 +26,13 @@ const user = (state = initialState, action) => {
   case actions.ADD_ORG: {
     return {
       ...state,
-      orgs: _.union(state.orgs, [action.payload]),
+      orgs: union(state.orgs, [action.payload]),
     };
   }
   case actions.ADD_ORGANIZATIONS: {
     return {
       ...state,
-      orgs: _.union(state.orgs, action.payload),
+      orgs: union(state.orgs, action.payload),
     };
   }
   case actions.CLEAR_USER_CREDENTIALS: {
@@ -59,8 +61,8 @@ const user = (state = initialState, action) => {
     };
   }
   case actions.SET_SNIPPET_LISTS: {
-    const userSnippets = _.get(action.payload, state.username);
-    const orgSnippets = _.omit(action.payload, state.username);
+    const userSnippets = get(action.payload, state.username);
+    const orgSnippets = omit(action.payload, state.username);
     return {
       ...state,
       orgSnippets,

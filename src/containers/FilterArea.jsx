@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import _ from 'lodash';
+import cloneDeep from 'lodash/cloneDeep';
+import keys from 'lodash/keys';
 import {
   Card,
   CardText,
@@ -16,7 +17,7 @@ import FilterAreaActions from '../components/FilterAreaActions';
 import RulesSelector from '../components/RulesSelector';
 import CustomPropTypes from '../util/custom-prop-types';
 
-const filterCount = filters => _.keys(filters).length;
+const filterCount = filters => keys(filters).length;
 
 export class FilterArea extends React.Component {
   constructor(props) {
@@ -47,7 +48,7 @@ export class FilterArea extends React.Component {
 
   handleRuleSelected(filterName) {
     const { dispatch, filters } = this.props;
-    const newFilters = _.cloneDeep(filters);
+    const newFilters = cloneDeep(filters);
     newFilters[filterName].selected = !newFilters[filterName].selected;
     dispatch(setRuleFilters(newFilters));
   }

@@ -1,5 +1,6 @@
 import axios from 'axios';
-import _ from 'lodash';
+import forIn from 'lodash/forIn';
+import isString from 'lodash/isString';
 
 const API_URL = process.env.REACT_APP_API_URL;
 const GITHUB_API_URL = 'https://api.github.com';
@@ -16,7 +17,7 @@ const githubHeaders = token => ({
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent#Return_value
 export const sanitizeKey = (str) => {
   const getCharCode = ch => `%${ch.charCodeAt(0).toString(16).toUpperCase()}`;
-  return encodeURIComponent(str).replace(/[!'()*]/g, ch => getCharCode(ch));
+  return encodeURIComponent(str).replace(/[!'()*]/g, getCharCode);
 };
 
 /* Construct the endpoint to make a REST request to. Only the username is
@@ -44,7 +45,7 @@ export const makeParserEndpointUrl = language =>
 // In case the snippet list is a string && !== "{}", it will still be parsed into
 // an Object; if the snippetList argument is an object, do nothing.
 export const sanitizeSnippetList = (snippetList) => {
-  if (_.isString(snippetList)) {
+  if (isString(snippetList)) {
     return JSON.parse(snippetList);
   }
   return snippetList;
@@ -60,7 +61,7 @@ export const fetchUserAvatar = (user, token) => {
 // Each gist contains a dict of filenames to file info. We need to iterate and get
 // the filenames and urls
 export const gistReducer = (list, gist) => {
-  _.forIn(gist.files, ({ raw_url: url }, name) =>
+  forIn(gist.files, ({ raw_url: url }, name) =>
     list.push({ name, url }));
   return list;
 };
@@ -80,18 +81,18 @@ export const normalizeState = (state) => {
     annotations,
     AST,
     filters,
-    snippetLanguage,
     readOnly,
-    snippetTitle,
     snippet,
+    snippetLanguage,
+    snippetTitle,
   } = state;
   return {
     annotations,
     AST,
     filters,
-    snippetLanguage,
     readOnly,
-    snippetTitle,
     snippet,
+    snippetLanguage,
+    snippetTitle,
   };
 };
