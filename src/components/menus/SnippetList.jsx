@@ -7,14 +7,18 @@ import CustomPropTypes from '../../util/custom-prop-types';
 
 const styles = {
   menuItem: {
-    display: 'flex',
-    justifyContent: 'space-between',
+    width: '350px',
   },
-  metaData: {
-    fontSize: '80%',
+  title: {
+    width: '50%',
   },
   language: {
-    paddingRight: '50px',
+    float: 'left',
+    fontSize: '80%',
+  },
+  lastEdited: {
+    float: 'right',
+    fontSize: '80%',
   },
 };
 
@@ -27,15 +31,17 @@ const makeDisplayTitle = (title) => {
 };
 
 const makeItemDiv = ({ snippetTitle, language, lastEdited }) => (
-  <div style={styles.menuItem}>
-    <div>{makeDisplayTitle(snippetTitle)}</div>
-    <div style={styles.metaData}>
-      <span style={styles.language}>
+  <table style={styles.menuItem}>
+    <tr>
+      <td style={styles.title}>{makeDisplayTitle(snippetTitle)}</td>
+      <td style={styles.language}>
         {mapLanguage[language]}
-      </span>
-      <Moment fromNow ago>{lastEdited}</Moment>
-    </div>
-  </div>
+      </td>
+      <td style={styles.lastEdited}>
+        <Moment fromNow ago>{lastEdited}</Moment>
+      </td>
+    </tr>
+  </table>
 );
 
 const makeMenuItems = (snippetOwner, snippetsList, onClick) => {

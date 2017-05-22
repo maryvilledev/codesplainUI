@@ -7,11 +7,8 @@ import {
 } from 'material-ui';
 import { withRouter } from 'react-router';
 import cookie from 'react-cookie';
-
-
 import { setGists } from '../actions/gists';
 import { fetchGists, fetchGist } from '../util/requests';
-
 import {
   addOrg,
   addOrganizations,
@@ -52,6 +49,7 @@ const styles = {
   iconStyleRight: {
     margin: '0',
     width: '100%',
+    height: '100%',
   },
   title: {
     cursor: 'pointer',
