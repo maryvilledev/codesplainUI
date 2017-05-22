@@ -83,7 +83,7 @@ export class FilterArea extends React.Component {
       >
         <CardTitle
           actAsExpander={doesHaveFilters}
-          title={<h2>Filters</h2>}
+          title={<h2 className="section-title">Filters</h2>}
           showExpandableButton={doesHaveFilters}
         />
         <CardText

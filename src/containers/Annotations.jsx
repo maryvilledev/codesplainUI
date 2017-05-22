@@ -149,7 +149,7 @@ export class Annotations extends React.Component {
       return (
         <Card style={styles.card}>
           <CardTitle
-            title={<h2>Annotation</h2>}
+            title={<h2 className="section-title">Annotation</h2>}
           />
           <CardText>{prompt}</CardText>
         </Card>
@@ -160,7 +160,12 @@ export class Annotations extends React.Component {
         <CardTitle
           title={
             <div>
-              <h2 style={styles.headerItem}>Annotation</h2>
+              <h2
+                className="section-title"
+                style={styles.headerItem}
+              >
+                Annotation
+              </h2>
               <AnnotationPaginator
                 getNextAnnotation={this.getNextAnnotation}
                 getPreviousAnnotation={this.getPreviousAnnotation}

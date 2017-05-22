@@ -29,7 +29,7 @@ const makeListItems = (filters, onRuleSelected) => (
 const RulesSelector = ({ filters, onRuleSelected }) => {
   const listItems = makeListItems(filters, onRuleSelected);
   return (
-    <div>
+    <div className="rule-selector-container">
       {listItems}
     </div>
   );
