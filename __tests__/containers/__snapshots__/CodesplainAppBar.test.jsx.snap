@@ -68,6 +68,7 @@ exports[`<CodesplainAppBar /> snapshot tests user is logged in 1`] = `
     }
     iconStyleRight={
       Object {
+        "height": "100%",
         "margin": "0",
         "width": "100%",
       }
@@ -180,6 +181,7 @@ exports[`<CodesplainAppBar /> snapshot tests user is not logged in 1`] = `
     }
     iconStyleRight={
       Object {
+        "height": "100%",
         "margin": "0",
         "width": "100%",
       }

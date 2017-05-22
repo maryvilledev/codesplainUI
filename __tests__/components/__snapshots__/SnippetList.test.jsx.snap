@@ -46,39 +46,45 @@ exports[`<SnippetList /> snapshot tests matches when snippets are passed 1`] = `
         insetChildren={false}
         onTouchTap={[Function]}
         primaryText={
-            <div
+            <table
                 style={
                     Object {
-                        "display": "flex",
-                        "justifyContent": "space-between",
+                        "width": "350px",
                       }
                 }>
-                <div>
-                    bar
-                </div>
-                <div
-                    style={
-                        Object {
-                            "fontSize": "80%",
-                          }
-                    }>
-                    <span
+                <tr>
+                    <td
                         style={
                             Object {
-                                "paddingRight": "50px",
+                                "width": "50%",
+                              }
+                        }>
+                        bar
+                    </td>
+                    <td
+                        style={
+                            Object {
+                                "float": "left",
+                                "fontSize": "80%",
                               }
                         } />
-                    <o
-                        ago={true}
-                        calendar={false}
-                        fromNow={true}
-                        toNow={false}
-                        unix={false}
-                        utc={false}>
-                        1495466347166
-                    </o>
-                </div>
-            </div>
+                    <td
+                        style={
+                            Object {
+                                "float": "right",
+                                "fontSize": "80%",
+                              }
+                        }>
+                        <o
+                            ago={true}
+                            calendar={false}
+                            fromNow={true}
+                            toNow={false}
+                            unix={false}
+                            utc={false} />
+                    </td>
+                </tr>
+            </table>
         } />,
       <MenuItem
         anchorOrigin={
@@ -94,39 +100,45 @@ exports[`<SnippetList /> snapshot tests matches when snippets are passed 1`] = `
         insetChildren={false}
         onTouchTap={[Function]}
         primaryText={
-            <div
+            <table
                 style={
                     Object {
-                        "display": "flex",
-                        "justifyContent": "space-between",
+                        "width": "350px",
                       }
                 }>
-                <div>
-                    qux
-                </div>
-                <div
-                    style={
-                        Object {
-                            "fontSize": "80%",
-                          }
-                    }>
-                    <span
+                <tr>
+                    <td
                         style={
                             Object {
-                                "paddingRight": "50px",
+                                "width": "50%",
+                              }
+                        }>
+                        qux
+                    </td>
+                    <td
+                        style={
+                            Object {
+                                "float": "left",
+                                "fontSize": "80%",
                               }
                         } />
-                    <o
-                        ago={true}
-                        calendar={false}
-                        fromNow={true}
-                        toNow={false}
-                        unix={false}
-                        utc={false}>
-                        1495466347166
-                    </o>
-                </div>
-            </div>
+                    <td
+                        style={
+                            Object {
+                                "float": "right",
+                                "fontSize": "80%",
+                              }
+                        }>
+                        <o
+                            ago={true}
+                            calendar={false}
+                            fromNow={true}
+                            toNow={false}
+                            unix={false}
+                            utc={false} />
+                    </td>
+                </tr>
+            </table>
         } />,
     ]
   }
