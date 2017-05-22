@@ -15,7 +15,7 @@ self.onmessage = ({ data: action }) => {
     if (!parser) break;
     const { snippet } = action.payload;
     self.postMessage(clearErrors());
-    const AST = parser(snippet, (err) => onError(err, self.postMessage));
+    const AST = parser(snippet, (err) => onError(err, self.postMessage), {});
     const ruleCounts = {}; getRuleCount(AST, ruleCounts);
     self.postMessage({
       type: action.type,

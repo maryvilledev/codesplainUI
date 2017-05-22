@@ -1,65 +1,72 @@
 import moxios from 'moxios';
-import configureMockStore from 'redux-mock-store';
-import thunk from 'redux-thunk';
 
 import * as actions from '../../src/actions/app';
+import generateMockStore from '../../src/testUtils/mockStore';
 
 describe('Actions: App', () => {
-  describe('SET_SNIPPET_KEY', () => {
-    it('creates correct action object', () => {
-      const key = 'szechuan sauce';
-      expect(actions.setSnippetKey(key)).toMatchSnapshot();
-    });
+  it('creates correct SET_SNIPPET_KEY action object', () => {
+    const key = 'szechuan sauce';
+    expect(actions.setSnippetKey(key)).toMatchSnapshot();
   });
-  describe('SET_SNIPPET_CONTENTS', () => {
-    it('creates an action to set the snippet contents', () => {
-      const snippet = 'Show me what you got';
-      const expected = {
-        type: actions.SET_SNIPPET_CONTENTS,
-        payload: snippet,
-      };
-      expect(actions.setSnippetContents(snippet)).toEqual(expected);
-    });
+  it('creates correct SET_SNIPPET_CONTENTS action object', () => {
+    const snippet = 'Show me what you got';
+    expect(actions.setSnippetContents(snippet)).toMatchSnapshot();
   });
-  describe('SET_RULE_FILTERS', () => {
-    it('creates an action to set the rule filters', () => {
-      const filters = {
-        for_stmt: {
-          prettyTokenName: 'For Loops',
-          count: 1,
-          selected: false,
-        },
-        atom: {
-          prettyTokenName: 'Atoms',
-          count: 21,
-          selected: true,
-        },
-      };
-      const expected = {
-        type: actions.SET_RULE_FILTERS,
-        payload: filters,
-      };
-      expect(actions.setRuleFilters(filters)).toEqual(expected);
-    });
+  it('creates correct SET_RULE_FILTERS action object', () => {
+    const filters = {
+      for_stmt: {
+        prettyTokenName: 'For Loops',
+        count: 1,
+        selected: false,
+      },
+      atom: {
+        prettyTokenName: 'Atoms',
+        count: 21,
+        selected: true,
+      },
+    };
+    expect(actions.setRuleFilters(filters)).toMatchSnapshot();
   });
-  describe('RESET_RULE_FILTERS', () => {
-    it('matches snapshot', () => {
-      expect(actions.resetFilters()).toMatchSnapshot();
-    });
+  it('creates correct RESET_RULE_FILTERS action object', () => {
+    expect(actions.resetFilters()).toMatchSnapshot();
   });
-  describe('SELECT_ALL_FILTERS', () => {
-    it('matches snapshot', () => {
-      expect(actions.selectAllFilters()).toMatchSnapshot();
-    });
+  it('creates correct SELECT_ALL_FILTERS action object', () => {
+    expect(actions.selectAllFilters()).toMatchSnapshot();
   });
-  describe('RESET_STATE', () => {
-    it('matches snapshot', () => {
-      expect(actions.resetState()).toMatchSnapshot();
-    });
+  it('creates correct RESET_STATE action object', () => {
+    expect(actions.resetState()).toMatchSnapshot();
   });
-  describe('SET_AST', () => {
-    it('creates an action to set the abstract syntax tree', () => {
-      const AST = {
+  it('creates correct RESET_STATE action object', () => {
+    const AST = {
+      type: 'file_input',
+      begin: 0,
+      end: 1,
+      children: [
+        'NEWLINE',
+        'INDENT',
+        'NEWLINE',
+        'DEDENT',
+      ],
+    };
+    expect(actions.setAST(AST)).toMatchSnapshot();
+  });
+  it('creates correct TOGGLE_EDITING_STATE action object', () => {
+    expect(actions.toggleEditState()).toMatchSnapshot();
+  });
+  it('creates correct SAVE_ANNOTATION action object', () => {
+    const annotationData = {
+      annotation: 'You pass butter.',
+      lineNumber: 1,
+      lineText: 'What is my purpose?',
+    };
+    expect(actions.saveAnnotation(annotationData)).toMatchSnapshot();
+  });
+  it('creates correct RESTORE_STATE action object', () => {
+    const savedState = {
+      snippet: '\t',
+      snippetTitle: '',
+      annotations: {},
+      AST: {
         type: 'file_input',
         begin: 0,
         end: 1,
@@ -69,110 +76,35 @@ describe('Actions: App', () => {
           'NEWLINE',
           'DEDENT',
         ],
-      };
-      const expected = {
-        type: actions.SET_AST,
-        payload: AST,
-      };
-      expect(actions.setAST(AST)).toEqual(expected);
-    });
+      },
+      filters: {},
+      readOnly: false,
+    };
+    expect(actions.restoreState(savedState)).toMatchSnapshot();
   });
-  describe('TOGGLE_EDITING_STATE', () => {
-    it('creates an action that toggles the editing state', () => {
-      const expected = {
-        type: actions.TOGGLE_EDITING_STATE,
-      };
-      expect(actions.toggleEditState()).toEqual(expected);
-    });
+  it('creates correct SET_SNIPPET_TITLE action object', () => {
+    const snippetTitle = 'Get Schwifty';
+    const expected = {
+      type: actions.SET_SNIPPET_TITLE,
+      payload: snippetTitle,
+    };
+    expect(actions.setSnippetTitle(snippetTitle)).toEqual(expected);
   });
-  describe('SAVE_ANNOTATION', () => {
-    it('creates an action that adds an annotation', () => {
-      const annotationData = {
-        annotation: 'You pass butter.',
-        lineNumber: 1,
-        lineText: 'What is my purpose?',
-      };
-      const expected = {
-        type: actions.SAVE_ANNOTATION,
-        payload: annotationData,
-      };
-      expect(actions.saveAnnotation(annotationData)).toEqual(expected);
-    });
+  it('creates correct SET_SNIPPET_LANGUAGE action object', () => {
+    const snippetLanguage = 'Gromflomite';
+    expect(actions.setSnippetLanguage(snippetLanguage)).toMatchSnapshot();
   });
-  describe('RESTORE_STATE', () => {
-    it('creates an action that restores state', () => {
-      const savedState = {
-        snippet: '\t',
-        snippetTitle: '',
-        annotations: {},
-        AST: {
-          type: 'file_input',
-          begin: 0,
-          end: 1,
-          children: [
-            'NEWLINE',
-            'INDENT',
-            'NEWLINE',
-            'DEDENT',
-          ],
-        },
-        filters: {},
-        readOnly: false,
-      };
-      const expected = {
-        type: actions.RESTORE_STATE,
-        payload: savedState,
-      };
-      expect(actions.restoreState(savedState)).toEqual(expected);
-    });
+  it('creates correct PARSE_SNIPPET action object', () => {
+    const snippet = 'Grasssss tastes bad';
+    expect(actions.parseSnippet(snippet)).toMatchSnapshot();
   });
-  describe('SET_SNIPPET_TITLE', () => {
-    it('creates an action to set the snippet title', () => {
-      const snippetTitle = 'Get Schwifty';
-      const expected = {
-        type: actions.SET_SNIPPET_TITLE,
-        payload: snippetTitle,
-      };
-      expect(actions.setSnippetTitle(snippetTitle)).toEqual(expected);
-    });
-  });
-  describe('SET_SNIPPET_LANGUAGE', () => {
-    it('creates an action to set the snippet language', () => {
-      const snippetLanguage = 'Gromflomite';
-      const expected = {
-        type: actions.SET_SNIPPET_LANGUAGE,
-        payload: snippetLanguage,
-      };
-      expect(actions.setSnippetLanguage(snippetLanguage)).toEqual(expected);
-    });
-  });
-  describe('PARSE_SNIPPET', () => {
-    it('creates an action to parse the snippet with a web worker', () => {
-      const snippet = 'Grasssss tastes bad';
-      const expected = {
-        type: actions.PARSE_SNIPPET,
-        meta: {
-          WebWorker: true,
-        },
-        payload: {
-          snippet,
-        },
-      };
-      expect(actions.parseSnippet(snippet)).toEqual(expected);
-    });
-  });
-  describe('SAVE_SUCCEEDED', () => {
-    it('creates the correct action object', () => {
-      const expected = {
-        type: actions.SAVE_SUCCEEDED,
-      };
-      expect(actions.saveSucceeded()).toEqual(expected);
-    });
+  it('creates correct SAVE_SUCCEEDED action object', () => {
+    const expected = {
+      type: actions.SAVE_SUCCEEDED,
+    };
+    expect(actions.saveSucceeded()).toEqual(expected);
   });
   describe('async actions', () => {
-    const middlewares = [thunk];
-    const mockStore = configureMockStore(middlewares);
-
     beforeEach(() => {
       moxios.install();
     });
@@ -180,7 +112,7 @@ describe('Actions: App', () => {
       moxios.uninstall();
     });
     describe('saveNew()', () => {
-      it('dispatches SAVE_SUCCEEDED if saved', () => {
+      it('dispatches correct actions if save succeeded', () => {
         const key = 'gazorpazorp';
         const org = 'rick-sanchez';
         moxios.wait(() => {
@@ -190,7 +122,7 @@ describe('Actions: App', () => {
             response: { key, status: '200' },
           });
         });
-        const store = mockStore({
+        const store = generateMockStore({
           app: {},
           user: { token: '' },
         });
@@ -200,7 +132,7 @@ describe('Actions: App', () => {
             expect(returnVal).toEqual(key);
           });
       });
-      it('dispatches SAVE_FAILED if save failed', () => {
+      it('dispatches correct actions if save failed', () => {
         const org = 'rick-sanchez';
         moxios.wait(() => {
           const request = moxios.requests.mostRecent();
@@ -208,7 +140,7 @@ describe('Actions: App', () => {
             status: 400,
           });
         });
-        const store = mockStore({
+        const store = generateMockStore({
           app: {},
           user: { token: '' },
         });
@@ -227,7 +159,7 @@ describe('Actions: App', () => {
             status: 200,
           });
         });
-        const store = mockStore({
+        const store = generateMockStore({
           user: {
             token: '',
             selectedOrg: '',
@@ -246,7 +178,7 @@ describe('Actions: App', () => {
             status: 400,
           });
         });
-        const store = mockStore({
+        const store = generateMockStore({
           user: {
             token: '',
             selectedOrg: '',
@@ -259,15 +191,14 @@ describe('Actions: App', () => {
       });
     });
     describe('saveExisting()', () => {
-      it('dispatches SAVE_SUCCEEDED if saved', () => {
+      it('dispatches the correct actions if the action succeeded', () => {
         moxios.wait(() => {
           const request = moxios.requests.mostRecent();
           request.respondWith({
             status: 200,
-            response: { status: '200' },
           });
         });
-        const store = mockStore({
+        const store = generateMockStore({
           app: {},
           user: { token: '', username: '' },
         });
@@ -276,18 +207,41 @@ describe('Actions: App', () => {
             expect(store.getActions()).toMatchSnapshot();
           });
       });
-      it('dispatches SAVE_FAILED if save failed', () => {
+      it('dispatches the correct actions if the action failed', () => {
         moxios.wait(() => {
           const request = moxios.requests.mostRecent();
           request.respondWith({
             status: 400,
           });
         });
-        const store = mockStore({
+        const store = generateMockStore({
           app: {},
           user: { token: '', username: '' },
         });
         return store.dispatch(actions.saveExisting())
+          .then(() => { // return of async actions
+            expect(store.getActions()).toMatchSnapshot();
+          });
+      });
+    });
+    describe('loadSnippet()', () => {
+      it('dispatches the correct actions if the action succeeded', () => {
+        moxios.wait(() => {
+          const request = moxios.requests.mostRecent();
+          request.respondWith({
+            status: 200,
+            response: JSON.stringify({
+              snippet: 'snippet',
+            }),
+          });
+        });
+        const store = generateMockStore({
+          app: {},
+          user: { token: '' },
+        });
+        const snippetOwner = 'snippetOwner';
+        const snippetKey = 'key';
+        return store.dispatch(actions.loadSnippet(snippetOwner, snippetKey))
           .then(() => { // return of async actions
             expect(store.getActions()).toMatchSnapshot();
           });

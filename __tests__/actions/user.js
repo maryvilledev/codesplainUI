@@ -1,8 +1,7 @@
 import moxios from 'moxios';
-import configureMockStore from 'redux-mock-store';
-import thunk from 'redux-thunk';
 
 import * as actions from '../../src/actions/user';
+import generateMockStore from '../../src/testUtils/mockStore';
 
 describe('Actions: User', () => {
   describe('action creators', () => {
@@ -13,32 +12,21 @@ describe('Actions: User', () => {
 
     it('creates correct ADD_ORGANIZATIONS object', () => {
       const organizations = ['Galactic Federation', 'Council Of Ricks'];
-      const expected = {
-        type: actions.ADD_ORGANIZATIONS,
-        payload: organizations,
-      };
-      expect(actions.addOrganizations(organizations)).toEqual(expected);
+      expect(actions.addOrganizations(organizations)).toMatchSnapshot();
     });
+
     it('creates correct CLEAR_USER_CREDENTIALS object', () => {
       expect(actions.clearUserCredentials()).toMatchSnapshot();
     });
-  });
-  describe('action creators', () => {
+
     it('creates correct SET_AVATAR_URL object', () => {
       const url = 'https://foobar.com/quxbaz';
-      const expected = {
-        type: actions.SET_AVATAR_URL,
-        payload: url,
-      };
-      expect(actions.setAvatarUrl(url)).toEqual(expected);
+      expect(actions.setAvatarUrl(url)).toMatchSnapshot();
     });
+
     it('creates correct SAVE_USERNAME object', () => {
       const token = 'token';
-      const expected = {
-        type: actions.SAVE_USERNAME,
-        payload: token,
-      };
-      expect(actions.saveUsername(token)).toEqual(expected);
+      expect(actions.saveUsername(token)).toMatchSnapshot();
     });
 
     it('creates correct SAVE_ACCESS_TOKEN object', () => {
@@ -65,12 +53,20 @@ describe('Actions: User', () => {
       const org = 'galactic-federation';
       expect(actions.switchOrg(org)).toMatchSnapshot();
     });
+    it('creates correct SET_USER_SNIPPETS object', () => {
+      const snippetsList = [
+        {
+          snippetName: 'Test Snippet',
+          language: 'Python 3',
+          lastEdited: '2017-04-05T12:52:20.099Z',
+          private: true,
+        },
+      ];
+      expect(actions.setUserSnippets(snippetsList)).toMatchSnapshot();
+    });
   });
 
   describe('async actions', () => {
-    const middlewares = [thunk];
-    const mockStore = configureMockStore(middlewares);
-
     beforeEach(() => {
       moxios.install();
     });
@@ -80,8 +76,7 @@ describe('Actions: User', () => {
     });
 
     describe('UPDATE_USER_SNIPPETS', () => {
-      it('dispatches SET_USER_SNIPPETS, UPDATE_USER_SNIPPETS_STARTED, and ' +
-         'UPDATE_USER_SNIPPETS_SUCCEEDED if successful', () => {
+      it('dispatches correct actions if successful', () => {
         moxios.wait(() => {
           const request = moxios.requests.mostRecent();
           request.respondWith({
@@ -101,22 +96,17 @@ describe('Actions: User', () => {
               },
             },
           });
-          const expectedActions = [
-            { type: actions.UPDATE_USER_SNIPPETS },
-            { type: actions.UPDATE_USER_SNIPPETS_STARTED },
-            { type: actions.UPDATE_USER_SNIPPETS_SUCCEEDED },
-          ];
-          const store = mockStore({
-            user: {
-              username: 'FooBar',
-              token: '1234',
-            },
-          });
-          return store.dispatch(actions.updateUserSnippets())
-            .then(() => { // return of async actions
-              expect(store.getActions()).toEqual(expectedActions);
-            });
         });
+        const store = generateMockStore({
+          user: {
+            username: 'FooBar',
+            token: '1234',
+          },
+        });
+        return store.dispatch(actions.updateUserSnippets())
+          .then(() => { // return of async actions
+            expect(store.getActions()).toMatchSnapshot();
+          });
       });
 
       it('dispatches UPDATE_USER_SNIPPETS_FAILED if unsuccessful', () => {
@@ -126,11 +116,7 @@ describe('Actions: User', () => {
             status: 400,
           });
         });
-        const expectedActions = [
-          { type: actions.UPDATE_USER_SNIPPETS_STARTED },
-          { type: actions.UPDATE_USER_SNIPPETS_FAILED },
-        ];
-        const store = mockStore({
+        const store = generateMockStore({
           user: {
             username: 'FooBar',
             token: '1234',
@@ -138,26 +124,8 @@ describe('Actions: User', () => {
         });
         return store.dispatch(actions.updateUserSnippets())
           .catch(() => {
-            expect(store.getActions()).toEqual(expectedActions);
+            expect(store.getActions()).toMatchSnapshot();
           });
-      });
-    });
-
-    describe('SET_USER_SNIPPETS', () => {
-      it('creates an action to save meta data about user`s snippets', () => {
-        const snippetMeta = [
-          {
-            snippetName: 'Test Snippet',
-            language: 'Python 3',
-            lastEdited: '2017-04-05T12:52:20.099Z',
-            private: true,
-          },
-        ];
-        const expected = {
-          type: actions.SET_USER_SNIPPETS,
-          payload: snippetMeta,
-        };
-        expect(actions.setUserSnippets(snippetMeta)).toEqual(expected);
       });
     });
   });
