@@ -4,11 +4,7 @@ describe('Actions: parser', () => {
   describe('LOAD_PARSER', () => {
     it('creates an action to load a parser', () => {
       const language = 'squanchy';
-      const expected = {
-        type: actions.LOAD_PARSER,
-        payload: language,
-      };
-      expect(actions.loadParser(language)).toEqual(expect.objectContaining(expected));
+      expect(actions.loadParser(language)).toMatchSnapshot();
     });
   });
   describe('ADD_ERROR', () => {
@@ -19,18 +15,11 @@ describe('Actions: parser', () => {
         end: NaN,
         msg: 'blahblahblah',
       };
-      const expected = {
-        type: actions.ADD_ERROR,
-        payload: error,
-      };
-      expect(actions.addError(error)).toEqual(expected);
+      expect(actions.addError(error)).toMatchSnapshot();
     });
     describe('CLEAR_ERRORS', () => {
       it('creates an action to remove all errors from state', () => {
-        const expected = {
-          type: actions.CLEAR_ERRORS,
-        };
-        expect(actions.clearErrors()).toEqual(expected);
+        expect(actions.clearErrors()).toMatchSnapshot();
       });
     });
   });

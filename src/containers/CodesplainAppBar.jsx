@@ -174,12 +174,12 @@ export class CodesplainAppBar extends Component {
 
   handleImportGist(name, url) {
     const { dispatch } = this.props;
+    this.redirectToHomePage();
     dispatch(setSnippetTitle(name));
     fetchGist(url).then((contents) => {
       dispatch(setSnippetContents(contents));
       dispatch(parseSnippet(contents));
     });
-    this.redirectToHomePage();
   }
 
   resetApplication() {

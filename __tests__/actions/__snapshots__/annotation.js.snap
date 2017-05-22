@@ -1,0 +1,15 @@
+exports[`Actions: Annotation CLOSE_ANNOTATION_PANEL creates an action to close the annotation panel 1`] = `
+Object {
+  "type": "CLOSE_ANNOTATION_PANEL",
+}
+`;
+
+exports[`Actions: Annotation OPEN_ANNOTATION_PANEL creates an action to open the annotation panel 1`] = `
+Object {
+  "payload": Object {
+    "lineNumber": 1,
+    "lineText": "Wubba lubba dub dub!",
+  },
+  "type": "OPEN_ANNOTATION_PANEL",
+}
+`;

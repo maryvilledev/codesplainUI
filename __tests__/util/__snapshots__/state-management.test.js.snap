@@ -1,5 +1,10 @@
 exports[`util: state-management defaultStateValues matches snapshot 1`] = `
 Object {
+  "annotations": Object {},
+  "filters": Object {},
+  "readOnly": false,
+  "snippet": "",
   "snippetLanguage": "python3",
+  "snippetTitle": "title",
 }
 `;

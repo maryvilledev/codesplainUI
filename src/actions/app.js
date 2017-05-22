@@ -1,6 +1,9 @@
 import axios from 'axios';
-import { removeDeprecatedFiltersFromState } from '../util/codemirror-utils';
+
+
 import { addNotification, closeNotification } from './notifications';
+import { setAuthor } from './permissions';
+import { removeDeprecatedFiltersFromState } from '../util/codemirror-utils';
 import { makeSaveEndpointUrl, normalizeState } from '../util/requests';
 import { setDefaults } from '../util/state-management';
 
@@ -10,8 +13,6 @@ export const PARSE_SNIPPET = 'PARSE_SNIPPET';
 export const RESET_RULE_FILTERS = 'RESET_RULE_FILTERS';
 export const RESTORE_STATE = 'RESTORE_STATE';
 export const SAVE_ANNOTATION = 'SAVE_ANNOTATION';
-export const SAVE_FAILED = 'SAVE_FAILED';
-export const SAVE_STARTED = 'SAVE_STARTED';
 export const SAVE_SUCCEEDED = 'SAVE_SUCCEEDED';
 export const SELECT_ALL_FILTERS = 'SELECT_ALL_FILTERS';
 export const SET_AST = 'SET_AST';
@@ -20,10 +21,6 @@ export const SET_SNIPPET_CONTENTS = 'SET_SNIPPET_CONTENTS';
 export const SET_SNIPPET_LANGUAGE = 'SET_SNIPPET_LANGUAGE';
 export const SET_SNIPPET_TITLE = 'SET_SNIPPET_TITLE';
 export const TOGGLE_EDITING_STATE = 'TOGGLE_EDITING_STATE';
-export const SAVE_STATE = 'SAVE_STATE';
-export const SAVE_STATE_STARTED = 'SAVE_STATE_STARTED';
-export const SAVE_STATE_SUCCEEDED = 'SAVE_STATE_SUCCEEDED';
-export const SAVE_STATE_FAILED = 'SAVE_STATE_FAILED';
 export const SET_SNIPPET_KEY = 'SET_SNIPPET_KEY';
 
 export const setSnippetKey = key => ({
@@ -201,21 +198,22 @@ export const deleteSnippet = snippetKey => (dispatch, getState) => {
       dispatch(addNotification('Snippet Deleted!'));
     })
     .catch((err) => {
-      dispatch(addNotification('Failed to delete snippet; please try again'));
-      // Remove error notification
+      // Remove the 'deleting...' notifications
       dispatch(closeNotification());
+      // Show an error notification
+      dispatch(addNotification('Failed to delete snippet; please try again'));
       throw err;
     });
 };
 
-export const loadSnippet = (username, snippetKey) => (dispatch, getState) => {
+export const loadSnippet = (snippetOwner, snippetKey) => (dispatch, getState) => {
   const { token } = getState().user;
   const reqHeaders = {
     Authorization: token,
   };
   return axios({
     method: 'GET',
-    url: makeSaveEndpointUrl(username, snippetKey),
+    url: makeSaveEndpointUrl(snippetOwner, snippetKey),
     headers: reqHeaders,
     transformResponse: [
       (data) => {
@@ -223,5 +221,11 @@ export const loadSnippet = (username, snippetKey) => (dispatch, getState) => {
         return setDefaults(removeDeprecatedFiltersFromState(normalizeState(dataObj)));
       },
     ],
-  });
+  })
+    .then(({ data: appState }) => {
+      // Restore the application's state
+      dispatch(restoreState(appState));
+      dispatch(setSnippetKey(snippetKey));
+      dispatch(setAuthor(snippetOwner));
+    });
 };

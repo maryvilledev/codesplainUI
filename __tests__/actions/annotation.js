@@ -7,20 +7,13 @@ describe('Actions: Annotation', () => {
         lineNumber: 1,
         lineText: 'Wubba lubba dub dub!',
       };
-      const expected = {
-        type: actions.OPEN_ANNOTATION_PANEL,
-        payload: snippetInformation,
-      };
-      expect(actions.openAnnotationPanel(snippetInformation)).toEqual(expected);
+      expect(actions.openAnnotationPanel(snippetInformation)).toMatchSnapshot();
     });
   });
 
   describe('CLOSE_ANNOTATION_PANEL', () => {
     it('creates an action to close the annotation panel', () => {
-      const expected = {
-        type: actions.CLOSE_ANNOTATION_PANEL,
-      };
-      expect(actions.closeAnnotationPanel()).toEqual(expected);
+      expect(actions.closeAnnotationPanel()).toMatchSnapshot();
     });
   });
 });

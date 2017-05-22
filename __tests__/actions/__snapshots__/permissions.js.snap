@@ -1,0 +1,16 @@
+exports[`Actions: permissions SET_AUTHOR creates an action to set the author 1`] = `
+Object {
+  "payload": "phoenixperson",
+  "type": "SET_AUTHOR",
+}
+`;
+
+exports[`Actions: permissions SET_PERMISSIONS creates an action to set permissions 1`] = `
+Object {
+  "payload": Object {
+    "canEdit": false,
+    "canRead": true,
+  },
+  "type": "SET_PERMISSIONS",
+}
+`;
