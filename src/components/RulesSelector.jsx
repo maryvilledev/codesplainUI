@@ -1,5 +1,7 @@
 import React, { PropTypes } from 'react';
+
 import RuleLabel from './RuleLabel';
+import CustomPropTypes from '../util/custom-prop-types';
 
 const makeListItems = (filters, onRuleSelected) => (
   Object.keys(filters)
@@ -34,12 +36,7 @@ const RulesSelector = ({ filters, onRuleSelected }) => {
 };
 
 RulesSelector.propTypes = {
-  filters: PropTypes.shape({
-    color: PropTypes.string,
-    count: PropTypes.number,
-    prettyTokenName: PropTypes.string,
-    selected: PropTypes.bool,
-  }).isRequired,
+  filters: CustomPropTypes.filters.isRequired,
   onRuleSelected: PropTypes.func.isRequired,
 };
 
