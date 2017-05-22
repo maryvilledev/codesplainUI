@@ -6,6 +6,7 @@ import { shallowToJson } from 'enzyme-to-json';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
+import { saveAccessToken } from '../../src/actions/user';
 import generateMockStore from '../../src/testUtils/mockStore';
 import generateMockRouter from '../../src/testUtils/mockRouter';
 import {
@@ -62,6 +63,48 @@ describe('<CodesplainAppBar />', () => {
         />,
       );
       expect(shallowToJson(wrapper)).toMatchSnapshot();
+    });
+  });
+
+  describe('fetchUserAccountInfo', () => {
+    it('saves the access token if it has not been already', () => {
+      const accessToken = 'token';
+      cookie.save('token', accessToken, { path: '/' });
+      const store = generateMockStore({
+        ...defaultStore,
+        user: {
+          ...defaultStore.user,
+          // Set the username so the user info requests aren't triggered
+          username: 'Rick Sanchez',
+        },
+      });
+      const router = generateMockRouter({ location: { pathname: '/foobar' } });
+      mountWithContext(
+        <Provider store={store}>
+          <ConnectedAppBar router={router} />
+        </Provider>,
+      );
+      expect(store.getActions()[0]).toEqual(saveAccessToken(accessToken));
+      cookie.remove('token', { path: '/' });
+    });
+
+    it('does not save the access token if it already has been', () => {
+      const store = generateMockStore({
+        ...defaultStore,
+        user: {
+          ...defaultStore.user,
+          token: 'token',
+          // Set the username so the user info requests aren't triggered
+          username: 'Rick Sanchez',
+        },
+      });
+      const router = generateMockRouter({ location: { pathname: '/foobar' } });
+      mountWithContext(
+        <Provider store={store}>
+          <ConnectedAppBar router={router} />
+        </Provider>,
+      );
+      expect(store.getActions().length).toEqual(0);
     });
   });
 

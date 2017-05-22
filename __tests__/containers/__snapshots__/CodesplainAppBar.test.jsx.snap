@@ -17,21 +17,10 @@ exports[`<CodesplainAppBar /> snapshot tests user is logged in 1`] = `
 <div>
   <AppBar
     iconElementRight={
-      <AppMenu
-        avatarUrl=""
-        gists={Array []}
-        onImportGist={[Function]}
-        onSignOut={[Function]}
-        onSnippetSelected={[Function]}
-        orgSnippets={Object {}}
-        userSnippets={Object {}}
-        username="FooBar" />
+      <LoginButton
+        onClick={[Function]} />
     }
-    iconStyleRight={
-      Object {
-        "marginTop": "16px",
-      }
-    }
+    iconStyleRight={Object {}}
     showMenuIconButton={false}
     style={
       Object {
