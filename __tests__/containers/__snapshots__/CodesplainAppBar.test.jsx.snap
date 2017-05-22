@@ -8,9 +8,6 @@ Array [
     "type": "SET_AUTHOR",
   },
   Object {
-    "type": "CLEAR_USER_CREDENTIALS",
-  },
-  Object {
     "type": "CLOSE_ANNOTATION_PANEL",
   },
 ]

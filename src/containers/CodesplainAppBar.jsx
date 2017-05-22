@@ -20,7 +20,6 @@ import {
 import { addNotification } from '../actions/notifications';
 import { setAuthor } from '../actions/permissions';
 import {
-  clearUserCredentials,
   fetchSnippetLists,
   fetchUserInfo,
   fetchUserOrgs,
@@ -172,7 +171,6 @@ export class CodesplainAppBar extends Component {
     // Reset state
     dispatch(resetState());
     dispatch(setAuthor(''));
-    dispatch(clearUserCredentials());
     // Close the annotation panel
     dispatch(closeAnnotationPanel());
   }
