@@ -19,14 +19,13 @@ const styles = {
 };
 
 const makeItemDiv = ({ snippetTitle, language, lastEdited }) => (
-  // TODO: Parse lastEdited to pretty date time.
   <div style={styles.menuItem}>
     <div>{snippetTitle}</div>
     <div style={styles.metaData}>
       <span style={styles.language}>
         {mapLanguage[language]}
       </span>
-      <Moment fromNow ago>{Date.now()}</Moment>
+      <Moment fromNow ago>{lastEdited}</Moment>
     </div>
   </div>
 );
@@ -35,8 +34,6 @@ const makeMenuItems = (snippetOwner, snippetsList, onClick) => {
   if (Object.keys(snippetsList).length === 0) {
     return null;
   }
-  console.log('snippetList:');
-  console.log(snippetsList);
   return Object.keys(snippetsList).map(snippetKey => (
     <MenuItem
       key={snippetKey}
