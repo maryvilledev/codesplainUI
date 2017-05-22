@@ -59,6 +59,7 @@ export class CodesplainAppBar extends Component {
       isLoggedIn: false,
       isDialogOpen: false,
     };
+    this.fetchUserAccountInfo = this.fetchUserAccountInfo.bind(this);
     this.handleConfirmNavigation = this.handleConfirmNavigation.bind(this);
     this.handleDialogClose = this.handleDialogClose.bind(this);
     this.handleImportGist = this.handleImportGist.bind(this);
@@ -71,34 +72,7 @@ export class CodesplainAppBar extends Component {
   }
 
   componentDidMount() {
-    const { dispatch, token, router } = this.props;
-    const tokenCookie = cookie.load('token');
-
-    // Save token to state if it hasn't already been (by <Auth />)
-    if (!token && tokenCookie) {
-      dispatch(saveAccessToken(tokenCookie));
-    }
-
-    // If we have a token (thus are logged in), get user's info & save to state
-    if (tokenCookie) {
-      dispatch(fetchUserInfo())
-        .then(() => { this.setState({ isLoggedIn: true }); })
-        .then(() => dispatch(fetchUserOrgs()))
-        .then(() => dispatch(fetchSnippetLists()))
-        .then(() => dispatch(fetchGists()))
-        .catch((err) => {
-          // If we fail, token must have been invalid:
-          // remove it and redirect to home page
-          if (err.response.status === 401) {
-            this.resetApplication();
-            this.setState({ isLoggedIn: false });
-            cookie.remove('token', { path: '/' });
-            router.push('/');
-          } else {
-            dispatch(addNotification('Error fetching user information'));
-          }
-        });
-    }
+    this.fetchUserAccountInfo();
   }
 
   onLoginClick() {
@@ -118,6 +92,38 @@ export class CodesplainAppBar extends Component {
     // This does not use the router to route the user to Github because
     // router is used for routing within the application, not the entire web
     window.location = GITHUB_URL;
+  }
+
+  fetchUserAccountInfo() {
+    const { dispatch, token, router, username } = this.props;
+    const tokenCookie = cookie.load('token');
+
+    // Save token to state if it hasn't already been (by <Auth />)
+    if (!token && tokenCookie) {
+      dispatch(saveAccessToken(tokenCookie));
+    }
+
+    // If we have a token and don't have the user's account info already, fetch
+    // it & save to state.
+    if (tokenCookie && !username) {
+      dispatch(fetchUserInfo())
+        .then(() => { this.setState({ isLoggedIn: true }); })
+        .then(() => dispatch(fetchUserOrgs()))
+        .then(() => dispatch(fetchSnippetLists()))
+        .then(() => dispatch(fetchGists()))
+        .catch((err) => {
+          // If we fail, token must have been invalid:
+          // remove it and redirect to home page
+          if (err.response.status === 401) {
+            this.resetApplication();
+            this.setState({ isLoggedIn: false });
+            cookie.remove('token', { path: '/' });
+            router.push('/');
+          } else {
+            dispatch(addNotification('Error fetching user information'));
+          }
+        });
+    }
   }
 
   handleDialogClose() {
@@ -278,14 +284,14 @@ const mapStateToProps = (state) => {
     gists,
   } = state;
   return {
-    hasUnsavedChanges,
     appState: app,
-    orgSnippets,
-    userSnippets,
-    username,
-    token,
     avatarUrl,
     gists,
+    hasUnsavedChanges,
+    orgSnippets,
+    token,
+    username,
+    userSnippets,
   };
 };
 
