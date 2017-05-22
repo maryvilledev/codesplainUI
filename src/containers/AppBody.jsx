@@ -151,7 +151,7 @@ export class AppBody extends Component {
     return (
       <div style={styles.body} id="app-body" >
         <SnippetArea />
-        <div id="app-body-right-section" style={styles.rightSection}>
+        <div id="app-body-right-section">
           <FilterArea />
           <Annotations />
         </div>
