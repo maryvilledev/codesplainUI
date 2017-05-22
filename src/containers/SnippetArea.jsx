@@ -1,12 +1,11 @@
 import React, { PropTypes } from 'react';
-import _ from 'lodash';
+import debounce from 'lodash/debounce';
 import {
   Card,
   CardText,
 } from 'material-ui';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import cookie from 'react-cookie';
 
 import { openAnnotationPanel } from '../actions/annotation';
 import {
@@ -15,7 +14,6 @@ import {
   resetState,
   saveExisting,
   saveNew,
-  setAuthor,
   setSnippetContents,
   setSnippetKey,
   setSnippetLanguage,
@@ -24,7 +22,7 @@ import {
 } from '../actions/app';
 import { addNotification } from '../actions/notifications';
 import { loadParser } from '../actions/parser';
-import { setPermissions } from '../actions/permissions';
+import { setPermissions, setAuthor } from '../actions/permissions';
 import {
   fetchSnippetLists,
   switchOrg,
@@ -61,7 +59,7 @@ async function dispatchParseSnippet(snippet, dispatch) {
   dispatch(parseSnippet(snippet));
 }
 // Only fire the parse snippet action 400 millis after the last keydown
-const debouncedParseSnippetDispatch = _.debounce(dispatchParseSnippet, 400);
+const debouncedParseSnippetDispatch = debounce(dispatchParseSnippet, 400);
 
 export class SnippetArea extends React.Component {
   constructor(props) {
@@ -97,11 +95,12 @@ export class SnippetArea extends React.Component {
       author,
       avatarUrl: loggedInUserAvatarUrl,
       username: loggedInUser,
+      token,
     } = this.props;
-    const token = cookie.load('token');
 
     if (!nextProps.author || !token) {
       this.setState({ avatarUrl: '' });
+      return;
     }
     if (author !== nextProps.author) {
       // The URL to the user's avatar is already in the store, so if the snippet
@@ -114,7 +113,7 @@ export class SnippetArea extends React.Component {
         return;
       }
       fetchUserAvatar(nextProps.author, token)
-        .then((avatarUrl) => { this.setState({ avatarUrl }); });
+        .then(avatarUrl => this.setState({ avatarUrl }));
     }
   }
 
@@ -287,7 +286,7 @@ export class SnippetArea extends React.Component {
         id="app-body-snippet-area"
         style={styles.card}
       >
-        <CardText style={styles.snippetAreaCardText}>
+        <CardText style={styles.cardText}>
           <SnippetAreaToolbar
             author={author}
             avatarUrl={avatarUrl}
@@ -351,9 +350,10 @@ SnippetArea.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   selectedOrg: PropTypes.string,
   snippet: PropTypes.string.isRequired,
-  snippetKey: PropTypes.string.isRequired,
+  snippetKey: PropTypes.string,
   snippetLanguage: PropTypes.string.isRequired,
   snippetTitle: PropTypes.string.isRequired,
+  token: PropTypes.string,
   username: PropTypes.string,
 };
 
@@ -363,6 +363,8 @@ SnippetArea.defaultProps = {
   errors: [],
   openLine: -1,
   selectedOrg: '',
+  snippetKey: '',
+  token: '',
   username: '',
 };
 
@@ -393,6 +395,7 @@ const mapStateToProps = (state) => {
       avatarUrl,
       orgs,
       selectedOrg,
+      token,
       username,
     },
   } = state;
@@ -412,6 +415,7 @@ const mapStateToProps = (state) => {
     snippetKey,
     snippetLanguage,
     snippetTitle,
+    token,
     username,
   };
 };

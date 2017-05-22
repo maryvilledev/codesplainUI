@@ -27,6 +27,7 @@ import {
   resetState,
   setSnippetContents,
   setSnippetTitle,
+  parseSnippet,
  } from '../actions/app';
 import { closeAnnotationPanel } from '../actions/annotation';
 import { setAuthor } from '../actions/permissions';
@@ -97,6 +98,7 @@ export class CodesplainAppBar extends Component {
     this.handleTitleTouchTap = this.handleTitleTouchTap.bind(this);
     this.onLoginClick = this.onLoginClick.bind(this);
     this.redirectToHomePage = this.redirectToHomePage.bind(this);
+    this.resetApplication = this.resetApplication.bind(this);
     this.handleImportGist = this.handleImportGist.bind(this);
   }
 
@@ -160,6 +162,10 @@ export class CodesplainAppBar extends Component {
     window.location = GITHUB_URL;
   }
 
+  handleDialogClose() {
+    this.setState({ isDialogOpen: false });
+  }
+
   handleSignOut() {
     const { router } = this.props;
     cookie.remove('token', { path: '/' });
@@ -170,6 +176,7 @@ export class CodesplainAppBar extends Component {
 
   handleSnippetSelected(snippetOwner, snippetKey) {
     const { router } = this.props;
+    this.resetApplication();
     router.push(`/${snippetOwner}/${snippetKey}`);
   }
 
@@ -184,27 +191,6 @@ export class CodesplainAppBar extends Component {
     }
   }
 
-  redirectToHomePage() {
-    const {
-      dispatch,
-      router,
-    } = this.props;
-
-    // Reset state
-    dispatch(resetState());
-    dispatch(setAuthor(''));
-    // Close the annotation panel
-    dispatch(closeAnnotationPanel());
-    // If the user is not already at the home page, redirect them to it
-    if (router.location.pathname !== '/') {
-      router.push('/');
-    }
-  }
-
-  handleDialogClose() {
-    this.setState({ isDialogOpen: false });
-  }
-
   handleConfirmNavigation() {
     // Close the dialog
     this.handleDialogClose();
@@ -214,9 +200,31 @@ export class CodesplainAppBar extends Component {
 
   handleImportGist(name, url) {
     const { dispatch } = this.props;
-    dispatch(setSnippetTitle(name));
-    fetchGist(url).then(contents => dispatch(setSnippetContents(contents)));
     this.redirectToHomePage();
+    dispatch(setSnippetTitle(name));
+    fetchGist(url).then((contents) => {
+      dispatch(setSnippetContents(contents));
+      dispatch(parseSnippet(contents));
+    });
+  }
+
+  resetApplication() {
+    const { dispatch } = this.props;
+
+    // Reset state
+    dispatch(resetState());
+    dispatch(setAuthor(''));
+    // Close the annotation panel
+    dispatch(closeAnnotationPanel());
+  }
+
+  redirectToHomePage() {
+    const { router } = this.props;
+    this.resetApplication();
+    // If the user is not already at the home page, redirect them to it
+    if (router.location.pathname !== '/') {
+      router.push('/');
+    }
   }
 
   render() {
@@ -345,5 +353,5 @@ const mapStateToProps = (state) => {
     gists,
   };
 };
-
-export default withRouter(connect(mapStateToProps)(CodesplainAppBar));
+export const ConnectedAppBar = connect(mapStateToProps)(CodesplainAppBar);
+export default withRouter(ConnectedAppBar);

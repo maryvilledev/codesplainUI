@@ -7,21 +7,13 @@ describe('Actions: permissions', () => {
         canRead: true,
         canEdit: false,
       };
-      const expected = {
-        type: actions.SET_PERMISSIONS,
-        payload: permissions,
-      };
-      expect(actions.setPermissions(permissions)).toEqual(expected);
+      expect(actions.setPermissions(permissions)).toMatchSnapshot();
     });
   });
   describe('SET_AUTHOR', () => {
     it('creates an action to set the author', () => {
       const author = 'phoenixperson';
-      const expected = {
-        type: actions.SET_AUTHOR,
-        payload: author,
-      };
-      expect(actions.setAuthor(author)).toEqual(expected);
+      expect(actions.setAuthor(author)).toMatchSnapshot();
     });
   });
 });

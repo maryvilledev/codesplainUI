@@ -1,5 +1,5 @@
-import _ from 'lodash';
 import axios from 'axios';
+import mapValues from 'lodash/mapValues';
 
 import { makeSaveEndpointUrl, sanitizeSnippetList } from '../util/requests';
 
@@ -104,7 +104,7 @@ export const fetchSnippetLists = () => (dispatch, getState) => {
     headers,
   })
     .then(({ data: snippetLists }) => {
-      const sanitizedSnippetLists = _.mapValues(snippetLists, sanitizeSnippetList);
+      const sanitizedSnippetLists = mapValues(snippetLists, sanitizeSnippetList);
       dispatch(setSnippetLists(sanitizedSnippetLists));
     });
 };

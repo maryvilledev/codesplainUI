@@ -45,7 +45,41 @@ exports[`<SnippetList /> snapshot tests matches when snippets are passed 1`] = `
         focusState="none"
         insetChildren={false}
         onTouchTap={[Function]}
-        primaryText="bar" />,
+        primaryText={
+            <div
+                style={
+                    Object {
+                        "display": "flex",
+                        "justifyContent": "space-between",
+                      }
+                }>
+                <div>
+                    bar
+                </div>
+                <div
+                    style={
+                        Object {
+                            "fontSize": "80%",
+                          }
+                    }>
+                    <span
+                        style={
+                            Object {
+                                "paddingRight": "50px",
+                              }
+                        } />
+                    <o
+                        ago={true}
+                        calendar={false}
+                        fromNow={true}
+                        toNow={false}
+                        unix={false}
+                        utc={false}>
+                        1495466347166
+                    </o>
+                </div>
+            </div>
+        } />,
       <MenuItem
         anchorOrigin={
             Object {
@@ -59,7 +93,41 @@ exports[`<SnippetList /> snapshot tests matches when snippets are passed 1`] = `
         focusState="none"
         insetChildren={false}
         onTouchTap={[Function]}
-        primaryText="qux" />,
+        primaryText={
+            <div
+                style={
+                    Object {
+                        "display": "flex",
+                        "justifyContent": "space-between",
+                      }
+                }>
+                <div>
+                    qux
+                </div>
+                <div
+                    style={
+                        Object {
+                            "fontSize": "80%",
+                          }
+                    }>
+                    <span
+                        style={
+                            Object {
+                                "paddingRight": "50px",
+                              }
+                        } />
+                    <o
+                        ago={true}
+                        calendar={false}
+                        fromNow={true}
+                        toNow={false}
+                        unix={false}
+                        utc={false}>
+                        1495466347166
+                    </o>
+                </div>
+            </div>
+        } />,
     ]
   }
   onTouchTap={[Function]}

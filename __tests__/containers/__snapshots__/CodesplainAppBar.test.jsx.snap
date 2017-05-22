@@ -1,3 +1,18 @@
+exports[`<CodesplainAppBar /> resetApplication dispatches the correct actions to reset state 1`] = `
+Array [
+  Object {
+    "type": "RESET_STATE",
+  },
+  Object {
+    "payload": "",
+    "type": "SET_AUTHOR",
+  },
+  Object {
+    "type": "CLOSE_ANNOTATION_PANEL",
+  },
+]
+`;
+
 exports[`<CodesplainAppBar /> snapshot tests user is logged in 1`] = `
 <div>
   <AppBar

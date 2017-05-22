@@ -1,57 +1,25 @@
-exports[`<OrgSnippetsMenu /> snapshot tests matches when no snippets are passed 1`] = `
-<MenuItem
-  anchorOrigin={
-    Object {
-      "horizontal": "right",
-      "vertical": "top",
-    }
-  }
-  checked={false}
-  desktop={false}
-  disabled={true}
-  focusState="none"
-  insetChildren={false}
-  menuItems={null}
-  primaryText="Org snippets"
-  rightIcon={<NavigationArrowDropRight />} />
-`;
+exports[`<OrgSnippetsMenu /> snapshot tests matches when no snippets are passed 1`] = `<span />`;
 
 exports[`<OrgSnippetsMenu /> snapshot tests matches when snippets are passed 1`] = `
-<MenuItem
-  anchorOrigin={
-    Object {
-      "horizontal": "right",
-      "vertical": "top",
-    }
-  }
-  checked={false}
-  desktop={false}
-  disabled={false}
-  focusState="none"
-  insetChildren={false}
-  menuItems={
-    Array [
-      <SnippetList
-        onClick={[Function]}
-        primaryText="org1"
-        snippetOwner="org1"
-        snippetsList={
-            Object {
-                "baz": Object {
-                  "snippetTitle": "qux",
-                },
-                "foo": Object {
-                  "snippetTitle": "bar",
-                },
-              }
-        } />,
-      <SnippetList
-        onClick={[Function]}
-        primaryText="org2"
-        snippetOwner="org2"
-        snippetsList={Object {}} />,
-    ]
-  }
-  primaryText="Org snippets"
-  rightIcon={<NavigationArrowDropRight />} />
+<span>
+  <SnippetList
+    onClick={[Function]}
+    primaryText="org1"
+    snippetOwner="org1"
+    snippetsList={
+      Object {
+        "baz": Object {
+          "snippetTitle": "qux",
+        },
+        "foo": Object {
+          "snippetTitle": "bar",
+        },
+      }
+    } />
+  <SnippetList
+    onClick={[Function]}
+    primaryText="org2"
+    snippetOwner="org2"
+    snippetsList={Object {}} />
+</span>
 `;

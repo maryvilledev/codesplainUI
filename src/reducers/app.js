@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import mapValues from 'lodash/mapValues';
 
 import * as actions from '../actions/app';
 import { generateFilters } from '../util/codemirror-utils';
@@ -53,7 +53,7 @@ const app = (state = initialState, action) => {
     };
   }
   case actions.SELECT_ALL_FILTERS: {
-    const filters = _.mapValues(state.filters, (filter) => {
+    const filters = mapValues(state.filters, (filter) => {
       if (filter.selected) {
         return filter;
       }
@@ -65,7 +65,7 @@ const app = (state = initialState, action) => {
     };
   }
   case actions.RESET_RULE_FILTERS: {
-    const filters = _.mapValues(state.filters, (filter) => {
+    const filters = mapValues(state.filters, (filter) => {
       if (filter.selected) {
         return { ...filter, selected: false };
       }
@@ -116,12 +116,6 @@ const app = (state = initialState, action) => {
       ...state,
       hasUnsavedChanges: true,
       snippetLanguage: action.payload,
-    };
-  }
-  case actions.CLEAR_UNSAVED_CHANGES: {
-    return {
-      ...state,
-      hasUnsavedChanges: false,
     };
   }
   case actions.PARSE_SNIPPET: {

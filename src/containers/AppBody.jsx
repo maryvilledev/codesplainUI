@@ -9,9 +9,8 @@ import SnippetArea from './SnippetArea';
 import {
   loadSnippet,
   restoreState,
-  setSnippetKey,
 } from '../actions/app';
-import { setPermissions, setAuthor } from '../actions/permissions';
+import { setPermissions } from '../actions/permissions';
 import { switchOrg } from '../actions/user';
 import NotFound from '../components/NotFound';
 import CustomPropTypes from '../util/custom-prop-types';
@@ -31,6 +30,7 @@ export class AppBody extends Component {
       isValidSnippet: true,
     };
     this.loadSnippet = this.loadSnippet.bind(this);
+    this.setUpNewSnippet = this.setUpNewSnippet.bind(this);
     this.updatePermissions = this.updatePermissions.bind(this);
   }
 
@@ -59,6 +59,26 @@ export class AppBody extends Component {
     }
   }
 
+  setUpNewSnippet() {
+    const {
+      dispatch,
+    } = this.props;
+    // This is a new snippet for the current user, enable all permissions
+    const permissions = {
+      canRead: true,
+      canEdit: true,
+    };
+    dispatch(setPermissions(permissions));
+
+    // Reload the state if returning from login.
+    const signInState = cookie.load('signInState');
+    if (signInState) {
+      cookie.remove('signInState', { path: '/' });
+      cookie.remove('signInRedirect', { path: '/' });
+      dispatch(restoreState(signInState));
+    }
+  }
+
   loadSnippet() {
     const {
       dispatch,
@@ -74,28 +94,12 @@ export class AppBody extends Component {
 
     this.setState({ pathname });
     if (!snippetOwner && !snippetKey) {
-      // This is a new snippet for the current user, enable all permissions
-      const permissions = {
-        canRead: true,
-        canEdit: true,
-      };
-      dispatch(setPermissions(permissions));
-
-      // Reload the state if returning from login.
-      const signInState = cookie.load('signInState');
-      if (signInState) {
-        cookie.remove('signInState', { path: '/' });
-        cookie.remove('signInRedirect', { path: '/' });
-        dispatch(restoreState(signInState));
-      }
+      this.setUpNewSnippet();
       return;
     }
 
     dispatch(loadSnippet(snippetOwner, snippetKey))
-      .then(({ data: appState }) => {
-        // Restore the application's state
-        dispatch(restoreState(appState));
-        dispatch(setSnippetKey(snippetKey));
+      .then(() => {
         this.updatePermissions();
 
         // Reroute if using legacy url
@@ -104,7 +108,6 @@ export class AppBody extends Component {
         if (pathname !== nextRoute) {
           router.push(nextRoute);
         }
-        dispatch(setAuthor(snippetOwner));
       }, () => {
         // Failed to get the snippet, either bad URL or unauthorized
         this.setState({
@@ -118,11 +121,12 @@ export class AppBody extends Component {
       username,
       orgs,
       dispatch,
-      router,
+      router: {
+        params: {
+          username: snippetOwner,
+        },
+      },
     } = this.props;
-    const {
-      username: snippetOwner,
-    } = router.params;
 
     // If the user is a member of the org in question, make the org the
     // current org

@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import CodeMirror from 'react-codemirror';
-import _ from 'lodash';
+import isEqual from 'lodash/isEqual';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/python/python';
 
@@ -71,13 +71,13 @@ class Editor extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const newAST = !_.isEqual(nextProps.AST, this.props.AST);
-    const newFilters = !_.isEqual(nextProps.filters, this.props.filters);
+    const newAST = !isEqual(nextProps.AST, this.props.AST);
+    const newFilters = !isEqual(nextProps.filters, this.props.filters);
     this.setState({ newAST, newFilters });
   }
 
   shouldComponentUpdate(nextProps) {
-    return !_.isEqual(nextProps, this.props);
+    return !isEqual(nextProps, this.props);
   }
 
   componentDidUpdate() {

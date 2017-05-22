@@ -1,0 +1,27 @@
+exports[`Actions: parser ADD_ERROR CLEAR_ERRORS creates an action to remove all errors from state 1`] = `
+Object {
+  "type": "CLEAR_ERRORS",
+}
+`;
+
+exports[`Actions: parser ADD_ERROR creates an action to add an error 1`] = `
+Object {
+  "payload": Object {
+    "begin": 5,
+    "end": NaN,
+    "msg": "blahblahblah",
+    "type": "syntaxError",
+  },
+  "type": "ADD_ERROR",
+}
+`;
+
+exports[`Actions: parser LOAD_PARSER creates an action to load a parser 1`] = `
+Object {
+  "meta": Object {
+    "WebWorker": true,
+  },
+  "payload": "squanchy",
+  "type": "LOAD_PARSER",
+}
+`;
