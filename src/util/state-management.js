@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import defaults from 'lodash/defaults';
 
 export const defaultStateValues = {
   // Default values for state should go here. If a value was already set
@@ -11,7 +11,7 @@ export const defaultStateValues = {
   filters: {},
 };
 
-export const setDefaults = state => _.defaults(
+export const setDefaults = state => defaults(
   { ...state },
   defaultStateValues,
 );

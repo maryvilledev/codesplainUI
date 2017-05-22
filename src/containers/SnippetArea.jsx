@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import _ from 'lodash';
+import debounce from 'lodash/debounce';
 import {
   Card,
   CardText,
@@ -14,7 +14,6 @@ import {
   resetState,
   saveExisting,
   saveNew,
-  setAuthor,
   setSnippetContents,
   setSnippetKey,
   setSnippetLanguage,
@@ -23,7 +22,7 @@ import {
 } from '../actions/app';
 import { addNotification } from '../actions/notifications';
 import { loadParser } from '../actions/parser';
-import { setPermissions } from '../actions/permissions';
+import { setPermissions, setAuthor } from '../actions/permissions';
 import {
   fetchSnippetLists,
   switchOrg,
@@ -60,7 +59,7 @@ async function dispatchParseSnippet(snippet, dispatch) {
   dispatch(parseSnippet(snippet));
 }
 // Only fire the parse snippet action 400 millis after the last keydown
-const debouncedParseSnippetDispatch = _.debounce(dispatchParseSnippet, 400);
+const debouncedParseSnippetDispatch = debounce(dispatchParseSnippet, 400);
 
 export class SnippetArea extends React.Component {
   constructor(props) {
@@ -114,7 +113,7 @@ export class SnippetArea extends React.Component {
         return;
       }
       fetchUserAvatar(nextProps.author, token)
-        .then((avatarUrl) => { this.setState({ avatarUrl }); });
+        .then(avatarUrl => this.setState({ avatarUrl }));
     }
   }
 

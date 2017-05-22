@@ -32,7 +32,7 @@ const toolTipText = isEnabled => (
 const DeleteButton = ({ onClick, isEnabled }) => (
   <span style={styles.buttonContainer}>
     <div
-      styles={styles.inlineBlock}
+      style={styles.inlineBlock}
       data-tip
       data-for="trash-tip"
     >

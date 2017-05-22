@@ -1,5 +1,5 @@
 import axios from 'axios';
-import _ from 'lodash';
+import last from 'lodash/last';
 import {
   setRules,
   setIgnoredRules,
@@ -88,7 +88,7 @@ export function getRuleCount(node, map) {
   // Node's type is the last element of the node's tags property,
   // if AST was made with tagging parser. Otherwise, if it was made with
   // the legacy parser, it is the type property.
-  const type = node.type ? node.type : _.last(node.tags);
+  const type = node.type ? node.type : last(node.tags);
 
   if (type === undefined) return;
   if (map[type] === undefined) {
