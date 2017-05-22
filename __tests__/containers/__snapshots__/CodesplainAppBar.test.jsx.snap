@@ -33,16 +33,7 @@ exports[`<CodesplainAppBar /> snapshot tests user is logged in 1`] = `
               "display": "inline-flex",
               "height": "100%",
             }
-          }>
-          <SnippetMenu
-            borderBottomColor="#00e6e6"
-            onHoverBackground="#595959"
-            onSnippetSelected={[Function]}
-            orgSnippets={Object {}}
-            style={Object {}}
-            userSnippets={Object {}}
-            username="FooBar" />
-        </div>
+          } />
         <div
           style={
             Object {
@@ -52,17 +43,8 @@ exports[`<CodesplainAppBar /> snapshot tests user is logged in 1`] = `
               "height": "100%",
             }
           }>
-          <AppMenu
-            avatarURL=""
-            avatarUrl=""
-            gists={Array []}
-            onImportGist={[Function]}
-            onSignOut={[Function]}
-            onSnippetSelected={[Function]}
-            orgSnippets={Object {}}
-            style={Object {}}
-            userSnippets={Object {}}
-            username="FooBar" />
+          <LoginButton
+            onClick={[Function]} />
         </div>
       </div>
     }

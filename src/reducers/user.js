@@ -7,7 +7,7 @@ import * as actions from '../actions/user';
 export const initialState = {
   avatarUrl: '',
   orgs: [],
-  selectedOrg: null,
+  selectedOrg: undefined,
   token: '',
   username: '',
   userSnippets: {},
@@ -38,8 +38,6 @@ const user = (state = initialState, action) => {
   case actions.CLEAR_USER_CREDENTIALS: {
     return {
       ...initialState,
-      orgs: state.orgs,
-      selectedOrg: state.selectedOrg,
     };
   }
   case actions.SAVE_ACCESS_TOKEN: {

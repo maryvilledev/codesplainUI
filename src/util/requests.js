@@ -61,17 +61,17 @@ export const fetchUserAvatar = (user, token) => {
 // Each gist contains a dict of filenames to file info. We need to iterate and get
 // the filenames and urls
 export const gistReducer = (list, gist) => {
-  forIn(gist.files, ({ raw_url: url }, name) =>
-    list.push({ name, url }));
+  forIn(gist.files, ({ raw_url: url }, name) => list.push({ name, url }));
   return list;
 };
 
 export const fetchGists = token =>
-  axios.get(GIST_URL, githubHeaders(token)).then(({ data }) =>
-    data.reduce(gistReducer, []));
+  axios.get(GIST_URL, githubHeaders(token))
+    .then(({ data }) => data.reduce(gistReducer, []));
 
 export const fetchGist = url =>
-  axios.get(url).then(({ data }) => data);
+  axios.get(url)
+    .then(({ data }) => data);
 /*
 Returns new object containing only the fields from the given state object
 that we want to serialize.
