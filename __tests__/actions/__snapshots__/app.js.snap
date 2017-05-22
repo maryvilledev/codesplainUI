@@ -1,28 +1,3 @@
-exports[`Actions: App RESET_RULE_FILTERS matches snapshot 1`] = `
-Object {
-  "type": "RESET_RULE_FILTERS",
-}
-`;
-
-exports[`Actions: App RESET_STATE matches snapshot 1`] = `
-Object {
-  "type": "RESET_STATE",
-}
-`;
-
-exports[`Actions: App SELECT_ALL_FILTERS matches snapshot 1`] = `
-Object {
-  "type": "SELECT_ALL_FILTERS",
-}
-`;
-
-exports[`Actions: App SET_SNIPPET_KEY creates correct action object 1`] = `
-Object {
-  "payload": "szechuan sauce",
-  "type": "SET_SNIPPET_KEY",
-}
-`;
-
 exports[`Actions: App async actions deleteSnippet() dispatches the correct actions if the action fails 1`] = `
 Array [
   Object {
@@ -30,11 +5,11 @@ Array [
     "type": "ADD_NOTIFICATION",
   },
   Object {
-    "payload": "Failed to delete snippet; please try again",
-    "type": "ADD_NOTIFICATION",
+    "type": "CLOSE_NOTIFICATION",
   },
   Object {
-    "type": "CLOSE_NOTIFICATION",
+    "payload": "Failed to delete snippet; please try again",
+    "type": "ADD_NOTIFICATION",
   },
 ]
 `;
@@ -55,7 +30,32 @@ Array [
 ]
 `;
 
-exports[`Actions: App async actions saveExisting() dispatches SAVE_FAILED if save failed 1`] = `
+exports[`Actions: App async actions loadSnippet() dispatches the correct actions if the action succeeded 1`] = `
+Array [
+  Object {
+    "payload": Object {
+      "AST": undefined,
+      "annotations": Object {},
+      "filters": Object {},
+      "readOnly": false,
+      "snippet": "snippet",
+      "snippetLanguage": "python3",
+      "snippetTitle": "title",
+    },
+    "type": "RESTORE_STATE",
+  },
+  Object {
+    "payload": "key",
+    "type": "SET_SNIPPET_KEY",
+  },
+  Object {
+    "payload": "snippetOwner",
+    "type": "SET_AUTHOR",
+  },
+]
+`;
+
+exports[`Actions: App async actions saveExisting() dispatches the correct actions if the action failed 1`] = `
 Array [
   Object {
     "payload": "Saving...",
@@ -68,7 +68,7 @@ Array [
 ]
 `;
 
-exports[`Actions: App async actions saveExisting() dispatches SAVE_SUCCEEDED if saved 1`] = `
+exports[`Actions: App async actions saveExisting() dispatches the correct actions if the action succeeded 1`] = `
 Array [
   Object {
     "payload": "Saving...",
@@ -87,7 +87,7 @@ Array [
 ]
 `;
 
-exports[`Actions: App async actions saveNew() dispatches SAVE_FAILED if save failed 1`] = `
+exports[`Actions: App async actions saveNew() dispatches correct actions if save failed 1`] = `
 Array [
   Object {
     "payload": "Saving...",
@@ -100,7 +100,7 @@ Array [
 ]
 `;
 
-exports[`Actions: App async actions saveNew() dispatches SAVE_SUCCEEDED if saved 1`] = `
+exports[`Actions: App async actions saveNew() dispatches correct actions if save succeeded 1`] = `
 Array [
   Object {
     "payload": "Saving...",
@@ -117,4 +117,131 @@ Array [
     "type": "SAVE_SUCCEEDED",
   },
 ]
+`;
+
+exports[`Actions: App creates correct PARSE_SNIPPET action object 1`] = `
+Object {
+  "meta": Object {
+    "WebWorker": true,
+  },
+  "payload": Object {
+    "snippet": "Grasssss tastes bad",
+  },
+  "type": "PARSE_SNIPPET",
+}
+`;
+
+exports[`Actions: App creates correct RESET_RULE_FILTERS action object 1`] = `
+Object {
+  "type": "RESET_RULE_FILTERS",
+}
+`;
+
+exports[`Actions: App creates correct RESET_STATE action object 1`] = `
+Object {
+  "type": "RESET_STATE",
+}
+`;
+
+exports[`Actions: App creates correct RESET_STATE action object 2`] = `
+Object {
+  "payload": Object {
+    "begin": 0,
+    "children": Array [
+      "NEWLINE",
+      "INDENT",
+      "NEWLINE",
+      "DEDENT",
+    ],
+    "end": 1,
+    "type": "file_input",
+  },
+  "type": "SET_AST",
+}
+`;
+
+exports[`Actions: App creates correct RESTORE_STATE action object 1`] = `
+Object {
+  "payload": Object {
+    "AST": Object {
+      "begin": 0,
+      "children": Array [
+        "NEWLINE",
+        "INDENT",
+        "NEWLINE",
+        "DEDENT",
+      ],
+      "end": 1,
+      "type": "file_input",
+    },
+    "annotations": Object {},
+    "filters": Object {},
+    "readOnly": false,
+    "snippet": "	",
+    "snippetTitle": "",
+  },
+  "type": "RESTORE_STATE",
+}
+`;
+
+exports[`Actions: App creates correct SAVE_ANNOTATION action object 1`] = `
+Object {
+  "payload": Object {
+    "annotation": "You pass butter.",
+    "lineNumber": 1,
+    "lineText": "What is my purpose?",
+  },
+  "type": "SAVE_ANNOTATION",
+}
+`;
+
+exports[`Actions: App creates correct SELECT_ALL_FILTERS action object 1`] = `
+Object {
+  "type": "SELECT_ALL_FILTERS",
+}
+`;
+
+exports[`Actions: App creates correct SET_RULE_FILTERS action object 1`] = `
+Object {
+  "payload": Object {
+    "atom": Object {
+      "count": 21,
+      "prettyTokenName": "Atoms",
+      "selected": true,
+    },
+    "for_stmt": Object {
+      "count": 1,
+      "prettyTokenName": "For Loops",
+      "selected": false,
+    },
+  },
+  "type": "SET_RULE_FILTERS",
+}
+`;
+
+exports[`Actions: App creates correct SET_SNIPPET_CONTENTS action object 1`] = `
+Object {
+  "payload": "Show me what you got",
+  "type": "SET_SNIPPET_CONTENTS",
+}
+`;
+
+exports[`Actions: App creates correct SET_SNIPPET_KEY action object 1`] = `
+Object {
+  "payload": "szechuan sauce",
+  "type": "SET_SNIPPET_KEY",
+}
+`;
+
+exports[`Actions: App creates correct SET_SNIPPET_LANGUAGE action object 1`] = `
+Object {
+  "payload": "Gromflomite",
+  "type": "SET_SNIPPET_LANGUAGE",
+}
+`;
+
+exports[`Actions: App creates correct TOGGLE_EDITING_STATE action object 1`] = `
+Object {
+  "type": "TOGGLE_EDITING_STATE",
+}
 `;
