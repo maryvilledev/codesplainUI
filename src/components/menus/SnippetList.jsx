@@ -18,9 +18,17 @@ const styles = {
   },
 };
 
+// Truncates the title if it is too long to fit in snippets dropdown
+const makeDisplayTitle = (title) => {
+  if (title.length > 10) {
+    return `${title.substring(0, 12)}...`;
+  }
+  return title;
+};
+
 const makeItemDiv = ({ snippetTitle, language, lastEdited }) => (
   <div style={styles.menuItem}>
-    <div>{snippetTitle}</div>
+    <div>{makeDisplayTitle(snippetTitle)}</div>
     <div style={styles.metaData}>
       <span style={styles.language}>
         {mapLanguage[language]}
