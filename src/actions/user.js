@@ -129,7 +129,16 @@ export const fetchUserInfo = () => (dispatch, getState) => {
     method: 'GET',
     url: 'https://api.github.com/user',
     headers: reqHeaders,
-  });
+  })
+    .then(({ data }) => {
+      const { login: username, avatar_url: userAvatarURL } = data;
+      dispatch(saveUsername(username));
+      dispatch(setAvatarUrl(userAvatarURL));
+
+      // Add user's username to orgs list, and select it as default
+      dispatch(addOrg(username));
+      dispatch(switchOrg(username));
+    });
 };
 
 export const fetchUserOrgs = () => (dispatch, getState) => {
@@ -142,5 +151,12 @@ export const fetchUserOrgs = () => (dispatch, getState) => {
     method: 'GET',
     url: 'https://api.github.com/user/orgs',
     headers: reqHeaders,
+  })
+  .then(({ data }) => {
+    // Dispatch orgs to state
+    // Create a list of the names organizations the user belongs to
+    const orgs = data.map(org => org.login);
+    // Save the organizations list to the store
+    dispatch(addOrganizations(orgs));
   });
 };

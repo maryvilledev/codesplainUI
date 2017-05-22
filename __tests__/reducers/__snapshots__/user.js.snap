@@ -3,7 +3,7 @@ Object {
   "avatarUrl": "",
   "orgSnippets": Object {},
   "orgs": Array [],
-  "selectedOrg": null,
+  "selectedOrg": undefined,
   "token": "",
   "userSnippets": Object {},
   "username": "",
