@@ -11,6 +11,7 @@ import {
   styleRegion,
 } from '../util/codemirror-utils';
 import '../util/codemirror-themes';
+import { getCodeMirrorTheme } from '../util/codemirror-theme-options';
 import CustomPropTypes from '../util/custom-prop-types';
 
 // Options for the CodeMirror instance that are shared by edit and annotation mddes
@@ -184,6 +185,7 @@ class Editor extends React.Component {
 
   render() {
     const {
+      codeMirrorTheme,
       language,
       onChange,
       readOnly,
@@ -193,6 +195,7 @@ class Editor extends React.Component {
     const codeMirrorOptions = {
       mode: getCodeMirrorMode(language),
       ...(readOnly ? annotationModeOptions : editModeOptions),
+      theme: getCodeMirrorTheme(codeMirrorTheme),
     };
 
     return (
@@ -207,6 +210,7 @@ class Editor extends React.Component {
 }
 
 Editor.propTypes = {
+  codeMirrorTheme: PropTypes.string,
   errors: CustomPropTypes.errors,
   filters: CustomPropTypes.filters.isRequired,
   language: PropTypes.string.isRequired,
@@ -219,6 +223,7 @@ Editor.propTypes = {
 };
 
 Editor.defaultProps = {
+  codeMirrorTheme: 'codesplain',
   openLine: -1,
   errors: [],
 };

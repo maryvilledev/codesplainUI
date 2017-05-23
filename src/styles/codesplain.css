@@ -14,12 +14,12 @@ body {
   height: inherit;
 }
 
-.cm-s-codesplain {
+.CodeMirror {
   flex: 1 1 auto;
   height: 100%;
 }
 
-.cm-s-codesplain span {
+.CodeMirror span {
   font-size: 105%;
   line-height: 130%;
   padding-top: 2px;

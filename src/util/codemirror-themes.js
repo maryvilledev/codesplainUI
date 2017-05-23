@@ -4,7 +4,6 @@ import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/3024-day.css';
 import 'codemirror/theme/3024-night.css';
 import 'codemirror/theme/abcdef.css';
-import 'codemirror/theme/ambiance-mobile.css';
 import 'codemirror/theme/ambiance.css';
 import 'codemirror/theme/base16-dark.css';
 import 'codemirror/theme/base16-light.css';

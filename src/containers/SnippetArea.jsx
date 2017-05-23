@@ -68,6 +68,7 @@ export class SnippetArea extends React.Component {
       lockDialogOpen: false,
       deleteDialogOpen: false,
       avatarUrl: '',
+      codeMirrorTheme: 'codesplain',
     };
 
     this.handleCloseModal = this.handleCloseModal.bind(this);
@@ -76,10 +77,10 @@ export class SnippetArea extends React.Component {
     this.handleLanguageChanged = this.handleLanguageChanged.bind(this);
     this.handleLock = this.handleLock.bind(this);
     this.handleOrgChanged = this.handleOrgChanged.bind(this);
-    this.handleOrgChanged = this.handleOrgChanged.bind(this);
     this.handleSave = this.handleSave.bind(this);
     this.handleSaveAs = this.handleSaveAs.bind(this);
     this.handleSnippetChanged = this.handleSnippetChanged.bind(this);
+    this.handleThemeChange = this.handleThemeChange.bind(this);
     this.handleTitleChanged = this.handleTitleChanged.bind(this);
     this.handleToggleReadOnly = this.handleToggleReadOnly.bind(this);
     this.showDeleteModal = this.showDeleteModal.bind(this);
@@ -166,6 +167,10 @@ export class SnippetArea extends React.Component {
       lockDialogOpen: false,
       deleteDialogOpen: false,
     });
+  }
+
+  handleThemeChange(_, codeMirrorTheme) {
+    this.setState({ codeMirrorTheme });
   }
 
   handleSave() {
@@ -275,7 +280,7 @@ export class SnippetArea extends React.Component {
       snippetTitle,
       username,
     } = this.props;
-    const { avatarUrl } = this.state;
+    const { avatarUrl, codeMirrorTheme } = this.state;
     const markedLines = Object.keys(annotations).map(Number);
     // Delete button is enabled only when user is logged in, owns snippet,
     // and is not viewing a new snippet
@@ -305,6 +310,8 @@ export class SnippetArea extends React.Component {
             saveEnabled={Boolean(username)}
             selectedOrg={selectedOrg}
             title={snippetTitle}
+            onThemeChange={this.handleThemeChange}
+            codeMirrorTheme={codeMirrorTheme}
           />
           <ConfirmationDialog
             accept={this.handleToggleReadOnly}
@@ -331,6 +338,7 @@ export class SnippetArea extends React.Component {
             openLine={openLine}
             readOnly={readOnly}
             value={snippet}
+            codeMirrorTheme={codeMirrorTheme}
           />
         </CardText>
       </Card>
