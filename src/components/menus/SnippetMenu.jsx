@@ -15,7 +15,19 @@ const styles = {
   menuText: {
     color: 'white',
   },
+  menuClosed: {
+    background: 'transparent',
+    borderBottomWidth: '3px',
+    borderBottomColor: 'transparent',
+  },
 };
+
+const menuOpenStyle = ({ onHoverBackground, borderBottomColor }) => ({
+  background: onHoverBackground,
+  borderBottomWidth: '3px',
+  borderBottomStyle: 'solid',
+  borderBottomColor,
+});
 
 class SnippetMenu extends Component {
   constructor(props) {
@@ -27,6 +39,12 @@ class SnippetMenu extends Component {
     this.handleSnippetSelected = this.handleSnippetSelected.bind(this);
     this.handleMenuHovered = this.handleMenuHovered.bind(this);
     this.handleMenuNotHovered = this.handleMenuNotHovered.bind(this);
+
+    this.menuOpenStyle = menuOpenStyle(props);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.menuOpenStyle = menuOpenStyle(nextProps);
   }
 
   handleMenuHovered(ev) {
@@ -50,23 +68,12 @@ class SnippetMenu extends Component {
       username,
       userSnippets,
       orgSnippets,
-      onHoverBackground,
-      borderBottomColor,
     } = this.props;
     const {
       menuOpen,
     } = this.state;
 
-    const menuOpenStyle = menuOpen ? {
-      background: onHoverBackground,
-      borderBottomWidth: '3px',
-      borderBottomStyle: 'solid',
-      borderBottomColor,
-    } : {
-      background: 'transparent',
-      borderBottomWidth: '3px',
-      borderBottomColor: 'transparent',
-    };
+    const menuStyle = menuOpen ? this.menuOpenStyle : styles.menuClosed;
     const menuText = (
       <span style={styles.menuText}>
         Snippets
@@ -79,7 +86,7 @@ class SnippetMenu extends Component {
         onMouseEnter={this.handleMenuHovered}
         onRequestChange={this.handleMenuNotHovered}
         open={menuOpen}
-        style={{ ...styles.iconMenu, ...menuOpenStyle, ...style }}
+        style={{ ...styles.iconMenu, ...menuStyle, ...style }}
         targetOrigin={{ horizontal: 'left', vertical: 'top' }}
         useLayerForClickAway
         iconButtonElement={menuText}
@@ -104,8 +111,6 @@ SnippetMenu.propTypes = {
   userSnippets: CustomPropTypes.snippets.isRequired,
   orgSnippets: CustomPropTypes.orgSnippets.isRequired,
   onSnippetSelected: PropTypes.func.isRequired,
-  onHoverBackground: PropTypes.string.isRequired,
-  borderBottomColor: PropTypes.string.isRequired,
 };
 
 SnippetMenu.defaultProps = {

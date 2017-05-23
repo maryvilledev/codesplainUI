@@ -108,8 +108,7 @@ AppMenu.propTypes = {
   avatarUrl: PropTypes.string,
   onSignOut: PropTypes.func.isRequired,
   onSnippetSelected: PropTypes.func.isRequired,
-  style: PropTypes.object,
-  gists: PropTypes.array,
+  gists: CustomPropTypes.gists,
   onImportGist: PropTypes.func.isRequired,
 };
 
@@ -117,7 +116,6 @@ AppMenu.defaultProps = {
   avatarURL: '',
   style: {},
   orgSnippets: CustomPropTypes.orgSnippets.isRequired,
-  username: PropTypes.string.isRequired,
   userSnippets: CustomPropTypes.snippets.isRequired,
   gists: CustomPropTypes.gists,
 };
