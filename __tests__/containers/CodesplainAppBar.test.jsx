@@ -110,7 +110,13 @@ describe('<CodesplainAppBar />', () => {
 
   describe('resetApplication', () => {
     it('dispatches the correct actions to reset state', () => {
-      const store = generateMockStore(defaultStore);
+      const store = generateMockStore({
+        ...defaultStore,
+        user: {
+          ...defaultStore.user,
+          username: 'username',
+        },
+      });
       const wrapper = mountWithContext(
         <Provider store={store}>
           <ConnectedAppBar />

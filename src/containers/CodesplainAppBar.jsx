@@ -24,6 +24,7 @@ import {
   fetchUserInfo,
   fetchUserOrgs,
   saveAccessToken,
+  switchOrg,
 } from '../actions/user';
 import LoginButton from '../components/buttons/LoginButton';
 import AppMenu from '../components/menus/AppMenu';
@@ -172,11 +173,13 @@ export class CodesplainAppBar extends Component {
   }
 
   resetApplication() {
-    const { dispatch } = this.props;
+    const { dispatch, username } = this.props;
 
     // Reset state
     dispatch(resetState());
     dispatch(setAuthor(''));
+    // Reset the selected "organization" to the user's account
+    dispatch(switchOrg(username));
     // Close the annotation panel
     dispatch(closeAnnotationPanel());
   }
