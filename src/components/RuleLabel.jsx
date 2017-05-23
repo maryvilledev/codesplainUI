@@ -28,7 +28,8 @@ const RuleLabel = ({ color, rule, count, onClick, isActive }) => {
 
   return (
     <div
-      style={{ ...styles.label, backgroundColor, borderColor }}
+      className="rule-label"
+      style={{ backgroundColor, borderColor }}
       onClick={onClick}
     >
       {rule}

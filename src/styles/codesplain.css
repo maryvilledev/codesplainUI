@@ -10,6 +10,31 @@ body {
   height: inherit;
 }
 
+.rule-label {
+  box-sizing: border-box;
+  border-radius: 5px;
+  border-style: solid;
+  border-width: 1px;
+  cursor: pointer;
+  display: inline-flex;
+  flex: 0 1 auto;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  font-size: 10pt;
+  line-height: 1;
+  max-width: 300px;
+  min-width: 130px;
+  padding: 5px;
+  width: 50%;
+}
+
+.rule-selector-container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  box-sizing: border-box;
+}
+
 #root {
   height: inherit;
 }
@@ -28,6 +53,10 @@ body {
 
 .CodeMirror-linenumber {
   padding-top: 3px;
+}
+
+.section-title {
+  margin-bottom: 0;
 }
 
 .ReactCodeMirror {

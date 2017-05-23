@@ -1,22 +1,11 @@
 exports[`<RuleLabel /> snapshot tests matches snapshot of when it is active 1`] = `
 <div
+  className="rule-label"
   onClick={[Function]}
   style={
     Object {
       "backgroundColor": "#FF0000",
       "borderColor": "transparent",
-      "borderRadius": "5px",
-      "borderStyle": "solid",
-      "borderWidth": "1px",
-      "cursor": "pointer",
-      "display": "inline-block",
-      "fontSize": "10pt",
-      "lineHeight": 1,
-      "marginRight": "5px",
-      "marginTop": "5px",
-      "maxWidth": "200px",
-      "padding": "5px",
-      "width": "100%",
     }
   }>
   Example Rule
@@ -35,23 +24,12 @@ exports[`<RuleLabel /> snapshot tests matches snapshot of when it is active 1`] 
 
 exports[`<RuleLabel /> snapshot tests matches snapshot of when it is not active 1`] = `
 <div
+  className="rule-label"
   onClick={[Function]}
   style={
     Object {
       "backgroundColor": "transparent",
       "borderColor": "#e6e6e6",
-      "borderRadius": "5px",
-      "borderStyle": "solid",
-      "borderWidth": "1px",
-      "cursor": "pointer",
-      "display": "inline-block",
-      "fontSize": "10pt",
-      "lineHeight": 1,
-      "marginRight": "5px",
-      "marginTop": "5px",
-      "maxWidth": "200px",
-      "padding": "5px",
-      "width": "100%",
     }
   }>
   Example Rule

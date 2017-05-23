@@ -1,5 +1,6 @@
 exports[`<RulesSelector /> matches snapshot 1`] = `
-<div>
+<div
+  className="rule-selector-container">
   <RuleLabel
     count={1}
     isActive={false}
