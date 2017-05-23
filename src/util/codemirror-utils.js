@@ -40,12 +40,12 @@ export function highlightNode(codeMirror, node, filters, parentColor) {
   const type = node.type ? node.type : last(node.tags);
 
   // If we aren't ignoring this token...
-  if (ignoredRules.indexOf(type) === -1) {
+  // `type in rules` is a temporary fix for rules that existed in previous versions
+  // if the parser. TODO version rules so that snippets with older versions
+  // can pull in older rules and still parse correctly
+  if (ignoredRules.indexOf(type) === -1 && type in rules) {
     // Get the rule obj for this rule
     const rule = rules[type];
-    if (!rule) {
-      return; // Remove this return and the highlighting will sometimes fail
-    }
     // Use this node's color if it has one
     if (rule.color) {
       color = rule.color;

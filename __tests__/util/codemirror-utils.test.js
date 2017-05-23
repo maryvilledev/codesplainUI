@@ -84,6 +84,7 @@ describe('util: codemirror-utils', () => {
     it('should not call styleRegion if a rule is not ignored or valid', () => {
       const node = {
         type: 'Blips and Chitz',
+        children: [],
       };
       codemirrorUtils.highlightNode(codeMirror, node, {}, '');
       expect(codeMirror.markText).not.toBeCalled();
@@ -118,6 +119,7 @@ describe('util: codemirror-utils', () => {
     it('should not call styleRegion if a rule is not ignored or valid', () => {
       const node = {
         tags: ['Blips and Chitz'],
+        children: [],
       };
       codemirrorUtils.highlightNode(codeMirror, node, {}, '');
       expect(codeMirror.markText).not.toBeCalled();
