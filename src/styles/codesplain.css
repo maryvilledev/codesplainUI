@@ -23,7 +23,11 @@ body {
   font-size: 105%;
   line-height: 130%;
   padding-top: 2px;
-  padding-bottom: 2px;
+  padding-bottom: 3px;
+}
+
+.CodeMirror-linenumber {
+  padding-top: 3px;
 }
 
 .ReactCodeMirror {
