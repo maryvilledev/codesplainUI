@@ -168,8 +168,7 @@ export class CodesplainAppBar extends Component {
     const { dispatch } = this.props;
     this.redirectToHomePage();
     dispatch(setSnippetTitle(name));
-    dispatch(fetchGist(url))
-      .then(() => { this.redirectToHomePage(); });
+    dispatch(fetchGist(url));
   }
 
   resetApplication() {
