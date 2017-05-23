@@ -48,7 +48,7 @@ exports[`<AppMenu /> snapshot tests matches snapshot of when user is logged in 1
     touchTapCloseDelay={200}
     useLayerForClickAway={true}>
     <GistMenu
-      gists={[Function]}
+      gists={Array []}
       onClick={[Function]} />
     <MenuItem
       anchorOrigin={
@@ -118,7 +118,7 @@ exports[`<AppMenu /> snapshot tests matches snapshot of when user is not logged 
     touchTapCloseDelay={200}
     useLayerForClickAway={true}>
     <GistMenu
-      gists={[Function]}
+      gists={Array []}
       onClick={[Function]} />
     <MenuItem
       anchorOrigin={

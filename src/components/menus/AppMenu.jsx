@@ -50,20 +50,12 @@ class AppMenu extends Component {
       iconMenuOpen: false,
     };
     this.handleOnRequestChange = this.handleOnRequestChange.bind(this);
-    this.handleSnippetSelected = this.handleSnippetSelected.bind(this);
   }
 
   handleOnRequestChange(open) {
     this.setState({
       iconMenuOpen: open,
     });
-  }
-
-  handleSnippetSelected(snippetOwner, snippetKey) {
-    this.setState({
-      iconMenuOpen: false,
-    });
-    this.props.onSnippetSelected(snippetOwner, snippetKey);
   }
 
   render() {
@@ -107,7 +99,6 @@ class AppMenu extends Component {
 AppMenu.propTypes = {
   avatarUrl: PropTypes.string,
   onSignOut: PropTypes.func.isRequired,
-  onSnippetSelected: PropTypes.func.isRequired,
   gists: CustomPropTypes.gists,
   onImportGist: PropTypes.func.isRequired,
 };
@@ -115,9 +106,7 @@ AppMenu.propTypes = {
 AppMenu.defaultProps = {
   avatarURL: '',
   style: {},
-  orgSnippets: CustomPropTypes.orgSnippets.isRequired,
-  userSnippets: CustomPropTypes.snippets.isRequired,
-  gists: CustomPropTypes.gists,
+  gists: [],
 };
 
 export default AppMenu;
