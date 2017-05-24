@@ -4,7 +4,7 @@ import {
   IconMenu,
   MenuItem,
 } from 'material-ui';
-import SettingsIcon from 'material-ui/svg-icons/action/settings';
+import PaletteIcon from 'material-ui/svg-icons/image/palette';
 
 import codeMirrorThemeOptions from '../../util/codemirror-theme-options';
 
@@ -25,7 +25,7 @@ const EditorMenu = (props) => {
   } = props;
   return (
     <IconMenu
-      iconButtonElement={<IconButton><SettingsIcon /></IconButton>}
+      iconButtonElement={<IconButton><PaletteIcon /></IconButton>}
       onChange={onChange}
       value={codeMirrorTheme}
     >
