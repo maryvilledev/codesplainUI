@@ -60,6 +60,10 @@ export function highlightNode(codeMirror, node, filters, parentColor) {
     styleRegion(codeMirror, node.begin, node.end, `background-color: ${color};`);
   }
 
+  if (node.children === undefined) {
+    console.log(`"${type}" has undefined children`);
+  }
+
   // Highlight all children of this token
   node.children.forEach((child) => {
     if (isObject(child)) { highlightNode(codeMirror, child, filters, color); }
