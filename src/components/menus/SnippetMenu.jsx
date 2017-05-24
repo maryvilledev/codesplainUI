@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { IconMenu } from 'material-ui';
+import { IconMenu, MenuItem } from 'material-ui';
 import SnippetList from './SnippetList';
 import OrgSnippetsMenu from './OrgSnippetsMenu';
 import CustomPropTypes from '../../util/custom-prop-types';
@@ -68,6 +68,7 @@ class SnippetMenu extends Component {
       username,
       userSnippets,
       orgSnippets,
+      onOpenSearchMenu,
     } = this.props;
     const {
       menuOpen,
@@ -101,6 +102,10 @@ class SnippetMenu extends Component {
           onClick={this.handleSnippetSelected}
           orgSnippets={orgSnippets}
         />
+        <MenuItem
+          onTouchTap={onOpenSearchMenu}
+          primaryText="Search"
+        />
       </IconMenu>
     );
   }
@@ -111,6 +116,7 @@ SnippetMenu.propTypes = {
   userSnippets: CustomPropTypes.snippets.isRequired,
   orgSnippets: CustomPropTypes.orgSnippets.isRequired,
   onSnippetSelected: PropTypes.func.isRequired,
+  onOpenSearchMenu: PropTypes.func.isRequired,
 };
 
 SnippetMenu.defaultProps = {
