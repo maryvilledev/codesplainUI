@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import { addNotification, closeNotification } from './notifications';
 import { setAuthor } from './permissions';
+import { updateUserSnippets, fetchSnippetLists } from './user';
 import { removeDeprecatedFiltersFromState } from '../util/codemirror-utils';
 import { makeSaveEndpointUrl, normalizeState } from '../util/requests';
 import { setDefaults } from '../util/state-management';
@@ -124,6 +125,9 @@ export const saveNew = org => (dispatch, getState) => {
         dispatch(addNotification('Codesplaination Saved!'));
         // Clear the hasUnsavedChanges flag
         dispatch(saveSucceeded());
+        // Update the user's personal and organization snippet lists
+        dispatch(updateUserSnippets());
+        dispatch(fetchSnippetLists());
         // Return the key of the newly-saved snippet so that the browser
         // location can be updated
         return res.data.key;
@@ -166,6 +170,9 @@ export const saveExisting = () => (dispatch, getState) => {
         dispatch(addNotification('Codesplaination Saved!'));
         // Clear the hasUnsavedChanges flag
         dispatch(saveSucceeded());
+        // Update the user's personal and organization snippet lists
+        dispatch(updateUserSnippets());
+        dispatch(fetchSnippetLists());
       }, () => {
         // Give user feedback that saving failed
         dispatch(addNotification('Failed to save snippet; please try again'));

@@ -198,7 +198,6 @@ export class SnippetArea extends React.Component {
           router.push(`/${selectedOrg}/${snippetKey}`);
           // Update the snippet's key
           dispatch(setSnippetKey(snippetKey));
-          dispatch(updateUserSnippets());
         });
     }
   }
@@ -230,7 +229,6 @@ export class SnippetArea extends React.Component {
           canEdit: true,
         }; // Grant all permissions, this is now her file.
         dispatch(setPermissions(permissions));
-        dispatch(updateUserSnippets());
       });
   }
 
