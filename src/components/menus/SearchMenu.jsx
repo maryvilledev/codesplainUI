@@ -1,5 +1,6 @@
 import React from 'react';
 import { Dialog, TextField, List, ListItem } from 'material-ui';
+import FuzzySearch from 'fuzzy-search';
 
 const styles = {
   list: {
@@ -24,11 +25,21 @@ class SearchMenu extends React.Component {
     this.state = { filterText: '' };
     this.handleFilterTextChanged = this.handleFilterTextChanged.bind(this);
   }
+  componentWillReceiveProps(nextProps) {
+    const { orderedSnippets } = nextProps;
+    if (orderedSnippets && orderedSnippets.length > 0) {
+      this.searcher = new FuzzySearch(orderedSnippets, ['title', 'role']);
+    }
+  }
   handleFilterTextChanged(_, filterText) {
     this.setState({ filterText });
   }
   render() {
+    const { filterText } = this.state;
     const { open, onRequestClose, orderedSnippets } = this.props;
+    const listedSnippets = (this.searcher) ?
+    this.searcher.search(filterText) :
+    orderedSnippets;
     return (
       <Dialog
         modal={false}
@@ -41,7 +52,7 @@ class SearchMenu extends React.Component {
           fullWidth
         />
         <List style={styles.list}>
-          {orderedSnippets.map(info => listItem(info))}
+          {listedSnippets.map(info => listItem(info))}
         </List>
       </Dialog>
     );
