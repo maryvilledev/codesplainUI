@@ -79,13 +79,13 @@ const orderSnippets = (username, userSnippets, orgSnippets) => {
   const allSnippets = { ...orgSnippets }; // Spread so there aren't side effects.
   allSnippets[username] = userSnippets;
   const orderedSnippets = _.reduce(allSnippets, (allList, snippets, role) => {
-    const next = _.reduce(snippets, (snipList, { language }, title) => {
-      const obj = { role, title, language };
+    const next = _.reduce(snippets, (snipList, { language, lastEdited }, snippetTitle) => {
+      const obj = { role, snippetTitle, language, lastEdited };
       return _.concat(snipList, obj);
     }, []);
     return _.concat(allList, next);
   }, []);
-  return _.sortBy(orderedSnippets, ({ title }) => title);
+  return _.sortBy(orderedSnippets, ({ snippetTitle }) => snippetTitle);
 };
 
 /*

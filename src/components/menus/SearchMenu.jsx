@@ -1,6 +1,8 @@
 import React from 'react';
-import { Dialog, TextField, List, ListItem } from 'material-ui';
+import { Dialog, TextField, Menu, MenuItem } from 'material-ui';
 import FuzzySearch from 'fuzzy-search';
+
+import SnippetMenuItem from './SnippetMenuItem';
 
 const styles = {
   list: {
@@ -10,13 +12,16 @@ const styles = {
   },
 };
 
-const listItem = ({ title, role, language }, onClick) => (
-  <ListItem
-    onClick={onClick}
-  >
-    {title}
-  </ListItem>
-);
+const makeMenuItems = (snippet, onClick) => {
+  const { snippetTitle, role } = snippet;
+  return (
+    <MenuItem
+      key={`${role}/${snippetTitle}`}
+      onTouchTap={() => onClick(role, snippetTitle)}
+      primaryText={SnippetMenuItem(snippet)}
+    />
+  );
+};
 
 
 class SearchMenu extends React.Component {
@@ -28,7 +33,7 @@ class SearchMenu extends React.Component {
   componentWillReceiveProps(nextProps) {
     const { orderedSnippets } = nextProps;
     if (orderedSnippets && orderedSnippets.length > 0) {
-      this.searcher = new FuzzySearch(orderedSnippets, ['title', 'role']);
+      this.searcher = new FuzzySearch(orderedSnippets, ['snippetTitle', 'role']);
     }
   }
   handleFilterTextChanged(_, filterText) {
@@ -36,7 +41,7 @@ class SearchMenu extends React.Component {
   }
   render() {
     const { filterText } = this.state;
-    const { open, onRequestClose, orderedSnippets } = this.props;
+    const { open, onRequestClose, orderedSnippets, onClick } = this.props;
     const listedSnippets = (this.searcher) ?
     this.searcher.search(filterText) :
     orderedSnippets;
@@ -51,9 +56,9 @@ class SearchMenu extends React.Component {
           onChange={this.handleFilterTextChanged}
           fullWidth
         />
-        <List style={styles.list}>
-          {listedSnippets.map(info => listItem(info))}
-        </List>
+        <Menu style={styles.list}>
+          {listedSnippets.map(info => makeMenuItems(info, onClick))}
+        </Menu>
       </Dialog>
     );
   }
