@@ -8,6 +8,7 @@ import LanguageSelector from './LanguageSelector';
 import LockButton from './buttons/LockButton';
 import DeleteButton from './buttons/DeleteButton';
 import SaveMenu from './menus/SaveMenu';
+import EditorMenu from './menus/EditorMenu';
 import CustomPropTypes from '../util/custom-prop-types';
 
 const styles = {
@@ -47,6 +48,7 @@ const SnippetAreaToolbar = (props) => {
     author,
     avatarUrl,
     canEdit,
+    codeMirrorTheme,
     deleteEnabled,
     language,
     onDeleteClick,
@@ -55,6 +57,7 @@ const SnippetAreaToolbar = (props) => {
     onOrgChanged,
     onSaveAsClick,
     onSaveClick,
+    onThemeChange,
     onTitleChange,
     orgs,
     readOnly,
@@ -107,6 +110,10 @@ const SnippetAreaToolbar = (props) => {
             isEnabled={deleteEnabled}
             onClick={onDeleteClick}
           />
+          <EditorMenu
+            codeMirrorTheme={codeMirrorTheme}
+            onChange={onThemeChange}
+          />
         </div>
       </div>
     </div>
@@ -117,6 +124,7 @@ SnippetAreaToolbar.propTypes = {
   author: PropTypes.string,
   avatarUrl: PropTypes.string,
   canEdit: PropTypes.bool.isRequired,
+  codeMirrorTheme: PropTypes.string,
   deleteEnabled: PropTypes.bool.isRequired,
   language: PropTypes.string.isRequired,
   onDeleteClick: PropTypes.func.isRequired,
@@ -125,6 +133,7 @@ SnippetAreaToolbar.propTypes = {
   onOrgChanged: PropTypes.func.isRequired,
   onSaveAsClick: PropTypes.func.isRequired,
   onSaveClick: PropTypes.func.isRequired,
+  onThemeChange: PropTypes.func.isRequired,
   onTitleChange: PropTypes.func.isRequired,
   orgs: CustomPropTypes.orgs.isRequired,
   readOnly: PropTypes.bool.isRequired,
@@ -136,6 +145,7 @@ SnippetAreaToolbar.propTypes = {
 SnippetAreaToolbar.defaultProps = {
   author: '',
   avatarUrl: '',
+  codeMirrorTheme: 'codesplain',
   selectedOrg: '',
 };
 

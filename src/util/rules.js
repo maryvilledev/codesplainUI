@@ -1,4 +1,5 @@
 import axios from 'axios';
+import isEqual from 'lodash/isEqual';
 import last from 'lodash/last';
 import {
   setRules,
@@ -69,7 +70,9 @@ const onStateChange = async () => {
     // the filters panel doesn't display any rules ignored
     // within those new mappings.
     const newState = removeDeprecatedFiltersFromState(state.app);
-    store.dispatch(restoreState(newState));
+    if (!isEqual(newState.filters, state.app.filters)) {
+      store.dispatch(restoreState(newState));
+    }
   }
   currentLanguage = newLanguage;
 };

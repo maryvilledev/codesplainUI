@@ -6,6 +6,7 @@ import {
 } from 'material-ui';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import cookie from 'react-cookie';
 
 import { openAnnotationPanel } from '../actions/annotation';
 import {
@@ -64,10 +65,12 @@ const debouncedParseSnippetDispatch = debounce(dispatchParseSnippet, 400);
 export class SnippetArea extends React.Component {
   constructor(props) {
     super(props);
+    const savedTheme = cookie.load('theme');
     this.state = {
       lockDialogOpen: false,
       deleteDialogOpen: false,
       avatarUrl: '',
+      codeMirrorTheme: savedTheme || 'codesplain',
     };
 
     this.handleCloseModal = this.handleCloseModal.bind(this);
@@ -76,10 +79,10 @@ export class SnippetArea extends React.Component {
     this.handleLanguageChanged = this.handleLanguageChanged.bind(this);
     this.handleLock = this.handleLock.bind(this);
     this.handleOrgChanged = this.handleOrgChanged.bind(this);
-    this.handleOrgChanged = this.handleOrgChanged.bind(this);
     this.handleSave = this.handleSave.bind(this);
     this.handleSaveAs = this.handleSaveAs.bind(this);
     this.handleSnippetChanged = this.handleSnippetChanged.bind(this);
+    this.handleThemeChange = this.handleThemeChange.bind(this);
     this.handleTitleChanged = this.handleTitleChanged.bind(this);
     this.handleToggleReadOnly = this.handleToggleReadOnly.bind(this);
     this.showDeleteModal = this.showDeleteModal.bind(this);
@@ -88,6 +91,10 @@ export class SnippetArea extends React.Component {
   componentDidMount() {
     const { dispatch, snippetLanguage } = this.props;
     dispatch(loadParser(snippetLanguage));
+
+    if (cookie.load('theme') === undefined) {
+      cookie.save('theme', this.state.codeMirrorTheme, { path: '/' });
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -166,6 +173,11 @@ export class SnippetArea extends React.Component {
       lockDialogOpen: false,
       deleteDialogOpen: false,
     });
+  }
+
+  handleThemeChange(_, codeMirrorTheme) {
+    this.setState({ codeMirrorTheme });
+    cookie.save('theme', codeMirrorTheme, { path: '/' });
   }
 
   handleSave() {
@@ -275,7 +287,7 @@ export class SnippetArea extends React.Component {
       snippetTitle,
       username,
     } = this.props;
-    const { avatarUrl } = this.state;
+    const { avatarUrl, codeMirrorTheme } = this.state;
     const markedLines = Object.keys(annotations).map(Number);
     // Delete button is enabled only when user is logged in, owns snippet,
     // and is not viewing a new snippet
@@ -291,6 +303,7 @@ export class SnippetArea extends React.Component {
             author={author}
             avatarUrl={avatarUrl}
             canEdit={canEdit}
+            codeMirrorTheme={codeMirrorTheme}
             deleteEnabled={deleteEnabled}
             language={snippetLanguage}
             onDeleteClick={this.showDeleteModal}
@@ -299,6 +312,7 @@ export class SnippetArea extends React.Component {
             onOrgChanged={this.handleOrgChanged}
             onSaveAsClick={this.handleSaveAs}
             onSaveClick={this.handleSave}
+            onThemeChange={this.handleThemeChange}
             onTitleChange={this.handleTitleChanged}
             orgs={orgs}
             readOnly={readOnly}
@@ -322,6 +336,7 @@ export class SnippetArea extends React.Component {
           />
           <Editor
             AST={AST}
+            codeMirrorTheme={codeMirrorTheme}
             errors={errors}
             filters={filters}
             language={snippetLanguage}

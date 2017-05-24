@@ -9,18 +9,19 @@ const defaultProps = {
   canEdit: true,
   deleteEnabled: true,
   language: 'python',
+  onDeleteClick: jest.fn(),
   onLanguageChange: jest.fn(),
   onLockClick: jest.fn(),
-  onSaveClick: jest.fn(),
-  onSaveAsClick: jest.fn(),
-  onDeleteClick: jest.fn(),
-  onTitleChange: jest.fn(),
   onOrgChanged: jest.fn(),
+  onSaveAsClick: jest.fn(),
+  onSaveClick: jest.fn(),
+  onThemeChange: jest.fn(),
+  onTitleChange: jest.fn(),
+  orgs: ['galactic-federation'],
   readOnly: false,
   saveEnabled: true,
-  title: '',
-  orgs: ['galactic-federation'],
   selectedOrg: 'galactic-federation',
+  title: '',
 };
 
 describe('<SnippetAreaToolbar />', () => {
@@ -134,6 +135,34 @@ describe('<SnippetAreaToolbar />', () => {
         />,
       );
       expect(wrapper.find('LanguageSelector').prop('disabled')).toBe(readOnly);
+    });
+  });
+
+  describe('prop: onThemeChange', () => {
+    it('is forwarded to the EditorMenu', () => {
+      const onChange = () => {};
+      const wrapper = shallowWithContext(
+        <SnippetAreaToolbar
+          {...defaultProps}
+          onThemeChange={onChange}
+        />,
+      );
+      const editorMenu = wrapper.find('EditorMenu');
+      expect(editorMenu.prop('onChange')).toEqual(onChange);
+    });
+  });
+
+  describe('prop: codeMirrorTheme', () => {
+    it('is forwarded to the EditorMenu', () => {
+      const codeMirrorTheme = 'monokai';
+      const wrapper = shallowWithContext(
+        <SnippetAreaToolbar
+          {...defaultProps}
+          codeMirrorTheme={codeMirrorTheme}
+        />,
+      );
+      const editorMenu = wrapper.find('EditorMenu');
+      expect(editorMenu.prop('codeMirrorTheme')).toEqual(codeMirrorTheme);
     });
   });
 });
