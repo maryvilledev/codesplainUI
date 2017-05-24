@@ -296,6 +296,7 @@ export class SnippetArea extends React.Component {
             author={author}
             avatarUrl={avatarUrl}
             canEdit={canEdit}
+            codeMirrorTheme={codeMirrorTheme}
             deleteEnabled={deleteEnabled}
             language={snippetLanguage}
             onDeleteClick={this.showDeleteModal}
@@ -304,14 +305,13 @@ export class SnippetArea extends React.Component {
             onOrgChanged={this.handleOrgChanged}
             onSaveAsClick={this.handleSaveAs}
             onSaveClick={this.handleSave}
+            onThemeChange={this.handleThemeChange}
             onTitleChange={this.handleTitleChanged}
             orgs={orgs}
             readOnly={readOnly}
             saveEnabled={Boolean(username)}
             selectedOrg={selectedOrg}
             title={snippetTitle}
-            onThemeChange={this.handleThemeChange}
-            codeMirrorTheme={codeMirrorTheme}
           />
           <ConfirmationDialog
             accept={this.handleToggleReadOnly}
@@ -329,6 +329,7 @@ export class SnippetArea extends React.Component {
           />
           <Editor
             AST={AST}
+            codeMirrorTheme={codeMirrorTheme}
             errors={errors}
             filters={filters}
             language={snippetLanguage}
@@ -338,7 +339,6 @@ export class SnippetArea extends React.Component {
             openLine={openLine}
             readOnly={readOnly}
             value={snippet}
-            codeMirrorTheme={codeMirrorTheme}
           />
         </CardText>
       </Card>

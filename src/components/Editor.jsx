@@ -224,8 +224,8 @@ Editor.propTypes = {
 
 Editor.defaultProps = {
   codeMirrorTheme: 'codesplain',
-  openLine: -1,
   errors: [],
+  openLine: -1,
 };
 
 export default Editor;

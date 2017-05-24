@@ -48,6 +48,7 @@ const SnippetAreaToolbar = (props) => {
     author,
     avatarUrl,
     canEdit,
+    codeMirrorTheme,
     deleteEnabled,
     language,
     onDeleteClick,
@@ -56,13 +57,12 @@ const SnippetAreaToolbar = (props) => {
     onOrgChanged,
     onSaveAsClick,
     onSaveClick,
+    onThemeChange,
     onTitleChange,
     orgs,
     readOnly,
     saveEnabled,
     selectedOrg,
-    onThemeChange,
-    codeMirrorTheme,
     title,
   } = props;
 
@@ -124,6 +124,7 @@ SnippetAreaToolbar.propTypes = {
   author: PropTypes.string,
   avatarUrl: PropTypes.string,
   canEdit: PropTypes.bool.isRequired,
+  codeMirrorTheme: PropTypes.string,
   deleteEnabled: PropTypes.bool.isRequired,
   language: PropTypes.string.isRequired,
   onDeleteClick: PropTypes.func.isRequired,
@@ -132,6 +133,7 @@ SnippetAreaToolbar.propTypes = {
   onOrgChanged: PropTypes.func.isRequired,
   onSaveAsClick: PropTypes.func.isRequired,
   onSaveClick: PropTypes.func.isRequired,
+  onThemeChange: PropTypes.func.isRequired,
   onTitleChange: PropTypes.func.isRequired,
   orgs: CustomPropTypes.orgs.isRequired,
   readOnly: PropTypes.bool.isRequired,
@@ -143,6 +145,7 @@ SnippetAreaToolbar.propTypes = {
 SnippetAreaToolbar.defaultProps = {
   author: '',
   avatarUrl: '',
+  codeMirrorTheme: 'codesplain',
   selectedOrg: '',
 };
 
