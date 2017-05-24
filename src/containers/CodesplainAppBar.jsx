@@ -29,6 +29,7 @@ import LoginButton from '../components/buttons/LoginButton';
 import AppMenu from '../components/menus/AppMenu';
 import CustomPropTypes from '../util/custom-prop-types';
 import SnippetMenu from '../components/menus/SnippetMenu';
+import SearchMenu from '../components/menus/SearchMenu';
 
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 const GITHUB_URL = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&scope=read:org`;
@@ -85,6 +86,7 @@ export class CodesplainAppBar extends Component {
     this.state = {
       isLoggedIn: false,
       isDialogOpen: false,
+      isSearchMenuOpen: false,
     };
     this.fetchUserAccountInfo = this.fetchUserAccountInfo.bind(this);
     this.handleConfirmNavigation = this.handleConfirmNavigation.bind(this);
@@ -94,6 +96,7 @@ export class CodesplainAppBar extends Component {
     this.handleSnippetSelected = this.handleSnippetSelected.bind(this);
     this.handleTitleTouchTap = this.handleTitleTouchTap.bind(this);
     this.handleOpenSearchMenu = this.handleOpenSearchMenu.bind(this);
+    this.handleCloseSearchMenu = this.handleCloseSearchMenu.bind(this);
     this.onLoginClick = this.onLoginClick.bind(this);
     this.redirectToHomePage = this.redirectToHomePage.bind(this);
     this.resetApplication = this.resetApplication.bind(this);
@@ -198,7 +201,13 @@ export class CodesplainAppBar extends Component {
     dispatch(fetchGist(url));
   }
 
-  handleOpenSearchMenu() {} // TODO
+  handleOpenSearchMenu() {
+    this.setState({ isSearchMenuOpen: true });
+  }
+
+  handleCloseSearchMenu() {
+    this.setState({ isSearchMenuOpen: false });
+  }
 
   resetApplication() {
     const { dispatch, username } = this.props;
@@ -236,7 +245,7 @@ export class CodesplainAppBar extends Component {
     ];
 
     const { avatarUrl, orgSnippets, username, userSnippets, gists } = this.props;
-    const { isDialogOpen, isLoggedIn } = this.state;
+    const { isDialogOpen, isLoggedIn, isSearchMenuOpen } = this.state;
     const appMenu = isLoggedIn ?
       (<AppMenu
         avatarUrl={avatarUrl}
@@ -298,6 +307,10 @@ export class CodesplainAppBar extends Component {
         >
           Discard unsaved changes?
         </Dialog>
+        <SearchMenu
+          open={isSearchMenuOpen}
+          onRequestClose={this.handleCloseSearchMenu}
+        />
       </div>
     );
   }
