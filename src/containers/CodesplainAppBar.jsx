@@ -233,6 +233,8 @@ export class CodesplainAppBar extends Component {
     dispatch(switchOrg(username));
     // Close the annotation panel
     dispatch(closeAnnotationPanel());
+    // Close the search menuText
+    this.handleCloseSearchMenu();
   }
 
   redirectToHomePage() {
@@ -332,6 +334,7 @@ export class CodesplainAppBar extends Component {
           open={isSearchMenuOpen}
           onRequestClose={this.handleCloseSearchMenu}
           orderedSnippets={orderedSnippets}
+          onClick={this.handleSnippetSelected}
         />
       </div>
     );
