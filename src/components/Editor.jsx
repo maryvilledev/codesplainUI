@@ -172,12 +172,12 @@ class Editor extends React.Component {
   handleCursorActivity() {
     // Always highlight when the cursor moves and text is in the editor
     const { filters, AST, value } = this.props;
+    const codeMirror = this.codeMirror.getCodeMirror();
 
     // Need to keep this type of check for the AST, otherwise, for a
     // new snippet, we'll try to highlight with an AST === {}, which
     // !== undefined
     if (value && Object.keys(AST) > 0) {
-      const codeMirror = this.codeMirror.getCodeMirror();
       highlight(codeMirror, AST, filters);
     }
   }

@@ -163,6 +163,7 @@ describe('Actions: App', () => {
           user: {
             token: '',
             selectedOrg: '',
+            orgs: [],
           },
         });
         return store.dispatch(actions.deleteSnippet(snippetKey))
@@ -182,6 +183,7 @@ describe('Actions: App', () => {
           user: {
             token: '',
             selectedOrg: '',
+            orgs: [],
           },
         });
         return store.dispatch(actions.deleteSnippet(snippetKey))
