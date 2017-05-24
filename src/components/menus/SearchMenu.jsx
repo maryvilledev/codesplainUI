@@ -9,6 +9,14 @@ const styles = {
   },
 };
 
+const listItem = ({ title, role, language }, onClick) => (
+  <ListItem
+    onClick={onClick}
+  >
+    {title}
+  </ListItem>
+);
+
 
 class SearchMenu extends React.Component {
   constructor() {
@@ -33,7 +41,7 @@ class SearchMenu extends React.Component {
           fullWidth
         />
         <List style={styles.list}>
-          <ListItem>Dummy</ListItem><ListItem>Dummy</ListItem><ListItem>Dummy</ListItem><ListItem>Dummy</ListItem><ListItem>Dummy</ListItem><ListItem>Dummy</ListItem><ListItem>Dummy</ListItem><ListItem>Dummy</ListItem><ListItem>Dummy</ListItem><ListItem>Dummy</ListItem><ListItem>Dummy</ListItem><ListItem>Dummy</ListItem><ListItem>Dummy</ListItem>
+          {orderedSnippets.map(info => listItem(info))}
         </List>
       </Dialog>
     );

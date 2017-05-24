@@ -258,7 +258,14 @@ export class CodesplainAppBar extends Component {
       />,
     ];
 
-    const { avatarUrl, orgSnippets, username, userSnippets, gists } = this.props;
+    const {
+      avatarUrl,
+      orgSnippets,
+      username,
+      userSnippets,
+      gists,
+      orderedSnippets,
+    } = this.props;
     const { isDialogOpen, isLoggedIn, isSearchMenuOpen } = this.state;
     const appMenu = isLoggedIn ?
       (<AppMenu
@@ -324,6 +331,7 @@ export class CodesplainAppBar extends Component {
         <SearchMenu
           open={isSearchMenuOpen}
           onRequestClose={this.handleCloseSearchMenu}
+          orderedSnippets={orderedSnippets}
         />
       </div>
     );
@@ -365,7 +373,6 @@ const mapStateToProps = (state) => {
     gists,
   } = state;
   const orderedSnippets = orderSnippets(username, userSnippets, orgSnippets);
-  console.log(orderedSnippets);
   return {
     appState: app,
     avatarUrl,
