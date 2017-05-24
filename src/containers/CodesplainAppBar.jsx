@@ -349,6 +349,7 @@ CodesplainAppBar.propTypes = {
   token: PropTypes.string,
   username: PropTypes.string,
   userSnippets: CustomPropTypes.snippets,
+  orderedSnippets: CustomPropTypes.orderedSnippets,
 };
 
 CodesplainAppBar.defaultProps = {
@@ -358,6 +359,7 @@ CodesplainAppBar.defaultProps = {
   token: '',
   username: '',
   userSnippets: {},
+  orderedSnippets: [],
 };
 
 const mapStateToProps = (state) => {

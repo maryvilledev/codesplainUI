@@ -55,6 +55,20 @@ exports[`<SnippetMenu /> snapshot tests matches snapshot of when user is logged 
   <OrgSnippetsMenu
     onClick={[Function]}
     orgSnippets={Object {}} />
+  <MenuItem
+    anchorOrigin={
+      Object {
+        "horizontal": "right",
+        "vertical": "top",
+      }
+    }
+    checked={false}
+    desktop={false}
+    disabled={false}
+    focusState="none"
+    insetChildren={false}
+    onTouchTap={[Function]}
+    primaryText="Search" />
 </IconMenu>
 `;
 
@@ -115,5 +129,19 @@ exports[`<SnippetMenu /> snapshot tests matches snapshot of when user is not log
   <OrgSnippetsMenu
     onClick={[Function]}
     orgSnippets={Object {}} />
+  <MenuItem
+    anchorOrigin={
+      Object {
+        "horizontal": "right",
+        "vertical": "top",
+      }
+    }
+    checked={false}
+    desktop={false}
+    disabled={false}
+    focusState="none"
+    insetChildren={false}
+    onTouchTap={[Function]}
+    primaryText="Search" />
 </IconMenu>
 `;

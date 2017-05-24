@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Dialog, TextField, List, ListItem } from 'material-ui';
 import FuzzySearch from 'fuzzy-search';
 
 import SnippetMenuItem from './SnippetMenuItem';
+import CustomPropTypes from '../../util/custom-prop-types';
 
 const styles = {
   list: {
@@ -24,7 +25,7 @@ const makeListItems = (snippet, onClick) => {
 };
 
 
-class SearchMenu extends React.Component {
+class SearchMenu extends Component {
   constructor() {
     super();
     this.state = { filterText: '' };
@@ -63,5 +64,12 @@ class SearchMenu extends React.Component {
     );
   }
 }
+
+SearchMenu.propTypes = {
+  open: PropTypes.bool.isRequired,
+  onRequestClose: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
+  orderedSnippets: CustomPropTypes.orderedSnippets,
+};
 
 export default SearchMenu;

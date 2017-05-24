@@ -52,4 +52,15 @@ const SnippetMenuItem = ({ snippetTitle, language, lastEdited, role }) => (
   </table>
 );
 
+SnippetMenuItem.propTypes = {
+  snippetTitle: PropTypes.string.isRequired,
+  language: PropTypes.string.isRequired,
+  lastEdited: PropTypes.number.isRequired,
+  role: PropTypes.string,
+};
+
+SnippetMenuItem.defaultProps = {
+  role: '',
+};
+
 export default SnippetMenuItem;

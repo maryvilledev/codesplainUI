@@ -47,6 +47,15 @@ const gists = PropTypes.arrayOf(
   }),
 );
 
+const orderedSnippets = PropTypes.arrayOf(
+  PropTypes.shape({
+    snippetTitle: PropTypes.string,
+    role: PropTypes.string,
+    lastEdited: PropTypes.number,
+    language: PropTypes.string,
+  }),
+);
+
 const snippets = PropTypes.objectOf(snippetData);
 
 const orgSnippets = PropTypes.objectOf(snippets);
@@ -58,6 +67,7 @@ export default {
   errors,
   filters,
   lineAnnotated,
+  orderedSnippets,
   orgs,
   orgSnippets,
   permissions,

@@ -9,6 +9,7 @@ const makeMenuItems = (orgSnippets, onClick) => {
   }
   return orgNames.map(orgName => (
     <SnippetList
+      key={orgName}
       onClick={onClick}
       primaryText={orgName}
       snippetsList={orgSnippets[orgName]}
