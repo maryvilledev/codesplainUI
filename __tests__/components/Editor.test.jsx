@@ -52,4 +52,18 @@ describe('<Editor />', () => {
       expect(wrapper.find('CodeMirror').prop('value')).toEqual(snippetContents);
     });
   });
+
+  describe('prop: codeMirrorTheme', () => {
+    it('forwarded to the CodeMirror instance', () => {
+      const codeMirrorTheme = 'monokai';
+      const wrapper = shallowWithContext(
+        <Editor
+          {...defaultProps}
+          codeMirrorTheme={codeMirrorTheme}
+        />,
+      );
+      const codeMirrorOptions = wrapper.find('CodeMirror').prop('options');
+      expect(codeMirrorOptions.theme).toEqual(codeMirrorTheme);
+    });
+  });
 });

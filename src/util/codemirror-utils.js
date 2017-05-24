@@ -33,7 +33,7 @@ Recursive function for highlighting code in a CodeMirror. highlight() is an
 exported wrapper func for this, and starts the recursion.
 */
 export function highlightNode(codeMirror, node, filters, parentColor) {
-  let color = parentColor;
+  let backgroundColor = parentColor;
   // Node's type is the last element of the node's tags property,
   // if AST was made with tagging parser. Otherwise, if it was made with
   // the legacy parser, it is the type property.
@@ -48,21 +48,23 @@ export function highlightNode(codeMirror, node, filters, parentColor) {
     const rule = rules[type];
     // Use this node's color if it has one
     if (rule.color) {
-      color = rule.color;
+      backgroundColor = rule.color;
     }
 
     // If this token's filter is not selected
     if (!filters[type] || !filters[type].selected) {
-      color = parentColor;
+      backgroundColor = parentColor;
     }
 
+    const fontColor = backgroundColor !== 'transparent' ? 'black' : '';
+
     // Apply the background color CSS to this token
-    styleRegion(codeMirror, node.begin, node.end, `background-color: ${color};`);
+    styleRegion(codeMirror, node.begin, node.end, `background-color: ${backgroundColor}; color: ${fontColor}`);
   }
 
   // Highlight all children of this token
   node.children.forEach((child) => {
-    if (isObject(child)) { highlightNode(codeMirror, child, filters, color); }
+    if (isObject(child)) { highlightNode(codeMirror, child, filters, backgroundColor); }
   });
 }
 

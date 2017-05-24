@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import CodeMirror from 'react-codemirror';
 import isEqual from 'lodash/isEqual';
-import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/python/python';
 
 import {
@@ -11,8 +10,9 @@ import {
   styleAll,
   styleRegion,
 } from '../util/codemirror-utils';
+import '../util/codemirror-themes';
+import { getCodeMirrorTheme } from '../util/codemirror-theme-options';
 import CustomPropTypes from '../util/custom-prop-types';
-import '../styles/codesplain.css';
 
 // Options for the CodeMirror instance that are shared by edit and annotation mddes
 const baseCodeMirrorOptions = {
@@ -185,6 +185,7 @@ class Editor extends React.Component {
 
   render() {
     const {
+      codeMirrorTheme,
       language,
       onChange,
       readOnly,
@@ -194,6 +195,7 @@ class Editor extends React.Component {
     const codeMirrorOptions = {
       mode: getCodeMirrorMode(language),
       ...(readOnly ? annotationModeOptions : editModeOptions),
+      theme: getCodeMirrorTheme(codeMirrorTheme),
     };
 
     return (
@@ -208,6 +210,8 @@ class Editor extends React.Component {
 }
 
 Editor.propTypes = {
+  codeMirrorTheme: PropTypes.string,
+  errors: CustomPropTypes.errors,
   filters: CustomPropTypes.filters.isRequired,
   language: PropTypes.string.isRequired,
   markedLines: PropTypes.arrayOf(PropTypes.number).isRequired,
@@ -216,12 +220,12 @@ Editor.propTypes = {
   openLine: PropTypes.number,
   readOnly: PropTypes.bool.isRequired,
   value: PropTypes.string.isRequired,
-  errors: CustomPropTypes.errors,
 };
 
 Editor.defaultProps = {
-  openLine: -1,
+  codeMirrorTheme: 'codesplain',
   errors: [],
+  openLine: -1,
 };
 
 export default Editor;
