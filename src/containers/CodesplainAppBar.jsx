@@ -7,6 +7,7 @@ import {
 } from 'material-ui';
 import { withRouter } from 'react-router';
 import cookie from 'react-cookie';
+import _ from 'lodash';
 import { closeAnnotationPanel } from '../actions/annotation';
 import {
   resetState,
@@ -72,6 +73,19 @@ const styles = {
     height: '100%',
     alignItems: 'center',
   },
+};
+
+const orderSnippets = (username, userSnippets, orgSnippets) => {
+  const allSnippets = orgSnippets;
+  allSnippets[username] = userSnippets;
+  const orderedSnippets = _.reduce(allSnippets, (allList, snippets, role) => {
+    const next = _.reduce(snippets, (snipList, { language }, title) => {
+      const obj = { role, title, language };
+      return _.concat(snipList, obj);
+    }, []);
+    return _.concat(allList, next);
+  }, []);
+  return _.sortBy(orderedSnippets, ({ title }) => title);
 };
 
 /*
@@ -350,6 +364,8 @@ const mapStateToProps = (state) => {
     },
     gists,
   } = state;
+  const orderedSnippets = orderSnippets(username, userSnippets, orgSnippets);
+  console.log(orderedSnippets);
   return {
     appState: app,
     avatarUrl,
@@ -359,6 +375,7 @@ const mapStateToProps = (state) => {
     token,
     username,
     userSnippets,
+    orderedSnippets,
   };
 };
 

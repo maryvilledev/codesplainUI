@@ -20,7 +20,7 @@ class SearchMenu extends React.Component {
     this.setState({ filterText });
   }
   render() {
-    const { open, onRequestClose } = this.props;
+    const { open, onRequestClose, orderedSnippets } = this.props;
     return (
       <Dialog
         modal={false}
