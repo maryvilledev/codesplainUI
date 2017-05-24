@@ -45,7 +45,47 @@ exports[`<SnippetList /> snapshot tests matches when snippets are passed 1`] = `
         focusState="none"
         insetChildren={false}
         onTouchTap={[Function]}
-        primaryText="bar" />,
+        primaryText={
+            <table
+                style={
+                    Object {
+                        "width": "350px",
+                      }
+                }>
+                <tr>
+                    <td
+                        style={
+                            Object {
+                                "width": "50%",
+                              }
+                        }>
+                        bar
+                    </td>
+                    <td
+                        style={
+                            Object {
+                                "float": "left",
+                                "fontSize": "80%",
+                              }
+                        } />
+                    <td
+                        style={
+                            Object {
+                                "float": "right",
+                                "fontSize": "80%",
+                              }
+                        }>
+                        <o
+                            ago={true}
+                            calendar={false}
+                            fromNow={true}
+                            toNow={false}
+                            unix={false}
+                            utc={false} />
+                    </td>
+                </tr>
+            </table>
+        } />,
       <MenuItem
         anchorOrigin={
             Object {
@@ -59,7 +99,47 @@ exports[`<SnippetList /> snapshot tests matches when snippets are passed 1`] = `
         focusState="none"
         insetChildren={false}
         onTouchTap={[Function]}
-        primaryText="qux" />,
+        primaryText={
+            <table
+                style={
+                    Object {
+                        "width": "350px",
+                      }
+                }>
+                <tr>
+                    <td
+                        style={
+                            Object {
+                                "width": "50%",
+                              }
+                        }>
+                        qux
+                    </td>
+                    <td
+                        style={
+                            Object {
+                                "float": "left",
+                                "fontSize": "80%",
+                              }
+                        } />
+                    <td
+                        style={
+                            Object {
+                                "float": "right",
+                                "fontSize": "80%",
+                              }
+                        }>
+                        <o
+                            ago={true}
+                            calendar={false}
+                            fromNow={true}
+                            toNow={false}
+                            unix={false}
+                            utc={false} />
+                    </td>
+                </tr>
+            </table>
+        } />,
     ]
   }
   onTouchTap={[Function]}

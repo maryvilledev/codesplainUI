@@ -1,0 +1,119 @@
+exports[`<SnippetMenu /> snapshot tests matches snapshot of when user is logged in 1`] = `
+<IconMenu
+  anchorOrigin={
+    Object {
+      "horizontal": "left",
+      "vertical": "bottom",
+    }
+  }
+  animated={true}
+  iconButtonElement={
+    <span
+      style={
+        Object {
+          "color": "white",
+        }
+      }>
+      Snippets
+    </span>
+  }
+  multiple={false}
+  onItemTouchTap={[Function]}
+  onKeyboardFocus={[Function]}
+  onMouseDown={[Function]}
+  onMouseEnter={[Function]}
+  onMouseLeave={[Function]}
+  onMouseUp={[Function]}
+  onRequestChange={[Function]}
+  onTouchTap={[Function]}
+  open={false}
+  style={
+    Object {
+      "alignItems": "center",
+      "background": "transparent",
+      "borderBottomColor": "transparent",
+      "borderBottomWidth": "3px",
+      "display": "inline-flex",
+      "height": "100%",
+      "paddingLeft": "10px",
+      "paddingRight": "10px",
+    }
+  }
+  targetOrigin={
+    Object {
+      "horizontal": "left",
+      "vertical": "top",
+    }
+  }
+  touchTapCloseDelay={200}
+  useLayerForClickAway={true}>
+  <SnippetList
+    onClick={[Function]}
+    primaryText="My Snippets"
+    snippetOwner="foo"
+    snippetsList={Object {}} />
+  <OrgSnippetsMenu
+    onClick={[Function]}
+    orgSnippets={Object {}} />
+</IconMenu>
+`;
+
+exports[`<SnippetMenu /> snapshot tests matches snapshot of when user is not logged in 1`] = `
+<IconMenu
+  anchorOrigin={
+    Object {
+      "horizontal": "left",
+      "vertical": "bottom",
+    }
+  }
+  animated={true}
+  iconButtonElement={
+    <span
+      style={
+        Object {
+          "color": "white",
+        }
+      }>
+      Snippets
+    </span>
+  }
+  multiple={false}
+  onItemTouchTap={[Function]}
+  onKeyboardFocus={[Function]}
+  onMouseDown={[Function]}
+  onMouseEnter={[Function]}
+  onMouseLeave={[Function]}
+  onMouseUp={[Function]}
+  onRequestChange={[Function]}
+  onTouchTap={[Function]}
+  open={false}
+  style={
+    Object {
+      "alignItems": "center",
+      "background": "transparent",
+      "borderBottomColor": "transparent",
+      "borderBottomWidth": "3px",
+      "display": "inline-flex",
+      "height": "100%",
+      "paddingLeft": "10px",
+      "paddingRight": "10px",
+    }
+  }
+  targetOrigin={
+    Object {
+      "horizontal": "left",
+      "vertical": "top",
+    }
+  }
+  touchTapCloseDelay={200}
+  useLayerForClickAway={true}>
+  <SnippetList
+    onClick={[Function]}
+    primaryText="My Snippets"
+    snippetOwner="foo"
+    snippetsList={Object {}} />
+  <OrgSnippetsMenu
+    onClick={[Function]}
+    orgSnippets={Object {}} />
+</IconMenu>
+`;

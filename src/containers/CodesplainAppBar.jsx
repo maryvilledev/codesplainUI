@@ -7,7 +7,6 @@ import {
 } from 'material-ui';
 import { withRouter } from 'react-router';
 import cookie from 'react-cookie';
-
 import { closeAnnotationPanel } from '../actions/annotation';
 import {
   resetState,
@@ -29,6 +28,7 @@ import {
 import LoginButton from '../components/buttons/LoginButton';
 import AppMenu from '../components/menus/AppMenu';
 import CustomPropTypes from '../util/custom-prop-types';
+import SnippetMenu from '../components/menus/SnippetMenu';
 
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 const GITHUB_URL = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&scope=read:org`;
@@ -36,14 +36,40 @@ const GITHUB_URL = `https://github.com/login/oauth/authorize?client_id=${CLIENT_
 const styles = {
   appBar: {
     background: '#333333', // light black
+    height: '60px',
   },
-  rightElement: {
-    marginTop: '16px',
+  titleWrapper: {
+    display: 'inline-flex',
+    flexGrow: '0',
+    flexBasis: 'auto',
+  },
+  iconStyleRight: {
+    margin: '0',
+    width: '100%',
+    height: '100%',
   },
   title: {
     color: '#00e6e6', // tealish
     cursor: 'pointer',
     fontWeight: 'bold',
+    marginRight: '50px',
+  },
+  rightSection: {
+    margin: 0,
+    padding: 0,
+    height: '100%',
+    width: '100%',
+  },
+  appMenu: {
+    display: 'inline-flex',
+    float: 'right',
+    height: '100%',
+    alignItems: 'center',
+  },
+  snippetMenu: {
+    display: 'inline-flex',
+    height: '100%',
+    alignItems: 'center',
   },
 };
 
@@ -209,7 +235,7 @@ export class CodesplainAppBar extends Component {
 
     const { avatarUrl, orgSnippets, username, userSnippets, gists } = this.props;
     const { isDialogOpen, isLoggedIn } = this.state;
-    const rightElement = isLoggedIn ?
+    const appMenu = isLoggedIn ?
       (<AppMenu
         avatarUrl={avatarUrl}
         gists={gists}
@@ -221,6 +247,17 @@ export class CodesplainAppBar extends Component {
         userSnippets={userSnippets}
       />)
       : <LoginButton onClick={this.onLoginClick} />;
+    const snippetMenu = isLoggedIn ?
+      (<SnippetMenu
+        username={username}
+        userSnippets={userSnippets}
+        orgSnippets={orgSnippets}
+        onSnippetSelected={this.handleSnippetSelected}
+        onHoverBackground="#595959"
+        borderBottomColor={styles.title.color}
+      />)
+      : null;
+
     const titleElement = (
       <span
         onClick={this.handleTitleTouchTap}
@@ -229,15 +266,26 @@ export class CodesplainAppBar extends Component {
         Codesplain
       </span>
     );
+    const rightSection = (
+      <div style={styles.rightSection}>
+        <div style={styles.snippetMenu}>
+          {snippetMenu}
+        </div>
+        <div style={styles.appMenu}>
+          {appMenu}
+        </div>
+      </div>
+    );
 
     return (
       <div>
         <AppBar
-          iconElementRight={rightElement}
-          iconStyleRight={isLoggedIn ? styles.rightElement : {}}
-          showMenuIconButton={false}
           style={styles.appBar}
+          titleStyle={styles.titleWrapper}
+          showMenuIconButton={false}
           title={titleElement}
+          iconElementRight={rightSection}
+          iconStyleRight={styles.iconStyleRight}
         />
         <Dialog
           actions={actions}

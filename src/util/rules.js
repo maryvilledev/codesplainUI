@@ -98,3 +98,12 @@ export function getRuleCount(node, map) {
   }
   node.children.forEach(child => getRuleCount(child, map));
 }
+
+/*
+Mapping of language names from the API's index.json
+to a pretty, displayable names.
+*/
+export const mapLanguage = {
+  python3: 'Python 3',
+  java8: 'Java 8',
+};

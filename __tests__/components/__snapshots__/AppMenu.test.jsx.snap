@@ -1,5 +1,6 @@
 exports[`<AppMenu /> snapshot tests matches snapshot of when user is logged in 1`] = `
-<div>
+<div
+  style={Object {}}>
   <IconMenu
     anchorOrigin={
       Object {
@@ -46,14 +47,6 @@ exports[`<AppMenu /> snapshot tests matches snapshot of when user is logged in 1
     }
     touchTapCloseDelay={200}
     useLayerForClickAway={true}>
-    <SnippetList
-      onClick={[Function]}
-      primaryText="My Snippets"
-      snippetOwner="username"
-      snippetsList={Object {}} />
-    <OrgSnippetsMenu
-      onClick={[Function]}
-      orgSnippets={Object {}} />
     <GistMenu
       gists={Array []}
       onClick={[Function]} />
@@ -76,7 +69,8 @@ exports[`<AppMenu /> snapshot tests matches snapshot of when user is logged in 1
 `;
 
 exports[`<AppMenu /> snapshot tests matches snapshot of when user is not logged in 1`] = `
-<div>
+<div
+  style={Object {}}>
   <IconMenu
     anchorOrigin={
       Object {
@@ -123,14 +117,6 @@ exports[`<AppMenu /> snapshot tests matches snapshot of when user is not logged 
     }
     touchTapCloseDelay={200}
     useLayerForClickAway={true}>
-    <SnippetList
-      onClick={[Function]}
-      primaryText="My Snippets"
-      snippetOwner="username"
-      snippetsList={Object {}} />
-    <OrgSnippetsMenu
-      onClick={[Function]}
-      orgSnippets={Object {}} />
     <GistMenu
       gists={Array []}
       onClick={[Function]} />

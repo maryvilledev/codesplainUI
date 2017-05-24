@@ -3826,6 +3826,16 @@ minimist@^1.1.1, minimist@^1.2.0:
   dependencies:
     minimist "0.0.8"
 
+moment-timezone@^0.5.13:
+  version "0.5.13"
+  resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.13.tgz#99ce5c7d827262eb0f1f702044177f60745d7b90"
+  dependencies:
+    moment ">= 2.9.0"
+
+"moment@>= 2.9.0", moment@^2.18.1:
+  version "2.18.1"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.18.1.tgz#c36193dd3ce1c2eed2adb7c802dbbc77a81b1c0f"
+
 moxios@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/moxios/-/moxios-0.3.0.tgz#5cfe89cbe3b513a41d09f4fe6bdb6bfe362c8b3a"
@@ -4716,6 +4726,10 @@ react-markdown-renderer@^1.2.0:
   resolved "https://registry.yarnpkg.com/react-markdown-renderer/-/react-markdown-renderer-1.2.0.tgz#1cc8a53ebb632cc6d3ca07d246a0cc0de18bcaa8"
   dependencies:
     remarkable "^1.6.2"
+
+react-moment@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/react-moment/-/react-moment-0.2.2.tgz#349e284ad0483ab6ec109a244586e401ce9d6b50"
 
 react-redux@^5.0.3:
   version "5.0.3"

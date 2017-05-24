@@ -8,9 +8,6 @@ import {
 } from 'material-ui';
 import ArrowDropDown from 'material-ui/svg-icons/navigation/arrow-drop-down';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-
-import OrgSnippetsMenu from './OrgSnippetsMenu';
-import SnippetList from './SnippetList';
 import GistsMenu from './GistsMenu';
 import CustomPropTypes from '../../util/custom-prop-types';
 
@@ -53,7 +50,6 @@ class AppMenu extends Component {
       iconMenuOpen: false,
     };
     this.handleOnRequestChange = this.handleOnRequestChange.bind(this);
-    this.handleSnippetSelected = this.handleSnippetSelected.bind(this);
   }
 
   handleOnRequestChange(open) {
@@ -62,20 +58,11 @@ class AppMenu extends Component {
     });
   }
 
-  handleSnippetSelected(snippetOwner, snippetKey) {
-    this.setState({
-      iconMenuOpen: false,
-    });
-    this.props.onSnippetSelected(snippetOwner, snippetKey);
-  }
-
   render() {
     const {
       avatarUrl,
       onSignOut,
-      orgSnippets,
-      username,
-      userSnippets,
+      style,
       gists,
       onImportGist,
     } = this.props;
@@ -84,7 +71,7 @@ class AppMenu extends Component {
     } = this.state;
 
     return (
-      <div>
+      <div style={style}>
         <IconMenu
           anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
           iconButtonElement={makeAppMenuIcon(avatarUrl)}
@@ -95,16 +82,6 @@ class AppMenu extends Component {
           targetOrigin={{ horizontal: 'right', vertical: 'top' }}
           useLayerForClickAway
         >
-          <SnippetList
-            onClick={this.handleSnippetSelected}
-            primaryText="My Snippets"
-            snippetOwner={username}
-            snippetsList={userSnippets}
-          />
-          <OrgSnippetsMenu
-            onClick={this.handleSnippetSelected}
-            orgSnippets={orgSnippets}
-          />
           <GistsMenu
             onClick={onImportGist}
             gists={gists}
@@ -122,16 +99,13 @@ class AppMenu extends Component {
 AppMenu.propTypes = {
   avatarUrl: PropTypes.string,
   onSignOut: PropTypes.func.isRequired,
-  onSnippetSelected: PropTypes.func.isRequired,
-  orgSnippets: CustomPropTypes.orgSnippets.isRequired,
-  username: PropTypes.string.isRequired,
-  userSnippets: CustomPropTypes.snippets.isRequired,
   gists: CustomPropTypes.gists,
   onImportGist: PropTypes.func.isRequired,
 };
 
 AppMenu.defaultProps = {
-  avatarUrl: '',
+  avatarURL: '',
+  style: {},
   gists: [],
 };
 

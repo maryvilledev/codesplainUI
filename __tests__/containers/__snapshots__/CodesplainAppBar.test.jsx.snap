@@ -21,14 +21,49 @@ exports[`<CodesplainAppBar /> snapshot tests user is logged in 1`] = `
 <div>
   <AppBar
     iconElementRight={
-      <LoginButton
-        onClick={[Function]} />
+      <div
+        style={
+          Object {
+            "height": "100%",
+            "margin": 0,
+            "padding": 0,
+            "width": "100%",
+          }
+        }>
+        <div
+          style={
+            Object {
+              "alignItems": "center",
+              "display": "inline-flex",
+              "height": "100%",
+            }
+          } />
+        <div
+          style={
+            Object {
+              "alignItems": "center",
+              "display": "inline-flex",
+              "float": "right",
+              "height": "100%",
+            }
+          }>
+          <LoginButton
+            onClick={[Function]} />
+        </div>
+      </div>
     }
-    iconStyleRight={Object {}}
+    iconStyleRight={
+      Object {
+        "height": "100%",
+        "margin": "0",
+        "width": "100%",
+      }
+    }
     showMenuIconButton={false}
     style={
       Object {
         "background": "#333333",
+        "height": "60px",
       }
     }
     title={
@@ -39,10 +74,18 @@ exports[`<CodesplainAppBar /> snapshot tests user is logged in 1`] = `
             "color": "#00e6e6",
             "cursor": "pointer",
             "fontWeight": "bold",
+            "marginRight": "50px",
           }
         }>
         Codesplain
       </span>
+    }
+    titleStyle={
+      Object {
+        "display": "inline-flex",
+        "flexBasis": "auto",
+        "flexGrow": "0",
+      }
     }
     zDepth={1} />
   <Dialog
@@ -91,14 +134,49 @@ exports[`<CodesplainAppBar /> snapshot tests user is not logged in 1`] = `
 <div>
   <AppBar
     iconElementRight={
-      <LoginButton
-        onClick={[Function]} />
+      <div
+        style={
+          Object {
+            "height": "100%",
+            "margin": 0,
+            "padding": 0,
+            "width": "100%",
+          }
+        }>
+        <div
+          style={
+            Object {
+              "alignItems": "center",
+              "display": "inline-flex",
+              "height": "100%",
+            }
+          } />
+        <div
+          style={
+            Object {
+              "alignItems": "center",
+              "display": "inline-flex",
+              "float": "right",
+              "height": "100%",
+            }
+          }>
+          <LoginButton
+            onClick={[Function]} />
+        </div>
+      </div>
     }
-    iconStyleRight={Object {}}
+    iconStyleRight={
+      Object {
+        "height": "100%",
+        "margin": "0",
+        "width": "100%",
+      }
+    }
     showMenuIconButton={false}
     style={
       Object {
         "background": "#333333",
+        "height": "60px",
       }
     }
     title={
@@ -109,10 +187,18 @@ exports[`<CodesplainAppBar /> snapshot tests user is not logged in 1`] = `
             "color": "#00e6e6",
             "cursor": "pointer",
             "fontWeight": "bold",
+            "marginRight": "50px",
           }
         }>
         Codesplain
       </span>
+    }
+    titleStyle={
+      Object {
+        "display": "inline-flex",
+        "flexBasis": "auto",
+        "flexGrow": "0",
+      }
     }
     zDepth={1} />
   <Dialog
