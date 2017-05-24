@@ -52,38 +52,40 @@ exports[`<SnippetList /> snapshot tests matches when snippets are passed 1`] = `
                         "width": "350px",
                       }
                 }>
-                <tr>
-                    <td
-                        style={
-                            Object {
-                                "width": "50%",
-                              }
-                        }>
-                        bar
-                    </td>
-                    <td
-                        style={
-                            Object {
-                                "float": "left",
-                                "fontSize": "80%",
-                              }
-                        } />
-                    <td
-                        style={
-                            Object {
-                                "float": "right",
-                                "fontSize": "80%",
-                              }
-                        }>
-                        <o
-                            ago={true}
-                            calendar={false}
-                            fromNow={true}
-                            toNow={false}
-                            unix={false}
-                            utc={false} />
-                    </td>
-                </tr>
+                <tbody>
+                    <tr>
+                        <td
+                            style={
+                                Object {
+                                    "width": "50%",
+                                  }
+                            }>
+                            bar
+                        </td>
+                        <td
+                            style={
+                                Object {
+                                    "float": "left",
+                                    "fontSize": "80%",
+                                  }
+                            } />
+                        <td
+                            style={
+                                Object {
+                                    "float": "right",
+                                    "fontSize": "80%",
+                                  }
+                            }>
+                            <o
+                                ago={true}
+                                calendar={false}
+                                fromNow={true}
+                                toNow={false}
+                                unix={false}
+                                utc={false} />
+                        </td>
+                    </tr>
+                </tbody>
             </table>
         } />,
       <MenuItem
@@ -106,38 +108,40 @@ exports[`<SnippetList /> snapshot tests matches when snippets are passed 1`] = `
                         "width": "350px",
                       }
                 }>
-                <tr>
-                    <td
-                        style={
-                            Object {
-                                "width": "50%",
-                              }
-                        }>
-                        qux
-                    </td>
-                    <td
-                        style={
-                            Object {
-                                "float": "left",
-                                "fontSize": "80%",
-                              }
-                        } />
-                    <td
-                        style={
-                            Object {
-                                "float": "right",
-                                "fontSize": "80%",
-                              }
-                        }>
-                        <o
-                            ago={true}
-                            calendar={false}
-                            fromNow={true}
-                            toNow={false}
-                            unix={false}
-                            utc={false} />
-                    </td>
-                </tr>
+                <tbody>
+                    <tr>
+                        <td
+                            style={
+                                Object {
+                                    "width": "50%",
+                                  }
+                            }>
+                            qux
+                        </td>
+                        <td
+                            style={
+                                Object {
+                                    "float": "left",
+                                    "fontSize": "80%",
+                                  }
+                            } />
+                        <td
+                            style={
+                                Object {
+                                    "float": "right",
+                                    "fontSize": "80%",
+                                  }
+                            }>
+                            <o
+                                ago={true}
+                                calendar={false}
+                                fromNow={true}
+                                toNow={false}
+                                unix={false}
+                                utc={false} />
+                        </td>
+                    </tr>
+                </tbody>
             </table>
         } />,
     ]
