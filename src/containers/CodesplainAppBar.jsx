@@ -93,6 +93,7 @@ export class CodesplainAppBar extends Component {
     this.handleSignOut = this.handleSignOut.bind(this);
     this.handleSnippetSelected = this.handleSnippetSelected.bind(this);
     this.handleTitleTouchTap = this.handleTitleTouchTap.bind(this);
+    this.handleOpenSearchMenu = this.handleOpenSearchMenu.bind(this);
     this.onLoginClick = this.onLoginClick.bind(this);
     this.redirectToHomePage = this.redirectToHomePage.bind(this);
     this.resetApplication = this.resetApplication.bind(this);
@@ -197,6 +198,8 @@ export class CodesplainAppBar extends Component {
     dispatch(fetchGist(url));
   }
 
+  handleOpenSearchMenu() {} // TODO
+
   resetApplication() {
     const { dispatch, username } = this.props;
 
@@ -252,6 +255,7 @@ export class CodesplainAppBar extends Component {
         userSnippets={userSnippets}
         orgSnippets={orgSnippets}
         onSnippetSelected={this.handleSnippetSelected}
+        onOpenSearchMenu={this.handleOpenSearchMenu}
         onHoverBackground="#595959"
         borderBottomColor={styles.title.color}
       />)
