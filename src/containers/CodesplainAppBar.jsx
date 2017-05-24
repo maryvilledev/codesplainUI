@@ -76,7 +76,7 @@ const styles = {
 };
 
 const orderSnippets = (username, userSnippets, orgSnippets) => {
-  const allSnippets = orgSnippets;
+  const allSnippets = { ...orgSnippets }; // Spread so there aren't side effects.
   allSnippets[username] = userSnippets;
   const orderedSnippets = _.reduce(allSnippets, (allList, snippets, role) => {
     const next = _.reduce(snippets, (snipList, { language }, title) => {
