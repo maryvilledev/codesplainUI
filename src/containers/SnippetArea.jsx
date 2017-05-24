@@ -6,6 +6,7 @@ import {
 } from 'material-ui';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import cookie from 'react-cookie';
 
 import { openAnnotationPanel } from '../actions/annotation';
 import {
@@ -64,11 +65,12 @@ const debouncedParseSnippetDispatch = debounce(dispatchParseSnippet, 400);
 export class SnippetArea extends React.Component {
   constructor(props) {
     super(props);
+    const savedTheme = cookie.load('theme');
     this.state = {
       lockDialogOpen: false,
       deleteDialogOpen: false,
       avatarUrl: '',
-      codeMirrorTheme: 'codesplain',
+      codeMirrorTheme: savedTheme || 'codesplain',
     };
 
     this.handleCloseModal = this.handleCloseModal.bind(this);
@@ -89,6 +91,10 @@ export class SnippetArea extends React.Component {
   componentDidMount() {
     const { dispatch, snippetLanguage } = this.props;
     dispatch(loadParser(snippetLanguage));
+
+    if (cookie.load('theme') === undefined) {
+      cookie.save('theme', this.state.codeMirrorTheme, { path: '/' });
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -171,6 +177,7 @@ export class SnippetArea extends React.Component {
 
   handleThemeChange(_, codeMirrorTheme) {
     this.setState({ codeMirrorTheme });
+    cookie.save('theme', codeMirrorTheme, { path: '/' });
   }
 
   handleSave() {
