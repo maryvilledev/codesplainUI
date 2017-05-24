@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dialog, TextField, Menu, MenuItem } from 'material-ui';
+import { Dialog, TextField, List, ListItem } from 'material-ui';
 import FuzzySearch from 'fuzzy-search';
 
 import SnippetMenuItem from './SnippetMenuItem';
@@ -12,10 +12,10 @@ const styles = {
   },
 };
 
-const makeMenuItems = (snippet, onClick) => {
+const makeListItems = (snippet, onClick) => {
   const { snippetTitle, role } = snippet;
   return (
-    <MenuItem
+    <ListItem
       key={`${role}/${snippetTitle}`}
       onTouchTap={() => onClick(role, snippetTitle)}
       primaryText={SnippetMenuItem(snippet)}
@@ -56,9 +56,9 @@ class SearchMenu extends React.Component {
           onChange={this.handleFilterTextChanged}
           fullWidth
         />
-        <Menu style={styles.list}>
-          {listedSnippets.map(info => makeMenuItems(info, onClick))}
-        </Menu>
+        <List style={styles.list}>
+          {listedSnippets.map(info => makeListItems(info, onClick))}
+        </List>
       </Dialog>
     );
   }

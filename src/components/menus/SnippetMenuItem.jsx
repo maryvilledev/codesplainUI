@@ -5,10 +5,13 @@ import { mapLanguage } from '../../util/rules';
 
 const styles = {
   menuItem: {
-    width: '350px',
+    width: '100%',
   },
   title: {
-    width: '50%',
+    width: '13em',
+  },
+  role: {
+    width: '17em',
   },
   language: {
     float: 'left',
@@ -21,17 +24,24 @@ const styles = {
 };
 
 // Truncates the title if it is too long to fit in snippets dropdown
-const makeDisplayTitle = (title) => {
-  if (title.length > 10) {
-    return `${title.substring(0, 12)}...`;
+const makeDisplayTitle = (title, dist) => {
+  if (title.length > dist) {
+    return `${title.substring(0, dist)}...`;
   }
   return title;
 };
 
-const SnippetMenuItem = ({ snippetTitle, language, lastEdited }) => (
+const SnippetMenuItem = ({ snippetTitle, language, lastEdited, role }) => (
   <table style={styles.menuItem}>
     <tr>
-      <td style={styles.title}>{makeDisplayTitle(snippetTitle)}</td>
+      <td style={styles.title}>{makeDisplayTitle(snippetTitle, 10)}</td>
+      {
+        role ?
+          <td style={styles.role}>
+            {makeDisplayTitle(role, 14)}
+          </td>
+        : null
+      }
       <td style={styles.language}>
         {mapLanguage[language]}
       </td>
