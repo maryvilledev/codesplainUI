@@ -32,15 +32,17 @@ const makeDisplayTitle = (title) => {
 
 const makeItemDiv = ({ snippetTitle, language, lastEdited }) => (
   <table style={styles.menuItem}>
-    <tr>
-      <td style={styles.title}>{makeDisplayTitle(snippetTitle)}</td>
-      <td style={styles.language}>
-        {mapLanguage[language]}
-      </td>
-      <td style={styles.lastEdited}>
-        <Moment fromNow ago>{lastEdited}</Moment>
-      </td>
-    </tr>
+    <tbody>
+      <tr>
+        <td style={styles.title}>{makeDisplayTitle(snippetTitle)}</td>
+        <td style={styles.language}>
+          {mapLanguage[language]}
+        </td>
+        <td style={styles.lastEdited}>
+          <Moment fromNow ago>{lastEdited}</Moment>
+        </td>
+      </tr>
+    </tbody>
   </table>
 );
 

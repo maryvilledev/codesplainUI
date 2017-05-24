@@ -1,5 +1,4 @@
-import React, { PropTypes } from 'react';
-import SnippetList from './SnippetList';
+import React, { PropTypes } from 'react'; import SnippetList from './SnippetList';
 import CustomPropTypes from '../../util/custom-prop-types';
 
 const makeMenuItems = (orgSnippets, onClick) => {
@@ -9,6 +8,7 @@ const makeMenuItems = (orgSnippets, onClick) => {
   }
   return orgNames.map(orgName => (
     <SnippetList
+      key={orgName}
       onClick={onClick}
       primaryText={orgName}
       snippetsList={orgSnippets[orgName]}
