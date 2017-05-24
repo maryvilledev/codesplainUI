@@ -30,6 +30,8 @@ class SearchMenu extends Component {
     super();
     this.state = { filterText: '' };
     this.handleFilterTextChanged = this.handleFilterTextChanged.bind(this);
+    this.handleRequestClose = this.handleRequestClose.bind(this);
+    this.handleMakeSelection = this.handleMakeSelection.bind(this);
   }
   componentWillReceiveProps(nextProps) {
     const { orderedSnippets } = nextProps;
@@ -40,17 +42,27 @@ class SearchMenu extends Component {
   handleFilterTextChanged(_, filterText) {
     this.setState({ filterText });
   }
+  handleRequestClose() {
+    const { onRequestClose } = this.props;
+    this.setState({ filterText: '' });
+    onRequestClose();
+  }
+  handleMakeSelection(...args) {
+    const { onClick } = this.props;
+    this.setState({ filterText: '' });
+    onClick(...args);
+  }
   render() {
     const { filterText } = this.state;
-    const { open, onRequestClose, orderedSnippets, onClick } = this.props;
-    const listedSnippets = (this.searcher) ?
+    const { open, orderedSnippets } = this.props;
+    const listedSnippets = (filterText) ?
     this.searcher.search(filterText) :
     orderedSnippets;
     return (
       <Dialog
         modal={false}
         open={open}
-        onRequestClose={onRequestClose}
+        onRequestClose={this.handleRequestClose}
       >
         <TextField
           hintText="Filter"
@@ -58,7 +70,8 @@ class SearchMenu extends Component {
           fullWidth
         />
         <List style={styles.list}>
-          {listedSnippets.map(info => makeListItems(info, onClick))}
+          {listedSnippets.map(info =>
+            makeListItems(info, this.handleMakeSelection))}
         </List>
       </Dialog>
     );
