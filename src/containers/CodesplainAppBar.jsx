@@ -7,7 +7,10 @@ import {
 } from 'material-ui';
 import { withRouter } from 'react-router';
 import cookie from 'react-cookie';
-import { reduce, concat, sortBy } from 'lodash';
+import reduce from 'lodash/reduce';
+import concat from 'lodash/concat';
+import sortBy from 'lodash/sortBy';
+
 import { closeAnnotationPanel } from '../actions/annotation';
 import {
   resetState,
