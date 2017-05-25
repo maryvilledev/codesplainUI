@@ -14,11 +14,11 @@ const styles = {
 };
 
 const makeListItems = (snippet, onClick) => {
-  const { snippetTitle, role } = snippet;
+  const { key, role } = snippet;
   return (
     <ListItem
-      key={`${role}/${snippetTitle}`}
-      onTouchTap={() => onClick(role, snippetTitle)}
+      key={`${role}/${key}`}
+      onTouchTap={() => onClick(role, key)}
       primaryText={SnippetMenuItem(snippet)}
     />
   );

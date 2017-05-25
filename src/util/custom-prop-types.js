@@ -53,6 +53,7 @@ const orderedSnippets = PropTypes.arrayOf(
     role: PropTypes.string,
     lastEdited: PropTypes.number,
     language: PropTypes.string,
+    key: PropTypes.string,
   }),
 );
 
