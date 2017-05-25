@@ -124,7 +124,7 @@ describe('Actions: App', () => {
         });
         const store = generateMockStore({
           app: {},
-          user: { token: '' },
+          user: { token: '', orgs: [] },
         });
         return store.dispatch(actions.saveNew(org))
           .then((returnVal) => { // return of async actions
@@ -142,7 +142,7 @@ describe('Actions: App', () => {
         });
         const store = generateMockStore({
           app: {},
-          user: { token: '' },
+          user: { token: '', orgs: [] },
         });
         return store.dispatch(actions.saveNew(org))
           .then(() => { // return of async actions
@@ -163,6 +163,7 @@ describe('Actions: App', () => {
           user: {
             token: '',
             selectedOrg: '',
+            orgs: [],
           },
         });
         return store.dispatch(actions.deleteSnippet(snippetKey))
@@ -182,6 +183,7 @@ describe('Actions: App', () => {
           user: {
             token: '',
             selectedOrg: '',
+            orgs: [],
           },
         });
         return store.dispatch(actions.deleteSnippet(snippetKey))
@@ -200,7 +202,7 @@ describe('Actions: App', () => {
         });
         const store = generateMockStore({
           app: {},
-          user: { token: '', username: '' },
+          user: { token: '', username: '', orgs: [] },
         });
         return store.dispatch(actions.saveExisting())
           .then(() => { // return of async actions
@@ -216,7 +218,7 @@ describe('Actions: App', () => {
         });
         const store = generateMockStore({
           app: {},
-          user: { token: '', username: '' },
+          user: { token: '', username: '', orgs: [] },
         });
         return store.dispatch(actions.saveExisting())
           .then(() => { // return of async actions

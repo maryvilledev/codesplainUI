@@ -2,7 +2,8 @@ import axios from 'axios';
 
 
 import { addNotification, closeNotification } from './notifications';
-import { setAuthor } from './permissions';
+import { setAuthor, setPermissions } from './permissions';
+import { fetchSnippetLists } from './user';
 import { removeDeprecatedFiltersFromState } from '../util/codemirror-utils';
 import { makeSaveEndpointUrl, normalizeState } from '../util/requests';
 import { setDefaults } from '../util/state-management';
@@ -124,6 +125,15 @@ export const saveNew = org => (dispatch, getState) => {
         dispatch(addNotification('Codesplaination Saved!'));
         // Clear the hasUnsavedChanges flag
         dispatch(saveSucceeded());
+        // Update the user's personal and organization snippet lists
+        dispatch(fetchSnippetLists());
+        // Update the snippet's key
+        dispatch(setSnippetKey(res.data.key));
+        const permissions = {
+          canRead: true,
+          canEdit: true,
+        }; // Grant all permissions, this is now her file.
+        dispatch(setPermissions(permissions));
         // Return the key of the newly-saved snippet so that the browser
         // location can be updated
         return res.data.key;
@@ -166,6 +176,8 @@ export const saveExisting = () => (dispatch, getState) => {
         dispatch(addNotification('Codesplaination Saved!'));
         // Clear the hasUnsavedChanges flag
         dispatch(saveSucceeded());
+        // Update the user's personal and organization snippet lists
+        dispatch(fetchSnippetLists());
       }, () => {
         // Give user feedback that saving failed
         dispatch(addNotification('Failed to save snippet; please try again'));
@@ -196,6 +208,11 @@ export const deleteSnippet = snippetKey => (dispatch, getState) => {
       dispatch(closeNotification());
       // Give user feedback that snippet deleted
       dispatch(addNotification('Snippet Deleted!'));
+
+      // Update state to reflect deletion of snippet
+      dispatch(resetState());
+      dispatch(setAuthor(''));
+      dispatch(fetchSnippetLists()); // Update org snippet lists
     })
     .catch((err) => {
       // Remove the 'deleting...' notifications

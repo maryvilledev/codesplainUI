@@ -12,23 +12,16 @@ import { openAnnotationPanel } from '../actions/annotation';
 import {
   deleteSnippet,
   parseSnippet,
-  resetState,
   saveExisting,
   saveNew,
   setSnippetContents,
-  setSnippetKey,
   setSnippetLanguage,
   setSnippetTitle,
   toggleEditState,
 } from '../actions/app';
 import { addNotification } from '../actions/notifications';
 import { loadParser } from '../actions/parser';
-import { setPermissions, setAuthor } from '../actions/permissions';
-import {
-  fetchSnippetLists,
-  switchOrg,
-  updateUserSnippets,
-} from '../actions/user';
+import { switchOrg } from '../actions/user';
 import ConfirmationDialog from '../components/ConfirmationDialog';
 import Editor from '../components/Editor';
 import SnippetAreaToolbar from '../components/SnippetAreaToolbar';
@@ -198,19 +191,13 @@ export class SnippetArea extends React.Component {
 
      // Update a pre-existing snippet
     if (id) {
-      dispatch(saveExisting())
-        .then(() => {
-          dispatch(updateUserSnippets());
-        });
+      dispatch(saveExisting());
     } else {
       // Save a new snippet
       dispatch(saveNew(selectedOrg))
         .then((snippetKey) => {
           // Redirect the user to the snippet's page
           router.push(`/${selectedOrg}/${snippetKey}`);
-          // Update the snippet's key
-          dispatch(setSnippetKey(snippetKey));
-          dispatch(updateUserSnippets());
         });
     }
   }
@@ -235,14 +222,6 @@ export class SnippetArea extends React.Component {
       .then((snippetKey) => {
         // Redirect the user to the snippet's page
         router.push(`/${selectedOrg}/${snippetKey}`);
-        // Update the snippet's key
-        dispatch(setSnippetKey(snippetKey));
-        const permissions = {
-          canRead: true,
-          canEdit: true,
-        }; // Grant all permissions, this is now her file.
-        dispatch(setPermissions(permissions));
-        dispatch(updateUserSnippets());
       });
   }
 
@@ -251,10 +230,6 @@ export class SnippetArea extends React.Component {
     const { dispatch, snippetKey, router } = this.props;
     dispatch(deleteSnippet(snippetKey))
       .then(() => {
-        dispatch(resetState());
-        dispatch(setAuthor(''));
-        dispatch(updateUserSnippets());
-        dispatch(fetchSnippetLists()); // Update org snippet lists
         router.push('/'); // TODO: Test that does not redirect delete fails
       });
   }
