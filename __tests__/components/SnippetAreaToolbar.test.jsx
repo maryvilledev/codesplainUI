@@ -139,7 +139,7 @@ describe('<SnippetAreaToolbar />', () => {
   });
 
   describe('prop: onThemeChange', () => {
-    it('is forwarded to the EditorMenu', () => {
+    it('is forwarded to the ThemePicker', () => {
       const onChange = () => {};
       const wrapper = shallowWithContext(
         <SnippetAreaToolbar
@@ -147,13 +147,13 @@ describe('<SnippetAreaToolbar />', () => {
           onThemeChange={onChange}
         />,
       );
-      const editorMenu = wrapper.find('EditorMenu');
-      expect(editorMenu.prop('onChange')).toEqual(onChange);
+      const themePicker = wrapper.find('ThemePicker');
+      expect(themePicker.prop('onChange')).toEqual(onChange);
     });
   });
 
   describe('prop: codeMirrorTheme', () => {
-    it('is forwarded to the EditorMenu', () => {
+    it('is forwarded to the ThemePicker', () => {
       const codeMirrorTheme = 'monokai';
       const wrapper = shallowWithContext(
         <SnippetAreaToolbar
@@ -161,8 +161,8 @@ describe('<SnippetAreaToolbar />', () => {
           codeMirrorTheme={codeMirrorTheme}
         />,
       );
-      const editorMenu = wrapper.find('EditorMenu');
-      expect(editorMenu.prop('codeMirrorTheme')).toEqual(codeMirrorTheme);
+      const themePicker = wrapper.find('ThemePicker');
+      expect(themePicker.prop('codeMirrorTheme')).toEqual(codeMirrorTheme);
     });
   });
 });

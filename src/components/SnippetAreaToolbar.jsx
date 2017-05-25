@@ -8,7 +8,7 @@ import LanguageSelector from './LanguageSelector';
 import LockButton from './buttons/LockButton';
 import DeleteButton from './buttons/DeleteButton';
 import SaveMenu from './menus/SaveMenu';
-import EditorMenu from './menus/EditorMenu';
+import ThemePicker from './menus/ThemePicker';
 import CustomPropTypes from '../util/custom-prop-types';
 
 const styles = {
@@ -110,7 +110,7 @@ const SnippetAreaToolbar = (props) => {
             isEnabled={deleteEnabled}
             onClick={onDeleteClick}
           />
-          <EditorMenu
+          <ThemePicker
             codeMirrorTheme={codeMirrorTheme}
             onChange={onThemeChange}
           />
