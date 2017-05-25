@@ -7,7 +7,7 @@ import {
 } from 'material-ui';
 import { withRouter } from 'react-router';
 import cookie from 'react-cookie';
-import _ from 'lodash';
+import { reduce, concat, sortBy } from 'lodash';
 import { closeAnnotationPanel } from '../actions/annotation';
 import {
   resetState,
@@ -75,17 +75,21 @@ const styles = {
   },
 };
 
+// This is a reducer that takes the user and her snippets and combines them with
+// the org snippets in a vector that contains only information relevant to displaying
+// the snippet in a menu. This vector is then sorted by title and returned without side
+// effects to the original objects.
 const orderSnippets = (username, userSnippets, orgSnippets) => {
   const allSnippets = { ...orgSnippets }; // Spread so there aren't side effects.
   allSnippets[username] = userSnippets;
-  const orderedSnippets = _.reduce(allSnippets, (allList, snippets, role) => {
-    const next = _.reduce(snippets, (snipList, { language, lastEdited }, snippetTitle) => {
+  const orderedSnippets = reduce(allSnippets, (allList, snippets, role) => {
+    const next = reduce(snippets, (snipList, { language, lastEdited }, snippetTitle) => {
       const obj = { role, snippetTitle, language, lastEdited };
-      return _.concat(snipList, obj);
+      return concat(snipList, obj);
     }, []);
-    return _.concat(allList, next);
+    return concat(allList, next);
   }, []);
-  return _.sortBy(orderedSnippets, ({ snippetTitle }) => snippetTitle);
+  return sortBy(orderedSnippets, ({ snippetTitle }) => snippetTitle);
 };
 
 /*
