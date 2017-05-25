@@ -94,7 +94,7 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is no
             "flex": "1 1 auto",
           }
         } />
-      <EditorMenu
+      <ThemePicker
         codeMirrorTheme="codesplain"
         onChange={[Function]} />
     </div>
@@ -198,7 +198,7 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is re
             "flex": "1 1 auto",
           }
         } />
-      <EditorMenu
+      <ThemePicker
         codeMirrorTheme="codesplain"
         onChange={[Function]} />
     </div>
