@@ -20,6 +20,7 @@
     "axios": "^0.15.3",
     "codemirror": "^5.25.0",
     "eslint": "^3.19.0",
+    "fuzzy-search": "^1.4.0",
     "highlight.js": "^9.10.0",
     "lodash": "^4.17.4",
     "material-ui": "^0.17.1",

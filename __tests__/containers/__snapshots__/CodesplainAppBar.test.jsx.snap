@@ -127,6 +127,11 @@ exports[`<CodesplainAppBar /> snapshot tests user is logged in 1`] = `
     repositionOnUpdate={true}>
     Discard unsaved changes?
   </Dialog>
+  <SearchMenu
+    onClick={[Function]}
+    onRequestClose={[Function]}
+    open={false}
+    orderedSnippets={Array []} />
 </div>
 `;
 
@@ -240,5 +245,10 @@ exports[`<CodesplainAppBar /> snapshot tests user is not logged in 1`] = `
     repositionOnUpdate={true}>
     Discard unsaved changes?
   </Dialog>
+  <SearchMenu
+    onClick={[Function]}
+    onRequestClose={[Function]}
+    open={false}
+    orderedSnippets={Array []} />
 </div>
 `;

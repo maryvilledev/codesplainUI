@@ -49,7 +49,7 @@ exports[`<SnippetList /> snapshot tests matches when snippets are passed 1`] = `
             <table
                 style={
                     Object {
-                        "width": "350px",
+                        "width": "100%",
                       }
                 }>
                 <tbody>
@@ -57,7 +57,7 @@ exports[`<SnippetList /> snapshot tests matches when snippets are passed 1`] = `
                         <td
                             style={
                                 Object {
-                                    "width": "50%",
+                                    "width": "13em",
                                   }
                             }>
                             bar
@@ -105,7 +105,7 @@ exports[`<SnippetList /> snapshot tests matches when snippets are passed 1`] = `
             <table
                 style={
                     Object {
-                        "width": "350px",
+                        "width": "100%",
                       }
                 }>
                 <tbody>
@@ -113,7 +113,7 @@ exports[`<SnippetList /> snapshot tests matches when snippets are passed 1`] = `
                         <td
                             style={
                                 Object {
-                                    "width": "50%",
+                                    "width": "13em",
                                   }
                             }>
                             qux

@@ -10,6 +10,7 @@ const defaultProps = {
   orgSnippets: {},
   onSnippetSelected: jest.fn(),
   onHoverBackground: '',
+  onOpenSearchMenu: jest.fn(),
   borderBottomColor: '',
 };
 
