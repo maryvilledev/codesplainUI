@@ -27,6 +27,13 @@ Array [
     "payload": "Snippet Deleted!",
     "type": "ADD_NOTIFICATION",
   },
+  Object {
+    "type": "RESET_STATE",
+  },
+  Object {
+    "payload": "",
+    "type": "SET_AUTHOR",
+  },
 ]
 `;
 
@@ -115,6 +122,17 @@ Array [
   },
   Object {
     "type": "SAVE_SUCCEEDED",
+  },
+  Object {
+    "payload": "gazorpazorp",
+    "type": "SET_SNIPPET_KEY",
+  },
+  Object {
+    "payload": Object {
+      "canEdit": true,
+      "canRead": true,
+    },
+    "type": "SET_PERMISSIONS",
   },
 ]
 `;

@@ -33,22 +33,24 @@ const makeDisplayTitle = (title, dist) => {
 
 const SnippetMenuItem = ({ snippetTitle, language, lastEdited, role }) => (
   <table style={styles.menuItem}>
-    <tr>
-      <td style={styles.title}>{makeDisplayTitle(snippetTitle, 10)}</td>
-      {
+    <tbody>
+      <tr>
+        <td style={styles.title}>{makeDisplayTitle(snippetTitle, 10)}</td>
+        {
         role ?
           <td style={styles.role}>
             {makeDisplayTitle(role, 14)}
           </td>
         : null
       }
-      <td style={styles.language}>
-        {mapLanguage[language]}
-      </td>
-      <td style={styles.lastEdited}>
-        <Moment fromNow ago>{lastEdited}</Moment>
-      </td>
-    </tr>
+        <td style={styles.language}>
+          {mapLanguage[language]}
+        </td>
+        <td style={styles.lastEdited}>
+          <Moment fromNow ago>{lastEdited}</Moment>
+        </td>
+      </tr>
+    </tbody>
   </table>
 );
 

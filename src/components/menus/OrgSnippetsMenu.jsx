@@ -1,5 +1,4 @@
-import React, { PropTypes } from 'react';
-import SnippetList from './SnippetList';
+import React, { PropTypes } from 'react'; import SnippetList from './SnippetList';
 import CustomPropTypes from '../../util/custom-prop-types';
 
 const makeMenuItems = (orgSnippets, onClick) => {
