@@ -55,6 +55,10 @@ body {
   padding-top: 3px;
 }
 
+.CodeMirror-linenumbers {
+  width: 40px;
+}
+
 .section-title {
   margin-bottom: 0;
 }
