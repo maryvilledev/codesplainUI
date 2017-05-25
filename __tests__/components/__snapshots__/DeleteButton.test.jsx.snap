@@ -15,7 +15,7 @@ exports[`<DeleteButton /> matches snapshot 1`] = `
     }>
     <IconButton
       disableTouchRipple={false}
-      disabled={true}
+      disabled={false}
       iconStyle={Object {}}
       id="TrashButton"
       onTouchTap={[Function]}
@@ -31,11 +31,14 @@ exports[`<DeleteButton /> matches snapshot 1`] = `
   </div>
   <ReactTooltip
     effect="solid"
-    getContent={[Function]}
     id="trash-tip"
     insecure={true}
     place="bottom"
     resizeHide={true}
-    wrapper="div" />
+    wrapper="div">
+    <span>
+      Click to delete snippet
+    </span>
+  </ReactTooltip>
 </span>
 `;

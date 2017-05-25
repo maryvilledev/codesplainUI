@@ -16,21 +16,10 @@ const styles = {
   },
 };
 
-export const generateToolTipText = (deletingIsEnabled) => {
-  if (deletingIsEnabled) {
-    return (
-      <span>Click to delete snippet</span>
-    );
-  }
-  return (
-    <span>You can only delete snippets<br />that you own</span>
-  );
-};
-
 const hideIfNotSaved = isNotSaved => branch(isNotSaved, renderNothing);
 const enhance = hideIfNotSaved(props => props.snippetKey === '' || !props.isEnabled);
 
-export const DeleteButton = ({ onClick, isEnabled }) => (
+export const DeleteButton = ({ onClick }) => (
   <span style={styles.buttonContainer}>
     <div
       style={styles.inlineBlock}
@@ -39,7 +28,6 @@ export const DeleteButton = ({ onClick, isEnabled }) => (
     >
       <IconButton
         id="TrashButton"
-        disabled={!isEnabled}
         onTouchTap={onClick}
         style={styles.button}
       >
@@ -47,17 +35,25 @@ export const DeleteButton = ({ onClick, isEnabled }) => (
       </IconButton>
     </div>
     <ReactTooltip
-      getContent={() => generateToolTipText(isEnabled)}
       id="trash-tip"
       effect="solid"
       place="bottom"
-    />
+    >
+      <span>Click to delete snippet</span>
+    </ReactTooltip>
   </span>
 );
 
 DeleteButton.propTypes = {
   onClick: PropTypes.func.isRequired,
+  // eslint-disable-next-line
   isEnabled: PropTypes.bool.isRequired,
+  // eslint-disable-next-line
+  snippetKey: PropTypes.string,
+};
+
+DeleteButton.defaultProps = {
+  snippetKey: '',
 };
 
 export default enhance(DeleteButton);
