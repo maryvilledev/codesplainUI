@@ -51,7 +51,7 @@ const orderedSnippets = PropTypes.arrayOf(
   PropTypes.shape({
     snippetTitle: PropTypes.string,
     role: PropTypes.string,
-    lastEdited: PropTypes.number,
+    lastEdited: PropTypes.string,
     language: PropTypes.string,
   }),
 );
