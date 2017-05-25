@@ -189,9 +189,11 @@ export class CodesplainAppBar extends Component {
   }
 
   handleSnippetSelected(snippetOwner, snippetKey) {
-    const { router } = this.props;
-    this.resetApplication();
-    router.push(`/${snippetOwner}/${snippetKey}`);
+    const { router, snippetKey: curr } = this.props;
+    if (snippetKey !== curr) {
+      this.resetApplication();
+      router.push(`/${snippetOwner}/${snippetKey}`);
+    }
   }
 
   handleTitleTouchTap() {
@@ -354,6 +356,7 @@ CodesplainAppBar.propTypes = {
   username: PropTypes.string,
   userSnippets: CustomPropTypes.snippets,
   orderedSnippets: CustomPropTypes.orderedSnippets,
+  snippetKey: PropTypes.string,
 };
 
 CodesplainAppBar.defaultProps = {
@@ -364,6 +367,7 @@ CodesplainAppBar.defaultProps = {
   username: '',
   userSnippets: {},
   orderedSnippets: [],
+  snippetKey: '',
 };
 
 const mapStateToProps = (state) => {
@@ -371,6 +375,7 @@ const mapStateToProps = (state) => {
     app,
     app: {
       hasUnsavedChanges,
+      snippetKey,
     },
     user: {
       avatarUrl,
@@ -392,6 +397,7 @@ const mapStateToProps = (state) => {
     username,
     userSnippets,
     orderedSnippets,
+    snippetKey,
   };
 };
 
