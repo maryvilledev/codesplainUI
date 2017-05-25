@@ -28,7 +28,7 @@ export const generateToolTipText = (deletingIsEnabled) => {
 };
 
 const hideIfNotSaved = isNotSaved => branch(isNotSaved, renderNothing);
-const enhance = hideIfNotSaved(props => props.snippetKey === '');
+const enhance = hideIfNotSaved(props => props.snippetKey === '' || !props.isEnabled);
 
 export const DeleteButton = ({ onClick, isEnabled }) => (
   <span style={styles.buttonContainer}>

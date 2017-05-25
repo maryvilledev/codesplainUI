@@ -5,7 +5,6 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import EnhancedDeleteButton, {
   DeleteButton,
-  generateToolTipText,
 } from '../../src/components/buttons/DeleteButton';
 
 const defaultProps = {
@@ -18,18 +17,10 @@ describe('<DeleteButton />', () => {
   const muiTheme = getMuiTheme();
   const shallowWithContext = node => shallow(node, { context: { muiTheme } });
 
-  it('matches snapshot of when the app is not in read-only mode', () => {
-    const wrapper = shallowWithContext(
-      <DeleteButton {...defaultProps} />,
-    );
-    expect(shallowToJson(wrapper)).toMatchSnapshot();
-  });
-
-  it('matches snapshot of when the app is in read-only mode', () => {
+  it('matches snapshot', () => {
     const wrapper = shallowWithContext(
       <DeleteButton
         {...defaultProps}
-        isEnabled
       />,
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
@@ -50,6 +41,15 @@ describe('<DeleteButton />', () => {
     });
   });
 
+  it('renders nothing if user cannot delete this snippet', () => {
+    const wrapper = shallowWithContext(
+      <EnhancedDeleteButton
+        {...defaultProps}
+      />,
+    );
+    expect(wrapper.find('Nothing').length).toEqual(1);
+  });
+
   it('renders nothing if snippet has not been saved', () => {
     const snippetKey = '';
     const wrapper = shallowWithContext(
@@ -59,14 +59,5 @@ describe('<DeleteButton />', () => {
       />,
     );
     expect(wrapper.find('Nothing').length).toEqual(1);
-  });
-
-  describe('generateToolTipText()', () => {
-    it('Returns the correct statement if deleting is enabled', () => {
-      expect(generateToolTipText(true)).toMatchSnapshot();
-    });
-    it('Returns the correct statement if deleting is not enabled', () => {
-      expect(generateToolTipText(false)).toMatchSnapshot();
-    });
   });
 });
