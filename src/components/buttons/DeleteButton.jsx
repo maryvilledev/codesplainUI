@@ -16,9 +16,6 @@ const styles = {
   },
 };
 
-const hideIfNotSaved = isNotSaved => branch(isNotSaved, renderNothing);
-const enhance = hideIfNotSaved(props => props.snippetKey === '' || !props.isEnabled);
-
 export const DeleteButton = ({ onClick }) => (
   <span style={styles.buttonContainer}>
     <div
@@ -55,5 +52,11 @@ DeleteButton.propTypes = {
 DeleteButton.defaultProps = {
   snippetKey: '',
 };
+
+// Render <Nothing /> (which renders null) if the user cannot delete the
+// current snippet (either because it hasn't been saved, or they don't own)
+// the snippet
+const hideIfCannotDelete = isNotSaved => branch(isNotSaved, renderNothing);
+const enhance = hideIfCannotDelete(props => props.snippetKey === '' || !props.isEnabled);
 
 export default enhance(DeleteButton);
