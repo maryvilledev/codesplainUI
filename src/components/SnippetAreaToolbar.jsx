@@ -63,6 +63,7 @@ const SnippetAreaToolbar = (props) => {
     readOnly,
     saveEnabled,
     selectedOrg,
+    snippetKey,
     title,
   } = props;
 
@@ -106,6 +107,7 @@ const SnippetAreaToolbar = (props) => {
             style={styles.button}
           />
           <DeleteButton
+            snippetKey={snippetKey}
             style={styles.button}
             isEnabled={deleteEnabled}
             onClick={onDeleteClick}
@@ -139,6 +141,7 @@ SnippetAreaToolbar.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   saveEnabled: PropTypes.bool.isRequired,
   selectedOrg: PropTypes.string,
+  snippetKey: PropTypes.string,
   title: PropTypes.string.isRequired,
 };
 
@@ -147,6 +150,7 @@ SnippetAreaToolbar.defaultProps = {
   avatarUrl: '',
   codeMirrorTheme: 'codesplain',
   selectedOrg: '',
+  snippetKey: '',
 };
 
 export default SnippetAreaToolbar;

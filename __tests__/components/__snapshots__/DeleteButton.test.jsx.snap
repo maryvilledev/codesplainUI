@@ -1,3 +1,17 @@
+exports[`<DeleteButton /> generateToolTipText() Returns the correct statement if deleting is enabled 1`] = `
+<span>
+  Click to delete snippet
+</span>
+`;
+
+exports[`<DeleteButton /> generateToolTipText() Returns the correct statement if deleting is not enabled 1`] = `
+<span>
+  You can only delete snippets
+  <br />
+  that you own
+</span>
+`;
+
 exports[`<DeleteButton /> matches snapshot of when the app is in read-only mode 1`] = `
 <span
   style={
@@ -31,15 +45,12 @@ exports[`<DeleteButton /> matches snapshot of when the app is in read-only mode 
   </div>
   <ReactTooltip
     effect="solid"
+    getContent={[Function]}
     id="trash-tip"
     insecure={true}
     place="bottom"
     resizeHide={true}
-    wrapper="div">
-    <span>
-      Click to delete snippet
-    </span>
-  </ReactTooltip>
+    wrapper="div" />
 </span>
 `;
 
@@ -76,16 +87,11 @@ exports[`<DeleteButton /> matches snapshot of when the app is not in read-only m
   </div>
   <ReactTooltip
     effect="solid"
+    getContent={[Function]}
     id="trash-tip"
     insecure={true}
     place="bottom"
     resizeHide={true}
-    wrapper="div">
-    <span>
-      You can only delete snippets
-      <br />
-      that you own
-    </span>
-  </ReactTooltip>
+    wrapper="div" />
 </span>
 `;

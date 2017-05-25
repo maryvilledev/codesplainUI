@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
-
 import IconButton from 'material-ui/IconButton';
 import TrashCan from 'material-ui/svg-icons/action/delete';
 import ReactTooltip from 'react-tooltip';
+import { branch, renderNothing } from 'recompose';
 
 const styles = {
   button: {
@@ -16,20 +16,21 @@ const styles = {
   },
 };
 
-const toolTipText = isEnabled => (
-  isEnabled ?
-    (<span>
-      Click to delete snippet
-    </span>)
-    :
-    (<span>
-      You can only delete snippets
-      <br />
-      that you own
-    </span>)
-);
+export const generateToolTipText = (deletingIsEnabled) => {
+  if (deletingIsEnabled) {
+    return (
+      <span>Click to delete snippet</span>
+    );
+  }
+  return (
+    <span>You can only delete snippets<br />that you own</span>
+  );
+};
 
-const DeleteButton = ({ onClick, isEnabled }) => (
+const hideIfNotSaved = isNotSaved => branch(isNotSaved, renderNothing);
+const enhance = hideIfNotSaved(props => props.snippetKey === '');
+
+export const DeleteButton = ({ onClick, isEnabled }) => (
   <span style={styles.buttonContainer}>
     <div
       style={styles.inlineBlock}
@@ -46,12 +47,11 @@ const DeleteButton = ({ onClick, isEnabled }) => (
       </IconButton>
     </div>
     <ReactTooltip
+      getContent={() => generateToolTipText(isEnabled)}
       id="trash-tip"
       effect="solid"
       place="bottom"
-    >
-      {toolTipText(isEnabled)}
-    </ReactTooltip>
+    />
   </span>
 );
 
@@ -60,4 +60,4 @@ DeleteButton.propTypes = {
   isEnabled: PropTypes.bool.isRequired,
 };
 
-export default DeleteButton;
+export default enhance(DeleteButton);

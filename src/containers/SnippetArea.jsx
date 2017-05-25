@@ -293,6 +293,7 @@ export class SnippetArea extends React.Component {
             readOnly={readOnly}
             saveEnabled={Boolean(username)}
             selectedOrg={selectedOrg}
+            snippetKey={snippetKey}
             title={snippetTitle}
           />
           <ConfirmationDialog
