@@ -60,6 +60,7 @@ class SearchMenu extends Component {
     orderedSnippets;
     return (
       <Dialog
+        title={<h1>Snippet Search</h1>}
         modal={false}
         open={open}
         onRequestClose={this.handleRequestClose}
