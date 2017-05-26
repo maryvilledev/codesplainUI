@@ -6,10 +6,8 @@ import {
 import AuthorAvatarIcon from './AuthorAvatarIcon';
 import LanguageSelector from './LanguageSelector';
 import LockButton from './buttons/LockButton';
-import DeleteButton from './buttons/DeleteButton';
 import SaveMenu from './menus/SaveMenu';
-import ThemePicker from './menus/ThemePicker';
-import KeymapPicker from './menus/KeymapPicker';
+import SettingsMenu from './menus/SettingsMenu';
 import CustomPropTypes from '../util/custom-prop-types';
 
 const styles = {
@@ -108,18 +106,13 @@ const SnippetAreaToolbar = (props) => {
             selectedOrg={selectedOrg}
             style={styles.button}
           />
-          <DeleteButton
-            style={styles.button}
-            isEnabled={deleteEnabled}
-            onClick={onDeleteClick}
-          />
-          <ThemePicker
+          <SettingsMenu
+            deleteEnabled={deleteEnabled}
+            onDeleteClick={onDeleteClick}
             codeMirrorTheme={codeMirrorTheme}
-            onChange={onThemeChange}
-          />
-          <KeymapPicker
+            onThemeChange={onThemeChange}
             selectedKeymap={selectedKeymap}
-            onChange={onKeymapChange}
+            onKeymapChange={onKeymapChange}
           />
         </div>
       </div>

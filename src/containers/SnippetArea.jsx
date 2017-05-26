@@ -172,7 +172,7 @@ export class SnippetArea extends React.Component {
     });
   }
 
-  handleThemeChange(_, codeMirrorTheme) {
+  handleThemeChange(codeMirrorTheme) {
     this.setState({ codeMirrorTheme });
     cookie.save('theme', codeMirrorTheme, { path: '/' });
   }
@@ -248,7 +248,7 @@ export class SnippetArea extends React.Component {
     dispatch(openAnnotationPanel({ lineNumber, lineText }));
   }
 
-  handleKeymapSelected(_, selectedKeymap) {
+  handleKeymapSelected(selectedKeymap) {
     this.setState({ selectedKeymap });
     cookie.save('keymap', selectedKeymap, { path: '/' });
   }

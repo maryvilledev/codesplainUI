@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
-import ThemePicker from '../../src/components/menus/ThemePicker';
+import KeymapPicker from '../../src/components/menus/KeymapPicker';
 
 const defaultProps = {
   onChange: jest.fn(),
@@ -15,7 +15,7 @@ describe('<ThemePicker />', () => {
 
   describe('snapshot tests', () => {
     it('matches default snapshot', () => {
-      const wrapper = shallowWithContext(<ThemePicker {...defaultProps} />);
+      const wrapper = shallowWithContext(<KeymapPicker {...defaultProps} />);
       expect(shallowToJson(wrapper)).toMatchSnapshot();
     });
   });

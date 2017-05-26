@@ -1,740 +1,756 @@
 exports[`<ThemePicker /> snapshot tests matches default snapshot 1`] = `
-<span
-  data-for="theme-picker-tooltip"
-  data-tip={true}>
-  <IconMenu
-    anchorOrigin={
-      Object {
-        "horizontal": "left",
-        "vertical": "top",
-      }
+<MenuItem
+  anchorOrigin={
+    Object {
+      "horizontal": "right",
+      "vertical": "top",
     }
-    animated={true}
-    iconButtonElement={
-      <IconButton
-        disableTouchRipple={false}
+  }
+  checked={false}
+  desktop={false}
+  disabled={false}
+  focusState="none"
+  insetChildren={false}
+  leftIcon={<ImagePalette />}
+  menuItems={
+    Array [
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
+        }
+        checked={false}
+        desktop={false}
         disabled={false}
-        iconStyle={Object {}}
-        tooltipPosition="bottom-center"
-        touch={false}>
-        <ImagePalette />
-      </IconButton>
-    }
-    multiple={false}
-    onChange={[Function]}
-    onItemTouchTap={[Function]}
-    onKeyboardFocus={[Function]}
-    onMouseDown={[Function]}
-    onMouseEnter={[Function]}
-    onMouseLeave={[Function]}
-    onMouseUp={[Function]}
-    onRequestChange={[Function]}
-    onTouchTap={[Function]}
-    open={null}
-    targetOrigin={
-      Object {
-        "horizontal": "left",
-        "vertical": "top",
-      }
-    }
-    touchTapCloseDelay={200}
-    useLayerForClickAway={false}
-    value="codesplain">
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        focusState="none"
+        insetChildren={false}
+        primaryText="Codesplain"
+        value="codesplain" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="Codesplain"
-      value="codesplain" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="3024 Day"
+        value="3024-day" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="3024 Day"
-      value="3024-day" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="3024 Night"
+        value="3024-night" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="3024 Night"
-      value="3024-night" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="ABCDEF"
+        value="abcdef" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="ABCDEF"
-      value="abcdef" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="Ambiance"
+        value="ambiance" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="Ambiance"
-      value="ambiance" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="Base 16 Dark"
+        value="base16-dark" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="Base 16 Dark"
-      value="base16-dark" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="Base 16 Light"
+        value="base16-light" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="Base 16 Light"
-      value="base16-light" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="Bespin"
+        value="bespin" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="Bespin"
-      value="bespin" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="Blackboard"
+        value="blackboard" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="Blackboard"
-      value="blackboard" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="Cobalt"
+        value="cobalt" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="Cobalt"
-      value="cobalt" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="Colorforth"
+        value="colorforth" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="Colorforth"
-      value="colorforth" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="Dracula"
+        value="dracula" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="Dracula"
-      value="dracula" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="Duotone Dark"
+        value="duotone-dark" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="Duotone Dark"
-      value="duotone-dark" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="Duotone Light"
+        value="duotone-light" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="Duotone Light"
-      value="duotone-light" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="Eclipse"
+        value="eclipse" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="Eclipse"
-      value="eclipse" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="Elegant"
+        value="elegant" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="Elegant"
-      value="elegant" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="Erlang Dark"
+        value="erlang-dark" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="Erlang Dark"
-      value="erlang-dark" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="Hopscotch"
+        value="hopscotch" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="Hopscotch"
-      value="hopscotch" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="Icecoder"
+        value="icecoder" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="Icecoder"
-      value="icecoder" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="Isotope"
+        value="isotope" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="Isotope"
-      value="isotope" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="Lesser Dark"
+        value="lesser-dark" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="Lesser Dark"
-      value="lesser-dark" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="Liquibyte"
+        value="liquibyte" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="Liquibyte"
-      value="liquibyte" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="Material"
+        value="material" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="Material"
-      value="material" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="Mbo"
+        value="mbo" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="Mbo"
-      value="mbo" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="MDN-like"
+        value="mdn-like" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="MDN-like"
-      value="mdn-like" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="Midnight"
+        value="midnight" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="Midnight"
-      value="midnight" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="Monokai"
+        value="monokai" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="Monokai"
-      value="monokai" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="Neat"
+        value="neat" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="Neat"
-      value="neat" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="Neo"
+        value="neo" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="Neo"
-      value="neo" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="Night"
+        value="night" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="Night"
-      value="night" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="Panda Syntax"
+        value="panda-syntax" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="Panda Syntax"
-      value="panda-syntax" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="Paraiso Dark"
+        value="paraiso-dark" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="Paraiso Dark"
-      value="paraiso-dark" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="Paraiso Light"
+        value="paraiso-light" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="Paraiso Light"
-      value="paraiso-light" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="Pastel On Dark"
+        value="pastel-on-dark" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="Pastel On Dark"
-      value="pastel-on-dark" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="Railscasts"
+        value="railscasts" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="Railscasts"
-      value="railscasts" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="Rubyblue"
+        value="rubyblue" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="Rubyblue"
-      value="rubyblue" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="Seti"
+        value="seti" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="Seti"
-      value="seti" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="Solarized Dark"
+        value="solarized-dark" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="Solarized Dark"
-      value="solarized-dark" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="Solarized Light"
+        value="solarized-light" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="Solarized Light"
-      value="solarized-light" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="The Matrix"
+        value="the-matrix" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="The Matrix"
-      value="the-matrix" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="Tomorrow Night Bright"
+        value="tomorrow-night-bright" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="Tomorrow Night Bright"
-      value="tomorrow-night-bright" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="Tomorrow Night Eighties"
+        value="tomorrow-night-eighties" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="Tomorrow Night Eighties"
-      value="tomorrow-night-eighties" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="TTCN"
+        value="ttcn" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="TTCN"
-      value="ttcn" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="Twilight"
+        value="twilight" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="Twilight"
-      value="twilight" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="Vibrant Ink"
+        value="vibrant-ink" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="Vibrant Ink"
-      value="vibrant-ink" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="XQ Dark"
+        value="xq-dark" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="XQ Dark"
-      value="xq-dark" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="XQ Light"
+        value="xq-light" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="XQ Light"
-      value="xq-light" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="Yeti"
+        value="yeti" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
         }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="Yeti"
-      value="yeti" />
-    <MenuItem
-      anchorOrigin={
-        Object {
-          "horizontal": "right",
-          "vertical": "top",
-        }
-      }
-      checked={false}
-      desktop={false}
-      disabled={false}
-      focusState="none"
-      insetChildren={false}
-      primaryText="Zenburn"
-      value="zenburn" />
-  </IconMenu>
-  <ReactTooltip
-    effect="solid"
-    id="theme-picker-tooltip"
-    insecure={true}
-    place="bottom"
-    resizeHide={true}
-    wrapper="div">
-    Select a theme
-  </ReactTooltip>
-</span>
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="Zenburn"
+        value="zenburn" />,
+    ]
+  }
+  onChange={[Function]}
+  primaryText="Theme"
+  rightIcon={<NavigationArrowDropRight />} />
 `;

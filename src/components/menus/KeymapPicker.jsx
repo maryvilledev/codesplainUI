@@ -1,12 +1,10 @@
 import React, { PropTypes } from 'react';
 import memoize from 'lodash/memoize';
 import {
-  IconButton,
-  IconMenu,
   MenuItem,
 } from 'material-ui';
 import KeyboardIcon from 'material-ui/svg-icons/hardware/keyboard';
-import ReactTooltip from 'react-tooltip';
+import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 
 const keymapOptions = [
   ['Default', 'default'],
@@ -15,9 +13,15 @@ const keymapOptions = [
   ['Sublime Text', 'sublime'],
 ];
 
-const makeKeybindingOptions = memoize(() => (
+const makeKeybindingOptions = memoize((selected, onChange) => (
   keymapOptions.map(([primaryText, value]) => (
-    <MenuItem key={value} primaryText={primaryText} value={value} />
+    <MenuItem
+      checked={value === selected}
+      key={value}
+      primaryText={primaryText}
+      value={value}
+      onTouchTap={() => { onChange(value); }}
+    />
   ))
 ));
 
@@ -27,22 +31,13 @@ const KeymapPicker = (props) => {
     onChange,
   } = props;
   return (
-    <span data-tip data-for="keymap-picker-tooltip">
-      <IconMenu
-        iconButtonElement={<IconButton><KeyboardIcon /></IconButton>}
-        onChange={onChange}
-        value={selectedKeymap}
-      >
-        {makeKeybindingOptions()}
-      </IconMenu>
-      <ReactTooltip
-        id="keymap-picker-tooltip"
-        effect="solid"
-        place="bottom"
-      >
-        Select your keymap
-      </ReactTooltip>
-    </span>
+    <MenuItem
+      leftIcon={<KeyboardIcon />}
+      rightIcon={<ArrowDropRight />}
+      primaryText="Keymap"
+      onChange={onChange}
+      menuItems={makeKeybindingOptions(selectedKeymap, onChange)}
+    />
   );
 };
 

@@ -73,9 +73,17 @@ class Editor extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const newAST = !isEqual(nextProps.AST, this.props.AST);
-    const newFilters = !isEqual(nextProps.filters, this.props.filters);
-    this.setState({ newAST, newFilters });
+    const {
+      AST,
+      codeMirrorTheme,
+      filters,
+      keymap,
+    } = this.props;
+    const newAST = !isEqual(nextProps.AST, AST);
+    const newFilters = !isEqual(nextProps.filters, filters);
+    const newTheme = !isEqual(nextProps.codeMirrorTheme, codeMirrorTheme);
+    const newKeymap = !isEqual(nextProps.keymap, keymap);
+    this.setState({ newAST, newFilters, newTheme, newKeymap });
   }
 
   shouldComponentUpdate(nextProps) {
@@ -94,6 +102,8 @@ class Editor extends React.Component {
     const {
       newAST,
       newFilters,
+      newTheme,
+      newKeymap,
     } = this.state;
 
     const codeMirrorInst = this.codeMirror.getCodeMirror();
@@ -112,7 +122,7 @@ class Editor extends React.Component {
     if (openLine !== -1) {
       this.emphasizeLine(openLine);
     }
-    if ((newAST || newFilters) && value) {
+    if ((newAST || newFilters || newTheme || newKeymap) && value) {
       highlight(codeMirrorInst, AST, filters);
     }
     if (errors) {

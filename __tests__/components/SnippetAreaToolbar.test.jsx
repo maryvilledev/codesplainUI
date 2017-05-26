@@ -148,8 +148,8 @@ describe('<SnippetAreaToolbar />', () => {
           onThemeChange={onChange}
         />,
       );
-      const themePicker = wrapper.find('ThemePicker');
-      expect(themePicker.prop('onChange')).toEqual(onChange);
+      const settingsMenu = wrapper.find('SettingsMenu');
+      expect(settingsMenu.prop('onThemeChange')).toEqual(onChange);
     });
   });
 
@@ -162,8 +162,8 @@ describe('<SnippetAreaToolbar />', () => {
           codeMirrorTheme={codeMirrorTheme}
         />,
       );
-      const themePicker = wrapper.find('ThemePicker');
-      expect(themePicker.prop('codeMirrorTheme')).toEqual(codeMirrorTheme);
+      const settingsMenu = wrapper.find('SettingsMenu');
+      expect(settingsMenu.prop('codeMirrorTheme')).toEqual(codeMirrorTheme);
     });
   });
 
@@ -176,13 +176,13 @@ describe('<SnippetAreaToolbar />', () => {
           selectedKeymap={selectedKeymap}
         />,
       );
-      const keymapPicker = wrapper.find('KeymapPicker');
-      expect(keymapPicker.prop('selectedKeymap')).toEqual(selectedKeymap);
+      const settingsMenu = wrapper.find('SettingsMenu');
+      expect(settingsMenu.prop('selectedKeymap')).toEqual(selectedKeymap);
     });
   });
 
   describe('prop: onKeymapChange', () => {
-    it('is forwarded to the KeymapPicker', () => {
+    it('is forwarded to the SettingsMenu', () => {
       const onChange = () => {};
       const wrapper = shallowWithContext(
         <SnippetAreaToolbar
@@ -190,8 +190,8 @@ describe('<SnippetAreaToolbar />', () => {
           onKeymapChange={onChange}
         />,
       );
-      const keymapPicker = wrapper.find('KeymapPicker');
-      expect(keymapPicker.prop('onChange')).toEqual(onChange);
+      const settingsMenu = wrapper.find('SettingsMenu');
+      expect(settingsMenu.prop('onKeymapChange')).toEqual(onChange);
     });
   });
 });

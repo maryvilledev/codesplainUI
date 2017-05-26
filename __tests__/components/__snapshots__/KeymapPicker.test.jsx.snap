@@ -1,0 +1,82 @@
+exports[`<ThemePicker /> snapshot tests matches default snapshot 1`] = `
+<MenuItem
+  anchorOrigin={
+    Object {
+      "horizontal": "right",
+      "vertical": "top",
+    }
+  }
+  checked={false}
+  desktop={false}
+  disabled={false}
+  focusState="none"
+  insetChildren={false}
+  leftIcon={<HardwareKeyboard />}
+  menuItems={
+    Array [
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
+        }
+        checked={true}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="Default"
+        value="default" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
+        }
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="Emacs"
+        value="emacs" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
+        }
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="Vim"
+        value="vim" />,
+      <MenuItem
+        anchorOrigin={
+            Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
+        }
+        checked={false}
+        desktop={false}
+        disabled={false}
+        focusState="none"
+        insetChildren={false}
+        onTouchTap={[Function]}
+        primaryText="Sublime Text"
+        value="sublime" />,
+    ]
+  }
+  onChange={[Function]}
+  primaryText="Keymap"
+  rightIcon={<NavigationArrowDropRight />} />
+`;
