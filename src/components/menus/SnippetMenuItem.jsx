@@ -8,10 +8,10 @@ const styles = {
     width: '100%',
   },
   title: {
-    width: '13em',
+    width: '10em',
   },
   role: {
-    width: '17em',
+    width: '10em',
   },
   language: {
     float: 'left',
