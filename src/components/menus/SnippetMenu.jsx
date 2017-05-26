@@ -11,6 +11,7 @@ const styles = {
     display: 'inline-flex',
     paddingLeft: '10px',
     paddingRight: '10px',
+    cursor: 'pointer',
   },
   menuText: {
     color: 'white',
@@ -37,8 +38,8 @@ class SnippetMenu extends Component {
       cursorOnMenuText: false,
     };
     this.handleSnippetSelected = this.handleSnippetSelected.bind(this);
-    this.handleMenuHovered = this.handleMenuHovered.bind(this);
-    this.handleMenuNotHovered = this.handleMenuNotHovered.bind(this);
+    this.handleMenuOpen = this.handleMenuOpen.bind(this);
+    this.handleMenuClose = this.handleMenuClose.bind(this);
 
     this.menuOpenStyle = menuOpenStyle(props);
   }
@@ -47,13 +48,13 @@ class SnippetMenu extends Component {
     this.menuOpenStyle = menuOpenStyle(nextProps);
   }
 
-  handleMenuHovered(ev) {
+  handleMenuOpen(ev) {
     ev.stopPropagation();
     ev.preventDefault();
     this.setState({ menuOpen: true });
   }
 
-  handleMenuNotHovered() {
+  handleMenuClose() {
     this.setState({ menuOpen: false });
   }
 
@@ -84,8 +85,8 @@ class SnippetMenu extends Component {
     return (
       <IconMenu
         anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-        onMouseEnter={this.handleMenuHovered}
-        onRequestChange={this.handleMenuNotHovered}
+        onTouchTap={this.handleMenuOpen}
+        onRequestChange={this.handleMenuClose}
         open={menuOpen}
         style={{ ...styles.iconMenu, ...menuStyle, ...style }}
         targetOrigin={{ horizontal: 'left', vertical: 'top' }}
