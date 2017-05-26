@@ -86,9 +86,10 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is no
             "flex": "1 1 auto",
           }
         } />
-      <DeleteButton
+      <branch(Component)
         isEnabled={true}
         onClick={[Function]}
+        snippetKey=""
         style={
           Object {
             "flex": "1 1 auto",
@@ -190,9 +191,10 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is re
             "flex": "1 1 auto",
           }
         } />
-      <DeleteButton
+      <branch(Component)
         isEnabled={true}
         onClick={[Function]}
+        snippetKey=""
         style={
           Object {
             "flex": "1 1 auto",

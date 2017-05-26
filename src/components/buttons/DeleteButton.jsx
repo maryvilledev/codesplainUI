@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
-
 import IconButton from 'material-ui/IconButton';
 import TrashCan from 'material-ui/svg-icons/action/delete';
 import ReactTooltip from 'react-tooltip';
+import { branch, renderNothing } from 'recompose';
 
 const styles = {
   button: {
@@ -16,20 +16,7 @@ const styles = {
   },
 };
 
-const toolTipText = isEnabled => (
-  isEnabled ?
-    (<span>
-      Click to delete snippet
-    </span>)
-    :
-    (<span>
-      You can only delete snippets
-      <br />
-      that you own
-    </span>)
-);
-
-const DeleteButton = ({ onClick, isEnabled }) => (
+export const DeleteButton = ({ onClick }) => (
   <span style={styles.buttonContainer}>
     <div
       style={styles.inlineBlock}
@@ -38,7 +25,6 @@ const DeleteButton = ({ onClick, isEnabled }) => (
     >
       <IconButton
         id="TrashButton"
-        disabled={!isEnabled}
         onTouchTap={onClick}
         style={styles.button}
       >
@@ -50,14 +36,27 @@ const DeleteButton = ({ onClick, isEnabled }) => (
       effect="solid"
       place="bottom"
     >
-      {toolTipText(isEnabled)}
+      <span>Click to delete snippet</span>
     </ReactTooltip>
   </span>
 );
 
 DeleteButton.propTypes = {
   onClick: PropTypes.func.isRequired,
+  // eslint-disable-next-line
   isEnabled: PropTypes.bool.isRequired,
+  // eslint-disable-next-line
+  snippetKey: PropTypes.string,
 };
 
-export default DeleteButton;
+DeleteButton.defaultProps = {
+  snippetKey: '',
+};
+
+// Render <Nothing /> (which renders null) if the user cannot delete the
+// current snippet (either because it hasn't been saved, or they don't own)
+// the snippet
+const hideIfCannotDelete = isNotSaved => branch(isNotSaved, renderNothing);
+const enhance = hideIfCannotDelete(props => props.snippetKey === '' || !props.isEnabled);
+
+export default enhance(DeleteButton);
