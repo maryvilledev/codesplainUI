@@ -8,7 +8,7 @@ const styles = {
     width: '100%',
   },
   title: {
-    width: '10em',
+    width: '20em',
   },
   role: {
     width: '10em',
@@ -35,11 +35,11 @@ const SnippetMenuItem = ({ snippetTitle, language, lastEdited, role }) => (
   <table style={styles.menuItem}>
     <tbody>
       <tr>
-        <td style={styles.title}>{makeDisplayTitle(snippetTitle, 10)}</td>
+        <td style={styles.title}>{makeDisplayTitle(snippetTitle, 24)}</td>
         {
-        role ?
-          <td style={styles.role}>
-            {makeDisplayTitle(role, 14)}
+          role ?
+            <td style={styles.role}>
+              {makeDisplayTitle(role, 14)}
           </td>
         : null
       }
