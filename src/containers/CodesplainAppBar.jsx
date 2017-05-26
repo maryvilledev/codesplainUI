@@ -15,6 +15,7 @@ import { closeAnnotationPanel } from '../actions/annotation';
 import {
   resetState,
   setSnippetTitle,
+  downloadZip,
  } from '../actions/app';
 import {
   fetchGist,
@@ -269,6 +270,8 @@ export class CodesplainAppBar extends Component {
   }
 
   handleDownload(selectedOrg) {
+    const { dispatch } = this.props;
+    dispatch(downloadZip(selectedOrg));
     this.hideDownloadDialog();
   }
 
