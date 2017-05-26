@@ -34,6 +34,7 @@ import AppMenu from '../components/menus/AppMenu';
 import CustomPropTypes from '../util/custom-prop-types';
 import SnippetMenu from '../components/menus/SnippetMenu';
 import SearchMenu from '../components/menus/SearchMenu';
+import DownloadDialog from '../components/DownloadDialog';
 
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 const GITHUB_URL = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&scope=read:org`;
@@ -108,6 +109,7 @@ export class CodesplainAppBar extends Component {
       isLoggedIn: false,
       isDialogOpen: false,
       isSearchMenuOpen: false,
+      isDownloadDialogOpen: false,
     };
     this.fetchUserAccountInfo = this.fetchUserAccountInfo.bind(this);
     this.handleConfirmNavigation = this.handleConfirmNavigation.bind(this);
@@ -121,6 +123,9 @@ export class CodesplainAppBar extends Component {
     this.onLoginClick = this.onLoginClick.bind(this);
     this.redirectToHomePage = this.redirectToHomePage.bind(this);
     this.resetApplication = this.resetApplication.bind(this);
+    this.showDownloadDialog = this.showDownloadDialog.bind(this);
+    this.hideDownloadDialog = this.hideDownloadDialog.bind(this);
+    this.handleDownload = this.handleDownload.bind(this);
   }
 
   componentDidMount() {
@@ -255,6 +260,18 @@ export class CodesplainAppBar extends Component {
     }
   }
 
+  showDownloadDialog() {
+    this.setState({ isDownloadDialogOpen: true });
+  }
+
+  hideDownloadDialog() {
+    this.setState({ isDownloadDialogOpen: false });
+  }
+
+  handleDownload(selectedOrg) {
+    this.hideDownloadDialog();
+  }
+
   render() {
     const actions = [
       <FlatButton
@@ -276,14 +293,22 @@ export class CodesplainAppBar extends Component {
       userSnippets,
       gists,
       orderedSnippets,
+      orgs,
     } = this.props;
-    const { isDialogOpen, isLoggedIn, isSearchMenuOpen } = this.state;
+    const {
+      isDialogOpen,
+      isLoggedIn,
+      isSearchMenuOpen,
+      isDownloadDialogOpen,
+    } = this.state;
+
     const appMenu = isLoggedIn ?
       (<AppMenu
         avatarUrl={avatarUrl}
         gists={gists}
         onImportGist={this.handleImportGist}
         onSignOut={this.handleSignOut}
+        onDownloadClick={this.showDownloadDialog}
         onSnippetSelected={this.handleSnippetSelected}
         orgSnippets={orgSnippets}
         username={username}
@@ -345,6 +370,13 @@ export class CodesplainAppBar extends Component {
           orderedSnippets={orderedSnippets}
           onClick={this.handleSnippetSelected}
         />
+        <DownloadDialog
+          open={isDownloadDialogOpen}
+          onDownloadClick={this.handleDownload}
+          onCanceled={this.hideDownloadDialog}
+          orgs={orgs}
+          username={username}
+        />
       </div>
     );
   }
@@ -360,6 +392,7 @@ CodesplainAppBar.propTypes = {
   userSnippets: CustomPropTypes.snippets,
   orderedSnippets: CustomPropTypes.orderedSnippets,
   snippetKey: PropTypes.string,
+  orgs: CustomPropTypes.orgs,
 };
 
 CodesplainAppBar.defaultProps = {
@@ -371,6 +404,7 @@ CodesplainAppBar.defaultProps = {
   userSnippets: {},
   orderedSnippets: [],
   snippetKey: '',
+  orgs: [],
 };
 
 const mapStateToProps = (state) => {
@@ -386,6 +420,7 @@ const mapStateToProps = (state) => {
       token,
       username,
       userSnippets,
+      orgs,
     },
     gists,
   } = state;
@@ -401,6 +436,7 @@ const mapStateToProps = (state) => {
     userSnippets,
     orderedSnippets,
     snippetKey,
+    orgs,
   };
 };
 
