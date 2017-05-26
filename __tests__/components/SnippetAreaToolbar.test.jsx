@@ -15,6 +15,7 @@ const defaultProps = {
   onOrgChanged: jest.fn(),
   onSaveAsClick: jest.fn(),
   onSaveClick: jest.fn(),
+  onKeymapChange: jest.fn(),
   onThemeChange: jest.fn(),
   onTitleChange: jest.fn(),
   orgs: ['galactic-federation'],
@@ -163,6 +164,34 @@ describe('<SnippetAreaToolbar />', () => {
       );
       const themePicker = wrapper.find('ThemePicker');
       expect(themePicker.prop('codeMirrorTheme')).toEqual(codeMirrorTheme);
+    });
+  });
+
+  describe('prop: onKeymapChange', () => {
+    it('is forwarded to the KeymapPicker', () => {
+      const selectedKeymap = 'emacs';
+      const wrapper = shallowWithContext(
+        <SnippetAreaToolbar
+          {...defaultProps}
+          selectedKeymap={selectedKeymap}
+        />,
+      );
+      const keymapPicker = wrapper.find('KeymapPicker');
+      expect(keymapPicker.prop('selectedKeymap')).toEqual(selectedKeymap);
+    });
+  });
+
+  describe('prop: onKeymapChange', () => {
+    it('is forwarded to the KeymapPicker', () => {
+      const onChange = () => {};
+      const wrapper = shallowWithContext(
+        <SnippetAreaToolbar
+          {...defaultProps}
+          onKeymapChange={onChange}
+        />,
+      );
+      const keymapPicker = wrapper.find('KeymapPicker');
+      expect(keymapPicker.prop('onChange')).toEqual(onChange);
     });
   });
 });

@@ -97,6 +97,9 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is no
       <ThemePicker
         codeMirrorTheme="codesplain"
         onChange={[Function]} />
+      <KeymapPicker
+        onChange={[Function]}
+        selectedKeymap="default" />
     </div>
   </div>
 </div>
@@ -201,6 +204,9 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is re
       <ThemePicker
         codeMirrorTheme="codesplain"
         onChange={[Function]} />
+      <KeymapPicker
+        onChange={[Function]}
+        selectedKeymap="default" />
     </div>
   </div>
 </div>

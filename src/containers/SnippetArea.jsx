@@ -59,11 +59,13 @@ export class SnippetArea extends React.Component {
   constructor(props) {
     super(props);
     const savedTheme = cookie.load('theme');
+    const savedKeymap = cookie.load('keymap');
     this.state = {
       lockDialogOpen: false,
       deleteDialogOpen: false,
       avatarUrl: '',
       codeMirrorTheme: savedTheme || 'codesplain',
+      selectedKeymap: savedKeymap || 'default',
     };
 
     this.handleCloseModal = this.handleCloseModal.bind(this);
@@ -78,6 +80,7 @@ export class SnippetArea extends React.Component {
     this.handleThemeChange = this.handleThemeChange.bind(this);
     this.handleTitleChanged = this.handleTitleChanged.bind(this);
     this.handleToggleReadOnly = this.handleToggleReadOnly.bind(this);
+    this.handleKeymapSelected = this.handleKeymapSelected.bind(this);
     this.showDeleteModal = this.showDeleteModal.bind(this);
   }
 
@@ -87,6 +90,7 @@ export class SnippetArea extends React.Component {
 
     if (cookie.load('theme') === undefined) {
       cookie.save('theme', this.state.codeMirrorTheme, { path: '/' });
+      cookie.save('keymap', this.state.selectedKeymap, { path: '/' });
     }
   }
 
@@ -244,6 +248,11 @@ export class SnippetArea extends React.Component {
     dispatch(openAnnotationPanel({ lineNumber, lineText }));
   }
 
+  handleKeymapSelected(_, selectedKeymap) {
+    this.setState({ selectedKeymap });
+    cookie.save('keymap', selectedKeymap, { path: '/' });
+  }
+
   render() {
     const {
       annotations,
@@ -262,7 +271,11 @@ export class SnippetArea extends React.Component {
       snippetTitle,
       username,
     } = this.props;
-    const { avatarUrl, codeMirrorTheme } = this.state;
+    const {
+      avatarUrl,
+      codeMirrorTheme,
+      selectedKeymap,
+    } = this.state;
     const markedLines = Object.keys(annotations).map(Number);
     // Delete button is enabled only when user is logged in, owns snippet,
     // and is not viewing a new snippet
@@ -291,7 +304,9 @@ export class SnippetArea extends React.Component {
             onTitleChange={this.handleTitleChanged}
             orgs={orgs}
             readOnly={readOnly}
+            onKeymapChange={this.handleKeymapSelected}
             saveEnabled={Boolean(username)}
+            selectedKeymap={selectedKeymap}
             selectedOrg={selectedOrg}
             title={snippetTitle}
           />
@@ -314,6 +329,7 @@ export class SnippetArea extends React.Component {
             codeMirrorTheme={codeMirrorTheme}
             errors={errors}
             filters={filters}
+            keymap={selectedKeymap}
             language={snippetLanguage}
             markedLines={markedLines}
             onChange={this.handleSnippetChanged}

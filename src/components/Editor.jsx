@@ -11,6 +11,7 @@ import {
   styleRegion,
 } from '../util/codemirror-utils';
 import '../util/codemirror-themes';
+import '../util/codemirror-keymaps';
 import { getCodeMirrorTheme } from '../util/codemirror-theme-options';
 import CustomPropTypes from '../util/custom-prop-types';
 
@@ -192,6 +193,7 @@ class Editor extends React.Component {
   render() {
     const {
       codeMirrorTheme,
+      keymap,
       language,
       onChange,
       readOnly,
@@ -202,6 +204,7 @@ class Editor extends React.Component {
       mode: getCodeMirrorMode(language),
       ...(readOnly ? annotationModeOptions : editModeOptions),
       theme: getCodeMirrorTheme(codeMirrorTheme),
+      keyMap: keymap,
     };
 
     return (
@@ -219,6 +222,7 @@ Editor.propTypes = {
   codeMirrorTheme: PropTypes.string,
   errors: CustomPropTypes.errors,
   filters: CustomPropTypes.filters.isRequired,
+  keymap: PropTypes.string,
   language: PropTypes.string.isRequired,
   markedLines: PropTypes.arrayOf(PropTypes.number).isRequired,
   onChange: PropTypes.func.isRequired,
@@ -231,6 +235,7 @@ Editor.propTypes = {
 Editor.defaultProps = {
   codeMirrorTheme: 'codesplain',
   errors: [],
+  keymap: 'default',
   openLine: -1,
 };
 
