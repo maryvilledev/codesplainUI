@@ -86,8 +86,8 @@ const orderSnippets = (username, userSnippets, orgSnippets) => {
   const allSnippets = { ...orgSnippets }; // Spread so there aren't side effects.
   allSnippets[username] = userSnippets;
   const orderedSnippets = reduce(allSnippets, (allList, snippets, role) => {
-    const next = reduce(snippets, (snipList, { language, lastEdited }, snippetTitle) => {
-      const obj = { role, snippetTitle, language, lastEdited };
+    const next = reduce(snippets, (snipList, { language, lastEdited, snippetTitle }, key) => {
+      const obj = { role, snippetTitle, language, lastEdited, key };
       return concat(snipList, obj);
     }, []);
     return concat(allList, next);
