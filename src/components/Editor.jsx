@@ -76,7 +76,7 @@ class Editor extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // List of props that need to be compared
+    // List of props that dont' need to be compared
     const omitted = [
       'onChange',
       'onGutterClick',
