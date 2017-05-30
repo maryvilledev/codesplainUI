@@ -1,0 +1,55 @@
+exports[`<AnnotationPanel /> snapshots matches snapshot 1`] = `
+<div
+  style={
+    Object {
+      "display": "inline-flex",
+      "flexGrow": "1",
+      "justifyContent": "space-between",
+    }
+  }>
+  <IconButton
+    disableTouchRipple={false}
+    disabled={false}
+    iconStyle={Object {}}
+    onTouchTap={[Function]}
+    tooltip="Edit"
+    tooltipPosition="top-right"
+    touch={false}>
+    <EditorModeEdit />
+  </IconButton>
+  <div>
+    <IconButton
+      disableTouchRipple={false}
+      disabled={true}
+      iconStyle={Object {}}
+      id="previous-annotation"
+      onTouchTap={[Function]}
+      tooltip="Previous Annotation"
+      tooltipPosition="top-right"
+      touch={true}>
+      <NavigationArrowBack />
+    </IconButton>
+    <IconButton
+      disableTouchRipple={false}
+      disabled={true}
+      iconStyle={Object {}}
+      id="next-annotation"
+      onTouchTap={[Function]}
+      tooltip="Next Annotation"
+      tooltipPosition="top-right"
+      touch={true}>
+      <NavigationArrowForward />
+    </IconButton>
+    <IconButton
+      disableTouchRipple={false}
+      disabled={false}
+      iconStyle={Object {}}
+      onTouchTap={[Function]}
+      tooltip="Close"
+      tooltipPosition="top-right"
+      touch={false}>
+      <NavigationClose />
+    </IconButton>
+  </div>
+</div>
+`;
