@@ -1,4 +1,5 @@
 import { MuiThemeProvider } from 'material-ui/styles';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -19,6 +20,7 @@ import App from './components/App';
 import Auth from './components/Auth';
 import NotFoundView from './components/NotFoundView';
 import configureStore from './store/configureStore';
+import customMuiStyles from './styles/mui-styles';
 import { initRules } from './util/rules';
 
 // Needed for onTouchTap
@@ -36,7 +38,7 @@ history.listenBeforeUnload(() => {
 });
 
 ReactDOM.render(
-  <MuiThemeProvider>
+  <MuiThemeProvider muiTheme={getMuiTheme(customMuiStyles)}>
     <Provider store={store}>
       <Router history={history}>
         <Route path="/auth" component={Auth} />

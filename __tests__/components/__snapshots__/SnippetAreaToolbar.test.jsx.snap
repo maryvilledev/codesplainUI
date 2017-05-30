@@ -86,17 +86,13 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is no
             "flex": "1 1 auto",
           }
         } />
-      <DeleteButton
-        isEnabled={true}
-        onClick={[Function]}
-        style={
-          Object {
-            "flex": "1 1 auto",
-          }
-        } />
-      <ThemePicker
+      <SettingsMenu
         codeMirrorTheme="codesplain"
-        onChange={[Function]} />
+        deleteEnabled={true}
+        onDeleteClick={[Function]}
+        onKeymapChange={[Function]}
+        onThemeChange={[Function]}
+        selectedKeymap="default" />
     </div>
   </div>
 </div>
@@ -190,17 +186,13 @@ exports[`<SnippetAreaToolbar /> snapshot tests matches snapshot of when it is re
             "flex": "1 1 auto",
           }
         } />
-      <DeleteButton
-        isEnabled={true}
-        onClick={[Function]}
-        style={
-          Object {
-            "flex": "1 1 auto",
-          }
-        } />
-      <ThemePicker
+      <SettingsMenu
         codeMirrorTheme="codesplain"
-        onChange={[Function]} />
+        deleteEnabled={true}
+        onDeleteClick={[Function]}
+        onKeymapChange={[Function]}
+        onThemeChange={[Function]}
+        selectedKeymap="default" />
     </div>
   </div>
 </div>
