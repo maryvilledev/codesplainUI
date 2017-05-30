@@ -1,14 +1,20 @@
 export default {
+  flatButton: {
+    primaryTextColor: '#00e6e6',
+    secondaryTextColor: '#f44336',
+  },
   inkBar: {
     backgroundColor: '#00e6e6',
   },
+  menuItem: {
+    selectedTextColor: '#00e6e6',
+  },
   tabs: {
     backgroundColor: ' #333333',
-    textColor: 'white',
-    selectedTextColor: 'white',
+    textColor: '#ffffff',
+    selectedTextColor: '#ffffff',
   },
-  flatButton: {
-    primaryTextColor: '#00e6e6',
-    secondaryTextColor: 'red',
+  textField: {
+    focusColor: '#00e6e6',
   },
 };
