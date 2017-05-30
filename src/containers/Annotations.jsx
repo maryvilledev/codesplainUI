@@ -49,13 +49,16 @@ export class Annotations extends React.Component {
       displayStatus: 'none',
       hasPreceedingAnnotation: false,
       hasProceedingAnnotation: false,
-      isEditing: false,
+
+      // We want to open in edit mode if the selected line has no annotation
+      isEditing: props.annotation.length === 0,
     };
     this.getNextAnnotation = this.getNextAnnotation.bind(this);
     this.getPreviousAnnotation = this.getPreviousAnnotation.bind(this);
     this.handleCloseAnnotation = this.handleCloseAnnotation.bind(this);
     this.handleSaveAnnotation = this.handleSaveAnnotation.bind(this);
     this.toggleEditState = this.toggleEditState.bind(this);
+    this.handleCancelEdit = this.handleCancelEdit.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -70,6 +73,9 @@ export class Annotations extends React.Component {
       hasProceedingAnnotation: hasNextAnnotation(nextAnnotatedLines, lineNumber),
       hasPreceedingAnnotation: hasPreviousAnnotation(nextAnnotatedLines, lineNumber),
     });
+
+    // We want to open in edit mode if the selected line has no annotation
+    this.setState({ isEditing: nextProps.annotation.length === 0 });
   }
 
   getPreviousAnnotation() {
@@ -145,6 +151,15 @@ export class Annotations extends React.Component {
     this.setState({ isEditing: !this.state.isEditing });
   }
 
+  handleCancelEdit() {
+    const annotationEmpty = this.props.annotation.length === 0;
+    if (annotationEmpty) {
+      this.handleCloseAnnotation();
+    } else {
+      this.toggleEditState();
+    }
+  }
+
   render() {
     const {
       annotation,
@@ -200,7 +215,7 @@ export class Annotations extends React.Component {
           lineAnnotated={lineAnnotated}
           saveAnnotation={this.handleSaveAnnotation}
           isEditing={this.state.isEditing}
-          onCancelEdit={this.toggleEditState}
+          onCancelEdit={this.handleCancelEdit}
         />
       </Card>
     );
