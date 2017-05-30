@@ -26,7 +26,7 @@ const AuthorAvatarIcon = ({ author, avatarUrl }) => {
           src={avatarUrl}
         />
         <ReactTooltip
-          id="avatar"
+          id="author-avatar"
           effect="solid"
           place="bottom"
         >
