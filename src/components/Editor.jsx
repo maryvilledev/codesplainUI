@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import CodeMirror from 'react-codemirror';
 import isEqual from 'lodash/isEqual';
+import omit from 'lodash/omit';
 import 'codemirror/mode/python/python';
 
 import {
@@ -56,7 +57,9 @@ const pushValueToCodeMirror = (value, codeMirrorInst) => {
 class Editor extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      shouldInvokeHighlight: false,
+    };
     this.handleGutterClick = this.handleGutterClick.bind(this);
     this.emphasizeLine = this.emphasizeLine.bind(this);
     this.deEmphasize = this.deEmphasize.bind(this);
@@ -73,17 +76,21 @@ class Editor extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const {
-      AST,
-      codeMirrorTheme,
-      filters,
-      keymap,
-    } = this.props;
-    const newAST = !isEqual(nextProps.AST, AST);
-    const newFilters = !isEqual(nextProps.filters, filters);
-    const newTheme = !isEqual(nextProps.codeMirrorTheme, codeMirrorTheme);
-    const newKeymap = !isEqual(nextProps.keymap, keymap);
-    this.setState({ newAST, newFilters, newTheme, newKeymap });
+    // List of props that need to be compared
+    const omitted = [
+      'onChange',
+      'onGutterClick',
+      'value',
+    ];
+    const omitProps = props => omit(props, omitted);
+    // Compare only the props that can cause CodeMirror to update (which will
+    // remove highlighting); if they're not equal, then highlight will need
+    // to be called after the component updates
+    const shouldInvokeHighlight = !isEqual(
+      omitProps(this.props),
+      omitProps(nextProps),
+    );
+    this.setState({ shouldInvokeHighlight });
   }
 
   shouldComponentUpdate(nextProps) {
@@ -99,12 +106,7 @@ class Editor extends React.Component {
       value,
       errors,
     } = this.props;
-    const {
-      newAST,
-      newFilters,
-      newTheme,
-      newKeymap,
-    } = this.state;
+    const { shouldInvokeHighlight } = this.state;
 
     const codeMirrorInst = this.codeMirror.getCodeMirror();
 
@@ -122,13 +124,11 @@ class Editor extends React.Component {
     if (openLine !== -1) {
       this.emphasizeLine(openLine);
     }
-    if ((newAST || newFilters || newTheme || newKeymap) && value) {
+    if (shouldInvokeHighlight && value) {
       highlight(codeMirrorInst, AST, filters);
     }
     if (errors) {
-      errors.forEach((error) => {
-        this.markError(error.begin, error.end);
-      });
+      errors.forEach((error) => { this.markError(error.begin, error.end); });
     }
   }
 
@@ -175,9 +175,7 @@ class Editor extends React.Component {
   }
 
   clearErrors() {
-    const css = `
-      background-image: none;
-    `;
+    const css = 'background-image: none;';
     styleAll(this.codeMirror.getCodeMirror(), css);
   }
 
