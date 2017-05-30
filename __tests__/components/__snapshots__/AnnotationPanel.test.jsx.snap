@@ -8,10 +8,10 @@ exports[`<AnnotationPanel /> snapshot tests matches snapshot when an annotation 
   <LineSnippet
     lineNumber={1}
     value="You don\'t know me!" />
-  <AnnotationDisplay
+  <AnnotationEditor
     annotation="Wubba lubba dub dub!"
-    closeAnnotation={[Function]}
-    editAnnotation={[Function]} />
+    onCloseEditor={[Function]}
+    saveAnnotation={[Function]} />
 </div>
 `;
 
@@ -27,7 +27,7 @@ exports[`<AnnotationPanel /> snapshot tests matches snapshot when no annotation 
     value="You don\'t know me!" />
   <AnnotationEditor
     annotation=""
-    closeAnnotation={[Function]}
+    onCloseEditor={[Function]}
     saveAnnotation={[Function]} />
 </div>
 `;

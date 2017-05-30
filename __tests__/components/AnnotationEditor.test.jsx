@@ -8,6 +8,7 @@ import AnnotationEditor from '../../src/components/AnnotationEditor';
 const mockFunctionProps = {
   closeAnnotation: jest.fn(),
   saveAnnotation: jest.fn(),
+  onCloseEditor: jest.fn(),
 };
 
 describe('<AnnotationEditor />', () => {

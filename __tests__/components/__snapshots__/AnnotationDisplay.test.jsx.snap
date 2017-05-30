@@ -1,159 +1,19 @@
 exports[`<AnnotationDisplay /> snapshots when an annotation after current one exists matches snapshot 1`] = `
-<div>
-  <MarkdownDisplayer
-    annotation="" />
-  <div
-    style={
-      Object {
-        "alignItems": "center",
-        "display": "flex",
-        "flexFlow": "row wrap",
-        "justifyContent": "space-between",
-      }
-    }>
-    <div>
-      <RaisedButton
-        disabled={false}
-        fullWidth={false}
-        label="Close"
-        labelPosition="after"
-        onTouchTap={[Function]}
-        primary={false}
-        secondary={true}
-        style={
-          Object {
-            "marginRight": "0.2rem",
-          }
-        } />
-      <RaisedButton
-        disabled={false}
-        fullWidth={false}
-        label="Edit"
-        labelPosition="after"
-        onTouchTap={[Function]}
-        primary={true}
-        secondary={false} />
-    </div>
-  </div>
-</div>
+<MarkdownDisplayer
+  annotation="" />
 `;
 
 exports[`<AnnotationDisplay /> snapshots when an annotation before current one exists matches snapshot 1`] = `
-<div>
-  <MarkdownDisplayer
-    annotation="" />
-  <div
-    style={
-      Object {
-        "alignItems": "center",
-        "display": "flex",
-        "flexFlow": "row wrap",
-        "justifyContent": "space-between",
-      }
-    }>
-    <div>
-      <RaisedButton
-        disabled={false}
-        fullWidth={false}
-        label="Close"
-        labelPosition="after"
-        onTouchTap={[Function]}
-        primary={false}
-        secondary={true}
-        style={
-          Object {
-            "marginRight": "0.2rem",
-          }
-        } />
-      <RaisedButton
-        disabled={false}
-        fullWidth={false}
-        label="Edit"
-        labelPosition="after"
-        onTouchTap={[Function]}
-        primary={true}
-        secondary={false} />
-    </div>
-  </div>
-</div>
+<MarkdownDisplayer
+  annotation="" />
 `;
 
 exports[`<AnnotationDisplay /> snapshots when annotation exists before/after current one matches snapshot 1`] = `
-<div>
-  <MarkdownDisplayer
-    annotation="" />
-  <div
-    style={
-      Object {
-        "alignItems": "center",
-        "display": "flex",
-        "flexFlow": "row wrap",
-        "justifyContent": "space-between",
-      }
-    }>
-    <div>
-      <RaisedButton
-        disabled={false}
-        fullWidth={false}
-        label="Close"
-        labelPosition="after"
-        onTouchTap={[Function]}
-        primary={false}
-        secondary={true}
-        style={
-          Object {
-            "marginRight": "0.2rem",
-          }
-        } />
-      <RaisedButton
-        disabled={false}
-        fullWidth={false}
-        label="Edit"
-        labelPosition="after"
-        onTouchTap={[Function]}
-        primary={true}
-        secondary={false} />
-    </div>
-  </div>
-</div>
+<MarkdownDisplayer
+  annotation="" />
 `;
 
 exports[`<AnnotationDisplay /> snapshots when no annotations before/after current one exist matches snapshot 1`] = `
-<div>
-  <MarkdownDisplayer
-    annotation="" />
-  <div
-    style={
-      Object {
-        "alignItems": "center",
-        "display": "flex",
-        "flexFlow": "row wrap",
-        "justifyContent": "space-between",
-      }
-    }>
-    <div>
-      <RaisedButton
-        disabled={false}
-        fullWidth={false}
-        label="Close"
-        labelPosition="after"
-        onTouchTap={[Function]}
-        primary={false}
-        secondary={true}
-        style={
-          Object {
-            "marginRight": "0.2rem",
-          }
-        } />
-      <RaisedButton
-        disabled={false}
-        fullWidth={false}
-        label="Edit"
-        labelPosition="after"
-        onTouchTap={[Function]}
-        primary={true}
-        secondary={false} />
-    </div>
-  </div>
-</div>
+<MarkdownDisplayer
+  annotation="" />
 `;
