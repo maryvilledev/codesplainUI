@@ -10,6 +10,22 @@ body {
   height: inherit;
 }
 
+a {
+  text-decoration: none;
+}
+
+.contact-link {
+  color: #666666;
+}
+
+.markdown-link {
+  color: #d3d3d3;
+}
+
+.hoverable-link:hover {
+  color: blue;
+}
+
 .rule-label {
   box-sizing: border-box;
   border-radius: 5px;

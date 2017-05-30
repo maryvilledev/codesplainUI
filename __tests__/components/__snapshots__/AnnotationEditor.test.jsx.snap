@@ -78,6 +78,7 @@ exports[`<AnnotationEditor /> matches snapshot 1`] = `
         }
       } />
     <a
+      className="markdown-link hoverable-link"
       href="http://commonmark.org/help"
       rel="noopener noreferrer"
       style={
@@ -100,7 +101,7 @@ exports[`<AnnotationEditor /> matches snapshot 1`] = `
       <span
         style={
           Object {
-            "color": "#d3d3d3",
+            "color": "inherit",
             "fontSize": "small",
           }
         }>

@@ -10,26 +10,39 @@ const style = {
     display: 'inline-flex',
     flexFlow: 'row nowrap',
     justifyContent: 'flex-end',
-    alignItems: 'center',
+    alignItems: 'flex-start',
+  },
+  githubLogo: {
+    height: '30px',
+  },
+  twitterLogo: {
+    marginTop: 'auto 0',
   },
   linkArea: {
-    display: 'inline-block',
-    font: '12pt Lato, sans-serif',
+    display: 'inline-flex',
+    flexFlow: 'column nowrap',
+  },
+  logo: {
+    height: '30px',
   },
   logoArea: {
-    display: 'block',
-    textAlign: 'center',
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'space-around',
   },
   link: {
-    padding: '4px',
-    color: '#666666',
-    textDecoration: 'none',
+    padding: '0 4px',
+    font: '12pt Lato, sans-serif',
+  },
+  maryvilleDevLogo: {
+    marginTop: '1px',
   },
 };
 
 const ReferenceArea = () => (
   <div style={style.paper}>
     <a
+      style={style.maryvilleDevLogo}
       href="https://maryvilledevcenter.com/"
       target="_blank"
       rel="noopener noreferrer"
@@ -43,10 +56,10 @@ const ReferenceArea = () => (
     <div style={style.linkArea}>
       <div style={style.logoArea}>
         <a
+          style={style.twitterLogo}
           href="https://www.twitter.com/MaryvilleDev"
           target="_blank"
           rel="noopener noreferrer"
-          style={style.link}
         >
           <img
             src={twitterIcon}
@@ -55,10 +68,10 @@ const ReferenceArea = () => (
           />
         </a>
         <a
+          style={style.githubLogo}
           href="https://github.com/maryvilledev"
           target="_blank"
           rel="noopener noreferrer"
-          style={style.link}
         >
           <img
             src={githubIcon}
@@ -68,6 +81,7 @@ const ReferenceArea = () => (
         </a>
       </div>
       <a
+        className="contact-link hoverable-link"
         href="mailto:support@codesplain.io"
         target="_blank"
         rel="noopener noreferrer"
