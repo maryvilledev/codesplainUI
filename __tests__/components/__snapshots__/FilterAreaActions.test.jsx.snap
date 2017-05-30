@@ -4,7 +4,7 @@ exports[`<FilterAreaActions /> matches snapshot of when the app is not in read-o
     Object {
       "display": "flex",
       "flexFlow": "row nowrap",
-      "justifyContent": "space-evenly",
+      "justifyContent": "space-around",
     }
   }>
   <FlatButton
