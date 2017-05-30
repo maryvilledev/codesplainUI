@@ -10,6 +10,10 @@ body {
   height: inherit;
 }
 
+a {
+  text-decoration: none;
+}
+
 .rule-label {
   box-sizing: border-box;
   border-radius: 5px;
