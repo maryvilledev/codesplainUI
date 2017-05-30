@@ -8,7 +8,7 @@ const styles = {
   cardActions: {
     display: 'flex',
     flexFlow: 'row nowrap',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-around',
   },
   label: {
     fontSize: '12px',
