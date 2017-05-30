@@ -12,11 +12,16 @@ exports[`<AnnotationDisplay /> snapshots when an annotation after current one ex
       }
     }>
     <div>
-      <RaisedButton
+      <FlatButton
         disabled={false}
         fullWidth={false}
         label="Close"
         labelPosition="after"
+        labelStyle={Object {}}
+        onKeyboardFocus={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        onTouchStart={[Function]}
         onTouchTap={[Function]}
         primary={false}
         secondary={true}
@@ -25,11 +30,16 @@ exports[`<AnnotationDisplay /> snapshots when an annotation after current one ex
             "marginRight": "0.2rem",
           }
         } />
-      <RaisedButton
+      <FlatButton
         disabled={false}
         fullWidth={false}
         label="Edit"
         labelPosition="after"
+        labelStyle={Object {}}
+        onKeyboardFocus={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        onTouchStart={[Function]}
         onTouchTap={[Function]}
         primary={true}
         secondary={false} />
@@ -52,11 +62,16 @@ exports[`<AnnotationDisplay /> snapshots when an annotation before current one e
       }
     }>
     <div>
-      <RaisedButton
+      <FlatButton
         disabled={false}
         fullWidth={false}
         label="Close"
         labelPosition="after"
+        labelStyle={Object {}}
+        onKeyboardFocus={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        onTouchStart={[Function]}
         onTouchTap={[Function]}
         primary={false}
         secondary={true}
@@ -65,11 +80,16 @@ exports[`<AnnotationDisplay /> snapshots when an annotation before current one e
             "marginRight": "0.2rem",
           }
         } />
-      <RaisedButton
+      <FlatButton
         disabled={false}
         fullWidth={false}
         label="Edit"
         labelPosition="after"
+        labelStyle={Object {}}
+        onKeyboardFocus={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        onTouchStart={[Function]}
         onTouchTap={[Function]}
         primary={true}
         secondary={false} />
@@ -92,11 +112,16 @@ exports[`<AnnotationDisplay /> snapshots when annotation exists before/after cur
       }
     }>
     <div>
-      <RaisedButton
+      <FlatButton
         disabled={false}
         fullWidth={false}
         label="Close"
         labelPosition="after"
+        labelStyle={Object {}}
+        onKeyboardFocus={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        onTouchStart={[Function]}
         onTouchTap={[Function]}
         primary={false}
         secondary={true}
@@ -105,11 +130,16 @@ exports[`<AnnotationDisplay /> snapshots when annotation exists before/after cur
             "marginRight": "0.2rem",
           }
         } />
-      <RaisedButton
+      <FlatButton
         disabled={false}
         fullWidth={false}
         label="Edit"
         labelPosition="after"
+        labelStyle={Object {}}
+        onKeyboardFocus={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        onTouchStart={[Function]}
         onTouchTap={[Function]}
         primary={true}
         secondary={false} />
@@ -132,11 +162,16 @@ exports[`<AnnotationDisplay /> snapshots when no annotations before/after curren
       }
     }>
     <div>
-      <RaisedButton
+      <FlatButton
         disabled={false}
         fullWidth={false}
         label="Close"
         labelPosition="after"
+        labelStyle={Object {}}
+        onKeyboardFocus={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        onTouchStart={[Function]}
         onTouchTap={[Function]}
         primary={false}
         secondary={true}
@@ -145,11 +180,16 @@ exports[`<AnnotationDisplay /> snapshots when no annotations before/after curren
             "marginRight": "0.2rem",
           }
         } />
-      <RaisedButton
+      <FlatButton
         disabled={false}
         fullWidth={false}
         label="Edit"
         labelPosition="after"
+        labelStyle={Object {}}
+        onKeyboardFocus={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        onTouchStart={[Function]}
         onTouchTap={[Function]}
         primary={true}
         secondary={false} />

@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 
 import MarkdownDisplayer from './MarkdownDisplayer';
 
@@ -33,13 +33,13 @@ const AnnotationDisplay = (props) => {
       <MarkdownDisplayer annotation={annotation} />
       <div style={styles.actionRow}>
         <div style={styles.actionButtons}>
-          <RaisedButton
+          <FlatButton
             label="Close"
             onTouchTap={closeAnnotation}
             secondary
             style={styles.cancelButton}
           />
-          <RaisedButton
+          <FlatButton
             label="Edit"
             onTouchTap={editAnnotation}
             primary

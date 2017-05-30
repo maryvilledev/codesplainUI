@@ -41,11 +41,16 @@ exports[`<AnnotationEditor /> matches snapshot 1`] = `
         "marginTop": "0.5rem",
       }
     }>
-    <RaisedButton
+    <FlatButton
       disabled={false}
       fullWidth={false}
       label="Cancel"
       labelPosition="after"
+      labelStyle={Object {}}
+      onKeyboardFocus={[Function]}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      onTouchStart={[Function]}
       onTouchTap={[Function]}
       primary={false}
       secondary={true}
@@ -54,11 +59,16 @@ exports[`<AnnotationEditor /> matches snapshot 1`] = `
           "flex": "1 1",
         }
       } />
-    <RaisedButton
+    <FlatButton
       disabled={true}
       fullWidth={false}
       label="Save"
       labelPosition="after"
+      labelStyle={Object {}}
+      onKeyboardFocus={[Function]}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      onTouchStart={[Function]}
       onTouchTap={[Function]}
       primary={true}
       secondary={false}
