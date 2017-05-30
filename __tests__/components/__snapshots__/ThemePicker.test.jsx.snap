@@ -21,11 +21,12 @@ exports[`<ThemePicker /> snapshot tests matches default snapshot 1`] = `
                 "vertical": "top",
               }
         }
-        checked={false}
+        checked={true}
         desktop={false}
         disabled={false}
         focusState="none"
         insetChildren={false}
+        onTouchTap={[Function]}
         primaryText="Codesplain"
         value="codesplain" />,
       <MenuItem

@@ -6,19 +6,16 @@ import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 
 import codeMirrorThemeOptions from '../../util/codemirror-theme-options';
 
-const DEFAULT_THEME = <MenuItem primaryText="Codesplain" value="codesplain" />;
-
 const makeThemePickerItems = memoize((selected, onChange) => (
-  [DEFAULT_THEME].concat(
-      codeMirrorThemeOptions.map(([displayName, value]) => (
-        <MenuItem
-          checked={value === selected}
-          key={value}
-          onTouchTap={() => { onChange(value); }}
-          primaryText={displayName}
-          value={value}
-        />
-    )),
+    codeMirrorThemeOptions.map(([displayName, value]) => (
+      <MenuItem
+        checked={value === selected}
+        key={value}
+        onTouchTap={() => { onChange(value); }}
+        primaryText={displayName}
+        value={value}
+      />
+  ),
   )
 ));
 

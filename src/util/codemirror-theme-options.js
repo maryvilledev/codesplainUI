@@ -2,6 +2,7 @@
  * [ ${Display name}, ${menuItem value} ]
  */
 export default [
+  ['Codesplain', 'codesplain'],
   ['3024 Day', '3024-day'],
   ['3024 Night', '3024-night'],
   ['ABCDEF', 'abcdef'],
