@@ -16,7 +16,7 @@ import {
   saveExisting,
 } from '../actions/app';
 import AnnotationPanel from '../components/AnnotationPanel';
-import AnnotationPaginator from '../components/buttons/AnnotationPaginator';
+import AnnotationActions from '../components/buttons/AnnotationActions';
 import {
   getAnnotatedLines,
   getNextAnnotation,
@@ -30,8 +30,15 @@ const styles = {
   card: {
     flex: '1 1 auto',
   },
-  headerItem: {
-    display: 'inline',
+  header: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  headerTitle: {
+    margin: '0',
+    paddingTop: '12px',
+    paddingRight: '12px',
   },
 };
 
@@ -42,11 +49,13 @@ export class Annotations extends React.Component {
       displayStatus: 'none',
       hasPreceedingAnnotation: false,
       hasProceedingAnnotation: false,
+      isEditing: false,
     };
     this.getNextAnnotation = this.getNextAnnotation.bind(this);
     this.getPreviousAnnotation = this.getPreviousAnnotation.bind(this);
     this.handleCloseAnnotation = this.handleCloseAnnotation.bind(this);
     this.handleSaveAnnotation = this.handleSaveAnnotation.bind(this);
+    this.toggleEditState = this.toggleEditState.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -125,8 +134,15 @@ export class Annotations extends React.Component {
     dispatch(saveAnnotation(annotationData));
     // Save the snippet only if this snippet has already been saved.
     if (snippetKey) {
-      dispatch(saveExisting());
+      dispatch(saveExisting())
+        .then(() => {
+          this.toggleEditState();
+        });
     }
+  }
+
+  toggleEditState() {
+    this.setState({ isEditing: !this.state.isEditing });
   }
 
   render() {
@@ -159,19 +175,21 @@ export class Annotations extends React.Component {
       <Card style={styles.card}>
         <CardTitle
           title={
-            <div>
+            <div style={styles.header}>
               <h2
                 className="section-title"
-                style={styles.headerItem}
+                style={styles.headerTitle}
               >
                 Annotation
               </h2>
-              <AnnotationPaginator
+              <AnnotationActions
                 getNextAnnotation={this.getNextAnnotation}
                 getPreviousAnnotation={this.getPreviousAnnotation}
                 hasNextAnnotation={hasProceedingAnnotation}
                 hasPrevAnnotation={hasPreceedingAnnotation}
-                style={styles.headerItem}
+                onClose={this.handleCloseAnnotation}
+                onEdit={this.toggleEditState}
+                disableEdit={this.state.isEditing}
               />
             </div>
           }
@@ -181,6 +199,8 @@ export class Annotations extends React.Component {
           closeAnnotation={this.handleCloseAnnotation}
           lineAnnotated={lineAnnotated}
           saveAnnotation={this.handleSaveAnnotation}
+          isEditing={this.state.isEditing}
+          onCancelEdit={this.toggleEditState}
         />
       </Card>
     );

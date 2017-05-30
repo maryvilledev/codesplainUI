@@ -57,7 +57,7 @@ class AnnotationEditor extends React.Component {
 
   clearAnnotation() {
     this.onAnnotationChange(null, '');
-    this.props.closeAnnotation();
+    this.props.onCloseEditor();
   }
 
   saveAnnotation() {
@@ -132,7 +132,7 @@ AnnotationEditor.defaultProps = {
 
 AnnotationEditor.propTypes = {
   annotation: PropTypes.string,
-  closeAnnotation: PropTypes.func.isRequired,
+  onCloseEditor: PropTypes.func.isRequired,
   saveAnnotation: PropTypes.func.isRequired,
 };
 

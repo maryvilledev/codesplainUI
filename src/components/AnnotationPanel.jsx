@@ -13,47 +13,24 @@ const style = {
 class AnnotationPanel extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isEditing: props.annotation.length === 0,
-    };
     this.handleSaveAnnotation = this.handleSaveAnnotation.bind(this);
-    this.toggleEditState = this.toggleEditState.bind(this);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const {
-      lineAnnotated: {
-        lineNumber,
-      },
-    } = this.props;
-    if (lineNumber !== nextProps.lineAnnotated.lineNumber) {
-      this.setState({
-        isEditing: nextProps.annotation.length === 0,
-      });
-    }
   }
 
   handleSaveAnnotation(annotation) {
     this.props.saveAnnotation(annotation);
-    this.toggleEditState();
-  }
-
-  toggleEditState() {
-    this.setState({
-      isEditing: !this.state.isEditing,
-    });
   }
 
   render() {
     const {
       annotation,
-      closeAnnotation,
+      isEditing,
+      onCancelEdit,
       lineAnnotated: {
         lineNumber,
         lineText,
       },
     } = this.props;
-    const { isEditing } = this.state;
+
     return (
       <div style={style.container}>
         <LineSnippet
@@ -63,13 +40,11 @@ class AnnotationPanel extends React.Component {
         { isEditing ?
           <AnnotationEditor
             annotation={annotation}
-            closeAnnotation={closeAnnotation}
+            onCloseEditor={onCancelEdit}
             saveAnnotation={this.handleSaveAnnotation}
           /> :
           <AnnotationDisplay
             annotation={annotation}
-            closeAnnotation={closeAnnotation}
-            editAnnotation={this.toggleEditState}
           />
         }
       </div>
@@ -79,12 +54,13 @@ class AnnotationPanel extends React.Component {
 
 AnnotationPanel.propTypes = {
   annotation: PropTypes.string.isRequired,
-  closeAnnotation: PropTypes.func.isRequired,
+  onCancelEdit: PropTypes.func.isRequired,
   saveAnnotation: PropTypes.func.isRequired,
   lineAnnotated: PropTypes.shape({
     lineNumber: PropTypes.number,
     lineText: PropTypes.string,
   }).isRequired,
+  isEditing: PropTypes.bool.isRequired,
 };
 
 export default AnnotationPanel;
