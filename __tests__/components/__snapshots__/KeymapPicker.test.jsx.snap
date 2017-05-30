@@ -1,4 +1,4 @@
-exports[`<ThemePicker /> snapshot tests matches default snapshot 1`] = `
+exports[`<KeyPicker /> snapshot tests matches default snapshot 1`] = `
 <MenuItem
   anchorOrigin={
     Object {

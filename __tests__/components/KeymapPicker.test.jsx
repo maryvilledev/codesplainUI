@@ -9,7 +9,7 @@ const defaultProps = {
   onChange: jest.fn(),
 };
 
-describe('<ThemePicker />', () => {
+describe('<KeyPicker />', () => {
   const muiTheme = getMuiTheme();
   const shallowWithContext = node => shallow(node, { context: { muiTheme } });
 
