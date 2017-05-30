@@ -8,6 +8,7 @@ exports[`<Editor /> matches snapshot 1`] = `
         "annotations",
         "CodeMirror-linenumbers",
       ],
+      "keyMap": "default",
       "lineNumbers": true,
       "lineWrapping": true,
       "mode": "python",

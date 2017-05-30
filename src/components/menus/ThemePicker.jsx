@@ -1,41 +1,37 @@
 import React, { PropTypes } from 'react';
-import {
-  IconButton,
-  IconMenu,
-  MenuItem,
-} from 'material-ui';
 import memoize from 'lodash/memoize';
-import ReactTooltip from 'react-tooltip';
+import { MenuItem } from 'material-ui';
 import PaletteIcon from 'material-ui/svg-icons/image/palette';
+import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 
 import codeMirrorThemeOptions from '../../util/codemirror-theme-options';
 
-const makeThemePickerItems = memoize(() => (
-  codeMirrorThemeOptions.map(([displayName, value]) => (
-    <MenuItem key={value} primaryText={displayName} value={value} />
-  ))
+const DEFAULT_THEME = <MenuItem primaryText="Codesplain" value="codesplain" />;
+
+const makeThemePickerItems = memoize((selected, onChange) => (
+  [DEFAULT_THEME].concat(
+      codeMirrorThemeOptions.map(([displayName, value]) => (
+        <MenuItem
+          checked={value === selected}
+          key={value}
+          onTouchTap={() => { onChange(value); }}
+          primaryText={displayName}
+          value={value}
+        />
+    )),
+  )
 ));
 
 const ThemePicker = (props) => {
   const { codeMirrorTheme, onChange } = props;
   return (
-    <span data-tip data-for="theme-picker-tooltip">
-      <IconMenu
-        iconButtonElement={<IconButton><PaletteIcon /></IconButton>}
-        onChange={onChange}
-        value={codeMirrorTheme}
-      >
-        <MenuItem primaryText="Codesplain" value="codesplain" />
-        {makeThemePickerItems()}
-      </IconMenu>
-      <ReactTooltip
-        id="theme-picker-tooltip"
-        effect="solid"
-        place="bottom"
-      >
-        Select a theme
-      </ReactTooltip>
-    </span>
+    <MenuItem
+      leftIcon={<PaletteIcon />}
+      menuItems={makeThemePickerItems(codeMirrorTheme, onChange)}
+      onChange={onChange}
+      primaryText="Theme"
+      rightIcon={<ArrowDropRight />}
+    />
   );
 };
 
