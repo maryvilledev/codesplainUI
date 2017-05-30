@@ -1,8 +1,6 @@
 import React, { PropTypes } from 'react';
 import memoize from 'lodash/memoize';
-import {
-  MenuItem,
-} from 'material-ui';
+import { MenuItem } from 'material-ui';
 import KeyboardIcon from 'material-ui/svg-icons/hardware/keyboard';
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 
@@ -18,9 +16,9 @@ const makeKeybindingOptions = memoize((selected, onChange) => (
     <MenuItem
       checked={value === selected}
       key={value}
+      onTouchTap={() => { onChange(value); }}
       primaryText={primaryText}
       value={value}
-      onTouchTap={() => { onChange(value); }}
     />
   ))
 ));
@@ -33,10 +31,10 @@ const KeymapPicker = (props) => {
   return (
     <MenuItem
       leftIcon={<KeyboardIcon />}
-      rightIcon={<ArrowDropRight />}
-      primaryText="Keymap"
-      onChange={onChange}
       menuItems={makeKeybindingOptions(selectedKeymap, onChange)}
+      onChange={onChange}
+      primaryText="Keymap"
+      rightIcon={<ArrowDropRight />}
     />
   );
 };
