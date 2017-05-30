@@ -37,7 +37,6 @@ exports[`<ReferenceArea /> matches snapshot 1`] = `
         rel="noopener noreferrer"
         style={
           Object {
-            "color": "#666666",
             "padding": "4px",
           }
         }
@@ -52,7 +51,6 @@ exports[`<ReferenceArea /> matches snapshot 1`] = `
         rel="noopener noreferrer"
         style={
           Object {
-            "color": "#666666",
             "padding": "4px",
           }
         }
@@ -64,11 +62,11 @@ exports[`<ReferenceArea /> matches snapshot 1`] = `
       </a>
     </div>
     <a
+      className="contact-link hoverable-link"
       href="mailto:support@codesplain.io"
       rel="noopener noreferrer"
       style={
         Object {
-          "color": "#666666",
           "padding": "4px",
         }
       }

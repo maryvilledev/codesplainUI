@@ -24,7 +24,7 @@ const styles = {
     top: '1rem',
   },
   markdownHintText: {
-    color: '#d3d3d3',
+    color: 'inherit',
     fontSize: 'small',
   },
   markdownIndicator: {
@@ -104,6 +104,7 @@ class AnnotationEditor extends React.Component {
             style={styles.button}
           />
           <a
+            className="markdown-link hoverable-link"
             href="http://commonmark.org/help"
             rel="noopener noreferrer"
             style={styles.markdownIndicator}

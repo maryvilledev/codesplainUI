@@ -22,7 +22,6 @@ const style = {
   },
   link: {
     padding: '4px',
-    color: '#666666',
   },
 };
 
@@ -67,6 +66,7 @@ const ReferenceArea = () => (
         </a>
       </div>
       <a
+        className="contact-link hoverable-link"
         href="mailto:support@codesplain.io"
         target="_blank"
         rel="noopener noreferrer"
