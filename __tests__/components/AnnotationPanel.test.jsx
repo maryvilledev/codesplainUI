@@ -10,6 +10,8 @@ const mockFunctionProps = {
   getNextAnnotation: jest.fn(),
   getPreviousAnnotation: jest.fn(),
   saveAnnotation: jest.fn(),
+  onCancelEdit: jest.fn(),
+  isEditing: true,
 };
 const defaultProps = {
   ...mockFunctionProps,

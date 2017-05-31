@@ -3,13 +3,15 @@ import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
-import AnnotationPaginator from '../../src/components/buttons/AnnotationPaginator';
+import AnnotationActions from '../../src/components/buttons/AnnotationActions';
 
 const defaultProps = {
   getNextAnnotation: jest.fn(),
   getPreviousAnnotation: jest.fn(),
   hasNextAnnotation: false,
   hasPrevAnnotation: false,
+  onClose: jest.fn(),
+  onEdit: jest.fn(),
 };
 
 describe('<AnnotationPanel />', () => {
@@ -18,7 +20,7 @@ describe('<AnnotationPanel />', () => {
 
   describe('snapshots', () => {
     it('matches snapshot', () => {
-      const wrapper = shallowWithContext(<AnnotationPaginator {...defaultProps} />);
+      const wrapper = shallowWithContext(<AnnotationActions {...defaultProps} />);
       expect(shallowToJson(wrapper)).toMatchSnapshot();
     });
   });
