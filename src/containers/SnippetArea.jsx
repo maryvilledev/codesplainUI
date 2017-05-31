@@ -102,21 +102,28 @@ export class SnippetArea extends React.Component {
       token,
     } = this.props;
 
-    if (!nextProps.author || !token) {
+    const {
+      author: nextAuthor,
+    } = nextProps;
+
+    if (!nextAuthor) {
       this.setState({ avatarUrl: '' });
       return;
+    } else if (!token) {
+      this.setState({ avatarUrl: `https://avatars.githubusercontent.com/${nextAuthor}` });
+      return;
     }
-    if (author !== nextProps.author) {
+    if (author !== nextAuthor) {
       // The URL to the user's avatar is already in the store, so if the snippet
       // is owned by the current user, then use the URL in the store instead
       // of pinging Github's API for it.
-      if (loggedInUser === nextProps.author) {
+      if (loggedInUser === nextAuthor) {
         this.setState({
           avatarUrl: loggedInUserAvatarUrl,
         });
         return;
       }
-      fetchUserAvatar(nextProps.author, token)
+      fetchUserAvatar(nextAuthor, token)
         .then(avatarUrl => this.setState({ avatarUrl }));
     }
   }
