@@ -90,6 +90,8 @@ export class SnippetArea extends React.Component {
 
     if (cookie.load('theme') === undefined) {
       cookie.save('theme', this.state.codeMirrorTheme, { path: '/' });
+    }
+    if (cookie.load('keymap') === undefined) {
       cookie.save('keymap', this.state.selectedKeymap, { path: '/' });
     }
   }
