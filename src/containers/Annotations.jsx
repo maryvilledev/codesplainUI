@@ -141,9 +141,7 @@ export class Annotations extends React.Component {
     // Save the snippet only if this snippet has already been saved.
     if (snippetKey) {
       dispatch(saveExisting())
-        .then(() => {
-          this.toggleEditState();
-        });
+        .then(() => this.setState({ isEditing: false }));
     }
   }
 
