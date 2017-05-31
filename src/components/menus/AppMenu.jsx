@@ -62,7 +62,6 @@ class AppMenu extends Component {
     const {
       avatarUrl,
       onSignOut,
-      onDownloadClick,
       style,
       gists,
       onImportGist,
@@ -88,10 +87,6 @@ class AppMenu extends Component {
             gists={gists}
           />
           <MenuItem
-            onClick={onDownloadClick}
-            primaryText="Download"
-          />
-          <MenuItem
             onClick={onSignOut}
             primaryText="Sign out"
           />
@@ -104,7 +99,6 @@ class AppMenu extends Component {
 AppMenu.propTypes = {
   avatarUrl: PropTypes.string,
   onSignOut: PropTypes.func.isRequired,
-  onDownloadClick: PropTypes.func.isRequired,
   gists: CustomPropTypes.gists,
   onImportGist: PropTypes.func.isRequired,
 };
