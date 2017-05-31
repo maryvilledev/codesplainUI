@@ -15,7 +15,7 @@ exports[`<AuthorAvatarIcon /> snapshots matches snapshot when avatar url is prov
     src="https://avatars2.githubusercontent.com/u/0?v=3" />
   <ReactTooltip
     effect="solid"
-    id="avatar"
+    id="author-avatar"
     insecure={true}
     place="bottom"
     resizeHide={true}

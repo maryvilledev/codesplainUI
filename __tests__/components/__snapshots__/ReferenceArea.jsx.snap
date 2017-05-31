@@ -2,7 +2,7 @@ exports[`<ReferenceArea /> matches snapshot 1`] = `
 <div
   style={
     Object {
-      "alignItems": "center",
+      "alignItems": "flex-start",
       "display": "inline-flex",
       "flexFlow": "row nowrap",
       "justifyContent": "flex-end",
@@ -12,6 +12,11 @@ exports[`<ReferenceArea /> matches snapshot 1`] = `
   <a
     href="https://maryvilledevcenter.com/"
     rel="noopener noreferrer"
+    style={
+      Object {
+        "marginTop": "1px",
+      }
+    }
     target="_blank">
     <img
       alt="Maryville DevCenter Logo"
@@ -21,15 +26,16 @@ exports[`<ReferenceArea /> matches snapshot 1`] = `
   <div
     style={
       Object {
-        "display": "inline-block",
-        "font": "12pt Lato, sans-serif",
+        "display": "inline-flex",
+        "flexFlow": "column nowrap",
       }
     }>
     <div
       style={
         Object {
-          "display": "block",
-          "textAlign": "center",
+          "alignItems": "center",
+          "display": "inline-flex",
+          "justifyContent": "space-around",
         }
       }>
       <a
@@ -37,9 +43,7 @@ exports[`<ReferenceArea /> matches snapshot 1`] = `
         rel="noopener noreferrer"
         style={
           Object {
-            "color": "#666666",
-            "padding": "4px",
-            "textDecoration": "none",
+            "marginTop": "auto 0",
           }
         }
         target="_blank">
@@ -53,9 +57,7 @@ exports[`<ReferenceArea /> matches snapshot 1`] = `
         rel="noopener noreferrer"
         style={
           Object {
-            "color": "#666666",
-            "padding": "4px",
-            "textDecoration": "none",
+            "height": "30px",
           }
         }
         target="_blank">
@@ -66,13 +68,13 @@ exports[`<ReferenceArea /> matches snapshot 1`] = `
       </a>
     </div>
     <a
+      className="contact-link hoverable-link"
       href="mailto:support@codesplain.io"
       rel="noopener noreferrer"
       style={
         Object {
-          "color": "#666666",
-          "padding": "4px",
-          "textDecoration": "none",
+          "font": "12pt Lato, sans-serif",
+          "padding": "0 4px",
         }
       }
       target="_blank">

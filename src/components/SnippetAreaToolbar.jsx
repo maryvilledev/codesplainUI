@@ -6,9 +6,8 @@ import {
 import AuthorAvatarIcon from './AuthorAvatarIcon';
 import LanguageSelector from './LanguageSelector';
 import LockButton from './buttons/LockButton';
-import DeleteButton from './buttons/DeleteButton';
 import SaveMenu from './menus/SaveMenu';
-import ThemePicker from './menus/ThemePicker';
+import SettingsMenu from './menus/SettingsMenu';
 import CustomPropTypes from '../util/custom-prop-types';
 
 const styles = {
@@ -59,6 +58,8 @@ const SnippetAreaToolbar = (props) => {
     onSaveClick,
     onThemeChange,
     onTitleChange,
+    onKeymapChange,
+    selectedKeymap,
     orgs,
     readOnly,
     saveEnabled,
@@ -105,14 +106,13 @@ const SnippetAreaToolbar = (props) => {
             selectedOrg={selectedOrg}
             style={styles.button}
           />
-          <DeleteButton
-            style={styles.button}
-            isEnabled={deleteEnabled}
-            onClick={onDeleteClick}
-          />
-          <ThemePicker
+          <SettingsMenu
+            deleteEnabled={deleteEnabled}
+            onDeleteClick={onDeleteClick}
             codeMirrorTheme={codeMirrorTheme}
-            onChange={onThemeChange}
+            onThemeChange={onThemeChange}
+            selectedKeymap={selectedKeymap}
+            onKeymapChange={onKeymapChange}
           />
         </div>
       </div>
@@ -128,6 +128,7 @@ SnippetAreaToolbar.propTypes = {
   deleteEnabled: PropTypes.bool.isRequired,
   language: PropTypes.string.isRequired,
   onDeleteClick: PropTypes.func.isRequired,
+  onKeymapChange: PropTypes.func.isRequired,
   onLanguageChange: PropTypes.func.isRequired,
   onLockClick: PropTypes.func.isRequired,
   onOrgChanged: PropTypes.func.isRequired,
@@ -138,6 +139,7 @@ SnippetAreaToolbar.propTypes = {
   orgs: CustomPropTypes.orgs.isRequired,
   readOnly: PropTypes.bool.isRequired,
   saveEnabled: PropTypes.bool.isRequired,
+  selectedKeymap: PropTypes.string,
   selectedOrg: PropTypes.string,
   title: PropTypes.string.isRequired,
 };
@@ -146,6 +148,7 @@ SnippetAreaToolbar.defaultProps = {
   author: '',
   avatarUrl: '',
   codeMirrorTheme: 'codesplain',
+  selectedKeymap: 'default',
   selectedOrg: '',
 };
 

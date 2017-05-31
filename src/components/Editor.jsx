@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import CodeMirror from 'react-codemirror';
 import isEqual from 'lodash/isEqual';
+import omit from 'lodash/omit';
 import 'codemirror/mode/python/python';
 
 import {
@@ -11,6 +12,7 @@ import {
   styleRegion,
 } from '../util/codemirror-utils';
 import '../util/codemirror-themes';
+import '../util/codemirror-keymaps';
 import { getCodeMirrorTheme } from '../util/codemirror-theme-options';
 import CustomPropTypes from '../util/custom-prop-types';
 
@@ -55,7 +57,9 @@ const pushValueToCodeMirror = (value, codeMirrorInst) => {
 class Editor extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      shouldInvokeHighlight: false,
+    };
     this.handleGutterClick = this.handleGutterClick.bind(this);
     this.emphasizeLine = this.emphasizeLine.bind(this);
     this.deEmphasize = this.deEmphasize.bind(this);
@@ -72,9 +76,21 @@ class Editor extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const newAST = !isEqual(nextProps.AST, this.props.AST);
-    const newFilters = !isEqual(nextProps.filters, this.props.filters);
-    this.setState({ newAST, newFilters });
+    // List of props that dont' need to be compared
+    const omitted = [
+      'onChange',
+      'onGutterClick',
+      'value',
+    ];
+    const omitProps = props => omit(props, omitted);
+    // Compare only the props that can cause CodeMirror to update (which will
+    // remove highlighting); if they're not equal, then highlight will need
+    // to be called after the component updates
+    const shouldInvokeHighlight = !isEqual(
+      omitProps(this.props),
+      omitProps(nextProps),
+    );
+    this.setState({ shouldInvokeHighlight });
   }
 
   shouldComponentUpdate(nextProps) {
@@ -90,10 +106,7 @@ class Editor extends React.Component {
       value,
       errors,
     } = this.props;
-    const {
-      newAST,
-      newFilters,
-    } = this.state;
+    const { shouldInvokeHighlight } = this.state;
 
     const codeMirrorInst = this.codeMirror.getCodeMirror();
 
@@ -111,13 +124,11 @@ class Editor extends React.Component {
     if (openLine !== -1) {
       this.emphasizeLine(openLine);
     }
-    if ((newAST || newFilters) && value) {
+    if (shouldInvokeHighlight && value) {
       highlight(codeMirrorInst, AST, filters);
     }
     if (errors) {
-      errors.forEach((error) => {
-        this.markError(error.begin, error.end);
-      });
+      errors.forEach((error) => { this.markError(error.begin, error.end); });
     }
   }
 
@@ -164,9 +175,7 @@ class Editor extends React.Component {
   }
 
   clearErrors() {
-    const css = `
-      background-image: none;
-    `;
+    const css = 'background-image: none;';
     styleAll(this.codeMirror.getCodeMirror(), css);
   }
 
@@ -192,6 +201,7 @@ class Editor extends React.Component {
   render() {
     const {
       codeMirrorTheme,
+      keymap,
       language,
       onChange,
       readOnly,
@@ -202,6 +212,7 @@ class Editor extends React.Component {
       mode: getCodeMirrorMode(language),
       ...(readOnly ? annotationModeOptions : editModeOptions),
       theme: getCodeMirrorTheme(codeMirrorTheme),
+      keyMap: keymap,
     };
 
     return (
@@ -219,6 +230,7 @@ Editor.propTypes = {
   codeMirrorTheme: PropTypes.string,
   errors: CustomPropTypes.errors,
   filters: CustomPropTypes.filters.isRequired,
+  keymap: PropTypes.string,
   language: PropTypes.string.isRequired,
   markedLines: PropTypes.arrayOf(PropTypes.number).isRequired,
   onChange: PropTypes.func.isRequired,
@@ -231,6 +243,7 @@ Editor.propTypes = {
 Editor.defaultProps = {
   codeMirrorTheme: 'codesplain',
   errors: [],
+  keymap: 'default',
   openLine: -1,
 };
 

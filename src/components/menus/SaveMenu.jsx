@@ -94,6 +94,7 @@ class SaveMenu extends React.Component {
         actions={
           <span>
             <FlatButton
+              secondary
               label="Cancel"
               onTouchTap={() => this.setState({ showSaveAsDialog: false })}
             />

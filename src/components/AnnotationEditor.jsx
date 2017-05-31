@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Tab, Tabs } from 'material-ui/Tabs';
 import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 
 import MarkdownDisplayer from './MarkdownDisplayer';
 import markdownLogo from '../../res/markdown-logo.svg';
@@ -24,7 +24,7 @@ const styles = {
     top: '1rem',
   },
   markdownHintText: {
-    color: '#d3d3d3',
+    color: 'inherit',
     fontSize: 'small',
   },
   markdownIndicator: {
@@ -49,15 +49,13 @@ class AnnotationEditor extends React.Component {
     this.saveAnnotation = this.saveAnnotation.bind(this);
   }
 
-  onAnnotationChange(ev, annotation) {
-    this.setState({
-      annotation,
-    });
+  onAnnotationChange(_, annotation) {
+    this.setState({ annotation });
   }
 
   clearAnnotation() {
     this.onAnnotationChange(null, '');
-    this.props.closeAnnotation();
+    this.props.onCloseEditor();
   }
 
   saveAnnotation() {
@@ -92,13 +90,13 @@ class AnnotationEditor extends React.Component {
           </Tab>
         </Tabs>
         <div style={styles.bottomContainer}>
-          <RaisedButton
+          <FlatButton
             label="Cancel"
             onTouchTap={this.clearAnnotation}
             secondary
             style={styles.cancelButton}
           />
-          <RaisedButton
+          <FlatButton
             disabled={!annotation}
             label="Save"
             onTouchTap={this.saveAnnotation}
@@ -106,6 +104,7 @@ class AnnotationEditor extends React.Component {
             style={styles.button}
           />
           <a
+            className="markdown-link hoverable-link"
             href="http://commonmark.org/help"
             rel="noopener noreferrer"
             style={styles.markdownIndicator}
@@ -132,7 +131,7 @@ AnnotationEditor.defaultProps = {
 
 AnnotationEditor.propTypes = {
   annotation: PropTypes.string,
-  closeAnnotation: PropTypes.func.isRequired,
+  onCloseEditor: PropTypes.func.isRequired,
   saveAnnotation: PropTypes.func.isRequired,
 };
 

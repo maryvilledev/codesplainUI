@@ -16,7 +16,7 @@ import {
   saveExisting,
 } from '../actions/app';
 import AnnotationPanel from '../components/AnnotationPanel';
-import AnnotationPaginator from '../components/buttons/AnnotationPaginator';
+import AnnotationActions from '../components/buttons/AnnotationActions';
 import {
   getAnnotatedLines,
   getNextAnnotation,
@@ -30,8 +30,15 @@ const styles = {
   card: {
     flex: '1 1 auto',
   },
-  headerItem: {
-    display: 'inline',
+  header: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  headerTitle: {
+    margin: '0',
+    paddingTop: '12px',
+    paddingRight: '12px',
   },
 };
 
@@ -42,11 +49,16 @@ export class Annotations extends React.Component {
       displayStatus: 'none',
       hasPreceedingAnnotation: false,
       hasProceedingAnnotation: false,
+
+      // We want to open in edit mode if the selected line has no annotation
+      isEditing: props.annotation.length === 0,
     };
     this.getNextAnnotation = this.getNextAnnotation.bind(this);
     this.getPreviousAnnotation = this.getPreviousAnnotation.bind(this);
     this.handleCloseAnnotation = this.handleCloseAnnotation.bind(this);
     this.handleSaveAnnotation = this.handleSaveAnnotation.bind(this);
+    this.toggleEditState = this.toggleEditState.bind(this);
+    this.handleCancelEdit = this.handleCancelEdit.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -61,6 +73,9 @@ export class Annotations extends React.Component {
       hasProceedingAnnotation: hasNextAnnotation(nextAnnotatedLines, lineNumber),
       hasPreceedingAnnotation: hasPreviousAnnotation(nextAnnotatedLines, lineNumber),
     });
+
+    // We want to open in edit mode if the selected line has no annotation
+    this.setState({ isEditing: nextProps.annotation.length === 0 });
   }
 
   getPreviousAnnotation() {
@@ -125,7 +140,23 @@ export class Annotations extends React.Component {
     dispatch(saveAnnotation(annotationData));
     // Save the snippet only if this snippet has already been saved.
     if (snippetKey) {
-      dispatch(saveExisting());
+      dispatch(saveExisting())
+        .then(() => {
+          this.toggleEditState();
+        });
+    }
+  }
+
+  toggleEditState() {
+    this.setState({ isEditing: !this.state.isEditing });
+  }
+
+  handleCancelEdit() {
+    const annotationEmpty = this.props.annotation.length === 0;
+    if (annotationEmpty) {
+      this.handleCloseAnnotation();
+    } else {
+      this.toggleEditState();
     }
   }
 
@@ -159,19 +190,21 @@ export class Annotations extends React.Component {
       <Card style={styles.card}>
         <CardTitle
           title={
-            <div>
+            <div style={styles.header}>
               <h2
                 className="section-title"
-                style={styles.headerItem}
+                style={styles.headerTitle}
               >
                 Annotation
               </h2>
-              <AnnotationPaginator
+              <AnnotationActions
                 getNextAnnotation={this.getNextAnnotation}
                 getPreviousAnnotation={this.getPreviousAnnotation}
                 hasNextAnnotation={hasProceedingAnnotation}
                 hasPrevAnnotation={hasPreceedingAnnotation}
-                style={styles.headerItem}
+                onClose={this.handleCloseAnnotation}
+                onEdit={this.toggleEditState}
+                disableEdit={this.state.isEditing}
               />
             </div>
           }
@@ -181,6 +214,8 @@ export class Annotations extends React.Component {
           closeAnnotation={this.handleCloseAnnotation}
           lineAnnotated={lineAnnotated}
           saveAnnotation={this.handleSaveAnnotation}
+          isEditing={this.state.isEditing}
+          onCancelEdit={this.handleCancelEdit}
         />
       </Card>
     );
