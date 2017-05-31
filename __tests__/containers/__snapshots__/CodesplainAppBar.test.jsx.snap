@@ -132,12 +132,6 @@ exports[`<CodesplainAppBar /> snapshot tests user is logged in 1`] = `
     onRequestClose={[Function]}
     open={false}
     orderedSnippets={Array []} />
-  <DownloadDialog
-    onCanceled={[Function]}
-    onDownloadClick={[Function]}
-    open={false}
-    orgs={Array []}
-    username="FooBar" />
 </div>
 `;
 
@@ -256,11 +250,5 @@ exports[`<CodesplainAppBar /> snapshot tests user is not logged in 1`] = `
     onRequestClose={[Function]}
     open={false}
     orderedSnippets={Array []} />
-  <DownloadDialog
-    onCanceled={[Function]}
-    onDownloadClick={[Function]}
-    open={false}
-    orgs={Array []}
-    username="FooBar" />
 </div>
 `;
