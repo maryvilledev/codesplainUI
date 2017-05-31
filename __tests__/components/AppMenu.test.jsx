@@ -13,6 +13,7 @@ const defaultProps = {
   orgSnippets: {},
   username: 'username',
   userSnippets: {},
+  onDownloadClick: jest.fn(),
 };
 
 describe('<AppMenu />', () => {
@@ -46,7 +47,11 @@ describe('<AppMenu />', () => {
           onSignOut={onSignOut}
         />,
       );
-      expect(wrapper.find('MenuItem').prop('onClick')).toEqual(onSignOut);
+      expect(
+        wrapper.find('MenuItem')
+               .find('[primaryText="Sign out"]')
+               .prop('onClick'),
+      ).toEqual(onSignOut);
     });
   });
 });
