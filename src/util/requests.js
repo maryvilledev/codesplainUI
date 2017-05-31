@@ -34,6 +34,13 @@ export const makeSaveEndpointUrl = (username, snippetId = '') => {
 };
 
 /*
+Construct the REST endpoint for generating a zip file of the selectedOrg.
+*/
+export const makeDumpEndpointUrl = selectedOrg => (
+  `${API_URL}/users/${selectedOrg}/dump`
+);
+
+/*
 Construct the REST endpoint for obtaining the parser for the specified
 language.
 */

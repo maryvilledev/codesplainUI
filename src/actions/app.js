@@ -5,7 +5,11 @@ import { addNotification, closeNotification } from './notifications';
 import { setAuthor, setPermissions } from './permissions';
 import { fetchSnippetLists } from './user';
 import { removeDeprecatedFiltersFromState } from '../util/codemirror-utils';
-import { makeSaveEndpointUrl, normalizeState } from '../util/requests';
+import {
+  makeDumpEndpointUrl,
+  makeSaveEndpointUrl,
+  normalizeState,
+} from '../util/requests';
 import { setDefaults } from '../util/state-management';
 
 export const RESET_STATE = 'RESET_STATE';
@@ -219,6 +223,21 @@ export const deleteSnippet = snippetKey => (dispatch, getState) => {
       dispatch(closeNotification());
       // Show an error notification
       dispatch(addNotification('Failed to delete snippet; please try again'));
+      throw err;
+    });
+};
+
+export const downloadZip = selectedOrg => (dispatch) => {
+  dispatch(addNotification('Downloading snippets zip file.'));
+  return axios.post(makeDumpEndpointUrl(selectedOrg))
+    .then(({ data: url }) => {
+      dispatch(closeNotification());
+      dispatch(addNotification('Successfully downloaded zip file!'));
+      window.location = url;
+    })
+    .catch((err) => {
+      dispatch(closeNotification());
+      dispatch(addNotification('Failed to download snippets zip.'));
       throw err;
     });
 };
